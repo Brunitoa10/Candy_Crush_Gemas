@@ -1,4 +1,4 @@
-package nivel;
+package Nivel;
 
 public class nivel {
 
