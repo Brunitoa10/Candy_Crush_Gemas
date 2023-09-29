@@ -1,8 +1,8 @@
 package Entidades;
 
-public class roca extends obstaculo{
+public class hielo extends obstaculo {
 
-	public roca(int f, int c, String ri) {
+	public hielo(int f, int c, String ri) {
 		super(f, c, ri);
 		// TODO Auto-generated constructor stub
 	}
