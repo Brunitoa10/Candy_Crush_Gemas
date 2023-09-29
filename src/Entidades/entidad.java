@@ -16,22 +16,22 @@ public entidad(int f, int c, String ri)
 	columna=c;
 	enfocada=false;
 	imagen=ri;
-	};
+	}
 
 public void setEntidadGrafica(entidadGrafica eg)
 {
 	entidadG=eg;
-};
+}
 
 public String getImagneRep()
 {
 	return imagen;
-};
+}
 
 public int getFila()
 {
 	return fila;
-};
+}
 
 public int getColumna()
 {
