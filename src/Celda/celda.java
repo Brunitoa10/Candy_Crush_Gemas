@@ -6,12 +6,12 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
-import Entidades.entidad;
+import Entidades.Entidad;
 import GUI.GUI;
-import GUI.entidadGrafica;
+import GUI.EntidadGrafica;
 import Logica.EntidadLogica;
 
-public class celda extends JLabel implements entidadGrafica{
+public class celda extends JLabel implements EntidadGrafica{
     //Atributos
     protected GUI miGUI;
     protected EntidadLogica entidad_logica;

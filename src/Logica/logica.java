@@ -26,12 +26,12 @@ public class logica {
 		miTablero.fijarJugador(miNivel.getFilaInicialJugador(), miNivel.getColumnaInicialJugador());
 	}
 
-	public void mover_jugador(int d) {
-		miTablero.mover_jugador(d);
+	public void mover_jugador(int direccion) {
+		miTablero.mover_jugador(direccion);
 	}
 	
-	public void intercambiar(int d) {
-		miTablero.intercambiar(d);
+	public void intercambiar(int direccion) {
+		miTablero.intercambiar(direccion);
 	}
 	
 	private void asociarEntidadesLogicasGraficas() {
