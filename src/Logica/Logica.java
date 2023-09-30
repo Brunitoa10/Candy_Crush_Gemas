@@ -7,19 +7,19 @@ import GUI.EntidadGrafica;
 import GUI.GUI;
 import Nivel.generadorNivel;
 import Nivel.nivel;
-import Tablero.tablero;
+import Tablero.Tablero;
 
 
 
-public class logica {
+public class Logica {
 	//Atributos
-	protected tablero miTablero;
+	protected Tablero miTablero;
 	protected GUI miGUI;
 	protected nivel miNivel;
 
 	//Constructor
-	public logica(){
-		miTablero = new tablero(this);
+	public Logica(){
+		miTablero = new Tablero(this);
 		miNivel = generadorNivel.cargar_nivel_y_tablero("/Niveles/Nivel1.txt", miTablero);
 		miGUI = new GUI(this, miTablero.getFila(), miTablero.getColumna());
 		asociarEntidadesLogicasGraficas();
@@ -42,7 +42,7 @@ public class logica {
 			for (int c=0; c < miTablero.getColumna(); c++) {
 				entidad = miTablero.get_entidad(f, c);
 				egrafica = miGUI.agregar_entidad(entidad);
-				entidad.set_entidad_grafica(egrafica);
+				entidad.setEntidadGrafica(egrafica);
 			}
 		}
 		miGUI.setVisible(true);
@@ -54,7 +54,7 @@ public class logica {
 		EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                	new logica();
+                	new Logica();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

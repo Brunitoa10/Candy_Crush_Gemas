@@ -11,14 +11,14 @@ import GUI.GUI;
 import GUI.EntidadGrafica;
 import Logica.EntidadLogica;
 
-public class celda extends JLabel implements EntidadGrafica{
+public class Celda extends JLabel implements EntidadGrafica{
     //Atributos
     protected GUI miGUI;
     protected EntidadLogica entidad_logica;
     protected int size_label;
 
     //Constructor
-    public celda(GUI g, EntidadLogica l,int s){
+    public Celda(GUI g, EntidadLogica l,int s){
         super();
 		miGUI = g;
 		entidad_logica = l;

@@ -26,7 +26,7 @@ public class hielo extends obstaculo {
 	}
 
 	@Override
-	public boolean esPosibleIntercambiar(entidad e) {
+	public boolean esPosibleIntercambiar(Entidad e) {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -59,6 +59,12 @@ public class hielo extends obstaculo {
 	public void intercambiarPosicion(int f, int c) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public String get_imagen_representativa() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

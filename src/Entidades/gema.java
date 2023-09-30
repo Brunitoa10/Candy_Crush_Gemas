@@ -1,8 +1,8 @@
 package Entidades;
 import Logica.color;
-import GUI.entidadGrafica;
+import GUI.EntidadGrafica;
 
-public class gema extends entidad{
+public class gema extends Entidad{
 
 	protected color color;
 	
@@ -30,7 +30,7 @@ public class gema extends entidad{
 	}
 
 	@Override
-	public boolean esPosibleIntercambiar(entidad e) {
+	public boolean esPosibleIntercambiar(Entidad e) {
 		return e.puedeRecibir(this);
 	}
 
@@ -64,5 +64,12 @@ public class gema extends entidad{
 		columna=c;
 		entidadG.notificarse_cambio_estado();
 	}
+
+	@Override
+	public String get_imagen_representativa() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }

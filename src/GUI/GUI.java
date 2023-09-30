@@ -1,25 +1,48 @@
 package GUI;
 
 
+
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
+
+
+import Celda.Celda;
+import Logica.EntidadLogica;
+import Logica.Logica;
+
 
 public class GUI extends JFrame {
 
-	private JPanel contentPane;
-
+	protected Logica miLogica;
+	protected int filas,columnas;
+	protected Celda celda_A_pendienteAnimacion,celda_B_pendienteAnimacion;
+	protected JLabel texto_superior;
+	protected JPanel panel_principal;
 	
-	/**
-	 * Create the frame.
-	 */
-	public GUI() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+	private int size_label = 60;
 
-		setContentPane(contentPane);
+	//Movimientos
+	private static final int ARRIBA = 15000;
+	private static final int ABAJO = 15001;
+	private static final int IZQUIERDA = 15002;
+	private static final int DERECHA = 15003;
+	
+	
+	public GUI(Logica l, int f, int c) {
+		
+	}
+	
+	protected void inicializar() {
+		
+	}
+	
+	public EntidadGrafica agregar_entidad(EntidadLogica e) {
+		return null;
+	}
+	
+	public void considerar_para_intercambio_posicion(Celda c) {
+		
 	}
 
 }

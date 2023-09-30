@@ -1,6 +1,6 @@
 package Entidades;
 
-import GUI.entidadGrafica;
+import GUI.EntidadGrafica;
 import Logica.EntidadLogica;
 
 public abstract class Entidad implements EntidadLogica, enfocable,intercambiable{
@@ -8,7 +8,7 @@ protected int fila;
 protected int columna;
 protected boolean enfocada;
 protected String imagen;
-protected entidadGrafica entidadG;
+protected EntidadGrafica entidadG;
 
 public Entidad(int f, int c, String ri) 
 {
@@ -18,12 +18,12 @@ public Entidad(int f, int c, String ri)
 	imagen=ri;
 	}
 
-public void setEntidadGrafica(entidadGrafica eg)
+public void setEntidadGrafica(EntidadGrafica eg)
 {
 	entidadG=eg;
 }
 
-public String getImagneRep()
+public String getImagenRep()
 {
 	return imagen;
 }
@@ -40,6 +40,7 @@ public int getColumna()
 
 public boolean destruir()
 {
+	return false;
 	
 }
 }

@@ -1,6 +1,6 @@
 package Threads;
 
-import Celda.celda;
+import Celda.Celda;
 import Logica.EntidadLogica;
 
 public class AnimadorIntercambio extends Thread{
@@ -8,11 +8,11 @@ public class AnimadorIntercambio extends Thread{
     protected int size_label;
 	protected int step;
 	protected int delay;
-	protected celda celda1,celda2;
+	protected Celda celda1,celda2;
 	
 
     //Constructor
-	public AnimadorIntercambio(int size, int step, int d, celda c1, celda c2) {
+	public AnimadorIntercambio(int size, int step, int d, Celda c1, Celda c2) {
 		size_label = size;
 		this.step = step;
 		delay = d;

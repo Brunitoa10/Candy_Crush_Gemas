@@ -1,6 +1,6 @@
 package Entidades;
 
-public abstract class obstaculo extends entidad{
+public abstract class obstaculo extends Entidad{
 
 	public obstaculo(int f, int c, String ri) {
 		super(f, c, ri);

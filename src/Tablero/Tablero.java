@@ -1,5 +1,5 @@
 package Tablero;
 
-public class tablero {
+public class Tablero {
 
 }
