@@ -1,16 +1,16 @@
 package Entidades;
 
 import GUI.entidadGrafica;
-import Logica.entidadLogica;
+import Logica.EntidadLogica;
 
-public abstract class entidad implements entidadLogica, enfocable,intercambiable{
+public abstract class Entidad implements EntidadLogica, enfocable,intercambiable{
 protected int fila;
 protected int columna;
 protected boolean enfocada;
 protected String imagen;
 protected entidadGrafica entidadG;
 
-public entidad(int f, int c, String ri) 
+public Entidad(int f, int c, String ri) 
 {
 	fila=f;
 	columna=c;

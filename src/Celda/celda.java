@@ -9,16 +9,16 @@ import javax.swing.JLabel;
 import Entidades.entidad;
 import GUI.GUI;
 import GUI.entidadGrafica;
-import Logica.entidadLogica;
+import Logica.EntidadLogica;
 
 public class celda extends JLabel implements entidadGrafica{
     //Atributos
     protected GUI miGUI;
-    protected entidadLogica entidad_logica;
+    protected EntidadLogica entidad_logica;
     protected int size_label;
 
     //Constructor
-    public celda(GUI g, entidadLogica l,int s){
+    public celda(GUI g, EntidadLogica l,int s){
         super();
 		miGUI = g;
 		entidad_logica = l;
@@ -26,6 +26,8 @@ public class celda extends JLabel implements entidadGrafica{
 		setBounds(l.getColumna()*size_label, l.getFila()*size_label, size_label, size_label);
 		cambiar_imagen(l.get_imagen_representativa());	
     }
+
+    //Metodos
     public void notificarse_cambio_estado() {
 		cambiar_imagen(entidad_logica.get_imagen_representativa());
 	}
@@ -35,12 +37,12 @@ public class celda extends JLabel implements entidadGrafica{
 		miGUI.considerar_para_intercambio_posicion(this);
 	}
 	
-	public entidadLogica get_entidad_logica() {
+	public EntidadLogica getEntidadLogica() {
 		return entidad_logica;
 	}
 	
-	protected void cambiar_imagen(String i) {
-		ImageIcon imgIcon = new ImageIcon(this.getClass().getResource(i));
+	protected void cambiar_imagen(String miString) {
+		ImageIcon imgIcon = new ImageIcon(this.getClass().getResource(miString));
 		Image imgEscalada = imgIcon.getImage().getScaledInstance(size_label, size_label, Image.SCALE_SMOOTH);
 		Icon iconoEscalado = new ImageIcon(imgEscalada);
 		setIcon(iconoEscalado);

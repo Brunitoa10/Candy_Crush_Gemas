@@ -1,5 +1,5 @@
 package GUI;
 
-public interface entidadGrafica {
+public interface EntidadGrafica {
 
 }
