@@ -29,47 +29,52 @@ public class gema extends Entidad{
 		
 	}
 
+	public color getColor() {
+       return color;
+	}
+
 	@Override
 	public boolean esPosibleIntercambiar(Entidad e) {
 		return e.puedeRecibir(this);
 	}
 
 	@Override
-	public boolean puedeRecibir(gemaNormal g) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean puedeRecibir(gemaNormal gm) {
+		return true;
 	}
 
 	@Override
 	public boolean puedeRecibir(roca r) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean puedeRecibir(gemaEnvuelta ge) {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean puedeRecibir(gemaRayada gr) {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public void intercambiarPosicion(int f, int c) {
 		fila=f;
 		columna=c;
-		entidadG.notificarse_cambio_estado();
+		entidadG.notificarse_intercambio_posicion();
 	}
 
 	@Override
 	public String get_imagen_representativa() {
-		// TODO Auto-generated method stub
-		return null;
+		return imagen;
 	}
 
-
+    private boolean tieneJuego(int x, int y)
+	{
+      for(int i=1,i<3,i++)
+	  {
+		if()
+	  }
+	}
 }
