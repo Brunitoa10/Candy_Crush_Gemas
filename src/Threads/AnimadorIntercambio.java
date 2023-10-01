@@ -1,6 +1,6 @@
 package Threads;
 
-import Celda.Celda;
+import GUI.Celda;
 import Logica.EntidadLogica;
 
 public class AnimadorIntercambio extends Thread{

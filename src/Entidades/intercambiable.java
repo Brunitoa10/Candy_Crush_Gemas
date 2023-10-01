@@ -1,7 +1,7 @@
 package Entidades;
 
 public interface intercambiable {
-	public boolean esPosibleIntercambiar(Entidad e);
+	public boolean esPosibleIntercambiar(entidad e);
 	public boolean puedeRecibir(gemaNormal g);
 	public boolean puedeRecibir(roca r);
 	public boolean puedeRecibir(gemaEnvuelta ge);

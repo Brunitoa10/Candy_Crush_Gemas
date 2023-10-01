@@ -1,4 +1,4 @@
-package Celda;
+package GUI;
 
 import java.awt.Image;
 
@@ -7,11 +7,10 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 import Entidades.Entidad;
-import GUI.GUI;
 import GUI.EntidadGrafica;
 import Logica.EntidadLogica;
 
-public class Celda extends JLabel implements EntidadGrafica{
+public class Celda extends JLabel implements entidadGrafica{
     //Atributos
     protected GUI miGUI;
     protected EntidadLogica entidad_logica;

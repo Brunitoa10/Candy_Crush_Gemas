@@ -1,20 +1,16 @@
 package Entidades;
 import Logica.color;
-import GUI.EntidadGrafica;
+import GUI.entidadGrafica;
 
-public class gema extends Entidad{
+public class gema extends entidad{
 
 	protected color color;
 	
-	public gema(int f, int c, String ri) {
+	public gema(int f, int c, int col, String ri) {
 		super(f, c, ri);
 	}
 
-	@Override
-	public String getImagenRep() {
-		return imagen;
-	}
-
+	
 	@Override
 	public boolean enfocar() {
 	enfocada=true;
@@ -34,7 +30,7 @@ public class gema extends Entidad{
 	}
 
 	@Override
-	public boolean esPosibleIntercambiar(Entidad e) {
+	public boolean esPosibleIntercambiar(entidad e) {
 		return e.puedeRecibir(this);
 	}
 
@@ -65,16 +61,19 @@ public class gema extends Entidad{
 		entidadG.notificarse_intercambio_posicion();
 	}
 
-	@Override
-	public String get_imagen_representativa() {
-		return imagen;
-	}
-
     private boolean tieneJuego(int x, int y)
 	{
       for(int i=1,i<3,i++)
 	  {
 		if()
 	  }
+      
+      
 	}
+    
+    private void cargarImagenesRepresentativas(String path_img) {
+    	imagenes = new String [2];
+    	imagenes[0] = path_img + color +".png";
+    	imagenes[1] = path_img + color +"-resaltado.png";
+    }
 }
