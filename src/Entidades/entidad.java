@@ -29,6 +29,7 @@ public String get_imagen_representativa() {
 	indice += (enfocada ? 1 : 0);
 	return imagenes[indice];
 }
+
 public int getFila()
 {
 	return fila;
