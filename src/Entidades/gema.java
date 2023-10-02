@@ -30,31 +30,6 @@ public class gema extends entidad{
 	}
 
 	@Override
-	public boolean esPosibleIntercambiar(entidad e) {
-		return e.puedeRecibir(this);
-	}
-
-	@Override
-	public boolean puedeRecibir(gemaNormal gm) {
-		return true;
-	}
-
-	@Override
-	public boolean puedeRecibir(roca r) {
-		return false;
-	}
-
-	@Override
-	public boolean puedeRecibir(gemaEnvuelta ge) {
-		return true;
-	}
-
-	@Override
-	public boolean puedeRecibir(gemaRayada gr) {
-		return true;
-	}
-
-	@Override
 	public void intercambiarPosicion(int f, int c) {
 		fila=f;
 		columna=c;
