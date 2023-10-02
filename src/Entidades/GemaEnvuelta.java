@@ -2,9 +2,9 @@ package Entidades;
 
 import Logica.color;
 
-public class gemaEnvuelta extends gema{
+public class GemaEnvuelta extends Gema{
 
-	public gemaEnvuelta(int f, int c, color col) {
+	public GemaEnvuelta(int f, int c, color col) {
 		super(f, c, col, "/assets/gema_potenciadora/");
 	}
 

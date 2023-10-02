@@ -1,10 +1,10 @@
 package Entidades;
 import Logica.color;
-import GUI.entidadGrafica;
+import GUI.EntidadGrafica;
 
-public class gema extends entidad{
+public class Gema extends Entidad{
 
-	public gema(int f, int c, color col, String ri) {
+	public Gema(int f, int c, color col, String ri) {
 		super(f, c, ri,col);
 	}
 
@@ -34,22 +34,22 @@ public class gema extends entidad{
 	}
 
 
-	public boolean puedeRecibir(gemaNormal gm) {
+	public boolean puedeRecibir(GemaNormal gm) {
 		return true;
 	}
 
 
-	public boolean puedeRecibir(roca r) {
+	public boolean puedeRecibir(Roca r) {
 		return false;
 	}
 
 
-	public boolean puedeRecibir(gemaEnvuelta ge) {
+	public boolean puedeRecibir(GemaEnvuelta ge) {
 		return true;
 	}
 
 
-	public boolean puedeRecibir(gemaRayada gr) {
+	public boolean puedeRecibir(GemaRayada gr) {
 		return true;
 	}
 

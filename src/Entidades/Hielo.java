@@ -2,9 +2,9 @@ package Entidades;
 
 import Logica.color;
 
-public class hielo extends obstaculo {
+public class Hielo extends Obstaculo {
 
-	public hielo(int f, int c, color col) {
+	public Hielo(int f, int c, color col) {
 		super(f, c, col, "/assets/gema_normal/");
 	}
      
@@ -19,28 +19,28 @@ public class hielo extends obstaculo {
 	}
 
 	
-	public boolean esPosibleIntercambiar(entidad e) {
+	public boolean esPosibleIntercambiar(Entidad e) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
-	public boolean puedeRecibir(gemaNormal g) {
+	public boolean puedeRecibir(GemaNormal g) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
-	public boolean puedeRecibir(roca r) {
+	public boolean puedeRecibir(Roca r) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
-	public boolean puedeRecibir(gemaEnvuelta ge) {
+	public boolean puedeRecibir(GemaEnvuelta ge) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	
-	public boolean puedeRecibir(gemaRayada gr) {
+	public boolean puedeRecibir(GemaRayada gr) {
 		// TODO Auto-generated method stub
 		return false;
 	}

@@ -1,9 +1,9 @@
 package Tablero;
 
-import Entidades.entidad;
+import Entidades.Entidad;
 import GUI.Celda;
 import Logica.Logica;
-import Logica.entidadLogica;
+import Logica.EntidadLogica;
 import java.util.LinkedList;
 
 public class Tablero {
@@ -24,7 +24,7 @@ public class Tablero {
 	 * [0,0][0,1][0,2][0,3]
 	 */
 	
-	public tablero(Logica l) {
+	public Tablero(Logica l) {
 		miLogica = l;
 	}
 	
@@ -40,7 +40,7 @@ public class Tablero {
 	public int getColumna() {
 		return columnas;
 	}
-	public void agregarEntidad(int f, int c, entidadLogica e) {
+	public void agregarEntidad(int f, int c, EntidadLogica e) {
 		if((f>= 0 && f < filas) &&(c>= 0 && c< columnas)) {
 			t[f][c].setEntidadLogica(e);}
 	}
@@ -81,7 +81,7 @@ public class Tablero {
 	/* intercambia dede la posicion del cursor a direccion 0 derecha, 1 abajo, 2 izquierda, 3 arriba
 	 * en caso de no ser posible por out of bounds, no hace nada*/
 	LinkedList intercambiar(int dir) {
-		entidadLogica aux;
+		EntidadLogica aux;
 		switch(dir) {
 		case 0:
 			if(cJugador < columnas -1) {
@@ -126,7 +126,7 @@ public class Tablero {
 	private LinkedList CheckCruz(int f1, int c1, int f2, int c2) {
 		//optimizar
 		if((0<=f1 && f1 <filas) && (0<=c1 && c1 <columnas) && (0<=f2 && f2 <filas) && (0<=c2 && c2 <columnas)) {
-			LinkedList<entidadLogica> toReturn = new LinkedList<entidadLogica>();
+			LinkedList<EntidadLogica> toReturn = new LinkedList<EntidadLogica>();
 			int combo = 0;
 			
 			if(f1 == f2) {

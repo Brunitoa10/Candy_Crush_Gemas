@@ -1,6 +1,6 @@
 package Logica;
 
-public interface entidadLogica {
+public interface EntidadLogica {
  /**
 	 * Obtiene la fila en la que se ubica la entidad lógica.
 	 * @return el valor de la fila.

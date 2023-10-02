@@ -1,9 +1,9 @@
 package Entidades;
 import Logica.color;
 
-public class roca extends obstaculo{
+public class Roca extends Obstaculo{
 
-	public roca(int f, int c, color col, String ri) {
+	public Roca(int f, int c, color col, String ri) {
 		super(f, c, col, ri);
 	}
 
@@ -16,22 +16,22 @@ public class roca extends obstaculo{
 		
 	}
 
-	public boolean puedeRecibir(gemaNormal g) {
+	public boolean puedeRecibir(GemaNormal g) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
-	public boolean puedeRecibir(roca r) {
+	public boolean puedeRecibir(Roca r) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
-	public boolean puedeRecibir(gemaEnvuelta ge) {
+	public boolean puedeRecibir(GemaEnvuelta ge) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
-	public boolean puedeRecibir(gemaRayada gr) {
+	public boolean puedeRecibir(GemaRayada gr) {
 		// TODO Auto-generated method stub
 		return false;
 	}

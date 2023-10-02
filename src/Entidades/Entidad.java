@@ -1,18 +1,18 @@
 package Entidades;
 
-import GUI.entidadGrafica;
-import Logica.entidadLogica;
+import GUI.EntidadGrafica;
+import Logica.EntidadLogica;
 import Logica.color;
 
-public abstract class entidad implements entidadLogica, enfocable{
+public abstract class Entidad implements EntidadLogica, Enfocable{
 	protected int fila;
 	protected int columna;
 	protected boolean enfocada;
 	protected String[] imagenes;
-	protected entidadGrafica entidadG;
+	protected EntidadGrafica entidadG;
 	protected color color;
 
-	public entidad(int f, int c, String ri,color col) {
+	public Entidad(int f, int c, String ri,color col) {
 		fila=f;
 		columna=c;
 		enfocada=false;
@@ -20,7 +20,7 @@ public abstract class entidad implements entidadLogica, enfocable{
 		cargarImagenesRepresentativas(ri);
 	}
 
-	public void setEntidadGrafica(entidadGrafica eg){
+	public void setEntidadGrafica(EntidadGrafica eg){
 		entidadG=eg;
 	}
 
