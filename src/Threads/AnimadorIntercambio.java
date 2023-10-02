@@ -1,10 +1,10 @@
 package Threads;
 
 import GUI.Celda;
-import Logica.EntidadLogica;
+import Logica.entidadLogica;
 
 public class AnimadorIntercambio extends Thread{
-    //Atributos
+	//Atributos
     protected int size_label;
 	protected int step;
 	protected int delay;
@@ -22,8 +22,8 @@ public class AnimadorIntercambio extends Thread{
 		
     //Metodos
 	public void run() {
-		EntidadLogica el1 = celda1.getEntidadLogica();
-		EntidadLogica el2 = celda2.getEntidadLogica();
+		entidadLogica el1 = celda1.getEntidadLogica();
+		entidadLogica el2 = celda2.getEntidadLogica();
 		
         int pos_x_c1,pos_y_c1,pos_x_c2,pos_y_c2;
         int pos_x_c1_futura,pos_y_c1_futura,pos_x_c2_futura,pos_y_c2_futura;

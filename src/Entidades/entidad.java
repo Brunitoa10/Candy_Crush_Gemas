@@ -2,8 +2,9 @@ package Entidades;
 
 import GUI.entidadGrafica;
 import Logica.EntidadLogica;
+import Logica.entidadLogica;
 
-public abstract class entidad implements EntidadLogica, enfocable,intercambiable{
+public abstract class entidad implements entidadLogica, enfocable,intercambiable{
 protected int fila;
 protected int columna;
 protected boolean enfocada;
