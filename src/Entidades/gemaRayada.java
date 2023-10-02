@@ -1,10 +1,18 @@
 package Entidades;
 
 public abstract class gemaRayada extends gema{
+	
+	//direccion en la que la gema explotara
+	//en caso de cambiar los valores de horizontal y vertical, adaptar el nombre de los assets en /assets/gema_rayada/
+	private int d;
+	public static final int HORIZONTAL = 0;
+	public static final int VERTICAL = 1;
 
-	public gemaRayada(int f, int c, String ri) {
-		super(f, c, ri);
-		// TODO Auto-generated constructor stub
+	public gemaRayada(int f, int c, int col, int direccion) {
+		super(f, c,col, "/assets/gema_rayada/" + direccion);
 	}
-
+	
+	public boolean esPosibleIntercambiar(entidad e) {
+		return e.puedeRecibir(this);
+	}
 }

@@ -28,10 +28,11 @@ public class gema extends entidad{
 	public color getColor() {
        return color;
 	}
-
-	@Override
-	public boolean esPosibleIntercambiar(entidad e) {
-		return e.puedeRecibir(this);
+	
+	public String getImagenRep() {
+		int indice = 0;
+		indice += (enfocada ? 1 : 0);
+		return imagenes[indice];
 	}
 
 	@Override
@@ -61,7 +62,7 @@ public class gema extends entidad{
 		entidadG.notificarse_intercambio_posicion();
 	}
 
-    private boolean tieneJuego(int x, int y)
+/*    private boolean tieneJuego(int x, int y)
 	{
       for(int i=1,i<3,i++)
 	  {
@@ -70,7 +71,7 @@ public class gema extends entidad{
       
       
 	}
-    
+*/    
     private void cargarImagenesRepresentativas(String path_img) {
     	imagenes = new String [2];
     	imagenes[0] = path_img + color +".png";

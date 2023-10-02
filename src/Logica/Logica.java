@@ -3,8 +3,10 @@ package Logica;
 import java.awt.EventQueue;
 
 import Entidades.Entidad;
+import Entidades.entidad;
 import GUI.EntidadGrafica;
 import GUI.GUI;
+import GUI.entidadGrafica;
 import Nivel.generadorNivel;
 import Nivel.nivel;
 import Tablero.Tablero;
@@ -35,8 +37,8 @@ public class Logica {
 	}
 	
 	private void asociarEntidadesLogicasGraficas() {
-		Entidad entidad;
-		EntidadGrafica egrafica;
+		entidad entidad;
+		entidadGrafica egrafica;
 		
 		for (int f=0; f < miTablero.getFila(); f++) {
 			for (int c=0; c < miTablero.getColumna(); c++) {
