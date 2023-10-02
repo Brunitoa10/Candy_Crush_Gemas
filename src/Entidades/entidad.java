@@ -19,6 +19,8 @@ public entidad(int f, int c, String ri,color c)
 	columna=c;
 	enfocada=false;
 	color=c;
+	imagenes= new String[2];
+	imagenes[1]=ri
 	}
 
 public void setEntidadGrafica(entidadGrafica eg)
@@ -26,10 +28,15 @@ public void setEntidadGrafica(entidadGrafica eg)
 	entidadG=eg;
 }
 
-public String get_imagen_representativa() {
+public String getImagenesRep() {
 	int indice = 0;
 	indice += (enfocada ? 1 : 0);
 	return imagenes[indice];
+}
+
+public void setImagenesRep(int i,String g)
+{
+	imagenes[i]=g;
 }
 
 public int getFila()
