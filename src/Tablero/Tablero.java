@@ -4,6 +4,8 @@ import Entidades.Entidad;
 import GUI.Celda;
 import Logica.Logica;
 import Logica.EntidadLogica;
+
+import java.util.Iterator;
 import java.util.LinkedList;
 
 public class Tablero {
@@ -42,10 +44,10 @@ public class Tablero {
 	}
 	public void agregarEntidad(int f, int c, EntidadLogica e) {
 		if((f>= 0 && f < filas) &&(c>= 0 && c< columnas)) {
-			t[f][c].setEntidadLogica(e);}
+			t[f][c].setEntidad(e);}
 	}
 	
-	public void fijarJugador(int f, int c) throws Exception {
+	public void fijarJugador(int f, int c){
 		if((f>= 0 && f < filas) &&(c>= 0 && c< columnas)) {
 			fJugador = f;
 		    cJugador = c;}
@@ -80,37 +82,37 @@ public class Tablero {
 	
 	/* intercambia dede la posicion del cursor a direccion 0 derecha, 1 abajo, 2 izquierda, 3 arriba
 	 * en caso de no ser posible por out of bounds, no hace nada*/
-	LinkedList intercambiar(int dir) {
-		EntidadLogica aux;
+	public LinkedList intercambiar(int dir) {
+		Entidad aux;
 		switch(dir) {
 		case 0:
 			if(cJugador < columnas -1) {
-				if(t[fJugador][cJugador].getEntidadLogica().esPosibleInrecambiar() && t[fJugador][cJugador+1].getEntidadLogica().esPosibleIntercambiar()) {
-					aux =t[fJugador][cJugador].getEntidadLogica();
-					t[fJugador][cJugador].setEntidadLogica(t[fJugador][cJugador+1].getEntidadLogica());
-					t[fJugador][cJugador+1].setEntidadLogica(aux);}}
+				if(t[fJugador][cJugador].getEntidad().esPosibleInrecambiar() && t[fJugador][cJugador+1].getEntidad().esPosibleIntercambiar()) {
+					aux =t[fJugador][cJugador].getEntidad();
+					t[fJugador][cJugador].setEntidad(t[fJugador][cJugador+1].getEntidad());
+					t[fJugador][cJugador+1].setEntidad(aux);}}
 		break;
 		case 1:
 			if(fJugador>0) {
-				if(t[fJugador][cJugador].getEntidadLogica().esPosibleInrecambiar() && t[fJugador-1][cJugador].getEntidadLogica().esPosibleIntercambiar()) {
-					aux =t[fJugador][cJugador].getEntidadLogica();
-					t[fJugador][cJugador].setEntidadLogica(t[fJugador-1][cJugador].getEntidadLogica());
-					t[fJugador-1][cJugador].setEntidadLogica(aux);}}
+				if(t[fJugador][cJugador].getEntidad().esPosibleInrecambiar() && t[fJugador-1][cJugador].getEntidad().esPosibleIntercambiar()) {
+					aux =t[fJugador][cJugador].getEntidad();
+					t[fJugador][cJugador].setEntidad(t[fJugador-1][cJugador].getEntidad());
+					t[fJugador-1][cJugador].setEntidad(aux);}}
 		break;
 		case 2:
 			if(cJugador>0) {
-				if(t[fJugador][cJugador].getEntidadLogica().esPosibleInrecambiar() && t[fJugador][cJugador-1].getEntidadLogica().esPosibleIntercambiar()) {
-					aux =t[fJugador][cJugador].getEntidadLogica();
-					t[fJugador][cJugador].setEntidadLogica(t[fJugador][cJugador-1].getEntidadLogica());
-					t[fJugador][cJugador-1].setEntidadLogica(aux);}}
+				if(t[fJugador][cJugador].getEntidad().esPosibleInrecambiar() && t[fJugador][cJugador-1].getEntidad().esPosibleIntercambiar()) {
+					aux =t[fJugador][cJugador].getEntidad();
+					t[fJugador][cJugador].setEntidad(t[fJugador][cJugador-1].getEntidad());
+					t[fJugador][cJugador-1].setEntidad(aux);}}
 			
 		break;
 		case 3:
 			if(fJugador<filas -1 ) {
-				if(t[fJugador][cJugador].getEntidadLogica().esPosibleInrecambiar() && t[fJugador-1][cJugador].getEntidadLogica().esPosibleIntercambiar()) {
-					aux =t[fJugador][cJugador].getEntidadLogica();
-					t[fJugador][cJugador].setEntidadLogica(t[fJugador-1][cJugador].getEntidadLogica());
-					t[fJugador-1][cJugador].setEntidadLogica(aux);}}
+				if(t[fJugador][cJugador].getEntidad().esPosibleInrecambiar() && t[fJugador-1][cJugador].getEntidad().esPosibleIntercambiar()) {
+					aux =t[fJugador][cJugador].getEntidad();
+					t[fJugador][cJugador].setEntidad(t[fJugador-1][cJugador].getEntidad());
+					t[fJugador-1][cJugador].setEntidad(aux);}}
 		break;
 		default: System.out.println("mover jugador(): direccion incorrecta");
 	}
@@ -119,49 +121,110 @@ public class Tablero {
 		
 	}
 	
-	public LinkedList checkExhaustivo() {}
+	public LinkedList<Entidad> checkExhaustivo() {return null;}
 	
-	public boolean caida() {}
+	public boolean caida() {return false;}
 	
-	private LinkedList CheckCruz(int f1, int c1, int f2, int c2) {
+	private LinkedList<Entidad> CheckCruz(int f1, int c1, int f2, int c2) {
 		//optimizar
-		if((0<=f1 && f1 <filas) && (0<=c1 && c1 <columnas) && (0<=f2 && f2 <filas) && (0<=c2 && c2 <columnas)) {
-			LinkedList<EntidadLogica> toReturn = new LinkedList<EntidadLogica>();
-			int combo = 0;
-			
+		LinkedList<Entidad> toReturn = new LinkedList<Entidad>();
+		if((0<=f1 && f1 <filas) && (0<=c1 && c1 <columnas) && (0<=f2 && f2 <filas) && (0<=c2 && c2 <columnas )){
+			LinkedList<Entidad> aux;
+			Iterator<Entidad> it;
 			if(f1 == f2) {
-				for(int i = 1; i< filas; i++) {
-					if(t[f1][i-1].getColorEntidad() == t[f1][i].getColorEntidad()) {
-						
-						combo++;
-						if(combo == 2) {
-							toReturn.addLast(t[f1][i-2].getEntidadLogica());
-							toReturn.addLast(t[f1][i-1].getEntidadLogica());
-							toReturn.addLast(t[f1][i].getEntidadLogica());}
-						if(combo> 2) {
-							toReturn.addLast(t[f1][i].getEntidadLogica());}}		
-				else {
-					if(combo>=2) {
-						toReturn.addLast(null);
-						combo = 0;}
-					else combo = 0;}}
-				if(toReturn.getLast() != null) {
-					toReturn.addLast(null);
-				}
-			
-			
-			
-			
-			}else {
+				//caso dos filas iguales
 				
+				
+				aux = checkFila(f1);
+				it = aux.iterator();
+				while (it.hasNext()) {
+					toReturn.addLast(it.next());}
+				
+				aux = checkColumna(c1);
+				it = aux.iterator();
+				while (it.hasNext()) {
+					toReturn.addLast(it.next());}
+				
+				aux = checkColumna(c2);
+				it = aux.iterator();
+				while (it.hasNext()) {
+					toReturn.addLast(it.next());}
 			}
-		}else {
+			else {
+				aux = checkFila(f1);
+				it = aux.iterator();
+				while (it.hasNext()) {
+					toReturn.addLast(it.next());}
+				
+				aux = checkFila(f2);
+				it = aux.iterator();
+				while (it.hasNext()) {
+					toReturn.addLast(it.next());}
+				
+				aux = checkColumna(c2);
+				it = aux.iterator();
+				while (it.hasNext()) {
+					toReturn.addLast(it.next());}
+			}
+		return toReturn;
+		}
+		else {
 			System.out.println("error en checkCruz() de tablero");
 			return null;
 		}
-		
-		
-		
 	}
+	
+		
+		private LinkedList<Entidad> checkFila(int f) {
+			LinkedList<Entidad> toReturn = new LinkedList<Entidad>();
+			int combo = 0;
+			for(int i = 1; i< filas; i++) {
+				if(t[f][i-1].getColorEntidad() == t[f][i].getColorEntidad() && t[f][i].getColorEntidad() != 7&& t[f][i].getColorEntidad() != 8 ) {
+					
+					combo++;
+					if(combo == 2) {
+						toReturn.addLast(t[f][i-2].getEntidad());
+						toReturn.addLast(t[f][i-1].getEntidad());
+						toReturn.addLast(t[f][i].getEntidad());}
+					if(combo> 2) {
+						toReturn.addLast(t[f][i].getEntidad());}}		
+				else {
+					if(combo>=2) {
+						toReturn.addLast(null);}
+					combo = 0;
+					}
+			}//fin for
+			if(!toReturn.isEmpty() &&toReturn.getLast() != null) {
+				toReturn.addLast(null);}
+			return toReturn;
+			
+		}
+		private LinkedList<Entidad> checkColumna(int c) {
+			LinkedList<Entidad> toReturn = new LinkedList<Entidad>();
+			int combo = 0;
+			for(int i = 1; i< columnas; i++) {
+				if(t[i-1][c].getColorEntidad() == t[i][c].getColorEntidad() && t[i][c].getColorEntidad() != 7 && t[i][c].getColorEntidad() != 8 ) {
+					
+					combo++;
+					if(combo == 2) {
+						toReturn.addLast(t[i-2][c].getEntidad());
+						toReturn.addLast(t[i-1][c].getEntidad());
+						toReturn.addLast(t[i][c].getEntidad());}
+					if(combo> 2) {
+						toReturn.addLast(t[i][c].getEntidad());}}		
+				else {
+					if(combo>=2) {
+						toReturn.addLast(null);}
+					combo = 0;
+					}
+			}//fin for
+			if(!toReturn.isEmpty() && toReturn.getLast() != null ) {
+				toReturn.addLast(null);}
+			return toReturn;
+			
+		}
+		
+		
+	
 
 }
