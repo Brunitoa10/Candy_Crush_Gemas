@@ -2,6 +2,9 @@ package Logica;
 
 import java.awt.EventQueue;
 
+import Entidades.Entidad;
+import Entidades.entidad;
+import GUI.EntidadGrafica;
 import Entidades.entidad;
 import GUI.GUI;
 import GUI.entidadGrafica;
@@ -13,10 +16,35 @@ import Tablero.Tablero;
 
 public class Logica {
 	//Atributos
+	protected Tablero miTablero;
+	protected GUI miGUI;
+	protected nivel miNivel;
+
+	//Constructor
+	public Logica(){
+		miTablero = new Tablero(this);
+		miNivel = generadorNivel.cargar_nivel_y_tablero("/Niveles/Nivel1.txt", miTablero);
+		miGUI = new GUI(this, miTablero.getFila(), miTablero.getColumna());
+		asociarEntidadesLogicasGraficas();
+		miTablero.fijarJugador(miNivel.getFilaInicialJugador(), miNivel.getColumnaInicialJugador());
+	}
+
+	public void mover_jugador(int direccion) {
+		miTablero.mover_jugador(direccion);
+	}
+	
+	public void intercambiar(int direccion) {
+		miTablero.intercambiar(direccion);
+	}
+	
+	private void asociarEntidadesLogicasGraficas() {
+		entidad entidad;
+		entidadGrafica egrafica;
 		protected Tablero miTablero;
 		protected GUI miGUI;
 		protected nivel miNivel;
 		protected int movimientosRestantes;
+
 		
 		//Constructor
 		public Logica(){

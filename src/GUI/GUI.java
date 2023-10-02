@@ -73,6 +73,7 @@ public class GUI extends JFrame {
 	}
 	
 	public entidadGrafica agregar_entidad(entidadLogica e) {
+
 		Celda celda = new Celda(this, e, size_label);
 		panel_principal.add(celda);
 		return celda;

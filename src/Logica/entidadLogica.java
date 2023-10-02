@@ -15,8 +15,9 @@ public interface entidadLogica {
 	 * Obtiene la ruta donde se encuentra la imagen representativa de la entidad, en relación a su estado.
 	 * @return la ruta hacia la imagen.
 	 */
-	public String get_imagen_representativa();
+
 	public color obtenerColor();
 	//solo cambia los valores de x e y
 	public void intercambiarPosicion(int x, int y);
-}
+
+	public String getImagenRep();}
