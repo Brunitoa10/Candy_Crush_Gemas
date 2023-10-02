@@ -6,20 +6,20 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
-
+import Logica.color;
 import Logica.entidadLogica;
 
 public class Celda extends JLabel implements entidadGrafica{
     //Atributos
     protected GUI miGUI;
-    protected entidadLogica entidad_logica;
+    protected entidadLogica entidadLogica;
     protected int size_label;
 
     //Constructor
     public Celda(GUI g, entidadLogica l,int s){
         super();
 		miGUI = g;
-		entidad_logica = l;
+		entidadLogica = l;
 		size_label = s;
 		setBounds(l.getColumna()*size_label, l.getFila()*size_label, size_label, size_label);
 		cambiar_imagen(l.get_imagen_representativa());	
@@ -27,7 +27,7 @@ public class Celda extends JLabel implements entidadGrafica{
 
     //Metodos
     public void notificarse_cambio_estado() {
-		cambiar_imagen(entidad_logica.get_imagen_representativa());
+		cambiar_imagen(entidadLogica.get_imagen_representativa());
 	}
 	
 	@Override
@@ -36,11 +36,11 @@ public class Celda extends JLabel implements entidadGrafica{
 	}
 	
 	public entidadLogica getEntidadLogica() {
-		return entidad_logica;
+		return entidadLogica;
 	}
 	
 	public void setEntidadLogica(entidadLogica l) {
-		entidad_logica = l;
+		entidadLogica = l;
 	}
 	
 	protected void cambiar_imagen(String miString) {
@@ -48,5 +48,13 @@ public class Celda extends JLabel implements entidadGrafica{
 		Image imgEscalada = imgIcon.getImage().getScaledInstance(size_label, size_label, Image.SCALE_SMOOTH);
 		Icon iconoEscalado = new ImageIcon(imgEscalada);
 		setIcon(iconoEscalado);
+	}
+	
+	public color getColorEntidad() {
+		return entidadLogica.obtenerColor();
+	}
+	
+	public void actualizarXY(int x, int y) {
+		entidadLogica.intercambiarPosicion(x,y);
 	}
 }

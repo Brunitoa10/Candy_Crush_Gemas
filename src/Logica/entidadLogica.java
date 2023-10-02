@@ -16,4 +16,7 @@ public interface entidadLogica {
 	 * @return la ruta hacia la imagen.
 	 */
 	public String get_imagen_representativa();
+	public color obtenerColor();
+	//solo cambia los valores de x e y
+	public void intercambiarPosicion(int x, int y);
 }
