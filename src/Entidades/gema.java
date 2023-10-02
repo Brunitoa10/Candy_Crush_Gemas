@@ -60,16 +60,6 @@ public class gema extends entidad{
 		columna=c;
 		entidadG.notificarse_intercambio_posicion();
 	}
-
-    private boolean tieneJuego(int x, int y)
-	{
-      for(int i=1,i<3,i++)
-	  {
-		if()
-	  }
-      
-      
-	}
     
     private void cargarImagenesRepresentativas(String path_img) {
     	imagenes = new String [2];

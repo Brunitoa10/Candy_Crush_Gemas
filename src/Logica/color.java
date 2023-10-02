@@ -7,4 +7,6 @@ public class color {
 	public static final int VERDE = 4;
 	public static final int AZUL = 5;
 	public static final int PURPURA = 6;
+	public static final int ROCA=7;
+	public static final int HIELO=8;
 }
