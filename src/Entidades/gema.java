@@ -24,17 +24,6 @@ public class gema extends entidad{
 		enfocada=false;
 		
 	}
-
-	public color getColor() {
-       return color;
-	}
-
-	@Override
-	public void intercambiarPosicion(int f, int c) {
-		fila=f;
-		columna=c;
-		entidadG.notificarse_intercambio_posicion();
-	}
     
     private void cargarImagenesRepresentativas(String path_img) {
     	imagenes = new String [2];
