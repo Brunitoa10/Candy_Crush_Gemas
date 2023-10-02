@@ -11,8 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import Logica.EntidadLogica;
-import Logica.Juego;
+
 import Logica.Logica;
 import Logica.entidadLogica;
 import Threads.AnimadorIntercambio;
@@ -74,7 +73,11 @@ public class GUI extends JFrame {
 	}
 	
 	public entidadGrafica agregar_entidad(entidadLogica e) {
+<<<<<<< HEAD
 		Celda celda = new celda(this, e, size_label);
+=======
+		Celda celda = new Celda(this, e, size_label);
+>>>>>>> d71e29f09cab0098a65cff60b9bcc80adaa5b96a
 		panel_principal.add(celda);
 		return celda;
 	}

@@ -6,18 +6,17 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
-import Entidades.Entidad;
-import GUI.EntidadGrafica;
-import Logica.EntidadLogica;
+
+import Logica.entidadLogica;
 
 public class Celda extends JLabel implements entidadGrafica{
     //Atributos
     protected GUI miGUI;
-    protected EntidadLogica entidad_logica;
+    protected entidadLogica entidad_logica;
     protected int size_label;
 
     //Constructor
-    public Celda(GUI g, EntidadLogica l,int s){
+    public Celda(GUI g, entidadLogica l,int s){
         super();
 		miGUI = g;
 		entidad_logica = l;
@@ -36,8 +35,12 @@ public class Celda extends JLabel implements entidadGrafica{
 		miGUI.considerar_para_intercambio_posicion(this);
 	}
 	
-	public EntidadLogica getEntidadLogica() {
+	public entidadLogica getEntidadLogica() {
 		return entidad_logica;
+	}
+	
+	public void setEntidadLogica(entidadLogica l) {
+		entidad_logica = l;
 	}
 	
 	protected void cambiar_imagen(String miString) {

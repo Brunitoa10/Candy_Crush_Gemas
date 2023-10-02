@@ -8,6 +8,11 @@ public class color {
 	public static final int VERDE = 4;
 	public static final int AZUL = 5;
 	public static final int PURPURA = 6;
+<<<<<<< HEAD
 	public static final int HIELO = 7;
 	public static final int ROCA = 6;
+=======
+	public static final int ROCA=7;
+	public static final int HIELO=8;
+>>>>>>> d71e29f09cab0098a65cff60b9bcc80adaa5b96a
 }

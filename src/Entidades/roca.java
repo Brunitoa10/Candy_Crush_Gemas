@@ -2,20 +2,13 @@ package Entidades;
 
 public class roca extends obstaculo{
 
-	public roca(int f, int c, String ri) {
-		super(f, c, ri);
+	public roca(int f, int c, String ri, color col) {
+		super(f, c, ri,col);
 		// TODO Auto-generated constructor stub
 	}
 
-	@Override
-	public String getImagenRep() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean enfocar() {
-		// TODO Auto-generated method stub
+	public boolean intercambiarPosicion(int f, int c)
+	{
 		return false;
 	}
 

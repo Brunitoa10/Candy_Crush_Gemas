@@ -2,9 +2,13 @@ package Logica;
 
 import java.awt.EventQueue;
 
+<<<<<<< HEAD
 import Entidades.Entidad;
 import Entidades.entidad;
 import GUI.EntidadGrafica;
+=======
+import Entidades.entidad;
+>>>>>>> d71e29f09cab0098a65cff60b9bcc80adaa5b96a
 import GUI.GUI;
 import GUI.entidadGrafica;
 import Nivel.generadorNivel;
@@ -15,6 +19,7 @@ import Tablero.Tablero;
 
 public class Logica {
 	//Atributos
+<<<<<<< HEAD
 	protected Tablero miTablero;
 	protected GUI miGUI;
 	protected nivel miNivel;
@@ -39,28 +44,55 @@ public class Logica {
 	private void asociarEntidadesLogicasGraficas() {
 		entidad entidad;
 		entidadGrafica egrafica;
+=======
+		protected Tablero miTablero;
+		protected GUI miGUI;
+		protected nivel miNivel;
+		protected int movimientosRestantes;
+>>>>>>> d71e29f09cab0098a65cff60b9bcc80adaa5b96a
 		
-		for (int f=0; f < miTablero.getFila(); f++) {
-			for (int c=0; c < miTablero.getColumna(); c++) {
-				entidad = miTablero.get_entidad(f, c);
-				egrafica = miGUI.agregar_entidad(entidad);
-				entidad.setEntidadGrafica(egrafica);
-			}
+		//Constructor
+		public Logica(){
+			miTablero = new Tablero(this);
+			miNivel = generadorNivel.cargar_nivel_y_tablero(1, miTablero);
+			miGUI = new GUI(this, miTablero.getFila(), miTablero.getColumna());
+			asociarEntidadesLogicasGraficas();
+			miTablero.fijarJugador(miNivel.getFilaInicialJugador(), miNivel.getColumnaInicialJugador());
 		}
-		miGUI.setVisible(true);
-	}
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String [] args) {
-		EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                	new Logica();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-	}
+
+		public void mover_jugador(int direccion) {
+			miTablero.moverJugador(direccion);
+		}
+		
+		public void intercambiar(int direccion) {
+			miTablero.intercambiar(direccion);
+		}
+		
+		private void asociarEntidadesLogicasGraficas() {
+			entidad entidad;
+			entidadGrafica egrafica;
+			
+			for (int f=0; f < miTablero.getFila(); f++) {
+				for (int c=0; c < miTablero.getColumna(); c++) {
+					entidad = miTablero.get_entidad(f, c);
+					egrafica = miGUI.agregar_entidad(entidad);
+					entidad.setEntidadGrafica(egrafica);
+				}
+			}
+			miGUI.setVisible(true);
+		}
+		/**
+		 * Launch the application.
+		 */
+		public static void main(String [] args) {
+		     try {
+		         EventQueue.invokeLater(new Runnable() {
+		             public void run() {
+		                 new Logica();
+		             }
+		         });
+		     } catch (Exception e) {
+		         e.printStackTrace();
+		     }
+		 }
 }
