@@ -1,10 +1,11 @@
 package Entidades;
 
-public abstract class obstaculo extends Entidad{
+import Logica.color;
 
-	public obstaculo(int f, int c, String ri, color col) {
+public abstract class obstaculo extends entidad{
+
+	public obstaculo(int f, int c, color col, String ri) {
 		super(f, c, ri,col);
-		// TODO Auto-generated constructor stub
 	}
 
 }

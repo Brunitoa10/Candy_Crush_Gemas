@@ -5,7 +5,7 @@ import GUI.entidadGrafica;
 public class gema extends entidad{
 
 	public gema(int f, int c, color col, String ri) {
-		super(f, c, ri,color);
+		super(f, c, ri,col);
 	}
 
 	
@@ -23,7 +23,6 @@ public class gema extends entidad{
 		
 	}
 
-<<<<<<< HEAD
 	public color getColor() {
        return color;
 	}
@@ -34,27 +33,26 @@ public class gema extends entidad{
 		return imagenes[indice];
 	}
 
-	@Override
+
 	public boolean puedeRecibir(gemaNormal gm) {
 		return true;
 	}
 
-	@Override
+
 	public boolean puedeRecibir(roca r) {
 		return false;
 	}
 
-	@Override
+
 	public boolean puedeRecibir(gemaEnvuelta ge) {
 		return true;
 	}
 
-	@Override
+
 	public boolean puedeRecibir(gemaRayada gr) {
 		return true;
 	}
 
-	@Override
 	public void intercambiarPosicion(int f, int c) {
 		fila=f;
 		columna=c;
@@ -71,11 +69,5 @@ public class gema extends entidad{
       
 	}
 */    
-    private void cargarImagenesRepresentativas(String path_img) {
-    	imagenes = new String [2];
-    	imagenes[0] = path_img + color +".png";
-    	imagenes[1] = path_img + color +"-resaltado.png";
-    }
-=======
->>>>>>> d71e29f09cab0098a65cff60b9bcc80adaa5b96a
+
 }

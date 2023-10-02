@@ -22,12 +22,12 @@ public class Celda extends JLabel implements entidadGrafica{
 		entidadLogica = l;
 		size_label = s;
 		setBounds(l.getColumna()*size_label, l.getFila()*size_label, size_label, size_label);
-		cambiar_imagen(l.get_imagen_representativa());	
+		cambiar_imagen(l.getImagenRep());	
     }
 
     //Metodos
     public void notificarse_cambio_estado() {
-		cambiar_imagen(entidadLogica.get_imagen_representativa());
+		cambiar_imagen(entidadLogica.getImagenRep());
 	}
 	
 	@Override

@@ -1,15 +1,15 @@
 package Entidades;
 
+import Logica.color;
+
 public class hielo extends obstaculo {
 
-	public hielo(int f, int c, String ri,color col) {
-		super(f, c, ri,col);
-		// TODO Auto-generated constructor stub
+	public hielo(int f, int c, color col) {
+		super(f, c, col, "/assets/gema_normal/");
 	}
      
-	 public boolean intercambiarPosicion(int f, int c)
-	{
-		return false;
+	 public void intercambiarPosicion(int f, int c){
+
 	}
 
 	@Override
@@ -18,46 +18,44 @@ public class hielo extends obstaculo {
 		
 	}
 
-	@Override
-	public boolean esPosibleIntercambiar(Entidad e) {
+	
+	public boolean esPosibleIntercambiar(entidad e) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
-	@Override
 	public boolean puedeRecibir(gemaNormal g) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
-	@Override
 	public boolean puedeRecibir(roca r) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
-	@Override
 	public boolean puedeRecibir(gemaEnvuelta ge) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
-	@Override
+	
 	public boolean puedeRecibir(gemaRayada gr) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public void intercambiarPosicion(int f, int c) {
-		// TODO Auto-generated method stub
-		
+	public String getImagenRep() {
+		int indice = 0;
+		indice += (enfocada ? 1 : 0);
+		return imagenes[indice];
 	}
 
-	@Override
-	public String get_imagen_representativa() {
-		// TODO Auto-generated method stub
-		return null;
+	protected void cargar_imagenes_representativas(String ri) {
+		imagenes = new String [2];
+		imagenes[0] = ri + color.HIELO +".png";
+		imagenes[1] = ri + color.HIELO +"-resaltado.png";
 	}
 
 }
