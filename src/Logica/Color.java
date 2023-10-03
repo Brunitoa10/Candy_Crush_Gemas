@@ -2,6 +2,7 @@ package Logica;
 
 public class Color {
 	//en caso de cambiar los valores, avisenle a Nacho para cambiar los nombres de los assets :)
+	public static final int TRANSPARENTE = 0;
 	public static final int ROJO = 1;
 	public static final int NARANJA = 2;
 	public static final int AMARILLO = 3;

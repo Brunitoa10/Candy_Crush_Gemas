@@ -1,6 +1,7 @@
 package Tablero;
 
 import Entidades.Entidad;
+import Entidades.GemaNormal;
 import GUI.Celda;
 import GUI.GUI;
 import Logica.Logica;
@@ -20,13 +21,12 @@ public class Tablero {
 	int cJugador;
 	
 	/*[fila,columna]
-	 * 
-	 * [5,0][5,1][5,2][5,3]
-	 * [4,0][4,1][4,2][4,3]
-	 * [3,0][3,1][3,2][3,3]
-	 * [2,0][2,1][2,2][2,3]
-	 * [1,0][1,1][1,2][1,3]
 	 * [0,0][0,1][0,2][0,3]
+	 * [1,0][1,1][1,2][1,3]
+	 * [2,0][2,1][2,2][2,3]
+	 * [3,0][3,1][3,2][3,3]
+	 * [4,0][4,1][4,2][4,3]
+	 * [5,0][5,1][5,2][5,3]
 	 */
 	
 	public Tablero(Logica l,GUI g) {
@@ -39,17 +39,27 @@ public class Tablero {
 	        t = new Celda[f][c];
 	        filas = f;
 	        columnas = c;
-	        
+	       
 	        for (int i = 0; i < filas; i++) {
 	            for (int j = 0; j < columnas; j++) {
-	            	
-	                t[i][j] = new Celda(miGui,null, 60); //ERROR :: LE ESTAS PASANDO NULL A UNA ENTIDAD
+	            	 System.out.println("ciclo en reset tablero");
+	                t[i][j] = new Celda(miGui,new GemaNormal(i,c,Color.TRANSPARENTE), 60); 
 	            }
 	        }
+	        this.printTable();
 	    } catch (Exception e) {
 	        System.out.println("Tablero :: Error al resetear " + e.getMessage());
 	    }
 	   }
+	
+	public void printTable() {
+		for(int i = 0; i<filas; i++) {
+			for (int j = 0; j<columnas ; j++) {
+				System.out.print("["+ t[i][j].getEntidad().obtenerColor() +"]");
+			}
+			System.out.println("");
+		}
+	}
 	
 	public Entidad getEntidad(int f, int c) {
 		Entidad entidad = null;

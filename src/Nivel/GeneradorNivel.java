@@ -7,7 +7,7 @@ import Tablero.Tablero;
 
 public class GeneradorNivel {
 	public static Nivel cargar_nivel_y_tablero(int nivel, Tablero t) {
-		//t.resetearTablero(5, 5);
+		t.resetearTablero(5, 5);
 		try {
 			for(int y=0; y<3; y++) {
 				t.agregarEntidad(new GemaNormal(0,y, Color.AZUL));
