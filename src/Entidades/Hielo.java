@@ -58,4 +58,10 @@ public class Hielo extends Obstaculo {
 		imagenes[1] = ri + color.HIELO +"-cursor.png";
 	}
 
+	@Override
+	public boolean esPosibleInrecambiar() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

@@ -37,7 +37,12 @@ public class Tablero {
 	}
 	
 	public Entidad getEntidad(int f, int c) {
-		return t[f][c].getEntidad();
+		if((f>= 0 && f < filas) &&(c>= 0 && c< columnas)) {
+			return t[f][c].getEntidad();}
+		else {
+			System.out.println("array out of bounds en get entidad");
+			return null;
+		}
 	}
 	
 	public int getFila() {
@@ -98,29 +103,33 @@ public class Tablero {
 	 * en caso de no ser posible por out of bounds, no hace nada*/
 	public void intercambiar(int dir) {
 		Entidad aux;
-		
-		
 		switch(dir) {
 		case 0:
 			if(cJugador < columnas -1) {
 				if(t[fJugador][cJugador].getEntidad().esPosibleInrecambiar() && t[fJugador][cJugador+1].getEntidad().esPosibleInrecambiar()) {
 					aux =t[fJugador][cJugador].getEntidad();
 					t[fJugador][cJugador].setEntidad(t[fJugador][cJugador+1].getEntidad());
-					t[fJugador][cJugador+1].setEntidad(aux);}}
+					t[fJugador][cJugador+1].setEntidad(aux);
+					//manejarColisiones(CheckCruz(fJugador,cJugador,fJugador,cJugador+1));  ¡¡¡I M P L E M E N T A R!!!
+					}}
 		break;
 		case 1:
 			if(fJugador>0) {
 				if(t[fJugador][cJugador].getEntidad().esPosibleInrecambiar() && t[fJugador-1][cJugador].getEntidad().esPosibleInrecambiar()) {
 					aux =t[fJugador][cJugador].getEntidad();
 					t[fJugador][cJugador].setEntidad(t[fJugador-1][cJugador].getEntidad());
-					t[fJugador-1][cJugador].setEntidad(aux);}}
+					t[fJugador-1][cJugador].setEntidad(aux);
+					//manejarColisiones(CheckCruz(fJugador,cJugador,fJugador-1,cJugador));  ¡¡¡I M P L E M E N T A R!!!
+					}}
 		break;
 		case 2:
 			if(cJugador>0) {
 				if(t[fJugador][cJugador].getEntidad().esPosibleInrecambiar() && t[fJugador][cJugador-1].getEntidad().esPosibleInrecambiar()) {
 					aux =t[fJugador][cJugador].getEntidad();
 					t[fJugador][cJugador].setEntidad(t[fJugador][cJugador-1].getEntidad());
-					t[fJugador][cJugador-1].setEntidad(aux);}}
+					t[fJugador][cJugador-1].setEntidad(aux);
+					//manejarColisiones(CheckCruz(fJugador,cJugador,fJugador,cJugador-1));  ¡¡¡I M P L E M E N T A R!!!
+					}}
 			
 		break;
 		case 3:
@@ -128,13 +137,22 @@ public class Tablero {
 				if(t[fJugador][cJugador].getEntidad().esPosibleInrecambiar() && t[fJugador-1][cJugador].getEntidad().esPosibleInrecambiar()) {
 					aux =t[fJugador][cJugador].getEntidad();
 					t[fJugador][cJugador].setEntidad(t[fJugador-1][cJugador].getEntidad());
-					t[fJugador-1][cJugador].setEntidad(aux);}}
+					t[fJugador-1][cJugador].setEntidad(aux);
+					//manejarColisiones(CheckCruz(fJugador,cJugador,fJugador-1	,cJugador+1));  ¡¡¡I M P L E M E N T A R!!!
+					}}
 		break;
 		default: System.out.println("mover jugador(): direccion incorrecta");
+		}		
 	}
-		
 	
-		
+	public void intercambiarSinCheck(int f1, int c1, int f2, int c2) {
+		Entidad aux;
+		if((0<=f1 && f1 <filas) && (0<=c1 && c1 <columnas) && (0<=f2 && f2 <filas) && (0<=c2 && c2 <columnas )){
+			aux = t[f1][c1].getEntidad();
+			t[f1][c1].setEntidad(t[f2][c2].getEntidad());
+			t[f2][c2].setEntidad(aux);
+		}
+		else System.out.println("out of bounds en intercambiarSinCheck");
 	}
 	
 	public LinkedList<Entidad> checkExhaustivo() {return null;}
@@ -240,7 +258,10 @@ public class Tablero {
 			
 		}
 		
-		
+		private boolean manejarColisiones(LinkedList<Entidad> l) {
+			return false;
+			
+		}
 	
 
 }
