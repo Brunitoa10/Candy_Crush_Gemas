@@ -7,7 +7,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 import Entidades.Entidad;
-import Logica.Color;
 
 public class Celda extends JLabel implements EntidadGrafica{
     //Atributos

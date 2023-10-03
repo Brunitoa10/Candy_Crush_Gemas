@@ -1,8 +1,4 @@
 package Entidades;
-
-import Logica.Color;
-import GUI.EntidadGrafica;
-
 public class GemaNormal extends Gema{
 		
 		public GemaNormal(int f, int c, int col) {

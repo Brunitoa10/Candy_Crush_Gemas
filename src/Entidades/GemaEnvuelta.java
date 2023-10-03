@@ -1,7 +1,5 @@
 package Entidades;
 
-import Logica.Color;
-
 public class GemaEnvuelta extends Gema{
 
 	public GemaEnvuelta(int f, int c, int col) {

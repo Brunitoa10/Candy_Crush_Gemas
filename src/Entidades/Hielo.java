@@ -1,7 +1,5 @@
 package Entidades;
 
-import Logica.Color;
-
 public class Hielo extends Obstaculo {
 
 	public Hielo(int f, int c, int col) {

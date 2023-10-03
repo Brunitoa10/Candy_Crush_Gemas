@@ -1,26 +1,9 @@
 package Entidades;
-import Logica.Color;
-import GUI.EntidadGrafica;
 
 public class Gema extends Entidad{
 
 	public Gema(int f, int c, int col, String ri) {
 		super(f, c, ri,col);
-	}
-
-	
-	@Override
-	public boolean enfocar() {
-		enfocada=true;
-		entidadG.notificarse_cambio_estado();
-	return enfocada;
-	}
-
-	@Override
-	public void desenfocar() {
-		entidadG.notificarse_cambio_estado();
-		enfocada=false;
-		
 	}
 
 	public int getColor() {
@@ -63,21 +46,7 @@ public class Gema extends Entidad{
 		entidadG.notificarse_intercambio_posicion();
 	}
 
-
-	@Override
 	public boolean esPosibleInrecambiar() {
 		return true;
-	}
-
-/*    private boolean tieneJuego(int x, int y)
-	{
-      for(int i=1,i<3,i++)
-	  {
-		if()
-	  }
-      
-      
-	}
-*/    
-
+	}   
 }

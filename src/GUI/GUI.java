@@ -18,7 +18,6 @@ import Threads.AnimadorIntercambio;
 
 
 public class GUI extends JFrame {
-
 	protected Logica milogica;
 	protected int filas,columnas;
 	protected Celda celda1_pendienteAn,celda2_pendienteAn;
