@@ -3,17 +3,12 @@ import Logica.color;
 
 public class Roca extends Obstaculo{
 
-	public Roca(int f, int c, color col, String ri) {
+	public Roca(int f, int c, int col, String ri) {
 		super(f, c, "/assets/gema_normal/", col);
 	}
 
 	public void intercambiarPosicion(int f, int c){
 
-	}
-
-	public void desenfocar() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	public boolean puedeRecibir(GemaNormal g) {
@@ -38,8 +33,8 @@ public class Roca extends Obstaculo{
 	
 	protected void cargar_imagenes_representativas(String ri) {
 		imagenes = new String [2];
-		imagenes[0] = ri + color.ROCA +".png";
-		imagenes[1] = ri + color.ROCA +"-resaltado.png";
+		imagenes[0] = ri + color +".png";
+		imagenes[1] = ri + color +"-resaltado.png";
 	}
 
 	@Override
@@ -47,6 +42,11 @@ public class Roca extends Obstaculo{
 		int indice = 0;
 		indice += (enfocada ? 1 : 0);
 		return imagenes[indice];
+	}
+
+	@Override
+	public boolean esPosibleInrecambiar() {
+		return false;
 	}
 
 }

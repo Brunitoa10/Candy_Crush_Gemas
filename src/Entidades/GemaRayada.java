@@ -9,7 +9,7 @@ public abstract class GemaRayada extends Gema{
 	public static final int HORIZONTAL = 0;
 	public static final int VERTICAL = 1;
 
-	public GemaRayada(int f, int c, color col, int direccion) {
+	public GemaRayada(int f, int c, int col, int direccion) {
 		super(f, c,col, "/assets/gema_rayada/" + direccion);
 	}
 	

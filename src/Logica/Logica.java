@@ -45,7 +45,7 @@ public class Logica {
 			
 			for (int f=0; f < miTablero.getFila(); f++) {
 				for (int c=0; c < miTablero.getColumna(); c++) {
-					ent = miTablero.get_entidad(f, c);
+					ent = miTablero.getEntidad(f, c);
 					egrafica = miGUI.agregar_entidad(ent);
 					ent.setEntidadGrafica(egrafica);
 				}

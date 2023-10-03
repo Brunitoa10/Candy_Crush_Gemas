@@ -4,8 +4,8 @@ import Logica.color;
 
 public class Hielo extends Obstaculo {
 
-	public Hielo(int f, int c, color col) {
-		super(f, c, col, "/assets/gema_normal/");
+	public Hielo(int f, int c, int col) {
+		super(f, c, "/assets/gema_normal/", col);
 	}
      
 	 public void intercambiarPosicion(int f, int c){
@@ -54,13 +54,12 @@ public class Hielo extends Obstaculo {
 
 	protected void cargar_imagenes_representativas(String ri) {
 		imagenes = new String [2];
-		imagenes[0] = ri + color.HIELO +".png";
-		imagenes[1] = ri + color.HIELO +"-cursor.png";
+		imagenes[0] = ri + color +".png";
+		imagenes[1] = ri + color +"-cursor.png";
 	}
 
 	@Override
 	public boolean esPosibleInrecambiar() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 

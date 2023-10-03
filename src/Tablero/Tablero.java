@@ -37,6 +37,7 @@ public class Tablero {
 	}
 	
 	public Entidad getEntidad(int f, int c) {
+		System.out.println(f + c);
 		if((f>= 0 && f < filas) &&(c>= 0 && c< columnas)) {
 			return t[f][c].getEntidad();}
 		else {
@@ -110,7 +111,7 @@ public class Tablero {
 					aux =t[fJugador][cJugador].getEntidad();
 					t[fJugador][cJugador].setEntidad(t[fJugador][cJugador+1].getEntidad());
 					t[fJugador][cJugador+1].setEntidad(aux);
-					//manejarColisiones(CheckCruz(fJugador,cJugador,fJugador,cJugador+1));  ¡¡¡I M P L E M E N T A R!!!
+					//manejarColisiones(CheckCruz(fJugador,cJugador,fJugador,cJugador+1));  ï¿½ï¿½ï¿½I M P L E M E N T A R!!!
 					}}
 		break;
 		case 1:
@@ -119,7 +120,7 @@ public class Tablero {
 					aux =t[fJugador][cJugador].getEntidad();
 					t[fJugador][cJugador].setEntidad(t[fJugador-1][cJugador].getEntidad());
 					t[fJugador-1][cJugador].setEntidad(aux);
-					//manejarColisiones(CheckCruz(fJugador,cJugador,fJugador-1,cJugador));  ¡¡¡I M P L E M E N T A R!!!
+					//manejarColisiones(CheckCruz(fJugador,cJugador,fJugador-1,cJugador));  ï¿½ï¿½ï¿½I M P L E M E N T A R!!!
 					}}
 		break;
 		case 2:
@@ -128,7 +129,7 @@ public class Tablero {
 					aux =t[fJugador][cJugador].getEntidad();
 					t[fJugador][cJugador].setEntidad(t[fJugador][cJugador-1].getEntidad());
 					t[fJugador][cJugador-1].setEntidad(aux);
-					//manejarColisiones(CheckCruz(fJugador,cJugador,fJugador,cJugador-1));  ¡¡¡I M P L E M E N T A R!!!
+					//manejarColisiones(CheckCruz(fJugador,cJugador,fJugador,cJugador-1));  ï¿½ï¿½ï¿½I M P L E M E N T A R!!!
 					}}
 			
 		break;
@@ -138,7 +139,7 @@ public class Tablero {
 					aux =t[fJugador][cJugador].getEntidad();
 					t[fJugador][cJugador].setEntidad(t[fJugador-1][cJugador].getEntidad());
 					t[fJugador-1][cJugador].setEntidad(aux);
-					//manejarColisiones(CheckCruz(fJugador,cJugador,fJugador-1	,cJugador+1));  ¡¡¡I M P L E M E N T A R!!!
+					//manejarColisiones(CheckCruz(fJugador,cJugador,fJugador-1	,cJugador+1));  ï¿½ï¿½ï¿½I M P L E M E N T A R!!!
 					}}
 		break;
 		default: System.out.println("mover jugador(): direccion incorrecta");

@@ -5,7 +5,7 @@ import GUI.EntidadGrafica;
 
 public class GemaNormal extends Gema{
 		
-		public GemaNormal(int f, int c, color col) {
+		public GemaNormal(int f, int c, int col) {
 			super(f, c, col, "/assets/gema_normal/");
 		}
 

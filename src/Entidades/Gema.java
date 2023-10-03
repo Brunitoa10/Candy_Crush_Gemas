@@ -4,7 +4,7 @@ import GUI.EntidadGrafica;
 
 public class Gema extends Entidad{
 
-	public Gema(int f, int c, color col, String ri) {
+	public Gema(int f, int c, int col, String ri) {
 		super(f, c, ri,col);
 	}
 
@@ -23,7 +23,7 @@ public class Gema extends Entidad{
 		
 	}
 
-	public color getColor() {
+	public int getColor() {
        return color;
 	}
 
@@ -61,6 +61,12 @@ public class Gema extends Entidad{
 		fila=f;
 		columna=c;
 		entidadG.notificarse_intercambio_posicion();
+	}
+
+
+	@Override
+	public boolean esPosibleInrecambiar() {
+		return true;
 	}
 
 /*    private boolean tieneJuego(int x, int y)
