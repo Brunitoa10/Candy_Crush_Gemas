@@ -2,7 +2,7 @@ package Entidades;
 
 import GUI.EntidadGrafica;
 import Logica.EntidadLogica;
-import Logica.color;
+import Logica.Color;
 
 public abstract class Entidad implements EntidadLogica, Enfocable{
 	protected int fila;
@@ -12,7 +12,7 @@ public abstract class Entidad implements EntidadLogica, Enfocable{
 	protected EntidadGrafica entidadG;
 	protected int color;
 
-	public Entidad(int f, int c, String ri, int col)  {
+	protected  Entidad(int f, int c, String ri, int col)  {
 		fila=f;
 		columna=c;
 		enfocada=false;

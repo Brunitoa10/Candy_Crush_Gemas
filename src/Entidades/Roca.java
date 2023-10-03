@@ -1,5 +1,5 @@
 package Entidades;
-import Logica.color;
+import Logica.Color;
 
 public class Roca extends Obstaculo{
 

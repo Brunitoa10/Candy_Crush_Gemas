@@ -4,6 +4,7 @@ import Entidades.Entidad;
 import GUI.Celda;
 import GUI.GUI;
 import Logica.Logica;
+import Logica.Color;
 import Logica.EntidadLogica;
 
 import java.util.Iterator;
@@ -34,48 +35,74 @@ public class Tablero {
 	}
 	
 	public void resetearTablero(int f, int c) {
-		t = new Celda[f][c];
-		filas = f;
-		columnas = c;
-		for (int i = 0; i<filas; i++) {
-			for (int j = 0; j<columnas; j++) {
-				t[i][j] = new Celda(miGui, null, 60) 
-			}
-		}
-	}
+	    try {
+	        t = new Celda[f][c];
+	        filas = f;
+	        columnas = c;
+	        
+	        for (int i = 0; i < filas; i++) {
+	            for (int j = 0; j < columnas; j++) {
+	            	
+	                t[i][j] = new Celda(miGui,null, 60); //ERROR :: LE ESTAS PASANDO NULL A UNA ENTIDAD
+	            }
+	        }
+	    } catch (Exception e) {
+	        System.out.println("Tablero :: Error al resetear " + e.getMessage());
+	    }
+	   }
 	
 	public Entidad getEntidad(int f, int c) {
-		if((f>= 0 && f < filas) &&(c>= 0 && c< columnas)) {
-			return t[f][c].getEntidad();}
-		else {
-			System.out.println("array out of bounds en get entidad");
-			return null;
+		Entidad entidad = null;
+		if(en_rango(f,c)) {
+			entidad =  t[f][c].getEntidad();
+		}else {
+			System.out.println("Tablero :: fuera de rango en get entidad ");
 		}
+		return entidad;
 	}
-	public void setEntidad(int f, int c,Entidad e) {
-		if((f>= 0 && f < filas) &&(c>= 0 && c< columnas)) {
-			t[f][c].setEntidad(e);}
+	
+	public void setEntidad(Entidad e) throws Exception {
+		int tmpFil = e.getFila(), tmpCol = e.getColumna();
+		if(en_rango(tmpFil,tmpCol) && e != null) {
+			t[tmpFil][tmpCol].setEntidad(e);}
 		else {
-			System.out.println("array out of bounds en set entidad");
+			if(en_rango(tmpFil,tmpCol)) {
+				throw new Exception("Tablero :: Fuera de rango en setEntidad ");
+			}else {
+				throw new Exception("Tablero :: Entidad null en setEntidad ");
+			}
 		}
 	}
 	
 	public int getFila() {
 		return filas;
 	}
+	
 	public int getColumna() {
 		return columnas;
 	}
-	public void agregarEntidad(int f, int c, Entidad e) {
-		if((f>= 0 && f < filas) &&(c>= 0 && c< columnas)) {
-			t[f][c].setEntidad(e);}
+	
+	public void agregarEntidad(Entidad e) throws Exception {
+		int tmpFil = e.getFila(), tmpCol = e.getColumna();
+		if(en_rango(tmpFil,tmpCol) && e != null) {
+			t[tmpFil][tmpCol].setEntidad(e);
+		}else {
+			if(en_rango(tmpFil,tmpCol)) {
+				throw new Exception("Tablero :: Fuera de rango en agregarEntidad ");
+			}else {
+				throw new Exception("Tablero :: Entidad null en agregarEntidad ");
+			}
+		}
 	}
 	
 	public void fijarJugador(int f, int c){
-		if((f>= 0 && f < filas) &&(c>= 0 && c< columnas)) {
+		if(en_rango(f,c)) {
 			fJugador = f;
-		    cJugador = c;}
-		else System.out.println("out of bounds en fijarJugador()");}
+		    cJugador = c;
+		}else {
+			System.out.println("Tablero :: fuera de rango en fijarJugador() ");
+		}
+	}
 	
 	/* mueve el cursor del jugador, en direccion 0 derecha, 1 abajo, 2 izquierda, 3 arriba*/
 	public void moverJugador(int dir) {
@@ -182,8 +209,7 @@ public class Tablero {
 			Iterator<Entidad> it;
 			if(f1 == f2) {
 				//caso dos filas iguales
-				
-				
+
 				aux = checkFila(f1);
 				it = aux.iterator();
 				while (it.hasNext()) {
@@ -277,6 +303,8 @@ public class Tablero {
 			return false;
 			
 		}
-	
+		private boolean en_rango(int nf, int nc){
+			return (((nf >= 0) && (nf < filas)) && ((nc >= 0) && (nc < columnas)));
+		}
 
 }

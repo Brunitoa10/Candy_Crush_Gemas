@@ -20,7 +20,7 @@ public class Logica {
 		//Constructor
 		public Logica(){
 			try {
-				miTablero = new Tablero(this);
+				miTablero = new Tablero(this,miGUI);
 				miNivel = generadorNivel.cargar_nivel_y_tablero(1, miTablero);
 				miGUI = new GUI(this, miTablero.getFila(), miTablero.getColumna());
 				asociarEntidadesLogicasGraficas();

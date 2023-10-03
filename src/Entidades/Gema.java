@@ -1,5 +1,5 @@
 package Entidades;
-import Logica.color;
+import Logica.Color;
 import GUI.EntidadGrafica;
 
 public class Gema extends Entidad{
@@ -11,8 +11,8 @@ public class Gema extends Entidad{
 	
 	@Override
 	public boolean enfocar() {
-	enfocada=true;
-	entidadG.notificarse_cambio_estado();
+		enfocada=true;
+		entidadG.notificarse_cambio_estado();
 	return enfocada;
 	}
 

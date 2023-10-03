@@ -1,6 +1,6 @@
 package Entidades;
 
-import Logica.color;
+import Logica.Color;
 
 public class GemaEnvuelta extends Gema{
 
