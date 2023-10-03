@@ -26,6 +26,10 @@ public class Gema extends Entidad{
 	public color getColor() {
        return color;
 	}
+
+	public boolean esPosibleIntercambiar(Entidad e) {
+		return e.puedeRecibir(this);
+	}
 	
 	public String getImagenRep() {
 		int indice = 0;

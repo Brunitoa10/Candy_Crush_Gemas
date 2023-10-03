@@ -22,8 +22,8 @@ public class AnimadorIntercambio extends Thread{
 		
     //Metodos
 	public void run() {
-		EntidadLogica el1 = celda1.getEntidadLogica();
-		EntidadLogica el2 = celda2.getEntidadLogica();
+		EntidadLogica el1 = celda1.getEntidad();
+		EntidadLogica el2 = celda2.getEntidad();
 		
         int pos_x_c1,pos_y_c1,pos_x_c2,pos_y_c2;
         int pos_x_c1_futura,pos_y_c1_futura,pos_x_c2_futura,pos_y_c2_futura;

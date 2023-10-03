@@ -8,7 +8,6 @@ import javax.swing.JLabel;
 
 import Entidades.Entidad;
 import Logica.color;
-import Logica.EntidadLogica;
 
 public class Celda extends JLabel implements EntidadGrafica{
     //Atributos
@@ -36,10 +35,18 @@ public class Celda extends JLabel implements EntidadGrafica{
 		miGUI.considerar_para_intercambio_posicion(this);
 	}
 	
+	public void notificarCeldaDesenfocar(){
+		ent.desenfocar();
+	}
+
+	public void notificarCeldaEnfocar(){
+		ent.enfocar();
+	}
+
 	public Entidad getEntidad() {
 		return ent;
 	}
-	
+
 	public void setEntidad(Entidad l) {
 		ent = l;
 	}
@@ -51,7 +58,7 @@ public class Celda extends JLabel implements EntidadGrafica{
 		setIcon(iconoEscalado);
 	}
 	
-	public int getColorEntidad() {
+	public color getColorEntidad() {
 		return ent.obtenerColor();
 	}
 	

@@ -9,10 +9,6 @@ public class GemaNormal extends Gema{
 			super(f, c, col, "/assets/gema_normal/");
 		}
 
-		/*public boolean esPosibleIntercambiar(entidad e) {
-			return e.puedeRecibir(this);
-		}*/
-
 		public boolean puedeRecibir(GemaNormal g) {
 			return true;
 		}

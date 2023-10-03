@@ -56,25 +56,35 @@ public class Tablero {
 	/* mueve el cursor del jugador, en direccion 0 derecha, 1 abajo, 2 izquierda, 3 arriba*/
 	public void moverJugador(int dir) {
 		
-		//AGREGAR RESALTADO DE CELDAS
-		
 		switch(dir) {
 		case 0:
 			if(cJugador < columnas -1) {
-				cJugador++;}
+				t[fJugador][cJugador].notificarCeldaDesenfocar();
+				cJugador++;
+				t[fJugador][cJugador].notificarCeldaEnfocar();
+			}
 		break;
 		case 1:
 			if(fJugador >0) {
-				fJugador--;}	
+				t[fJugador][cJugador].notificarCeldaDesenfocar();
+				fJugador--;
+				t[fJugador][cJugador].notificarCeldaEnfocar();
+			}	
 		break;
 		case 2:
 			if(cJugador > 0) {
-				cJugador--;}
+				t[fJugador][cJugador].notificarCeldaDesenfocar();
+				cJugador--;
+				t[fJugador][cJugador].notificarCeldaEnfocar();
+			}
 			
 		break;
 		case 3:
 			if(fJugador < columnas -1) {
-				fJugador++;}
+				t[fJugador][cJugador].notificarCeldaDesenfocar();
+				fJugador++;
+				t[fJugador][cJugador].notificarCeldaEnfocar();
+			}
 		break;
 		default: System.out.println("mover jugador(): direccion incorrecta");
 		}

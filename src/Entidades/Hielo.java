@@ -55,7 +55,7 @@ public class Hielo extends Obstaculo {
 	protected void cargar_imagenes_representativas(String ri) {
 		imagenes = new String [2];
 		imagenes[0] = ri + color.HIELO +".png";
-		imagenes[1] = ri + color.HIELO +"-resaltado.png";
+		imagenes[1] = ri + color.HIELO +"-cursor.png";
 	}
 
 }

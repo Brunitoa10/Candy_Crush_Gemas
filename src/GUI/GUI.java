@@ -26,10 +26,10 @@ public class GUI extends JFrame {
 	private int size_label = 60;
 
 	//Movimientos
-	private static final int ARRIBA = 15000;
-	private static final int ABAJO = 15001;
-	private static final int IZQUIERDA = 15002;
-	private static final int DERECHA = 15003;
+	public static final int ARRIBA = 15000;
+	public static final int ABAJO = 15001;
+	public static final int IZQUIERDA = 15002;
+	public static final int DERECHA = 15003;
 	
 	
 	public GUI(Logica l, int f, int c) {

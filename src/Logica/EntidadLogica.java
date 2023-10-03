@@ -16,7 +16,7 @@ public interface EntidadLogica {
 	 * @return la ruta hacia la imagen.
 	 */
 
-	public int obtenerColor();
+	public color obtenerColor();
 	//solo cambia los valores de x e y
 	public void intercambiarPosicion(int x, int y);
 

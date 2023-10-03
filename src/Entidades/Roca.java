@@ -4,7 +4,7 @@ import Logica.color;
 public class Roca extends Obstaculo{
 
 	public Roca(int f, int c, color col, String ri) {
-		super(f, c, col, ri);
+		super(f, c, "/assets/gema_normal/", col);
 	}
 
 	public void intercambiarPosicion(int f, int c){
