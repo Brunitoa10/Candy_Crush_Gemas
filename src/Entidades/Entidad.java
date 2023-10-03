@@ -10,9 +10,9 @@ public abstract class Entidad implements EntidadLogica, Enfocable{
 	protected boolean enfocada;
 	protected String[] imagenes;
 	protected EntidadGrafica entidadG;
-	protected color color;
+	protected int color;
 
-	public Entidad(int f, int c, String ri, color col)  {
+	public Entidad(int f, int c, String ri, int col)  {
 		fila=f;
 		columna=c;
 		enfocada=false;
@@ -31,7 +31,7 @@ public abstract class Entidad implements EntidadLogica, Enfocable{
 		return imagenes[indice];
 	}
 
-	public color obtenerColor() {
+	public int obtenerColor() {
 		return color;
 	}
 
@@ -70,12 +70,10 @@ public abstract class Entidad implements EntidadLogica, Enfocable{
 	return true;
 	}
 
-	public boolean esPosibleIntercambiar(Entidad e) {
-		return e.puedeRecibir(this);
-	}
 
+	public boolean puedeRecibir(Entidad entidad) {return true;}
 
-	public color getColor(){
+	public int getColor(){
 		return color;
 	}
 
@@ -84,4 +82,6 @@ public abstract class Entidad implements EntidadLogica, Enfocable{
 		imagenes[0] = ri + color +".png";
 		imagenes[1] = ri + color +"-cursor.png";
 	}
+
+	public abstract boolean esPosibleInrecambiar();
 }

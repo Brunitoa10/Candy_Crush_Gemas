@@ -58,7 +58,7 @@ public class Celda extends JLabel implements EntidadGrafica{
 		setIcon(iconoEscalado);
 	}
 	
-	public color getColorEntidad() {
+	public int getColorEntidad() {
 		return ent.obtenerColor();
 	}
 	

@@ -36,13 +36,17 @@ public class Tablero {
 		columnas = c;
 	}
 	
+	public Entidad getEntidad(int f, int c) {
+		return t[f][c].getEntidad();
+	}
+	
 	public int getFila() {
 		return filas;
 	}
 	public int getColumna() {
 		return columnas;
 	}
-	public void agregarEntidad(int f, int c, EntidadLogica e) {
+	public void agregarEntidad(int f, int c, Entidad e) {
 		if((f>= 0 && f < filas) &&(c>= 0 && c< columnas)) {
 			t[f][c].setEntidad(e);}
 	}
@@ -92,26 +96,28 @@ public class Tablero {
 	
 	/* intercambia dede la posicion del cursor a direccion 0 derecha, 1 abajo, 2 izquierda, 3 arriba
 	 * en caso de no ser posible por out of bounds, no hace nada*/
-	public LinkedList intercambiar(int dir) {
+	public void intercambiar(int dir) {
 		Entidad aux;
+		
+		
 		switch(dir) {
 		case 0:
 			if(cJugador < columnas -1) {
-				if(t[fJugador][cJugador].getEntidad().esPosibleInrecambiar() && t[fJugador][cJugador+1].getEntidad().esPosibleIntercambiar()) {
+				if(t[fJugador][cJugador].getEntidad().esPosibleInrecambiar() && t[fJugador][cJugador+1].getEntidad().esPosibleInrecambiar()) {
 					aux =t[fJugador][cJugador].getEntidad();
 					t[fJugador][cJugador].setEntidad(t[fJugador][cJugador+1].getEntidad());
 					t[fJugador][cJugador+1].setEntidad(aux);}}
 		break;
 		case 1:
 			if(fJugador>0) {
-				if(t[fJugador][cJugador].getEntidad().esPosibleInrecambiar() && t[fJugador-1][cJugador].getEntidad().esPosibleIntercambiar()) {
+				if(t[fJugador][cJugador].getEntidad().esPosibleInrecambiar() && t[fJugador-1][cJugador].getEntidad().esPosibleInrecambiar()) {
 					aux =t[fJugador][cJugador].getEntidad();
 					t[fJugador][cJugador].setEntidad(t[fJugador-1][cJugador].getEntidad());
 					t[fJugador-1][cJugador].setEntidad(aux);}}
 		break;
 		case 2:
 			if(cJugador>0) {
-				if(t[fJugador][cJugador].getEntidad().esPosibleInrecambiar() && t[fJugador][cJugador-1].getEntidad().esPosibleIntercambiar()) {
+				if(t[fJugador][cJugador].getEntidad().esPosibleInrecambiar() && t[fJugador][cJugador-1].getEntidad().esPosibleInrecambiar()) {
 					aux =t[fJugador][cJugador].getEntidad();
 					t[fJugador][cJugador].setEntidad(t[fJugador][cJugador-1].getEntidad());
 					t[fJugador][cJugador-1].setEntidad(aux);}}
@@ -119,7 +125,7 @@ public class Tablero {
 		break;
 		case 3:
 			if(fJugador<filas -1 ) {
-				if(t[fJugador][cJugador].getEntidad().esPosibleInrecambiar() && t[fJugador-1][cJugador].getEntidad().esPosibleIntercambiar()) {
+				if(t[fJugador][cJugador].getEntidad().esPosibleInrecambiar() && t[fJugador-1][cJugador].getEntidad().esPosibleInrecambiar()) {
 					aux =t[fJugador][cJugador].getEntidad();
 					t[fJugador][cJugador].setEntidad(t[fJugador-1][cJugador].getEntidad());
 					t[fJugador-1][cJugador].setEntidad(aux);}}
