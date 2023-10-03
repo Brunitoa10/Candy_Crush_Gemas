@@ -2,6 +2,7 @@ package Tablero;
 
 import Entidades.Entidad;
 import GUI.Celda;
+import GUI.GUI;
 import Logica.Logica;
 import Logica.EntidadLogica;
 
@@ -10,6 +11,7 @@ import java.util.LinkedList;
 
 public class Tablero {
 	protected Logica miLogica;
+    protected GUI miGui;
 	protected Celda t[][]; //[f][c]
 	int filas;
 	int columnas;
@@ -26,23 +28,35 @@ public class Tablero {
 	 * [0,0][0,1][0,2][0,3]
 	 */
 	
-	public Tablero(Logica l) {
+	public Tablero(Logica l,GUI g) {
 		miLogica = l;
+		miGui = g;
 	}
 	
 	public void resetearTablero(int f, int c) {
 		t = new Celda[f][c];
 		filas = f;
 		columnas = c;
+		for (int i = 0; i<filas; i++) {
+			for (int j = 0; j<columnas; j++) {
+				t[i][j] = new Celda(miGui, null, 60) 
+			}
+		}
 	}
 	
 	public Entidad getEntidad(int f, int c) {
-		System.out.println(f + c);
 		if((f>= 0 && f < filas) &&(c>= 0 && c< columnas)) {
 			return t[f][c].getEntidad();}
 		else {
 			System.out.println("array out of bounds en get entidad");
 			return null;
+		}
+	}
+	public void setEntidad(int f, int c,Entidad e) {
+		if((f>= 0 && f < filas) &&(c>= 0 && c< columnas)) {
+			t[f][c].setEntidad(e);}
+		else {
+			System.out.println("array out of bounds en set entidad");
 		}
 	}
 	
