@@ -22,6 +22,7 @@ public class Celda extends JLabel implements EntidadGrafica{
 		size_label = s;
 		setBounds(l.getColumna()*size_label, l.getFila()*size_label, size_label, size_label);
 		cambiar_imagen(l.getImagenRep());	
+		System.out.println(l.getImagenRep());
     }
 
     //Metodos

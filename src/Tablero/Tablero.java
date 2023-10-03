@@ -114,25 +114,25 @@ public class Tablero {
 		}
 	}
 	
-	/* mueve el cursor del jugador, en direccion 0 derecha, 1 abajo, 2 izquierda, 3 arriba*/
+	/* mueve el cursor del jugador, en direccion 15003 derecha, 15001 abajo, 15002 izquierda, 15000 arriba*/
 	public void moverJugador(int dir) {
 		
 		switch(dir) {
-		case 0:
+		case GUI.DERECHA:
 			if(cJugador < columnas -1) {
 				t[fJugador][cJugador].notificarCeldaDesenfocar();
 				cJugador++;
 				t[fJugador][cJugador].notificarCeldaEnfocar();
 			}
 		break;
-		case 1:
+		case GUI.ARRIBA:
 			if(fJugador >0) {
 				t[fJugador][cJugador].notificarCeldaDesenfocar();
 				fJugador--;
 				t[fJugador][cJugador].notificarCeldaEnfocar();
 			}	
 		break;
-		case 2:
+		case GUI.IZQUIERDA:
 			if(cJugador > 0) {
 				t[fJugador][cJugador].notificarCeldaDesenfocar();
 				cJugador--;
@@ -140,7 +140,7 @@ public class Tablero {
 			}
 			
 		break;
-		case 3:
+		case GUI.ABAJO:
 			if(fJugador < columnas -1) {
 				t[fJugador][cJugador].notificarCeldaDesenfocar();
 				fJugador++;

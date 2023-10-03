@@ -28,6 +28,8 @@ public class GeneradorNivel {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
 		}
+
+		t.printTable();
 		return new Nivel(2,2);
 	}
 }
