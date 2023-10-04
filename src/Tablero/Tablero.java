@@ -51,7 +51,9 @@ public class Tablero {
 	        System.out.println("Tablero :: Error al resetear " + e.getMessage());
 	    }
 	   }
-	
+	public void agregarCeldaVacia(int i, int j) {
+		t[i][j] = new Celda(miGui,new GemaNormal(i,j,Color.TRANSPARENTE), 60); 
+	}
 	public void printTable() {
 		for(int i = 0; i<filas; i++) {
 			for (int j = 0; j<columnas ; j++) {
@@ -74,8 +76,8 @@ public class Tablero {
 	public void setEntidad(Entidad e) throws Exception {
 		int tmpFil = e.getFila(), tmpCol = e.getColumna();
 		if(en_rango(tmpFil,tmpCol) && e != null) {
-			t[tmpFil][tmpCol].setEntidad(e);}
-		else {
+			t[tmpFil][tmpCol].setEntidad(e);
+		}else {
 			if(en_rango(tmpFil,tmpCol)) {
 				throw new Exception("Tablero :: Fuera de rango en setEntidad ");
 			}else {
@@ -316,5 +318,10 @@ public class Tablero {
 		private boolean en_rango(int nf, int nc){
 			return (((nf >= 0) && (nf < filas)) && ((nc >= 0) && (nc < columnas)));
 		}
+
+		
+
+		
+		
 
 }

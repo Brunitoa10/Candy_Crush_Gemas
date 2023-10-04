@@ -6,7 +6,9 @@ import Entidades.Entidad;
 import GUI.GUI;
 import GUI.EntidadGrafica;
 import Nivel.GeneradorNivel;
+import Nivel.GeneradorNivelDefinitivo;
 import Nivel.Nivel;
+import Nivel.NivelPiolita;
 import Tablero.Tablero;
 
 
@@ -15,6 +17,7 @@ public class Logica {
 		protected Tablero miTablero;
 		protected GUI miGUI;
 		protected Nivel miNivel;
+		//protected NivelPiolita miNivel;
 		protected GeneradorNivel generadorNivel;
 		
 		//Constructor
@@ -22,6 +25,7 @@ public class Logica {
 			try {
 				miTablero = new Tablero(this,miGUI);
 				miNivel = generadorNivel.cargar_nivel_y_tablero(1, miTablero);
+				//miNivel = GeneradorNivelDefinitivo.cargar_nivel_y_tablero(miTablero,"/Niveles/Nivel1/");
 				miGUI = new GUI(this, miTablero.getFila(), miTablero.getColumna());
 				asociarEntidadesLogicasGraficas();
 				miTablero.fijarJugador(miNivel.getFilaInicialJugador(), miNivel.getColumnaInicialJugador());
