@@ -41,8 +41,10 @@ public class GUI extends JFrame {
 	
 	protected void inicializar() {
 		setTitle("Proyecto Candy Crush - Comision-06");
-		setSize(new Dimension(500, 500));
-		setResizable(false);
+		setExtendedState(JFrame.MAXIMIZED_BOTH); 
+		setLocationRelativeTo(null);
+		setUndecorated(true);
+		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLayout(new BorderLayout());
 		
@@ -50,6 +52,7 @@ public class GUI extends JFrame {
 		panel_principal = new JPanel();
 		panel_principal.setSize(size_label * filas, size_label * columnas);
 		panel_principal.setLayout(null);
+		
 		panel_principal.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {	
