@@ -12,6 +12,9 @@ import java.util.Iterator;
 import java.util.LinkedList;
 
 public class Tablero {
+	
+	//--------[ATRIBUTOS DE INSTANCIA]------------
+	
 	protected Logica miLogica;
     protected GUI miGui;
 	protected Celda t[][]; //[f][c]
@@ -29,6 +32,140 @@ public class Tablero {
 	 * [5,0][5,1][5,2][5,3]
 	 */
 	
+	//-----------[METODOS PRIVADOS]--------------------
+	
+	private LinkedList<Entidad> CheckCruz(int f1, int c1, int f2, int c2) {
+		//optimizar
+		LinkedList<Entidad> toReturn = new LinkedList<Entidad>();
+		if((0<=f1 && f1 <filas) && (0<=c1 && c1 <columnas) && (0<=f2 && f2 <filas) && (0<=c2 && c2 <columnas )){
+			LinkedList<Entidad> aux;
+			Iterator<Entidad> it;
+			if(f1 == f2) {
+				//caso dos filas iguales
+
+				aux = checkFila(f1);
+				it = aux.iterator();
+				while (it.hasNext()) {
+					toReturn.addLast(it.next());}
+				
+				aux = checkColumna(c1);
+				it = aux.iterator();
+				while (it.hasNext()) {
+					toReturn.addLast(it.next());}
+				
+				aux = checkColumna(c2);
+				it = aux.iterator();
+				while (it.hasNext()) {
+					toReturn.addLast(it.next());}
+			}
+			else {
+				aux = checkFila(f1);
+				it = aux.iterator();
+				while (it.hasNext()) {
+					toReturn.addLast(it.next());}
+				
+				aux = checkFila(f2);
+				it = aux.iterator();
+				while (it.hasNext()) {
+					toReturn.addLast(it.next());}
+				
+				aux = checkColumna(c2);
+				it = aux.iterator();
+				while (it.hasNext()) {
+					toReturn.addLast(it.next());}
+			}
+		return toReturn;
+		}
+		else {
+			System.out.println("error en checkCruz() de tablero");
+			return null;
+		}
+	}
+
+	private void intecambiarPriv(int f1,int c1, int f2, int c2) {
+		Entidad aux;
+		aux =t[f1][c1].getEntidad();
+		t[f1][c1].setEntidad(t[f2][c2].getEntidad());
+		t[f2][c2].setEntidad(aux);
+		
+		t[f1][c1].getEntidad().setFilaColumna(f1,c1);
+		t[f2][c2].getEntidad().setFilaColumna(f2,c2);
+		
+		t[f1][c1].notificarCeldaEnfocar();
+		t[f2][c2].notificarCeldaDesenfocar();
+
+		t[f1][c1].notificarse_intercambio_posicion();
+		t[f2][c2].notificarse_intercambio_posicion();
+		
+		t[f1][c1].notificarse_cambio_estado();
+		t[f2][c2].notificarse_cambio_estado();
+		
+		t[f1][c1].getEntidad().intercambiarPosicion(f1,c1);
+		t[f2][c2].getEntidad().intercambiarPosicion(f2,c2);
+		
+		
+		//manejarColisiones(CheckCruz(fJugador,cJugador,fJugador-1	,cJugador+1));  ���I M P L E M E N T A R!!!
+		
+	}
+	
+	private LinkedList<Entidad> checkFila(int f) {
+		LinkedList<Entidad> toReturn = new LinkedList<Entidad>();
+		int combo = 0;
+		for(int i = 1; i< filas; i++) {
+			if(t[f][i-1].getColorEntidad() == t[f][i].getColorEntidad() && t[f][i].getColorEntidad() != 7&& t[f][i].getColorEntidad() != 8 ) {
+				
+				combo++;
+				if(combo == 2) {
+					toReturn.addLast(t[f][i-2].getEntidad());
+					toReturn.addLast(t[f][i-1].getEntidad());
+					toReturn.addLast(t[f][i].getEntidad());}
+				if(combo> 2) {
+					toReturn.addLast(t[f][i].getEntidad());}}		
+			else {
+				if(combo>=2) {
+					toReturn.addLast(null);}
+				combo = 0;
+				}
+		}//fin for
+		if(!toReturn.isEmpty() &&toReturn.getLast() != null) {
+			toReturn.addLast(null);}
+		return toReturn;
+		
+	}
+	private LinkedList<Entidad> checkColumna(int c) {
+		LinkedList<Entidad> toReturn = new LinkedList<Entidad>();
+		int combo = 0;
+		for(int i = 1; i< columnas; i++) {
+			if(t[i-1][c].getColorEntidad() == t[i][c].getColorEntidad() && t[i][c].getColorEntidad() != 7 && t[i][c].getColorEntidad() != 8 ) {
+				
+				combo++;
+				if(combo == 2) {
+					toReturn.addLast(t[i-2][c].getEntidad());
+					toReturn.addLast(t[i-1][c].getEntidad());
+					toReturn.addLast(t[i][c].getEntidad());}
+				if(combo> 2) {
+					toReturn.addLast(t[i][c].getEntidad());}}		
+			else {
+				if(combo>=2) {
+					toReturn.addLast(null);}
+				combo = 0;
+				}
+		}//fin for
+		if(!toReturn.isEmpty() && toReturn.getLast() != null ) {
+			toReturn.addLast(null);}
+		return toReturn;
+		
+	}
+	
+	private boolean manejarColisiones(LinkedList<Entidad> l) {
+		return false;
+		
+	}
+	private boolean en_rango(int nf, int nc){
+		return (((nf >= 0) && (nf < filas)) && ((nc >= 0) && (nc < columnas)));
+	}
+	
+	//-----------[METODOS PUBLICOS]--------------------
 	public Tablero(Logica l,GUI g) {
 		miLogica = l;
 		miGui = g;
@@ -51,15 +188,27 @@ public class Tablero {
 	        System.out.println("Tablero :: Error al resetear " + e.getMessage());
 	    }
 	   }
+	
 	public void agregarCeldaVacia(int i, int j) {
 		t[i][j] = new Celda(miGui,new GemaNormal(i,j,Color.TRANSPARENTE), 60); 
 	}
+	
 	public void printTable() {
+		System.out.println("");
 		for(int i = 0; i<filas; i++) {
 			for (int j = 0; j<columnas ; j++) {
 				System.out.print("["+ t[i][j].getEntidad().obtenerColor() +"]");
 			}
 			System.out.println("");
+		}
+	}
+	
+	public void asignarGUI(GUI g) {
+		miGui = g;
+		for(int i = 0; i<filas;i++) {
+			for(int j = 0; j<columnas; j++) {
+				t[i][j].setGUI(g);
+			}
 		}
 	}
 	
@@ -111,6 +260,7 @@ public class Tablero {
 		if(en_rango(f,c)) {
 			fJugador = f;
 		    cJugador = c;
+		    t[fJugador][cJugador].notificarCeldaEnfocar();
 		}else {
 			System.out.println("Tablero :: fuera de rango en fijarJugador() ");
 		}
@@ -156,48 +306,39 @@ public class Tablero {
 	/* intercambia dede la posicion del cursor a direccion 0 derecha, 1 abajo, 2 izquierda, 3 arriba
 	 * en caso de no ser posible por out of bounds, no hace nada*/
 	public void intercambiar(int dir) {
-		Entidad aux;
+		
 		switch(dir) {
-		case 0:
+		case GUI.DERECHA:
 			if(cJugador < columnas -1) {
 				if(t[fJugador][cJugador].getEntidad().esPosibleInrecambiar() && t[fJugador][cJugador+1].getEntidad().esPosibleInrecambiar()) {
-					aux =t[fJugador][cJugador].getEntidad();
-					t[fJugador][cJugador].setEntidad(t[fJugador][cJugador+1].getEntidad());
-					t[fJugador][cJugador+1].setEntidad(aux);
-					//manejarColisiones(CheckCruz(fJugador,cJugador,fJugador,cJugador+1));  ���I M P L E M E N T A R!!!
+					intecambiarPriv(fJugador,cJugador,fJugador,cJugador+1);
 					}}
 		break;
-		case 1:
+		case GUI.ARRIBA:
 			if(fJugador>0) {
 				if(t[fJugador][cJugador].getEntidad().esPosibleInrecambiar() && t[fJugador-1][cJugador].getEntidad().esPosibleInrecambiar()) {
-					aux =t[fJugador][cJugador].getEntidad();
-					t[fJugador][cJugador].setEntidad(t[fJugador-1][cJugador].getEntidad());
-					t[fJugador-1][cJugador].setEntidad(aux);
-					//manejarColisiones(CheckCruz(fJugador,cJugador,fJugador-1,cJugador));  ���I M P L E M E N T A R!!!
+					intecambiarPriv(fJugador,cJugador,fJugador-1,cJugador);
 					}}
 		break;
-		case 2:
+		case GUI.IZQUIERDA:
 			if(cJugador>0) {
 				if(t[fJugador][cJugador].getEntidad().esPosibleInrecambiar() && t[fJugador][cJugador-1].getEntidad().esPosibleInrecambiar()) {
-					aux =t[fJugador][cJugador].getEntidad();
-					t[fJugador][cJugador].setEntidad(t[fJugador][cJugador-1].getEntidad());
-					t[fJugador][cJugador-1].setEntidad(aux);
-					//manejarColisiones(CheckCruz(fJugador,cJugador,fJugador,cJugador-1));  ���I M P L E M E N T A R!!!
+					intecambiarPriv(fJugador,cJugador,fJugador,cJugador-1);
 					}}
 			
 		break;
-		case 3:
+		case GUI.ABAJO:
 			if(fJugador<filas -1 ) {
-				if(t[fJugador][cJugador].getEntidad().esPosibleInrecambiar() && t[fJugador-1][cJugador].getEntidad().esPosibleInrecambiar()) {
-					aux =t[fJugador][cJugador].getEntidad();
-					t[fJugador][cJugador].setEntidad(t[fJugador-1][cJugador].getEntidad());
-					t[fJugador-1][cJugador].setEntidad(aux);
-					//manejarColisiones(CheckCruz(fJugador,cJugador,fJugador-1	,cJugador+1));  ���I M P L E M E N T A R!!!
+				if(t[fJugador][cJugador].getEntidad().esPosibleInrecambiar() && t[fJugador+1][cJugador].getEntidad().esPosibleInrecambiar()) {
+					intecambiarPriv(fJugador,cJugador,fJugador+1,cJugador);
 					}}
 		break;
 		default: System.out.println("mover jugador(): direccion incorrecta");
-		}		
+		}
+	    printTable();
 	}
+	
+	
 	
 	public void intercambiarSinCheck(int f1, int c1, int f2, int c2) {
 		Entidad aux;
@@ -213,111 +354,12 @@ public class Tablero {
 	
 	public boolean caida() {return false;}
 	
-	private LinkedList<Entidad> CheckCruz(int f1, int c1, int f2, int c2) {
-		//optimizar
-		LinkedList<Entidad> toReturn = new LinkedList<Entidad>();
-		if((0<=f1 && f1 <filas) && (0<=c1 && c1 <columnas) && (0<=f2 && f2 <filas) && (0<=c2 && c2 <columnas )){
-			LinkedList<Entidad> aux;
-			Iterator<Entidad> it;
-			if(f1 == f2) {
-				//caso dos filas iguales
-
-				aux = checkFila(f1);
-				it = aux.iterator();
-				while (it.hasNext()) {
-					toReturn.addLast(it.next());}
-				
-				aux = checkColumna(c1);
-				it = aux.iterator();
-				while (it.hasNext()) {
-					toReturn.addLast(it.next());}
-				
-				aux = checkColumna(c2);
-				it = aux.iterator();
-				while (it.hasNext()) {
-					toReturn.addLast(it.next());}
-			}
-			else {
-				aux = checkFila(f1);
-				it = aux.iterator();
-				while (it.hasNext()) {
-					toReturn.addLast(it.next());}
-				
-				aux = checkFila(f2);
-				it = aux.iterator();
-				while (it.hasNext()) {
-					toReturn.addLast(it.next());}
-				
-				aux = checkColumna(c2);
-				it = aux.iterator();
-				while (it.hasNext()) {
-					toReturn.addLast(it.next());}
-			}
-		return toReturn;
-		}
-		else {
-			System.out.println("error en checkCruz() de tablero");
-			return null;
-		}
-	}
+	
 	
 		
-		private LinkedList<Entidad> checkFila(int f) {
-			LinkedList<Entidad> toReturn = new LinkedList<Entidad>();
-			int combo = 0;
-			for(int i = 1; i< filas; i++) {
-				if(t[f][i-1].getColorEntidad() == t[f][i].getColorEntidad() && t[f][i].getColorEntidad() != 7&& t[f][i].getColorEntidad() != 8 ) {
-					
-					combo++;
-					if(combo == 2) {
-						toReturn.addLast(t[f][i-2].getEntidad());
-						toReturn.addLast(t[f][i-1].getEntidad());
-						toReturn.addLast(t[f][i].getEntidad());}
-					if(combo> 2) {
-						toReturn.addLast(t[f][i].getEntidad());}}		
-				else {
-					if(combo>=2) {
-						toReturn.addLast(null);}
-					combo = 0;
-					}
-			}//fin for
-			if(!toReturn.isEmpty() &&toReturn.getLast() != null) {
-				toReturn.addLast(null);}
-			return toReturn;
-			
-		}
-		private LinkedList<Entidad> checkColumna(int c) {
-			LinkedList<Entidad> toReturn = new LinkedList<Entidad>();
-			int combo = 0;
-			for(int i = 1; i< columnas; i++) {
-				if(t[i-1][c].getColorEntidad() == t[i][c].getColorEntidad() && t[i][c].getColorEntidad() != 7 && t[i][c].getColorEntidad() != 8 ) {
-					
-					combo++;
-					if(combo == 2) {
-						toReturn.addLast(t[i-2][c].getEntidad());
-						toReturn.addLast(t[i-1][c].getEntidad());
-						toReturn.addLast(t[i][c].getEntidad());}
-					if(combo> 2) {
-						toReturn.addLast(t[i][c].getEntidad());}}		
-				else {
-					if(combo>=2) {
-						toReturn.addLast(null);}
-					combo = 0;
-					}
-			}//fin for
-			if(!toReturn.isEmpty() && toReturn.getLast() != null ) {
-				toReturn.addLast(null);}
-			return toReturn;
-			
-		}
+	
 		
-		private boolean manejarColisiones(LinkedList<Entidad> l) {
-			return false;
-			
-		}
-		private boolean en_rango(int nf, int nc){
-			return (((nf >= 0) && (nf < filas)) && ((nc >= 0) && (nc < columnas)));
-		}
+	
 
 		
 

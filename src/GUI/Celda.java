@@ -51,6 +51,10 @@ public class Celda extends JLabel implements EntidadGrafica{
 		ent = l;
 	}
 	
+	public void setGUI(GUI g) {
+		miGUI = g;
+	}
+	
 	protected void cambiar_imagen(String miString) {
 		ImageIcon imgIcon = new ImageIcon(this.getClass().getResource(miString));
 		Image imgEscalada = imgIcon.getImage().getScaledInstance(size_label, size_label, Image.SCALE_SMOOTH);

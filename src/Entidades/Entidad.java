@@ -37,6 +37,10 @@ public abstract class Entidad implements EntidadLogica, Enfocable{
 	public int obtenerColor() {
 		return color;
 	}
+	
+	public void setFilaColumna(int f, int c) {
+		fila = f;
+		columna = c;}
 
 	//setear manualmente las imagenes
 	public void setImagenesRep(int i,String g){
@@ -54,7 +58,7 @@ public abstract class Entidad implements EntidadLogica, Enfocable{
 	}
 
 	//cambia la posicion de la entidad
-	public void intercambiaPosicion(int nf, int nc) {
+	public void intercambiarPosicion(int nf, int nc) {
 		fila = nf;
 		columna = nc;
 		entidadG.notificarse_intercambio_posicion();
