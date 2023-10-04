@@ -171,16 +171,16 @@ public class Tablero {
 		/* rayado 
 		 * formacion:
 		 * Exactamente 4 caramelos regulares seguidos. 
-		 * en la posición hacia donde se movió el caramelo que generó la
-		 * formación del mismo.
-		 * Si el caramelo rayado es el resultado de un movimiento horizontal, las rayas serán
-		 * horizontales, si es el resultado de un movimiento vertical, serán verticales y el resultado
-		 * es aleatorio durante las cascadas más grandes
+		 * en la posiciï¿½n hacia donde se moviï¿½ el caramelo que generï¿½ la
+		 * formaciï¿½n del mismo.
+		 * Si el caramelo rayado es el resultado de un movimiento horizontal, las rayas serï¿½n
+		 * horizontales, si es el resultado de un movimiento vertical, serï¿½n verticales y el resultado
+		 * es aleatorio durante las cascadas mï¿½s grandes
 		 * 
 		 * envuelto
-		 * Formación: 5 o 6 caramelos regulares en forma de T, L o +.
-		 * Ubicación de aparición: en la posición hacia donde se movió el caramelo que generó la
-		 * formación del mismo.
+		 * Formaciï¿½n: 5 o 6 caramelos regulares en forma de T, L o +.
+		 * Ubicaciï¿½n de apariciï¿½n: en la posiciï¿½n hacia donde se moviï¿½ el caramelo que generï¿½ la
+		 * formaciï¿½n del mismo.
 		 */
 		
 		if(!l.isEmpty()) {
@@ -265,7 +265,8 @@ public class Tablero {
 	        for (int i = 0; i < filas; i++) {
 	            for (int j = 0; j < columnas; j++) {
 	            	 System.out.println("ciclo en reset tablero");
-	                t[i][j] = new Celda(miGui,new GemaNormal(i,c,Color.TRANSPARENTE), 60); 
+	            	 //Dejar el parametro j y el parametro 0
+	                t[i][j] = new Celda(miGui,new GemaNormal(i,j,0), 60); 
 	            }
 	        }
 	        this.printTable();
@@ -274,9 +275,6 @@ public class Tablero {
 	    }
 	   }
 	
-	public void agregarCeldaVacia(int i, int j) {
-		t[i][j] = new Celda(miGui,new GemaNormal(i,j,Color.TRANSPARENTE), 60); 
-	}
 	
 	public void printTable() {
 		System.out.println("");

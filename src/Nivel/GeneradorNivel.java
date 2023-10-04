@@ -2,37 +2,54 @@ package Nivel;
 
 
 import Entidades.GemaNormal;
-import Entidades.GemaEnvuelta;
-import Entidades.GemaRayada;
-import Entidades.Roca;
-import Logica.Color;
+
+import java.util.Scanner;
+
 import Tablero.Tablero;
+import java.io.File;
 
 public class GeneradorNivel {
-	public static Nivel cargar_nivel_y_tablero(int nivel, Tablero t) {
-		t.resetearTablero(5, 5);
-		try {
-			for(int y=0; y<3; y++) {
-				t.agregarEntidad(new GemaNormal(0,y, Color.AZUL));
-				t.agregarEntidad(new GemaRayada(1,y, Color.ROJO,0));
-				t.agregarEntidad(new GemaEnvuelta(2,y, Color.VERDE));
-				t.agregarEntidad(new GemaNormal(3,y, Color.NARANJA));
-				t.agregarEntidad(new GemaNormal(4,y, Color.PURPURA));
-			}
-			
-			for(int y=3; y<5; y++) {
-				t.agregarEntidad(new GemaNormal(0,y, Color.AZUL));
-				t.agregarEntidad(new GemaRayada(1,y, Color.ROJO,1));
-				t.agregarEntidad(new GemaNormal(2,y, Color.ROJO));
-				t.agregarEntidad(new Roca(3,y));
-				t.agregarEntidad(new GemaNormal(4,y, Color.PURPURA));
-			}
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			e.printStackTrace();
-		}
+	 public static Nivel cargar_nivel_y_tablero(Tablero t, int nivel) {
+	        try {
+	            Scanner input = new Scanner(new File("Niveles/Nivel" + nivel + ".txt"));
 
-		t.printTable();
-		return new Nivel(2,2);
-	}
+	         // Leer tamaño del tablero
+	            int filas = Integer.parseInt(input.nextLine().trim());
+	            int columnas = filas;
+
+	            // Leer posición inicial
+	            String[] posicionInicial = input.nextLine().split(",");
+	            int posX = Integer.parseInt(posicionInicial[0].trim());
+	            int posY = Integer.parseInt(posicionInicial[1].trim());
+	         
+	            // Leer terminador
+	            String terminador = input.nextLine();
+	            if (!terminador.equals("f")) {
+	                throw new Exception("Formato de archivo inválido. Se esperaba un terminador 'f'.");
+	            }
+	            t.resetearTablero(filas, columnas);
+	            
+	            // Leer y establecer gemas
+	            for (int i = 0; i < filas; i++) {
+	                String[] valores = input.nextLine().split(" ");
+	                for (int j = 0; j < columnas; j++) {
+	                	t.agregarEntidad(new GemaNormal(i, j, Integer.parseInt(valores[j].trim())));
+	                }
+	            }
+	            input.close();
+	          System.out.println("Fila :: "+filas);
+	          System.out.println("Col :: "+columnas);
+	          System.out.println("PosX :: "+posX);
+	          System.out.println("posY :: "+posY);
+	       
+
+	         
+	           return new Nivel(posX, posY);
+	        } catch (Exception ex) {
+	          System.out.println("GenerarNivelDefinitivo :: ME ROMPI");
+	          ex.getStackTrace();
+	            return null;
+	        }
+			
+	    }	    
 }
