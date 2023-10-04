@@ -1,5 +1,7 @@
 package Nivel;
 
+import Tablero.Tablero;
+
 public class Nivel {
 	//Atributos
 	protected int fila_inicial_jugador;
@@ -19,4 +21,6 @@ public class Nivel {
 	public int getColumnaInicialJugador() {
 		return columna_inicial_jugador;
 	}
+
+	
 }

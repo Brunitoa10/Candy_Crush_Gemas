@@ -43,7 +43,10 @@ public class GUI extends JFrame {
 		setTitle("Proyecto Candy Crush - Comision-06");
 		setExtendedState(JFrame.MAXIMIZED_BOTH); 
 		setLocationRelativeTo(null);
-		setUndecorated(true);
+		//----------------------------------------------------
+		//Estaba true, le puse false para poder achicarlo y que aparezca la cruz ()
+		setUndecorated(false); 
+		//----------------------------------------------------
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLayout(new BorderLayout());

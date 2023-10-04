@@ -1,16 +1,17 @@
-Tama�o del Tablero: 6x6
+6 6
 
-Movimientos Diponibles: 30
+30
 
-Tiempo disponible: 60 segundos
+60
 
-Objetivos:
-- Destruir 15 Gemas del tipo 3
-- Destruir 25 Gemas del tipo 5
+15 3
 
-Posicion Inicial: 2,3
+25 5
 
-Matriz:
+2,3
+
+f
+
 3 2 1 1 2 2
 2 3 3 4 4 4
 1 2 2 3 3 3

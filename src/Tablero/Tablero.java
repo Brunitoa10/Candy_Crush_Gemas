@@ -353,6 +353,8 @@ public class Tablero {
 	public LinkedList<Entidad> checkExhaustivo() {return null;}
 	
 	public boolean caida() {return false;}
+
+	
 	
 	
 	
@@ -364,6 +366,6 @@ public class Tablero {
 		
 
 		
-		
+	
 
 }
