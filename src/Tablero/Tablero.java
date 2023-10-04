@@ -34,12 +34,13 @@ public class Tablero {
 	
 	//-----------[METODOS PRIVADOS]--------------------
 	
-	private LinkedList<Entidad> CheckCruz(int f1, int c1, int f2, int c2) {
+	//RETORNA UNA UN ARRAY DE LISTAS COMO LinkedList<Entidad>[combos horizontales][combos veritcales]
+	private LinkedList<Celda> CheckCruz(int f1, int c1, int f2, int c2) {
 		//optimizar
-		LinkedList<Entidad> toReturn = new LinkedList<Entidad>();
+		LinkedList<Celda> toReturn = new LinkedList<Celda>(); 
 		if((0<=f1 && f1 <filas) && (0<=c1 && c1 <columnas) && (0<=f2 && f2 <filas) && (0<=c2 && c2 <columnas )){
-			LinkedList<Entidad> aux;
-			Iterator<Entidad> it;
+			LinkedList<Celda> aux;
+			Iterator<Celda> it;
 			if(f1 == f2) {
 				//caso dos filas iguales
 
@@ -103,24 +104,25 @@ public class Tablero {
 		t[f1][c1].getEntidad().intercambiarPosicion(f1,c1);
 		t[f2][c2].getEntidad().intercambiarPosicion(f2,c2);
 		
+		System.out.println("INTERCAMBIADO: "+"["+f1+"]"+"["+c1+"]" +" y "+"["+f2+"]" +"["+c2+"]");
 		
-		//manejarColisiones(CheckCruz(fJugador,cJugador,fJugador-1	,cJugador+1));  ï¿½ï¿½ï¿½I M P L E M E N T A R!!!
+		manejarColisiones(CheckCruz(fJugador,cJugador,fJugador-1,cJugador+1),t[f1][c1],t[f2][c2],0); 
 		
 	}
 	
-	private LinkedList<Entidad> checkFila(int f) {
-		LinkedList<Entidad> toReturn = new LinkedList<Entidad>();
+	private LinkedList<Celda> checkFila(int f) {
+		LinkedList<Celda> toReturn = new LinkedList<Celda>();
 		int combo = 0;
 		for(int i = 1; i< filas; i++) {
 			if(t[f][i-1].getColorEntidad() == t[f][i].getColorEntidad() && t[f][i].getColorEntidad() != 7&& t[f][i].getColorEntidad() != 8 ) {
 				
 				combo++;
 				if(combo == 2) {
-					toReturn.addLast(t[f][i-2].getEntidad());
-					toReturn.addLast(t[f][i-1].getEntidad());
-					toReturn.addLast(t[f][i].getEntidad());}
+					toReturn.addLast(t[f][i-2]);
+					toReturn.addLast(t[f][i-1]);
+					toReturn.addLast(t[f][i]);}
 				if(combo> 2) {
-					toReturn.addLast(t[f][i].getEntidad());}}		
+					toReturn.addLast(t[f][i]);}}		
 			else {
 				if(combo>=2) {
 					toReturn.addLast(null);}
@@ -129,22 +131,23 @@ public class Tablero {
 		}//fin for
 		if(!toReturn.isEmpty() &&toReturn.getLast() != null) {
 			toReturn.addLast(null);}
-		return toReturn;
-		
+		return toReturn;	
+		//no es un error que la lista tenga nulls, se manejan apropiadamente y son importantes para su estructura
 	}
-	private LinkedList<Entidad> checkColumna(int c) {
-		LinkedList<Entidad> toReturn = new LinkedList<Entidad>();
+	
+	private LinkedList<Celda> checkColumna(int c) {
+		LinkedList<Celda> toReturn = new LinkedList<Celda>();
 		int combo = 0;
 		for(int i = 1; i< columnas; i++) {
 			if(t[i-1][c].getColorEntidad() == t[i][c].getColorEntidad() && t[i][c].getColorEntidad() != 7 && t[i][c].getColorEntidad() != 8 ) {
 				
 				combo++;
 				if(combo == 2) {
-					toReturn.addLast(t[i-2][c].getEntidad());
-					toReturn.addLast(t[i-1][c].getEntidad());
-					toReturn.addLast(t[i][c].getEntidad());}
+					toReturn.addLast(t[i-2][c]);
+					toReturn.addLast(t[i-1][c]);
+					toReturn.addLast(t[i][c]);}
 				if(combo> 2) {
-					toReturn.addLast(t[i][c].getEntidad());}}		
+					toReturn.addLast(t[i][c]);}}		
 			else {
 				if(combo>=2) {
 					toReturn.addLast(null);}
@@ -154,13 +157,95 @@ public class Tablero {
 		if(!toReturn.isEmpty() && toReturn.getLast() != null ) {
 			toReturn.addLast(null);}
 		return toReturn;
-		
+		//no es un error que la lista tenga nulls, se manejan apropiadamente y son importantes para su estructura
 	}
 	
-	private boolean manejarColisiones(LinkedList<Entidad> l) {
-		return false;
+	private boolean manejarColisiones(LinkedList<Celda> l,Celda c1, Celda c2, int dir) {
+		//RECORRER LA LISTA (los combos solo tienen 2 colores posibles, ambos diferentes)
+	    //A CADA ELEMENTO DE LA LISTA APLICARLE .DESTRUIR()
+		//SI HAY DOS COLORES IGUALES EN DIFERENTES SETS DE COMBOS GENERAR RAYADO EN CELDA 1
+		//SI HAY OTRO MAS EN CELDA 2, NO ES POSIBLE QUE HAYA UN TERCERO
+		//CUALQUIER PROBLEMA CON ESTO, CONSULTAR A VALEN
 		
+		//consigna:
+		/* rayado 
+		 * formacion:
+		 * Exactamente 4 caramelos regulares seguidos. 
+		 * en la posición hacia donde se movió el caramelo que generó la
+		 * formación del mismo.
+		 * Si el caramelo rayado es el resultado de un movimiento horizontal, las rayas serán
+		 * horizontales, si es el resultado de un movimiento vertical, serán verticales y el resultado
+		 * es aleatorio durante las cascadas más grandes
+		 * 
+		 * envuelto
+		 * Formación: 5 o 6 caramelos regulares en forma de T, L o +.
+		 * Ubicación de aparición: en la posición hacia donde se movió el caramelo que generó la
+		 * formación del mismo.
+		 */
+		
+		if(!l.isEmpty()) {
+			Iterator<Celda> it = l.iterator();
+			Celda c = null;
+			Celda aux;
+			int color1 = -1;
+			int color2 = -2;
+			int combo = 0;
+			boolean posibleT = false;//marca si puede pasar que estemos en un combo t, se genera bomba(envuelta?)
+			
+			while(it.hasNext()) {//[1],[1],[1],[1],null,[4][4][4][4],null,[1][1][1]
+				
+				if(c == null) {//principio de combo
+					c = it.next();
+					posibleT = false;
+					if(color1 == -1) {
+						color1 = c.getEntidad().obtenerColor();
+					}else 
+						if(color1 == c.getEntidad().obtenerColor()) {
+							posibleT = true;
+						}else 
+							if(color2 == -2) 
+								color2 = c.getEntidad().obtenerColor();
+							else if(color2 == c.getEntidad().obtenerColor())
+								    posibleT = true;
+					c.getEntidad().destruir();
+					combo = 1;
+					if(c == c1 || c ==c2) {
+						if(posibleT) {
+							System.out.println("generar bomba!!!!!");
+							//generar bomba en la celda c
+							}
+						else aux = c;
+					}
+								
+				}//end if (c == null)
+				else {//medio del combo
+					c = it.next();
+					
+					if(c != null) {
+						c.getEntidad().destruir();
+						combo++;
+						if(c == c1 || c ==c2) {
+							if(posibleT) {
+								System.out.println("generar bomba!!!!!");
+								//generar bomba en la celda c
+							}
+							else aux = c;
+						}
+						if(combo>=4 && !posibleT) {
+							System.out.println("generar rayada!!!!!");
+							//generar rayada en aux
+							while(c!= null) {
+								c = it.next();
+							}
+						}
+					}
+				}//end medio del combo	
+			}//end while		
+		    return true;	
+		}//end if lista vacia  
+		else return false;
 	}
+	
 	private boolean en_rango(int nf, int nc){
 		return (((nf >= 0) && (nf < filas)) && ((nc >= 0) && (nc < columnas)));
 	}
