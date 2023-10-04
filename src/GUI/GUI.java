@@ -23,7 +23,7 @@ public class GUI extends JFrame {
 	protected Celda celda1_pendienteAn,celda2_pendienteAn;
 	protected JPanel panel_principal;
 	
-	private int size_label = 60;
+	private int size_label = 100;
 
 	//Movimientos
 	public static final int ARRIBA = 15000;

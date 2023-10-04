@@ -2,8 +2,8 @@ package Entidades;
 
 public class Roca extends Obstaculo{
 
-	public Roca(int f, int c, int col, String ri) {
-		super(f, c, "/assets/gema_normal/", col);
+	public Roca(int f, int c) {
+		super(f, c, "/assets/gemas/gema_normal/", 7);
 	}
 
 	public void intercambiarPosicion(int f, int c){
@@ -28,12 +28,6 @@ public class Roca extends Obstaculo{
 	public boolean puedeRecibir(GemaRayada gr) {
 		// TODO Auto-generated method stub
 		return false;
-	}
-	
-	protected void cargar_imagenes_representativas(String ri) {
-		imagenes = new String [2];
-		imagenes[0] = ri + color +".png";
-		imagenes[1] = ri + color +"-resaltado.png";
 	}
 
 	@Override

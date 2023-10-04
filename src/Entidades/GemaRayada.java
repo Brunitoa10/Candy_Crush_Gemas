@@ -1,5 +1,5 @@
 package Entidades;
-public abstract class GemaRayada extends Gema{
+public class GemaRayada extends Gema{
 	
 	//direccion en la que la gema explotara
 	//en caso de cambiar los valores de horizontal y vertical, adaptar el nombre de los assets en /assets/gema_rayada/
@@ -8,7 +8,7 @@ public abstract class GemaRayada extends Gema{
 	public static final int VERTICAL = 1;
 
 	public GemaRayada(int f, int c, int col, int direccion) {
-		super(f, c,col, "/assets/gema_rayada/" + direccion);
+		super(f, c,col, "/assets/gemas/gema_rayada/" + direccion);
 	}
 	
 	/*public boolean esPosibleIntercambiar(entidad e) {
