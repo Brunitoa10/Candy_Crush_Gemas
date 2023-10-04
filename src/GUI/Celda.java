@@ -32,7 +32,7 @@ public class Celda extends JLabel implements EntidadGrafica{
 	
 	@Override
 	public void notificarse_intercambio_posicion(){
-		miGUI.considerar_para_intercambio_posicion(this);
+		miGUI.animar_movimiento(this);
 	}
 	
 	public void notificarCeldaDesenfocar(){
@@ -43,6 +43,10 @@ public class Celda extends JLabel implements EntidadGrafica{
 		ent.enfocar();
 	}
 
+	public int getSizeLabel() {
+		return size_label;
+	}
+	
 	public Entidad getEntidad() {
 		return ent;
 	}

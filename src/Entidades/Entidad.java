@@ -80,7 +80,8 @@ public abstract class Entidad implements EntidadLogica, Enfocable{
 	
     //envia un mensaje si se destruye
 	public boolean destruir(){
-	return true;
+	   System.out.println("destruido "+ this.color + "en: "+fila+","+columna );
+	   return true;
 	}
 
     //verifica si puede recibir dicha entidad para el cambio

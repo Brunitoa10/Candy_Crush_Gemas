@@ -15,13 +15,16 @@ import Entidades.Entidad;
 import Logica.EntidadLogica;
 import Logica.Logica;
 import Threads.AnimadorIntercambio;
+import Threads.CentralAnimaciones;
 
 
 public class GUI extends JFrame {
 	protected Logica milogica;
 	protected int filas,columnas;
-	protected Celda celda1_pendienteAn,celda2_pendienteAn;
 	protected JPanel panel_principal;
+	protected CentralAnimaciones mi_animador;
+	protected int animaciones_pendientes;
+	protected boolean bloquear_intercambios;
 	
 	private int size_label = 100;
 
@@ -35,7 +38,12 @@ public class GUI extends JFrame {
 	public GUI(Logica l, int f, int c) {
 		milogica = l;
 		filas = f;
+		mi_animador = new CentralAnimaciones(this);
 		columnas = c;
+
+		animaciones_pendientes = 0;
+		bloquear_intercambios = false;
+		
 		inicializar();
 	}
 	
@@ -64,10 +72,10 @@ public class GUI extends JFrame {
 					case KeyEvent.VK_RIGHT: { milogica.mover_jugador(DERECHA); break; }
 					case KeyEvent.VK_UP: 	{ milogica.mover_jugador(ARRIBA);break; }
 					case KeyEvent.VK_DOWN: 	{ milogica.mover_jugador(ABAJO); break; }
-					case KeyEvent.VK_W:		{ milogica.intercambiar(ARRIBA); break; }
-					case KeyEvent.VK_S:		{ milogica.intercambiar(ABAJO); break; }
-					case KeyEvent.VK_A:		{ milogica.intercambiar(IZQUIERDA); break; }
-					case KeyEvent.VK_D:		{ milogica.intercambiar(DERECHA); break; } 
+					case KeyEvent.VK_W:		{ if (!bloquear_intercambios) milogica.intercambiar(ARRIBA); break; }
+					case KeyEvent.VK_S:		{ if (!bloquear_intercambios) milogica.intercambiar(ABAJO); break; }
+					case KeyEvent.VK_A:		{ if (!bloquear_intercambios) milogica.intercambiar(IZQUIERDA); break; }
+					case KeyEvent.VK_D:		{ if (!bloquear_intercambios) milogica.intercambiar(DERECHA); break; } 
 				}
 			}
 		});
@@ -82,17 +90,27 @@ public class GUI extends JFrame {
 		panel_principal.add(celda);
 		return celda;
 	}
-	
-	public void considerar_para_intercambio_posicion(Celda c) {
-		if (celda1_pendienteAn == null) {
-			celda1_pendienteAn = c;
-		}else {
-			celda2_pendienteAn = c;
-			AnimadorIntercambio mi_animador_intercambio = new AnimadorIntercambio(size_label, 10, 50, celda1_pendienteAn, celda2_pendienteAn);
-			celda1_pendienteAn = null;
-			celda2_pendienteAn = null;
-			mi_animador_intercambio.start();
+
+	public void notificarse_animacion_en_progreso() {
+		synchronized(this){
+			animaciones_pendientes ++;
+			bloquear_intercambios = true;
 		}
+	}
+	
+	public void notificarse_animacion_finalizada() {
+		synchronized(this){
+			animaciones_pendientes --;
+			bloquear_intercambios = animaciones_pendientes > 0;
+		}
+	}
+	
+	public void animar_movimiento(Celda c) {
+		mi_animador.animar_cambio_posicion(c);
+	}
+	
+	public void animar_cambio_estado(Celda c) {
+		mi_animador.animar_cambio_estado(c);
 	}
 
 }
