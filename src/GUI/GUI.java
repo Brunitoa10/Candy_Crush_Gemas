@@ -52,7 +52,7 @@ public class GUI extends JFrame {
 		setExtendedState(JFrame.MAXIMIZED_BOTH); 
 		setLocationRelativeTo(null);
 		//----------------------------------------------------
-		//Estaba true, le puse false para poder achicarlo y que aparezca la cruz ()
+		//Estaba true, le puse false para poder achicarlo y que aparezca la cruz
 		setUndecorated(false); 
 		//----------------------------------------------------
 		setVisible(true);
