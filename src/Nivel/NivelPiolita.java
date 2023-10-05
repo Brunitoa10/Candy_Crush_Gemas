@@ -4,24 +4,16 @@ import Tablero.Tablero;
 
 public class NivelPiolita {
 	private Tablero tablero;
+	private String objetivo;
 	private int movimientosDisponibles;
 	private int tiempoDisponible;
-	private String objetivo;
-	//Atributos
 	protected int fila_inicial_jugador;
 	protected int columna_inicial_jugador;
-	
-	
-	
-	//Metodos
-	public int getFilaInicialJugador() {
-		return fila_inicial_jugador;
-	}
-	
+
 	public int getColumnaInicialJugador() {
 		return columna_inicial_jugador;
 	}
-	public NivelPiolita(Tablero tablero, int movimientosDisponibles, int tiempoDisponible, String objetivo,int f, int c) {
+	public NivelPiolita(int f, int c,Tablero tablero, int movimientosDisponibles, int tiempoDisponible, String objetivo) {
 		this.tablero = tablero;
 		this.movimientosDisponibles = movimientosDisponibles;
 		this.tiempoDisponible = tiempoDisponible;
@@ -44,6 +36,11 @@ public class NivelPiolita {
 
 	public String getObjetivo() {
 		return objetivo;
+	}
+
+
+	public int getFilaInicialJugador() {
+		return fila_inicial_jugador;
 	}
 
 	// Otros métodos según necesidad
