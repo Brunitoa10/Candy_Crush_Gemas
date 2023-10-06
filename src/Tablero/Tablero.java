@@ -82,10 +82,15 @@ public class Tablero {
 			return null;
 		}
 	}
+	
+	private int colorAleatorio(int cotaInferior, int cotaSuperior) {
+		return (int)(Math.random()*cotaSuperior+cotaInferior);
+	}
 
 	private void intecambiarPriv(int f1,int c1, int f2, int c2) {
 		Entidad aux;
 		aux =t[f1][c1].getEntidad();
+		
 		t[f1][c1].setEntidad(t[f2][c2].getEntidad());
 		t[f2][c2].setEntidad(aux);
 		
@@ -106,7 +111,9 @@ public class Tablero {
 		
 		System.out.println("INTERCAMBIADO: "+"["+f1+"]"+"["+c1+"]" +" y "+"["+f2+"]" +"["+c2+"]");
 		
-		manejarColisiones(CheckCruz(fJugador,cJugador,fJugador-1,cJugador+1),t[f1][c1],t[f2][c2],0); 
+		boolean movValido = manejarColisiones(CheckCruz(fJugador,cJugador,fJugador-1,cJugador+1),t[f1][c1],t[f2][c2],0); 
+		if(!movValido)
+			intercambiarSinCheck(f1,c1,f2,c2);
 		
 	}
 	
@@ -248,6 +255,28 @@ public class Tablero {
 	
 	private boolean en_rango(int nf, int nc){
 		return (((nf >= 0) && (nf < filas)) && ((nc >= 0) && (nc < columnas)));
+	}
+	
+	private void intercambiarSinCheck(int f1, int c1, int f2, int c2) {
+		Entidad aux;
+		aux =t[f1][c1].getEntidad();
+		t[f1][c1].setEntidad(t[f2][c2].getEntidad());
+		t[f2][c2].setEntidad(aux);
+		
+		t[f1][c1].getEntidad().setFilaColumna(f1,c1);
+		t[f2][c2].getEntidad().setFilaColumna(f2,c2);
+		
+		t[f1][c1].notificarCeldaEnfocar();
+		t[f2][c2].notificarCeldaDesenfocar();
+
+		t[f1][c1].notificarse_intercambio_posicion();
+		t[f2][c2].notificarse_intercambio_posicion();
+		
+		t[f1][c1].notificarse_cambio_estado();
+		t[f2][c2].notificarse_cambio_estado();
+		
+		t[f1][c1].getEntidad().intercambiarPosicion(f1,c1);
+		t[f2][c2].getEntidad().intercambiarPosicion(f2,c2);
 	}
 	
 	//-----------[METODOS PUBLICOS]--------------------
@@ -422,20 +451,27 @@ public class Tablero {
 	}
 	
 	
-	
-	public void intercambiarSinCheck(int f1, int c1, int f2, int c2) {
-		Entidad aux;
-		if((0<=f1 && f1 <filas) && (0<=c1 && c1 <columnas) && (0<=f2 && f2 <filas) && (0<=c2 && c2 <columnas )){
-			aux = t[f1][c1].getEntidad();
-			t[f1][c1].setEntidad(t[f2][c2].getEntidad());
-			t[f2][c2].setEntidad(aux);
-		}
-		else System.out.println("out of bounds en intercambiarSinCheck");
-	}
-	
 	public LinkedList<Entidad> checkExhaustivo() {return null;}
 	
-	public boolean caida() {return false;}
+	public boolean caida() {
+		//verificar que la fila 0 es la de arriba
+		boolean caido = false;
+		for (int i = 0; i<filas; i++) {
+			for (int j = 0; j<columnas; j++) {
+				if(t[i][j].getEntidad().obtenerColor() == 0) {
+					caido = true;
+					if(i == 0)
+						t[i][j].setEntidad(new GemaNormal(i,j,colorAleatorio(1,6)));
+					else
+						intercambiarSinCheck(i,j,i-1,j);//VERIFICAR
+				}
+			}
+		}
+		if(caido) {
+			caida();
+			return true;}
+		else return false;
+	}
 
 	
 	
