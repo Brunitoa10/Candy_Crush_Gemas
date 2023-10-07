@@ -59,7 +59,7 @@ public class GUI extends JFrame {
 		setLocationRelativeTo(null);
 		//----------------------------------------------------
 		//Estaba true, le puse false para poder achicarlo y que aparezca la cruz
-		setUndecorated(true); 
+		setUndecorated(false); 
 		//----------------------------------------------------
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -132,6 +132,28 @@ public class GUI extends JFrame {
 	
 	public void animar_cambio_estado(Celda c) {
 		mi_animador.animar_cambio_estado(c);
+	}
+
+	//Metodos agregados por bruno
+	
+	public void actualizarMovimientos(int movimientos) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void mostrarMensajeDerrotaPorMovimientos() {
+		System.out.println("GUI :: derrotaPorMovimientos");
+		
+	}
+
+	public void mostrarMensajeDerrotaPorVidas() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void mostrarMensajeVictoriaPorMovimientos() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

@@ -18,7 +18,7 @@ public class Logica {
 		protected GeneradorNivel generadorNivel;
 		
 		//Constructor
-		public Logica(){
+		/*public Logica(){
 			try {
 				miTablero = new Tablero(this,miGUI);
 				miNivel = generadorNivel.cargar_nivel_y_tablero(miTablero,1);
@@ -30,14 +30,53 @@ public class Logica {
 				System.out.println(e.getMessage());
 				e.printStackTrace();
 			}
-		}
-
+		}*/
+		public Logica(){
+	        try {
+	            // Primero creamos el tablero y lo asignamos a la GUI
+	            miTablero = new Tablero(this, miGUI);
+	            miGUI = new GUI(this, miTablero.getFila(), miTablero.getColumna());
+	            miTablero.asignarGUI(miGUI);
+	            
+	            // Luego cargamos el nivel utilizando el generadorNivel
+	            miNivel = generadorNivel.cargar_nivel_y_tablero(miTablero, 1,this);
+	            
+	            // Asociamos entidades lógicas y gráficas
+	            asociarEntidadesLogicasGraficas();
+	            
+	            // Fijamos la posición inicial del jugador en el tablero
+	            miTablero.fijarJugador(miNivel.getFilaInicialJugador(), miNivel.getColumnaInicialJugador());
+	        } catch (Exception e) {
+	            System.out.println(e.getMessage());
+	            e.printStackTrace();
+	        }
+	    }
 		public void mover_jugador(int direccion) {
 			miTablero.moverJugador(direccion);
 		}
 		
 		public void intercambiar(int direccion) {
 			miTablero.intercambiar(direccion);
+			miNivel.restarMovimientos();
+			miGUI.actualizarMovimientos(miNivel.getMovimientos());
+		}
+		
+		public void notificarDerrotaPorMovimientos() {
+			miGUI.mostrarMensajeDerrotaPorMovimientos();
+			if(miNivel.getVidas() > 0) {
+				miTablero.resetearTablero(0, 0);
+				miNivel = generadorNivel.cargar_nivel_y_tablero(miTablero, 1,this);
+			}else {
+				miGUI.mostrarMensajeDerrotaPorVidas();
+			}
+		}
+		
+		public void notificarDerrotaPorVidas() {
+			miGUI.mostrarMensajeDerrotaPorVidas();
+		}
+		
+		public void notificarVictoriaPorObjetivos() {
+			miGUI.mostrarMensajeVictoriaPorMovimientos();
 		}
 		
 		private void asociarEntidadesLogicasGraficas() {
@@ -68,4 +107,7 @@ public class Logica {
 		         e.printStackTrace();
 		     }
 		 }
+
+		
+		
 }
