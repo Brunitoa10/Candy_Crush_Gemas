@@ -478,8 +478,6 @@ public class Tablero {
 			return true;}
 		else return false;
 	}
-
-	
 	
 	
 	

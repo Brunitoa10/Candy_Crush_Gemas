@@ -2,6 +2,7 @@ package Entidades;
 
 import GUI.EntidadGrafica;
 import Logica.EntidadLogica;
+import Tablero.*;
 
 public abstract class Entidad implements EntidadLogica, Enfocable{
 	protected int fila;
@@ -10,7 +11,7 @@ public abstract class Entidad implements EntidadLogica, Enfocable{
 	protected String[] imagenes;
 	protected EntidadGrafica entidadG;
 	protected int color;
-
+    protected Tablero miTablero;
 
    //crea una instancia de Entidad
 	protected  Entidad(int f, int c, String ri, int col)  {
@@ -21,11 +22,18 @@ public abstract class Entidad implements EntidadLogica, Enfocable{
 		cargarImagenesRepresentativas(ri);
 	}
 
-//asigna una entidad grafica a la Entidad
+    //asigna una entidad grafica a la Entidad
 	public void setEntidadGrafica(EntidadGrafica eg){
 		entidadG=eg;
 	}
 
+
+	//Asigna un Tablero a la entidad
+	public void setTablero(Tablero t)
+	{
+		miTablero=t;
+	}
+	
 	//obtener la imagen dependiendo si esta enfocada o no dicha entidad
 	public String getImagenesRep() {
 		int indice = 0;
@@ -43,8 +51,10 @@ public abstract class Entidad implements EntidadLogica, Enfocable{
 		columna = c;}
 
 	//setear manualmente las imagenes
-	public void setImagenesRep(int i,String g){
-		imagenes[i]=g;
+	public void setImagenesRep(String g){
+		imagenes[0] = g + color +".png";
+		imagenes[1] = g + color +"-cursor.png";
+		entidadG.notificarse_cambio_estado();
 	}
 
     //obtener la fila
@@ -97,4 +107,109 @@ public abstract class Entidad implements EntidadLogica, Enfocable{
 	}
 
 	public abstract boolean esPosibleIntercambiar(Entidad e);
+
+	public void romper(Entidad e)
+	{
+	 //Por implementar
+	} 
+
+	public void efectoGM(GemaNormal e)
+	{
+		e.setImagenesRep("0");
+	}
+
+	public void efectoR(Roca e)
+	{
+		e.setImagenesRep("0");
+	}
+
+	public void efectoH(Hielo e)
+	{
+		e.setImagenesRep("0");
+	}
+
+	public void efectoGM(GemaEnvuelta gm)
+	{
+		int fila=gm.getFila();
+		int columna=gm.getColumna();
+		int topeFila=miTablero.getFila();
+		int topeColumna=miTablero.getColumna();
+		int i=0;
+		int j=0;
+
+		if(fila!=0)
+		{
+			i=fila-1;
+		}
+
+		if(columna!=0)
+		{
+			j=columna-1;
+		}
+
+        if(topeFila-1!=fila)
+		{
+          topeFila=fila+1;		
+		}
+
+		if(topeColumna-1!=columna)
+		{
+			topeColumna=columna+1;
+		}
+
+		while(i!=topeFila)
+		{
+          int c=j;
+          while(c!=topeColumna)
+		  {
+			if(i==fila && c==columna)
+			{
+				miTablero.getEntidad(i,c).setImagenesRep("0");
+			}
+			else
+			{
+                miTablero.getEntidad(i, c).destruir();
+			}
+			c=c+1;
+		  }
+		  i=i++;
+		}
+	}
+
+	public void efectoGR(GemaRayada gr)
+	{
+		int fila=gr.getFila();
+		int columna=gr.getColumna();
+        int tope=0;
+       if(gr.getDireccion()==0) //es Horizontal
+	   {
+          tope=miTablero.getColumna();
+		  for(int i=0;i<tope;i++)
+		  {
+            if(i==columna)
+			{
+              miTablero.getEntidad(fila,i).setImagenesRep("0");
+			}
+			else
+			{
+			miTablero.getEntidad(fila, i).destruir();	
+			}
+		  }
+	   }
+	   else //es Vertical
+	   {
+          tope=miTablero.getFila();
+		  for(int i=0;i<tope;i++)
+		  {
+            if(i==fila)
+			{
+              miTablero.getEntidad(i,columna).setImagenesRep("0");
+			}
+			else
+			{
+			miTablero.getEntidad(fila, i).destruir();	
+			}
+		  }
+	   }
+	}
 }
