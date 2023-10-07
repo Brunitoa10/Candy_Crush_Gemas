@@ -4,9 +4,11 @@ import java.awt.Image;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 import Entidades.Entidad;
+import Threads.AnimadorExplosion;
 
 public class Celda extends JLabel implements EntidadGrafica{
     //Atributos
@@ -30,6 +32,11 @@ public class Celda extends JLabel implements EntidadGrafica{
 		cambiar_imagen(ent.getImagenRep());
 	}
 	
+	public void notificarse_explosion() {
+		cambiar_explosion();
+
+	}
+
 	@Override
 	public void notificarse_intercambio_posicion(){
 		miGUI.animar_movimiento(this);
@@ -64,6 +71,10 @@ public class Celda extends JLabel implements EntidadGrafica{
 		Image imgEscalada = imgIcon.getImage().getScaledInstance(size_label, size_label, Image.SCALE_SMOOTH);
 		Icon iconoEscalado = new ImageIcon(imgEscalada);
 		setIcon(iconoEscalado);
+	}
+
+	protected void cambiar_explosion() {
+		miGUI.animar_explosion(this);
 	}
 	
 	public int getColorEntidad() {

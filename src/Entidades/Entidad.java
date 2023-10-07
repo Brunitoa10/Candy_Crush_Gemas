@@ -91,6 +91,7 @@ public abstract class Entidad implements EntidadLogica, Enfocable{
     //envia un mensaje si se destruye
 	public boolean destruir(){
 	   System.out.println("destruido "+ this.color + " en: "+fila+","+columna );
+	   entidadG.notificarse_explosion();
 	   return true;
 	}
 

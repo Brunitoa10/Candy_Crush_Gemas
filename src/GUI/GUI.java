@@ -134,6 +134,10 @@ public class GUI extends JFrame {
 		mi_animador.animar_cambio_estado(c);
 	}
 
+	public void animar_explosion(Celda c) {
+		mi_animador.animar_explosion(c);
+	}
+
 	//Metodos agregados por bruno
 	
 	public void actualizarMovimientos(int movimientos) {
