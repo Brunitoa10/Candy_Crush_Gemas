@@ -24,18 +24,20 @@ public class Tablero {
 	int cJugador;
 	
 	/*[fila,columna]
-	 * [0,0][0,1][0,2][0,3]
-	 * [1,0][1,1][1,2][1,3]
-	 * [2,0][2,1][2,2][2,3]
-	 * [3,0][3,1][3,2][3,3]
-	 * [4,0][4,1][4,2][4,3]
+	 * 
 	 * [5,0][5,1][5,2][5,3]
+	 * [4,0][4,1][4,2][4,3]
+	 * [3,0][3,1][3,2][3,3]
+	 * [2,0][2,1][2,2][2,3]
+	 * [1,0][1,1][1,2][1,3]
+	 * [0,0][0,1][0,2][0,3]
 	 */
 	
 	//-----------[METODOS PRIVADOS]--------------------
 	
 	//RETORNA UNA UN ARRAY DE LISTAS COMO LinkedList<Entidad>[combos horizontales][combos veritcales]
 	private LinkedList<Celda> CheckCruz(int f1, int c1, int f2, int c2) {
+		//System.out.println("columnas "+ columnas+" filas "+ columnas+" f1 c1 "+ f1+" "+c1+" f2 c2 "+ f2+" "+c2);
 		//optimizar
 		LinkedList<Celda> toReturn = new LinkedList<Celda>(); 
 		if((0<=f1 && f1 <filas) && (0<=c1 && c1 <columnas) && (0<=f2 && f2 <filas) && (0<=c2 && c2 <columnas )){
@@ -111,7 +113,7 @@ public class Tablero {
 		
 		System.out.println("INTERCAMBIADO: "+"["+f1+"]"+"["+c1+"]" +" y "+"["+f2+"]" +"["+c2+"]");
 		
-		boolean movValido = manejarColisiones(CheckCruz(fJugador,cJugador,fJugador-1,cJugador+1),t[f1][c1],t[f2][c2],0); 
+		boolean movValido = manejarColisiones(CheckCruz(f1,c1,f2,c2),t[f1][c1],t[f2][c2],0); 
 		if(!movValido)
 			intercambiarSinCheck(f1,c1,f2,c2);
 		
@@ -422,18 +424,21 @@ public class Tablero {
 		switch(dir) {
 		case GUI.DERECHA:
 			if(cJugador < columnas -1) {
+				System.out.println("derecha");
 				if(t[fJugador][cJugador].getEntidad().esPosibleIntercambiar(t[fJugador][cJugador+1].getEntidad()) && t[fJugador][cJugador+1].getEntidad().esPosibleIntercambiar(t[fJugador][cJugador].getEntidad())) {
 					intecambiarPriv(fJugador,cJugador,fJugador,cJugador+1);
 					}}
 		break;
 		case GUI.ARRIBA:
 			if(fJugador>0) {
+				System.out.println("arriba");
 				if(t[fJugador][cJugador].getEntidad().esPosibleIntercambiar(t[fJugador-1][cJugador].getEntidad()) && t[fJugador-1][cJugador].getEntidad().esPosibleIntercambiar(t[fJugador][cJugador].getEntidad())) {
 					intecambiarPriv(fJugador,cJugador,fJugador-1,cJugador);
 					}}
 		break;
 		case GUI.IZQUIERDA:
 			if(cJugador>0) {
+				System.out.println("izquierda");
 				if(t[fJugador][cJugador].getEntidad().esPosibleIntercambiar(t[fJugador][cJugador-1].getEntidad()) && t[fJugador][cJugador-1].getEntidad().esPosibleIntercambiar(t[fJugador][cJugador].getEntidad())) {
 					intecambiarPriv(fJugador,cJugador,fJugador,cJugador-1);
 					}}
@@ -441,6 +446,7 @@ public class Tablero {
 		break;
 		case GUI.ABAJO:
 			if(fJugador<filas -1 ) {
+				System.out.println("abajo");
 				if(t[fJugador][cJugador].getEntidad().esPosibleIntercambiar(t[fJugador+1][cJugador].getEntidad()) && t[fJugador+1][cJugador].getEntidad().esPosibleIntercambiar(t[fJugador][cJugador].getEntidad())) {
 					intecambiarPriv(fJugador,cJugador,fJugador+1,cJugador);
 					}}
