@@ -44,5 +44,6 @@ public class Gema extends Entidad{
 		fila=f;
 		columna=c;
 		entidadG.notificarse_intercambio_posicion();
-	}  
+	}
+  
 }

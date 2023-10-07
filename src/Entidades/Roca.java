@@ -29,7 +29,7 @@ public class Roca extends Obstaculo{
 		return imagenes[indice];
 	}
 
-	public boolean esPosibleIntercambiar() {
+	public boolean esPosibleIntercambiar(Entidad e) {
 		return false;
 	}
 

@@ -422,26 +422,26 @@ public class Tablero {
 		switch(dir) {
 		case GUI.DERECHA:
 			if(cJugador < columnas -1) {
-				if(t[fJugador][cJugador].getEntidad().esPosibleInrecambiar() && t[fJugador][cJugador+1].getEntidad().esPosibleInrecambiar()) {
+				if(t[fJugador][cJugador].getEntidad().esPosibleIntercambiar(t[fJugador][cJugador+1].getEntidad()) && t[fJugador][cJugador+1].getEntidad().esPosibleIntercambiar(t[fJugador][cJugador].getEntidad())) {
 					intecambiarPriv(fJugador,cJugador,fJugador,cJugador+1);
 					}}
 		break;
 		case GUI.ARRIBA:
 			if(fJugador>0) {
-				if(t[fJugador][cJugador].getEntidad().esPosibleInrecambiar() && t[fJugador-1][cJugador].getEntidad().esPosibleInrecambiar()) {
+				if(t[fJugador][cJugador].getEntidad().esPosibleIntercambiar(t[fJugador-1][cJugador].getEntidad()) && t[fJugador-1][cJugador].getEntidad().esPosibleIntercambiar(t[fJugador][cJugador].getEntidad())) {
 					intecambiarPriv(fJugador,cJugador,fJugador-1,cJugador);
 					}}
 		break;
 		case GUI.IZQUIERDA:
 			if(cJugador>0) {
-				if(t[fJugador][cJugador].getEntidad().esPosibleInrecambiar() && t[fJugador][cJugador-1].getEntidad().esPosibleInrecambiar()) {
+				if(t[fJugador][cJugador].getEntidad().esPosibleIntercambiar(t[fJugador][cJugador-1].getEntidad()) && t[fJugador][cJugador-1].getEntidad().esPosibleIntercambiar(t[fJugador][cJugador].getEntidad())) {
 					intecambiarPriv(fJugador,cJugador,fJugador,cJugador-1);
 					}}
 			
 		break;
 		case GUI.ABAJO:
 			if(fJugador<filas -1 ) {
-				if(t[fJugador][cJugador].getEntidad().esPosibleInrecambiar() && t[fJugador+1][cJugador].getEntidad().esPosibleInrecambiar()) {
+				if(t[fJugador][cJugador].getEntidad().esPosibleIntercambiar(t[fJugador+1][cJugador].getEntidad()) && t[fJugador+1][cJugador].getEntidad().esPosibleIntercambiar(t[fJugador][cJugador].getEntidad())) {
 					intecambiarPriv(fJugador,cJugador,fJugador+1,cJugador);
 					}}
 		break;

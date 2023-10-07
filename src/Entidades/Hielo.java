@@ -39,10 +39,4 @@ public class Hielo extends Obstaculo {
 		imagenes[0] = ri + color +".png";
 		imagenes[1] = ri + color +"-cursor.png";
 	}
-
-	@Override
-	public boolean esPosibleIntercambiar() {
-		return false;
-	}
-
 }

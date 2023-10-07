@@ -5,20 +5,5 @@ public class GemaNormal extends Gema{
 			super(f, c, col, "/assets/gemas/gema_normal/");
 		}
 
-		public boolean puedeRecibir(GemaNormal g) {
-			return true;
-		}
-
-		public boolean puedeRecibir(Roca r) {
-			return false;
-		}
-
-		public boolean puedeRecibir(GemaEnvuelta ge) {
-			return true;
-		}
-
-		public boolean puedeRecibir(GemaRayada gr) {
-			return true;
-		}
 
 }
