@@ -11,11 +11,6 @@ public class GemaRayada extends Gema{
 		super(f, c,col, "/assets/gemas/gema_rayada/" + direccion);
 	}
 	
-	/*public boolean esPosibleIntercambiar(entidad e) {
-		return e.puedeRecibir(this);
-	}*/
-
-
 	public int getDireccion(){
 		return d;
 	}

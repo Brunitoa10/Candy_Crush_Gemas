@@ -96,5 +96,5 @@ public abstract class Entidad implements EntidadLogica, Enfocable{
 		imagenes[1] = ri + color +"-cursor.png";
 	}
 
-	public abstract boolean esPosibleInrecambiar();
+	public abstract boolean esPosibleIntercambiar();
 }

@@ -5,41 +5,25 @@ public class Hielo extends Obstaculo {
 	public Hielo(int f, int c, int col) {
 		super(f, c, "/assets/gema_normal/", col);
 	}
-     
-	 public void intercambiarPosicion(int f, int c){
-
-	}
-
-	@Override
-	public void desenfocar() {
-		// TODO Auto-generated method stub
-		
-	}
-
 	
 	public boolean esPosibleIntercambiar(Entidad e) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public boolean puedeRecibir(GemaNormal g) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public boolean puedeRecibir(Roca r) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public boolean puedeRecibir(GemaEnvuelta ge) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	
 	public boolean puedeRecibir(GemaRayada gr) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -57,7 +41,7 @@ public class Hielo extends Obstaculo {
 	}
 
 	@Override
-	public boolean esPosibleInrecambiar() {
+	public boolean esPosibleIntercambiar() {
 		return false;
 	}
 

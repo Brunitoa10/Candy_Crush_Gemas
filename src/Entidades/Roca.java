@@ -6,27 +6,19 @@ public class Roca extends Obstaculo{
 		super(f, c, "/assets/gemas/gema_normal/", 7);
 	}
 
-	public void intercambiarPosicion(int f, int c){
-
-	}
-
 	public boolean puedeRecibir(GemaNormal g) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public boolean puedeRecibir(Roca r) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public boolean puedeRecibir(GemaEnvuelta ge) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public boolean puedeRecibir(GemaRayada gr) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -37,8 +29,7 @@ public class Roca extends Obstaculo{
 		return imagenes[indice];
 	}
 
-	@Override
-	public boolean esPosibleInrecambiar() {
+	public boolean esPosibleIntercambiar() {
 		return false;
 	}
 
