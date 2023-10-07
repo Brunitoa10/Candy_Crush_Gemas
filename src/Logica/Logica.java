@@ -39,7 +39,7 @@ public class Logica {
 	            miTablero.asignarGUI(miGUI);
 	            
 	            // Luego cargamos el nivel utilizando el generadorNivel
-	            miNivel = generadorNivel.cargar_nivel_y_tablero(miTablero, 1,this);
+	            miNivel = generadorNivel.cargar_nivel_y_tablero(miTablero, 2,this);
 	            
 	            // Asociamos entidades lógicas y gráficas
 	            asociarEntidadesLogicasGraficas();
@@ -64,7 +64,7 @@ public class Logica {
 		public void notificarDerrotaPorMovimientos() {
 			miGUI.mostrarMensajeDerrotaPorMovimientos();
 			if(miNivel.getVidas() > 0) {
-				miTablero.resetearTablero(0, 0);
+				//miTablero.resetearTablero(0, 0);
 				miNivel = generadorNivel.cargar_nivel_y_tablero(miTablero, 1,this);
 			}else {
 				miGUI.mostrarMensajeDerrotaPorVidas();
