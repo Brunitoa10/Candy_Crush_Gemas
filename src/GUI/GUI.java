@@ -4,13 +4,14 @@ package GUI;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.GridBagConstraints;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-
+import java.awt.Insets;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
+import java.awt.GridBagLayout;
 import Entidades.Entidad;
 import Logica.EntidadLogica;
 import Logica.Logica;
@@ -22,9 +23,13 @@ public class GUI extends JFrame {
 	protected Logica milogica;
 	protected int filas,columnas;
 	protected JPanel panel_principal;
+	protected JLabel timerLabel;
+	protected int tiempoRestante;
 	protected CentralAnimaciones mi_animador;
 	protected int animaciones_pendientes;
 	protected boolean bloquear_intercambios;
+	protected JLabel movimientosLabel;
+	protected int movimientosRestantes;
 	
 	private int size_label = 100;
 
@@ -40,7 +45,8 @@ public class GUI extends JFrame {
 		filas = f;
 		mi_animador = new CentralAnimaciones(this);
 		columnas = c;
-
+		tiempoRestante = 999;
+		movimientosRestantes = 30;
 		animaciones_pendientes = 0;
 		bloquear_intercambios = false;
 		
@@ -53,16 +59,18 @@ public class GUI extends JFrame {
 		setLocationRelativeTo(null);
 		//----------------------------------------------------
 		//Estaba true, le puse false para poder achicarlo y que aparezca la cruz
-		setUndecorated(false); 
+		setUndecorated(true); 
 		//----------------------------------------------------
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setLayout(new BorderLayout());
-		
+		setLayout(new GridBagLayout());
+
+		timerLabel = new JLabel("Tiempo restante: "+ tiempoRestante);
+		movimientosLabel = new JLabel ("Movimientos restantes: "+ + movimientosRestantes);
 		
 		panel_principal = new JPanel();
 		panel_principal.setSize(size_label * filas, size_label * columnas);
-		panel_principal.setLayout(null);
+		panel_principal.setLayout(new GridBagLayout());
 		
 		panel_principal.addKeyListener(new KeyAdapter() {
 			@Override
@@ -79,15 +87,28 @@ public class GUI extends JFrame {
 				}
 			}
 		});
-		
-		getContentPane().add(panel_principal, BorderLayout.CENTER);
-		
+
+		//Constraints timer
+		GridBagConstraints c = new GridBagConstraints();
+		c.anchor = GridBagConstraints.FIRST_LINE_START;
+		c.insets = new Insets(10,0,0,10);
+		getContentPane().add(timerLabel,c);
+
+		getContentPane().add(panel_principal);
+
+		//Constraints movimientos
+		c.anchor = GridBagConstraints.FIRST_LINE_END;
+		c.insets = new Insets(10,10,0,0);
+		getContentPane().add(movimientosLabel, c);
 		panel_principal.setFocusable(true);
 	}
 	
 	public EntidadGrafica agregar_entidad(Entidad e) {
+		GridBagConstraints c = new GridBagConstraints();
 		Celda celda = new Celda(this, e, size_label);
-		panel_principal.add(celda);
+		c.gridx = celda.getEntidad().getFila();
+		c.gridx = celda.getEntidad().getColumna();
+		panel_principal.add(celda,c);
 		return celda;
 	}
 
