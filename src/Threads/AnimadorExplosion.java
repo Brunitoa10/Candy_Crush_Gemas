@@ -13,7 +13,8 @@ public class AnimadorExplosion extends Thread implements Animador {
 
 	protected int delay;
 
-    public AnimadorExplosion(ManejadorAnimaciones m, Celda c) {
+    public AnimadorExplosion(ManejadorAnimaciones m, Celda c, int d) {
+		delay = d;
 		mi_manager = m;
 		mi_celda_animada = c;
 		
@@ -33,9 +34,11 @@ public class AnimadorExplosion extends Thread implements Animador {
 	public void run() {
         Icon icon = new ImageIcon(this.getClass().getResource("/assets/gemas/detonado.gif"));
 		new Thread(()-> {
-			mi_celda_animada.setIcon(icon);
-            try {
-			sleep(1000);
+			try {
+				sleep(delay);
+				mi_celda_animada.setIcon(icon);
+            
+				sleep(1000);
             }catch (InterruptedException e) {
                 e.printStackTrace();
             }

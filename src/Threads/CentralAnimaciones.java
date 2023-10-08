@@ -48,12 +48,14 @@ public class CentralAnimaciones implements ManejadorAnimaciones{
 	}
 
 	public void animar_explosion(Celda c) {
-		Animador animador = new AnimadorExplosion(this, c);
+		Animador animador;
 		miGUI.notificarse_animacion_en_progreso();
 		
 		if (tiene_animaciones_en_progreso (c) ) {
+			animador = new AnimadorExplosion(this, c, 0);
 			mapeo_celda_animaciones.get(c).add(animador);
 		}else {
+			animador = new AnimadorExplosion(this, c, 700);
 			mapeo_celda_animaciones.put(c, new LinkedList<Animador>());
 			mapeo_celda_animaciones.get(c).add(animador);
 			animador.comenzar_animacion();
