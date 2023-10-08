@@ -1,5 +1,8 @@
 package Entidades;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import GUI.EntidadGrafica;
 import Logica.EntidadLogica;
 import Tablero.*;
@@ -91,6 +94,7 @@ public abstract class Entidad implements EntidadLogica, Enfocable{
     //envia un mensaje si se destruye
 	public boolean destruir(){
 	   System.out.println("destruido "+ this.color + " en: "+fila+","+columna );
+	   entidadG.notificarse_explosion();
 	   return true;
 	}
 
@@ -110,25 +114,45 @@ public abstract class Entidad implements EntidadLogica, Enfocable{
 
 	public void romper(Entidad e)
 	{
-	 //Por implementar
+	  String tipo= extraerTipo(e.getImagenRep());
+	  if(tipo=="gema_envuelta")
+	  {
+		efectoGM(e);
+	  }
+	  else if(tipo=="gema_rayada")
+	  {
+        efectoGR(e);
+	  }
+	  else if(tipo=="gema_normal")
+	  {
+		efectoG(e);
+	  }
+	  else if(e.obtenerColor()==7)
+	  {
+		efectoH(e);
+	  }
+	  else if(e.obtenerColor()==8)
+	  {
+		efectoR(e);
+	  }
 	} 
 
-	public void efectoGM(GemaNormal e)
+	public void efectoG(Entidad e)
 	{
 		e.setImagenesRep("0");
 	}
 
-	public void efectoR(Roca e)
+	public void efectoR(Entidad e)
 	{
 		e.setImagenesRep("0");
 	}
 
-	public void efectoH(Hielo e)
+	public void efectoH(Entidad e)
 	{
 		e.setImagenesRep("0");
 	}
 
-	public void efectoGM(GemaEnvuelta gm)
+	public void efectoGM(Entidad gm)
 	{
 		int fila=gm.getFila();
 		int columna=gm.getColumna();
@@ -176,12 +200,13 @@ public abstract class Entidad implements EntidadLogica, Enfocable{
 		}
 	}
 
-	public void efectoGR(GemaRayada gr)
+	public void efectoGR(Entidad gr)
 	{
 		int fila=gr.getFila();
 		int columna=gr.getColumna();
         int tope=0;
-       if(gr.getDireccion()==0) //es Horizontal
+		GemaRayada aux=(GemaRayada) gr;
+       if(aux.getDireccion()==0) //es Horizontal
 	   {
           tope=miTablero.getColumna();
 		  for(int i=0;i<tope;i++)
@@ -212,4 +237,16 @@ public abstract class Entidad implements EntidadLogica, Enfocable{
 		  }
 	   }
 	}
+
+	private static String extraerTipo(String sourcePath) {
+        String regex = "^(?:[^/]+/){4}([^/]+).*";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(sourcePath);
+
+        if (matcher.matches()) {
+            return matcher.group(1);
+        } else {
+            return null;
+        }
+    }
 }

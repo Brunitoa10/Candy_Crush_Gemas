@@ -1,0 +1,50 @@
+package Threads;
+
+import java.awt.Image;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+
+import GUI.Celda;
+
+public class AnimadorExplosion extends Thread implements Animador {
+
+    protected ManejadorAnimaciones mi_manager;
+	protected Celda mi_celda_animada;
+
+	protected int delay;
+
+    public AnimadorExplosion(ManejadorAnimaciones m, Celda c) {
+		mi_manager = m;
+		mi_celda_animada = c;
+		
+		int size_label = mi_celda_animada.getSizeLabel();
+	}
+
+    public Celda get_celda_asociada() {
+		return mi_celda_animada;
+	}
+	
+	@Override
+	public void comenzar_animacion() {
+		this.start();
+	}
+
+    @Override
+	public void run() {
+        Icon icon = new ImageIcon(this.getClass().getResource("/assets/gemas/detonado.gif"));
+		new Thread(()-> {
+			mi_celda_animada.setIcon(icon);
+            try {
+			sleep(1000);
+            }catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            
+            ImageIcon iconoVacio = new ImageIcon(this.getClass().getResource("/assets/gemas/gema_normal/0.png"));
+		    Image imgEscalada = iconoVacio.getImage().getScaledInstance(mi_celda_animada.getSizeLabel(), mi_celda_animada.getSizeLabel(), Image.SCALE_SMOOTH);
+		    Icon iconoEscalado = new ImageIcon(imgEscalada);
+			mi_celda_animada.setIcon(iconoEscalado);
+		 }).start();
+		
+    }
+}

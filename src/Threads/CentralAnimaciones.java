@@ -46,6 +46,19 @@ public class CentralAnimaciones implements ManejadorAnimaciones{
 			animador.comenzar_animacion();
 		}
 	}
+
+	public void animar_explosion(Celda c) {
+		Animador animador = new AnimadorExplosion(this, c);
+		miGUI.notificarse_animacion_en_progreso();
+		
+		if (tiene_animaciones_en_progreso (c) ) {
+			mapeo_celda_animaciones.get(c).add(animador);
+		}else {
+			mapeo_celda_animaciones.put(c, new LinkedList<Animador>());
+			mapeo_celda_animaciones.get(c).add(animador);
+			animador.comenzar_animacion();
+		}
+	}
 	
 	/**
 	 * Indica que la celda parametrizada debe ser animada a partir de un cambio de estado.
