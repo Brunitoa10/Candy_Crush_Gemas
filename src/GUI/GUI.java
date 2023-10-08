@@ -205,4 +205,8 @@ public class GUI extends JFrame {
 	    revalidate();
 	    repaint();
 	}
+	
+	public boolean getBloquear_intercambios() {
+		return bloquear_intercambios;
+	}
 }

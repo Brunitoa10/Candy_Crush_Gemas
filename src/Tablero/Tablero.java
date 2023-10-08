@@ -3,6 +3,7 @@ package Tablero;
 import Entidades.Entidad;
 import Entidades.GemaNormal;
 import GUI.Celda;
+import GUI.EntidadGrafica;
 import GUI.GUI;
 import Logica.Logica;
 import Logica.Color;
@@ -96,8 +97,8 @@ public class Tablero {
 		t[f1][c1].setEntidad(t[f2][c2].getEntidad());
 		t[f2][c2].setEntidad(aux);
 		
-		t[f1][c1].getEntidad().setFilaColumna(f1,c1);
-		t[f2][c2].getEntidad().setFilaColumna(f2,c2);
+		t[f1][c1].getEntidad().intercambiarPosicion(f1,c1);
+		t[f2][c2].getEntidad().intercambiarPosicion(f2,c2);
 		
 		t[f1][c1].notificarCeldaEnfocar();
 		t[f2][c2].notificarCeldaDesenfocar();
@@ -108,14 +109,19 @@ public class Tablero {
 		t[f1][c1].notificarse_cambio_estado();
 		t[f2][c2].notificarse_cambio_estado();
 		
-		t[f1][c1].getEntidad().intercambiarPosicion(f1,c1);
-		t[f2][c2].getEntidad().intercambiarPosicion(f2,c2);
 		
 		System.out.println("INTERCAMBIADO: "+"["+f1+"]"+"["+c1+"]" +" y "+"["+f2+"]" +"["+c2+"]");
 		
 		boolean movValido = manejarColisiones(CheckCruz(f1,c1,f2,c2),t[f1][c1],t[f2][c2],0); 
-		if(!movValido)
-			intercambiarSinCheck(f1,c1,f2,c2);
+		if(movValido) {
+			//caida();
+			int i = 0;
+		}
+		else {intercambiarSinCheck(f2,c2,f1,c1);
+			t[f1][c1].notificarCeldaEnfocar();
+			t[f2][c2].notificarCeldaDesenfocar();
+		
+		}
 		
 	}
 	
@@ -265,20 +271,39 @@ public class Tablero {
 		t[f1][c1].setEntidad(t[f2][c2].getEntidad());
 		t[f2][c2].setEntidad(aux);
 		
-		t[f1][c1].getEntidad().setFilaColumna(f1,c1);
-		t[f2][c2].getEntidad().setFilaColumna(f2,c2);
-		
-		t[f1][c1].notificarCeldaEnfocar();
-		t[f2][c2].notificarCeldaDesenfocar();
-
-		t[f1][c1].notificarse_intercambio_posicion();
-		t[f2][c2].notificarse_intercambio_posicion();
+		t[f1][c1].getEntidad().intercambiarPosicion(f1,c1);
+		t[f2][c2].getEntidad().intercambiarPosicion(f2,c2);
+		//t[f1][c1].notificarCeldaEnfocar();
+		//t[f2][c2].notificarCeldaDesenfocar();
 		
 		t[f1][c1].notificarse_cambio_estado();
 		t[f2][c2].notificarse_cambio_estado();
 		
+		//t[f1][c1].notificarse_intercambio_posicion();
+		//t[f2][c2].notificarse_intercambio_posicion();
+		
+		
+		
+	}
+	private void intercambiarCaida(int f1, int c1, int f2, int c2) {
+		Entidad aux;
+		aux =t[f1][c1].getEntidad();
+		t[f1][c1].setEntidad(t[f2][c2].getEntidad());
+		t[f2][c2].setEntidad(aux);
+		
 		t[f1][c1].getEntidad().intercambiarPosicion(f1,c1);
 		t[f2][c2].getEntidad().intercambiarPosicion(f2,c2);
+		//t[f1][c1].notificarCeldaEnfocar();
+		//t[f2][c2].notificarCeldaDesenfocar();
+		
+	    //t[f1][c1].notificarse_cambio_estado();
+		//t[f2][c2].notificarse_cambio_estado();
+		
+		//t[f1][c1].notificarse_intercambio_posicion();
+		//t[f2][c2].notificarse_intercambio_posicion();
+		
+		
+		
 	}
 	
 	//-----------[METODOS PUBLICOS]--------------------
@@ -461,15 +486,19 @@ public class Tablero {
 	
 	public boolean caida() {
 		//verificar que la fila 0 es la de arriba
+		EntidadGrafica egrafica;
 		boolean caido = false;
 		for (int i = 0; i<filas; i++) {
 			for (int j = 0; j<columnas; j++) {
 				if(t[i][j].getEntidad().obtenerColor() == 0) {
 					caido = true;
-					if(i == 0)
+					if(i == 0) {
 						t[i][j].setEntidad(new GemaNormal(i,j,colorAleatorio(1,6)));
-					else
-						intercambiarSinCheck(i,j,i-1,j);//VERIFICAR
+						egrafica = miGui.agregar_entidad(t[i][j].getEntidad());
+						t[i][j].getEntidad().setEntidadGrafica(egrafica);
+						t[i][j].notificarse_cambio_estado();}
+					else 
+					    intercambiarCaida(i-1,j,i,j);//VERIFICAR
 				}
 			}
 		}
