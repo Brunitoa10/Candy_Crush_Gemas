@@ -114,7 +114,7 @@ public class Tablero {
 		
 		boolean movValido = manejarColisiones(CheckCruz(f1,c1,f2,c2),t[f1][c1],t[f2][c2],0); 
 		if(movValido) {
-			//caida();
+			caida();
 			int i = 0;
 		}
 		else {intercambiarSinCheck(f2,c2,f1,c1);
@@ -493,8 +493,8 @@ public class Tablero {
 				if(t[i][j].getEntidad().obtenerColor() == 0) {
 					caido = true;
 					if(i == 0) {
+						egrafica = t[i][j].getEntidad().getEGrafica();
 						t[i][j].setEntidad(new GemaNormal(i,j,colorAleatorio(1,6)));
-						egrafica = miGui.agregar_entidad(t[i][j].getEntidad());
 						t[i][j].getEntidad().setEntidadGrafica(egrafica);
 						t[i][j].notificarse_cambio_estado();}
 					else 

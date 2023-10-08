@@ -34,6 +34,9 @@ public abstract class Entidad implements EntidadLogica, Enfocable{
 		entidadG=eg;
 	}
 
+	public EntidadGrafica getEGrafica() {
+		return entidadG;
+	}
 
 	//Asigna un Tablero a la entidad
 	public void setTablero(Tablero t)
