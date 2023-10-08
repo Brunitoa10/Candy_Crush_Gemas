@@ -3,6 +3,7 @@ package GUI;
 
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.event.KeyAdapter;
@@ -15,6 +16,7 @@ import java.awt.GridBagLayout;
 import Entidades.Entidad;
 import Logica.EntidadLogica;
 import Logica.Logica;
+import Nivel.Nivel;
 import Threads.AnimadorIntercambio;
 import Threads.CentralAnimaciones;
 
@@ -30,7 +32,9 @@ public class GUI extends JFrame {
 	protected boolean bloquear_intercambios;
 	protected JLabel movimientosLabel;
 	protected int movimientosRestantes;
-	
+	//-------------------------------------------
+	//protected Nivel miNivel;
+	//-------------------------------------------
 	private int size_label = 100;
 
 	//Movimientos
@@ -45,13 +49,14 @@ public class GUI extends JFrame {
 		filas = f;
 		mi_animador = new CentralAnimaciones(this);
 		columnas = c;
-		tiempoRestante = 999;
-		movimientosRestantes = 30;
+		tiempoRestante = milogica.getTiempo();
+		movimientosRestantes = milogica.getMovimientos();
 		animaciones_pendientes = 0;
 		bloquear_intercambios = false;
 		
 		inicializar();
 	}
+	
 	
 	protected void inicializar() {
 		setTitle("Proyecto Candy Crush - Comision-06");
@@ -155,5 +160,28 @@ public class GUI extends JFrame {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	//--------------------------------------------------------
+	public void limpiarGUI() {
+	   
+	    tiempoRestante = milogica.getTiempo();
+	    movimientosRestantes = milogica.getMovimientos();
+	    animaciones_pendientes = 0;
+	    bloquear_intercambios = false;
+	    
 
+	    limpiarMatrizGUI();
+	    
+
+	    timerLabel.setText("Tiempo restante: " + tiempoRestante);
+	    movimientosLabel.setText("Movimientos restantes: " + movimientosRestantes);
+	}
+	private void limpiarMatrizGUI() {
+	    Component[] componentes = panel_principal.getComponents();
+	    for (Component componente : componentes) {
+	        panel_principal.remove(componente);
+	    }
+	    revalidate();
+	    repaint();
+	}
 }

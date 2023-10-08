@@ -8,7 +8,7 @@ import Tablero.Tablero;
 
 public class Nivel {
 	//Atributos
-	protected int movimientos;
+	protected int movimientos,totalmovimientos;
 	protected ArrayList<Objetivos> objetivo; // ArrayList para almacenar los objetivos
 	protected int fila_inicial_jugador;
 	protected int columna_inicial_jugador;
@@ -19,12 +19,11 @@ public class Nivel {
 	private Tablero miTablero;
 
 	//Constructor
-	public Nivel(int posX, int posY,Logica l) {
+	public Nivel(int posX, int posY) {
 		fila_inicial_jugador = posX;
 		columna_inicial_jugador = posY;
 		vidas = 3;
 		this.objetivo = new ArrayList<>(); // Inicializamos la lista de objetivos
-		miLogica = l;
 	}
 
 	//Metodos
@@ -50,7 +49,14 @@ public class Nivel {
 	public int getMovimientos() {
 		return movimientos;
 	}
-
+	//------------------------------------------
+	public int getTotalMovimientos() {
+		return movimientos;
+	}
+	public void setTotalMovimientos(int m) {
+		 totalmovimientos = m;
+	}
+	//----------------------------------------
 	public int getTiempo() {
 		return tiempo;
 	}
@@ -124,5 +130,9 @@ public class Nivel {
 	        }
 	    }
 	    return contador;
+	}
+
+	public void setVidas(int vida) {
+		this.vidas = vida;
 	}
 }

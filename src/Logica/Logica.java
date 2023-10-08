@@ -18,39 +18,21 @@ public class Logica {
 		protected GeneradorNivel generadorNivel;
 		
 		//Constructor
-		/*public Logica(){
+		public Logica(){
 			try {
 				miTablero = new Tablero(this,miGUI);
 				miNivel = generadorNivel.cargar_nivel_y_tablero(miTablero,1);
 				miGUI = new GUI(this, miTablero.getFila(), miTablero.getColumna());
-				miTablero.asignarGUI(miGUI);
+				miTablero.asignarGUI(miGUI);	
 				asociarEntidadesLogicasGraficas();
+				
 				miTablero.fijarJugador(miNivel.getFilaInicialJugador(), miNivel.getColumnaInicialJugador());
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 				e.printStackTrace();
 			}
-		}*/
-		public Logica(){
-	        try {
-	            // Primero creamos el tablero y lo asignamos a la GUI
-	            miTablero = new Tablero(this, miGUI);
-	            miGUI = new GUI(this, miTablero.getFila(), miTablero.getColumna());
-	            miTablero.asignarGUI(miGUI);
-	            
-	            // Luego cargamos el nivel utilizando el generadorNivel
-	            miNivel = generadorNivel.cargar_nivel_y_tablero(miTablero, 2,this);
-	            
-	            // Asociamos entidades lógicas y gráficas
-	            asociarEntidadesLogicasGraficas();
-	            
-	            // Fijamos la posición inicial del jugador en el tablero
-	            miTablero.fijarJugador(miNivel.getFilaInicialJugador(), miNivel.getColumnaInicialJugador());
-	        } catch (Exception e) {
-	            System.out.println(e.getMessage());
-	            e.printStackTrace();
-	        }
-	    }
+		}
+		
 		public void mover_jugador(int direccion) {
 			miTablero.moverJugador(direccion);
 		}
@@ -64,13 +46,25 @@ public class Logica {
 		public void notificarDerrotaPorMovimientos() {
 			miGUI.mostrarMensajeDerrotaPorMovimientos();
 			if(miNivel.getVidas() > 0) {
-				//miTablero.resetearTablero(0, 0);
-				miNivel = generadorNivel.cargar_nivel_y_tablero(miTablero, 1,this);
+				int tmpVidas = miNivel.getVidas();
+				reiniciarNivel();
+				miNivel.setVidas(tmpVidas);
 			}else {
 				miGUI.mostrarMensajeDerrotaPorVidas();
 			}
 		}
 		
+		private void reiniciarNivel() {
+			miTablero.resetearTablero(miTablero.getFila(), miTablero.getColumna());
+			miGUI.limpiarGUI();
+			miTablero.limpiarTablero();
+			miNivel = generadorNivel.cargar_nivel_y_tablero(miTablero, 1);
+			miTablero.asignarGUI(miGUI);
+			asociarEntidadesLogicasGraficas();
+			miNivel.setMovimientos(miNivel.getTotalMovimientos());
+            miTablero.fijarJugador(miNivel.getFilaInicialJugador(), miNivel.getColumnaInicialJugador());
+        }
+
 		public void notificarDerrotaPorVidas() {
 			miGUI.mostrarMensajeDerrotaPorVidas();
 		}
@@ -92,6 +86,17 @@ public class Logica {
 			}
 			miGUI.setVisible(true);
 		}
+		
+		
+		public int getTiempo() {
+	        return miNivel.getTiempo();
+	    }
+
+	    public int getMovimientos() {
+	        return miNivel.getMovimientos();
+	    }
+		
+	   
 		/**
 		 * Launch the application.
 		 */
