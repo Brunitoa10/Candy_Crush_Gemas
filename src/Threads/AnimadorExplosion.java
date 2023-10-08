@@ -44,6 +44,8 @@ public class AnimadorExplosion extends Thread implements Animador {
 		    Image imgEscalada = iconoVacio.getImage().getScaledInstance(mi_celda_animada.getSizeLabel(), mi_celda_animada.getSizeLabel(), Image.SCALE_SMOOTH);
 		    Icon iconoEscalado = new ImageIcon(imgEscalada);
 			mi_celda_animada.setIcon(iconoEscalado);
+
+			mi_manager.notificarse_finalizacion_animacion(this);
 		 }).start();
 		
     }

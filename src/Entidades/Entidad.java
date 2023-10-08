@@ -4,6 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import GUI.EntidadGrafica;
+import Logica.Color;
 import Logica.EntidadLogica;
 import Tablero.*;
 
@@ -15,6 +16,7 @@ public abstract class Entidad implements EntidadLogica, Enfocable{
 	protected EntidadGrafica entidadG;
 	protected int color;
     protected Tablero miTablero;
+	protected String ruta;
 
    //crea una instancia de Entidad
 	protected  Entidad(int f, int c, String ri, int col)  {
@@ -22,6 +24,7 @@ public abstract class Entidad implements EntidadLogica, Enfocable{
 		columna=c;
 		enfocada=false;
 		color=col;
+		ruta = ri;
 		cargarImagenesRepresentativas(ri);
 	}
 
@@ -94,6 +97,8 @@ public abstract class Entidad implements EntidadLogica, Enfocable{
     //envia un mensaje si se destruye
 	public boolean destruir(){
 	   System.out.println("destruido "+ this.color + " en: "+fila+","+columna );
+	   color = Color.TRANSPARENTE;
+	   cargarImagenesRepresentativas(ruta);
 	   entidadG.notificarse_explosion();
 	   return true;
 	}
