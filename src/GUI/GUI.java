@@ -17,6 +17,7 @@ import Entidades.Entidad;
 import Logica.EntidadLogica;
 import Logica.Logica;
 import Nivel.Nivel;
+import Threads.AnimadorCronometro;
 import Threads.AnimadorIntercambio;
 import Threads.CentralAnimaciones;
 
@@ -32,6 +33,7 @@ public class GUI extends JFrame {
 	protected boolean bloquear_intercambios;
 	protected JLabel movimientosLabel;
 	protected int movimientosRestantes;
+	protected AnimadorCronometro animadorTiempo;
 	//-------------------------------------------
 	//protected Nivel miNivel;
 	//-------------------------------------------
@@ -53,6 +55,7 @@ public class GUI extends JFrame {
 		movimientosRestantes = milogica.getMovimientos();
 		animaciones_pendientes = 0;
 		bloquear_intercambios = false;
+		animadorTiempo = new AnimadorCronometro(tiempoRestante, this);
 		
 		inicializar();
 	}
@@ -85,10 +88,10 @@ public class GUI extends JFrame {
 					case KeyEvent.VK_RIGHT: { milogica.mover_jugador(DERECHA); break; }
 					case KeyEvent.VK_UP: 	{ milogica.mover_jugador(ARRIBA);break; }
 					case KeyEvent.VK_DOWN: 	{ milogica.mover_jugador(ABAJO); break; }
-					case KeyEvent.VK_W:		{ if (!bloquear_intercambios) milogica.intercambiar(ARRIBA); break; }
-					case KeyEvent.VK_S:		{ if (!bloquear_intercambios) milogica.intercambiar(ABAJO); break; }
-					case KeyEvent.VK_A:		{ if (!bloquear_intercambios) milogica.intercambiar(IZQUIERDA); break; }
-					case KeyEvent.VK_D:		{ if (!bloquear_intercambios) milogica.intercambiar(DERECHA); break; } 
+					case KeyEvent.VK_W:		{ if (!bloquear_intercambios) milogica.intercambiar(ARRIBA); /*iniciarTiempo();*/ break; }
+					case KeyEvent.VK_S:		{ if (!bloquear_intercambios) milogica.intercambiar(ABAJO); /*iniciarTiempo();*/ break; }
+					case KeyEvent.VK_A:		{ if (!bloquear_intercambios) milogica.intercambiar(IZQUIERDA); /*iniciarTiempo();*/ break; }
+					case KeyEvent.VK_D:		{ if (!bloquear_intercambios) milogica.intercambiar(DERECHA); /*iniciarTiempo();*/ break; } 
 				}
 			}
 		});
@@ -108,6 +111,16 @@ public class GUI extends JFrame {
 		panel_principal.setFocusable(true);
 	}
 	
+	public int getTiempoRestante() {
+		return tiempoRestante;
+	}
+
+	public void disminuirTiempo() {
+		tiempoRestante--;
+		milogica.disminuirTiempo();
+		timerLabel.setText("Tiempo restante: " + tiempoRestante);
+	}
+
 	public EntidadGrafica agregar_entidad(Entidad e) {
 		GridBagConstraints c = new GridBagConstraints();
 		Celda celda = new Celda(this, e, size_label);
@@ -146,8 +159,12 @@ public class GUI extends JFrame {
 	//Metodos agregados por bruno
 	
 	public void actualizarMovimientos(int movimientos) {
-		// TODO Auto-generated method stub
-		
+		movimientosRestantes = milogica.getMovimientos();
+		movimientosLabel.setText("Movimientos restantes: "+ + movimientosRestantes);
+	}
+
+	public void iniciarTiempo() {
+		animadorTiempo.iniciarTiempo();
 	}
 
 	public void mostrarMensajeDerrotaPorMovimientos() {

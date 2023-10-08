@@ -34,6 +34,7 @@ public class CentralAnimaciones implements ManejadorAnimaciones{
 	 * @param c Celda que debe animarse, en relación a la posición que ubica la JLabel y la ubicación indicada por la entidad lógica
 	 * referenciada por c.
 	 */
+
 	public void animar_cambio_posicion(Celda c) {
 		Animador animador = new AnimadorMovimiento(this, 10, 50, c);
 		miGUI.notificarse_animacion_en_progreso();

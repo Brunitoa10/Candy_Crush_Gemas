@@ -87,6 +87,10 @@ public class Logica {
 			miGUI.setVisible(true);
 		}
 		
+		public void disminuirTiempo() {
+			int aux = getTiempo() -1;
+			miNivel.setTiempo(aux);
+		}
 		
 		public int getTiempo() {
 	        return miNivel.getTiempo();
