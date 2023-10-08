@@ -27,7 +27,6 @@ public class Hielo extends Obstaculo {
 		return false;
 	}
 
-	@Override
 	public String getImagenRep() {
 		int indice = 0;
 		indice += (enfocada ? 1 : 0);
@@ -38,5 +37,9 @@ public class Hielo extends Obstaculo {
 		imagenes = new String [2];
 		imagenes[0] = ri + color +".png";
 		imagenes[1] = ri + color +"-cursor.png";
+	}
+
+	public void romper(Entidad e) {
+		e.setImagenesRep("0");
 	}
 }

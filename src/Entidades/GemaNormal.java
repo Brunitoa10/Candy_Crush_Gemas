@@ -6,4 +6,9 @@ public class GemaNormal extends Gema{
 		}
 
 
+		public void romper(Entidad e) {
+			e.setImagenesRep("0");
+		}
+
+
 }

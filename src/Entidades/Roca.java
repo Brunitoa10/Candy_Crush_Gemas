@@ -22,7 +22,6 @@ public class Roca extends Obstaculo{
 		return false;
 	}
 
-	@Override
 	public String getImagenRep() {
 		int indice = 0;
 		indice += (enfocada ? 1 : 0);
@@ -31,6 +30,10 @@ public class Roca extends Obstaculo{
 
 	public boolean esPosibleIntercambiar(Entidad e) {
 		return false;
+	}
+
+	public void romper(Entidad e) {
+		e.setImagenesRep("0");
 	}
 
 }

@@ -6,4 +6,6 @@ public abstract class Obstaculo extends Entidad{
 		super(f, c, ri,col);
 	}
 
+	public abstract void romper(Entidad e);
+  
 }

@@ -1,6 +1,6 @@
 package Entidades;
 
-public class Gema extends Entidad{
+public abstract class Gema extends Entidad{
 
 	public Gema(int f, int c, int col, String ri) {
 		super(f, c, ri,col);
@@ -45,6 +45,8 @@ public class Gema extends Entidad{
 		columna=c;
 		entidadG.notificarse_intercambio_posicion();
 	}
+
+	public abstract void romper(Entidad e);
   
 	
 }
