@@ -1,8 +1,6 @@
 
 package Entidades;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import GUI.EntidadGrafica;
 import Logica.Color;

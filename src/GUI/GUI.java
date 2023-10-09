@@ -2,9 +2,8 @@ package GUI;
 
 
 
-import java.awt.BorderLayout;
+
 import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -14,11 +13,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import java.awt.GridBagLayout;
 import Entidades.Entidad;
-import Logica.EntidadLogica;
 import Logica.Logica;
-import Nivel.Nivel;
 import Threads.AnimadorCronometro;
-import Threads.AnimadorIntercambio;
 import Threads.CentralAnimaciones;
 
 

@@ -6,8 +6,6 @@ import GUI.Celda;
 import GUI.EntidadGrafica;
 import GUI.GUI;
 import Logica.Logica;
-import Logica.Color;
-import Logica.EntidadLogica;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -507,11 +505,6 @@ public class Tablero {
 			return true;}
 		else return false;
 	}
-	
-	
-	
-		
-	
 		
 	public void limpiarTablero() {
 		for (int i = 0; i < filas; i++) {

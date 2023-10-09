@@ -2,7 +2,6 @@ package Nivel;
 
 import java.util.ArrayList;
 
-import GUI.GUI;
 import Logica.Logica;
 import Tablero.Tablero;
 

@@ -17,34 +17,21 @@ public class Logica {
 	protected Tablero miTablero;
 	protected GUI miGUI;
 	protected Nivel miNivel;
-	protected GeneradorNivel generadorNivel;
-	protected Thread contadorTiempo; // Hilo para contar el tiempo
+	protected Thread contadorTiempo;
 
 	//Constructor
 	public Logica(){
 		miTablero = new Tablero(this,miGUI);
-		miNivel = generadorNivel.cargar_nivel_y_tablero(miTablero,1,this);
+		miNivel = GeneradorNivel.cargar_nivel_y_tablero(miTablero,1,this);
 		miGUI = new GUI(this, miTablero.getFila(), miTablero.getColumna());
 		miTablero.asignarGUI(miGUI);	
 		asociarEntidadesLogicasGraficas();
 		miTablero.fijarJugador(miNivel.getFilaInicialJugador(), miNivel.getColumnaInicialJugador());
 		
-		
 		inicializarTiempo();
 	}
 
-	private void inicializarTiempo() {
-		Timer timer = new Timer();
-        timer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                disminuirTiempo(timer);
-                miGUI.actualizarTiempo(getTiempo());
-            }
-        }, 1000, 1000); // Inicia el temporizador después de 1 segundo y se ejecuta cada 1 segundo
-		
-	}
-
+	
 	public void mover_jugador(int direccion) {
 		miTablero.moverJugador(direccion);
 	}
@@ -60,23 +47,10 @@ public class Logica {
 		reiniciarNivel();
 	}
 
-	public void reiniciarNivel() {
-		miTablero.resetearTablero(miTablero.getFila(), miTablero.getColumna());
-	    miGUI.limpiarGUI();
-	    miTablero.limpiarTablero();
-	    miNivel = generadorNivel.cargar_nivel_y_tablero(miTablero, 1, this);
-	    miTablero.asignarGUI(miGUI);
-	    asociarEntidadesLogicasGraficas();
-	    miNivel.setMovimientos(miNivel.getTotalMovimientos());
-	    miGUI.actualizarMovimientos(miNivel.getMovimientos());
-	    miNivel.setTiempo(miNivel.getTotalTiempo());
-	    miTablero.fijarJugador(miNivel.getFilaInicialJugador(), miNivel.getColumnaInicialJugador());
-	   inicializarTiempo();
-	}
-
-
+	
 	public void notificarDerrotaPorVidas() {
 		miGUI.mostrarMensajeDerrotaPorVidas();
+		reiniciarNivel();
 	}
 	
 	public void notificarDerrotaPorTiempo() {
@@ -113,7 +87,7 @@ public class Logica {
             	tiempo = miNivel.getTiempo();
             }else {
             	miGUI.mostrarMensajeDerrotaPorTiempo();
-            	miGUI.mostrarMensajeDerrotaPorTiempo();
+            	miGUI.mostrarMensajeDerrotaPorVidas();
             }
         }else {
         	miNivel.setTiempo(tiempo);
@@ -130,7 +104,32 @@ public class Logica {
 		return miNivel.getMovimientos();
 	}
 
-
+	public void reiniciarNivel() {
+		miTablero.resetearTablero(miTablero.getFila(), miTablero.getColumna());
+	    miGUI.limpiarGUI();
+	    miTablero.limpiarTablero();
+	    miNivel = GeneradorNivel.cargar_nivel_y_tablero(miTablero, 1, this);
+	    miTablero.asignarGUI(miGUI);
+	    asociarEntidadesLogicasGraficas();
+	    miNivel.setMovimientos(miNivel.getTotalMovimientos());
+	    miGUI.actualizarMovimientos(miNivel.getMovimientos());
+	    miNivel.setTiempo(miNivel.getTotalTiempo());
+	    miTablero.fijarJugador(miNivel.getFilaInicialJugador(), miNivel.getColumnaInicialJugador());
+	   inicializarTiempo();
+	}
+	
+	private void inicializarTiempo() {
+		Timer timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                disminuirTiempo(timer);
+                miGUI.actualizarTiempo(getTiempo());
+            }
+        }, 1000, 1000); // Inicia el temporizador después de 1 segundo y se ejecuta cada 1 segundo
+		
+	}
+	
 	/**
 	 * Launch the application.
 	 */

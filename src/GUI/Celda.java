@@ -4,11 +4,9 @@ import java.awt.Image;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 import Entidades.Entidad;
-import Threads.AnimadorExplosion;
 
 public class Celda extends JLabel implements EntidadGrafica{
     //Atributos
