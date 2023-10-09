@@ -30,6 +30,10 @@ public class Logica {
 		miTablero.fijarJugador(miNivel.getFilaInicialJugador(), miNivel.getColumnaInicialJugador());
 		
 		
+		inicializarTiempo();
+	}
+
+	private void inicializarTiempo() {
 		Timer timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
@@ -38,6 +42,7 @@ public class Logica {
                 miGUI.actualizarTiempo(getTiempo());
             }
         }, 1000, 1000); // Inicia el temporizador después de 1 segundo y se ejecuta cada 1 segundo
+		
 	}
 
 	public void mover_jugador(int direccion) {
@@ -52,18 +57,21 @@ public class Logica {
 
 	public void notificarDerrotaPorMovimientos() {
 		miGUI.mostrarMensajeDerrotaPorMovimientos();
-		/*if(miNivel.getVidas() > 0) {
-			int tmpVidas = miNivel.getVidas();
-			reiniciarNivel();
-			miNivel.setVidas(tmpVidas);
-		}else {
-			miGUI.mostrarMensajeDerrotaPorVidas();
-		}*/
+		reiniciarNivel();
 	}
 
 	public void reiniciarNivel() {
-		miNivel.reiniciarNivel(miTablero,miGUI,miNivel,this, generadorNivel);
-		asociarEntidadesLogicasGraficas();
+		miTablero.resetearTablero(miTablero.getFila(), miTablero.getColumna());
+	    miGUI.limpiarGUI();
+	    miTablero.limpiarTablero();
+	    miNivel = generadorNivel.cargar_nivel_y_tablero(miTablero, 1, this);
+	    miTablero.asignarGUI(miGUI);
+	    asociarEntidadesLogicasGraficas();
+	    miNivel.setMovimientos(miNivel.getTotalMovimientos());
+	    miGUI.actualizarMovimientos(miNivel.getMovimientos());
+	    miNivel.setTiempo(miNivel.getTotalTiempo());
+	    miTablero.fijarJugador(miNivel.getFilaInicialJugador(), miNivel.getColumnaInicialJugador());
+	   inicializarTiempo();
 	}
 
 
@@ -73,6 +81,7 @@ public class Logica {
 	
 	public void notificarDerrotaPorTiempo() {
 		miGUI.mostrarMensajeDerrotaPorTiempo();
+		reiniciarNivel();
 	}
 	
 	public void notificarVictoriaPorObjetivos() {
@@ -94,13 +103,21 @@ public class Logica {
 	}
 
 	public int disminuirTiempo(Timer timer) {
-		int tiempo = miNivel.getTiempo();
-		tiempo--;
-        if (tiempo <= 0) {
+		int tiempo = miNivel.getTiempo()-1;
+        if (tiempo == 0) {
             timer.cancel();
             miGUI.mostrarMensajeDerrotaPorTiempo();
+            if(miNivel.getVidas() >= 1) {
+            	miNivel.restarVidas();
+            	reiniciarNivel();
+            	tiempo = miNivel.getTiempo();
+            }else {
+            	miGUI.mostrarMensajeDerrotaPorTiempo();
+            	miGUI.mostrarMensajeDerrotaPorTiempo();
+            }
+        }else {
+        	miNivel.setTiempo(tiempo);
         }
-        miNivel.setTiempo(tiempo);
         return tiempo;
 	}
 

@@ -89,7 +89,7 @@ public abstract class Entidad implements EntidadLogica, Enfocable{
 	public boolean enfocar() {
 		enfocada = true;
 		entidadG.notificarse_cambio_estado();
-		return true;
+		return true; 
 	}
 
 	//desenfoca la entidad

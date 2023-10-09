@@ -58,6 +58,12 @@ public class Nivel {
 	public void setTotalMovimientos(int m) {
 		 totalmovimientos = m;
 	}
+	public int getTotalTiempo() {
+		return tiempo;
+	}
+	public void setTotalTiempo(int t) {
+		 tiempo = t;
+	}
 	//----------------------------------------
 	public int getTiempo() {
 		return tiempo;
@@ -93,6 +99,8 @@ public class Nivel {
 	    	miLogica.notificarDerrotaPorMovimientos();
 	    	if(vidas>0) {
 	    		miLogica.reiniciarNivel();
+	    	}else {
+	    		miLogica.notificarDerrotaPorVidas();
 	    	}
 	    	
             
@@ -141,16 +149,5 @@ public class Nivel {
 
 	public void setVidas(int vida) {
 		this.vidas = vida;
-	}
-
-	public void reiniciarNivel(Tablero miTablero2, GUI miGUI, Nivel miNivel, Logica logica,GeneradorNivel generadorNivel) {
-		miTablero.resetearTablero(miTablero.getFila(), miTablero.getColumna());
-		miGUI.limpiarGUI();
-		miTablero.limpiarTablero();
-		miNivel = generadorNivel.cargar_nivel_y_tablero(miTablero, 1,logica);
-		miTablero.asignarGUI(miGUI);
-		//asociarEntidadesLogicasGraficas();
-		miNivel.setMovimientos(miNivel.getTotalMovimientos());
-        miTablero.fijarJugador(miNivel.getFilaInicialJugador(), miNivel.getColumnaInicialJugador());
 	}
 }

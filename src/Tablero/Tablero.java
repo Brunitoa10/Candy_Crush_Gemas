@@ -513,8 +513,6 @@ public class Tablero {
 		
 	
 		
-	
-
 	public void limpiarTablero() {
 		for (int i = 0; i < filas; i++) {
 	        for (int j = 0; j < columnas; j++) {
