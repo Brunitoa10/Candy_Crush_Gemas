@@ -34,9 +34,6 @@ public class GUI extends JFrame {
 	protected JLabel movimientosLabel;
 	protected int movimientosRestantes;
 	protected AnimadorCronometro animadorTiempo;
-	//-------------------------------------------
-	//protected Nivel miNivel;
-	//-------------------------------------------
 	private int size_label = 100;
 
 	//Movimientos
@@ -115,12 +112,10 @@ public class GUI extends JFrame {
 		return tiempoRestante;
 	}
 
-	public void disminuirTiempo() {
-		tiempoRestante--;
-		milogica.disminuirTiempo();
+	public void actualizarTiempo(int tiempo) {
+		tiempoRestante = tiempo;
 		timerLabel.setText("Tiempo restante: " + tiempoRestante);
 	}
-
 	public EntidadGrafica agregar_entidad(Entidad e) {
 		GridBagConstraints c = new GridBagConstraints();
 		Celda celda = new Celda(this, e, size_label);
@@ -182,6 +177,10 @@ public class GUI extends JFrame {
 		
 	}
 	
+	public void mostrarMensajeDerrotaPorTiempo() {
+		System.out.println("GUI :: derrotaPorTiempo");
+	}
+	
 	//--------------------------------------------------------
 	public void limpiarGUI() {
 	   
@@ -209,4 +208,10 @@ public class GUI extends JFrame {
 	public boolean getBloquear_intercambios() {
 		return bloquear_intercambios;
 	}
+
+
+	
+
+
+	
 }

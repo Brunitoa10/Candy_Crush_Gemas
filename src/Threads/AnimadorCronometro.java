@@ -17,7 +17,8 @@ public class AnimadorCronometro extends Thread {
         try {
             while(miGUI.getTiempoRestante() >= 0) {
 			    sleep(1000);
-                miGUI.disminuirTiempo();
+			    miGUI.actualizarTiempo(tiempo);
+                //miGUI.disminuirTiempo();
 		    }
         } catch (InterruptedException e) {
             e.printStackTrace();

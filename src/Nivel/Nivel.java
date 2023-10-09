@@ -2,6 +2,7 @@ package Nivel;
 
 import java.util.ArrayList;
 
+import GUI.GUI;
 import Logica.Logica;
 import Tablero.Tablero;
 
@@ -19,11 +20,12 @@ public class Nivel {
 	private Tablero miTablero;
 
 	//Constructor
-	public Nivel(int posX, int posY) {
+	public Nivel(int posX, int posY,Logica l) {
 		fila_inicial_jugador = posX;
 		columna_inicial_jugador = posY;
 		vidas = 3;
 		this.objetivo = new ArrayList<>(); // Inicializamos la lista de objetivos
+		miLogica = l;
 	}
 
 	//Metodos
@@ -88,7 +90,12 @@ public class Nivel {
 	    if (movimientos == 0) {
 	    	restarVidas();
 	    	System.out.println("Nivel :: vidas "+vidas);
-            miLogica.notificarDerrotaPorMovimientos();
+	    	miLogica.notificarDerrotaPorMovimientos();
+	    	if(vidas>0) {
+	    		miLogica.reiniciarNivel();
+	    	}
+	    	
+            
 	        /*if (verificarObjetivosCumplidos()) {
 	            miLogica.notificarVictoriaPorObjetivos(); // Notificar a la lógica si se cumplieron los objetivos.
 	        } else {
@@ -134,5 +141,16 @@ public class Nivel {
 
 	public void setVidas(int vida) {
 		this.vidas = vida;
+	}
+
+	public void reiniciarNivel(Tablero miTablero2, GUI miGUI, Nivel miNivel, Logica logica,GeneradorNivel generadorNivel) {
+		miTablero.resetearTablero(miTablero.getFila(), miTablero.getColumna());
+		miGUI.limpiarGUI();
+		miTablero.limpiarTablero();
+		miNivel = generadorNivel.cargar_nivel_y_tablero(miTablero, 1,logica);
+		miTablero.asignarGUI(miGUI);
+		//asociarEntidadesLogicasGraficas();
+		miNivel.setMovimientos(miNivel.getTotalMovimientos());
+        miTablero.fijarJugador(miNivel.getFilaInicialJugador(), miNivel.getColumnaInicialJugador());
 	}
 }

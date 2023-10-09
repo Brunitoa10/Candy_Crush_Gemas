@@ -9,8 +9,8 @@ import java.util.Scanner;
 import Tablero.Tablero;
 import java.io.File;
 public class GeneradorNivel {
-	public static Nivel cargar_nivel_y_tablero(Tablero t, int nivel) {
-		Nivel miNivel = new Nivel(0,0);
+	public static Nivel cargar_nivel_y_tablero(Tablero t, int nivel,Logica l) {
+		Nivel miNivel = new Nivel(0,0,l);
 		try {
 			Scanner input = new Scanner(new File("src//Niveles//Nivel" + nivel + ".txt"));
 
