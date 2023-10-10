@@ -46,7 +46,7 @@ public abstract class Gema extends Entidad{
 		entidadG.notificarse_intercambio_posicion();
 	}
 
-	public abstract void romper(Entidad e);
+	public abstract void romper();
   
 	
 }

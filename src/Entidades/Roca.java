@@ -1,5 +1,7 @@
 package Entidades;
 
+import Logica.Color;
+
 public class Roca extends Obstaculo{
 
 	public Roca(int f, int c) {
@@ -32,8 +34,11 @@ public class Roca extends Obstaculo{
 		return false;
 	}
 
-	public void romper(Entidad e) {
-		e.setImagenesRep("0");
+	public void romper() {
+		    System.out.println("destruido "+ this.color + " en: "+fila+","+columna );
+	        color = Color.TRANSPARENTE;
+	        cargarImagenesRepresentativas(ruta);
+	        entidadG.notificarse_explosion();
 	}
 
 }

@@ -1,4 +1,7 @@
 package Entidades;
+
+import Logica.Color;
+
 public class GemaRayada extends Gema{
 	
 	//direccion en la que la gema explotara
@@ -16,19 +19,21 @@ public class GemaRayada extends Gema{
 	}
 
 	@Override
-	public void romper(Entidad e) {
-		int fila=e.getFila();
-		int columna=e.getColumna();
+	public void romper() {
+		int f=fila;
+		int c=columna;
         int tope=0;
-		GemaRayada aux=(GemaRayada) e;
-       if(aux.getDireccion()==0) //es Horizontal
+       if(d==0) //es Horizontal
 	   {
           tope=miTablero.getColumna();
 		  for(int i=0;i<tope;i++)
 		  {
-            if(i==columna)
+            if(i==c)
 			{
-              miTablero.getEntidad(fila,i).setImagenesRep("0");
+              System.out.println("destruido gema rayada Horizontal"+ this.color + " en: "+f+","+c );
+	          color = Color.TRANSPARENTE;
+	          cargarImagenesRepresentativas(ruta);
+	          entidadG.notificarse_explosion();
 			}
 			else
 			{
@@ -41,9 +46,12 @@ public class GemaRayada extends Gema{
           tope=miTablero.getFila();
 		  for(int i=0;i<tope;i++)
 		  {
-            if(i==fila)
+            if(i==f)
 			{
-              miTablero.getEntidad(i,columna).setImagenesRep("0");
+                 System.out.println("destruido gema rayada Vertical "+ this.color + " en: "+f+","+c );
+	             color = Color.TRANSPARENTE;
+	   			 cargarImagenesRepresentativas(ruta);
+	  			 entidadG.notificarse_explosion();;
 			}
 			else
 			{

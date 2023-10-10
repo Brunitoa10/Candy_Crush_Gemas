@@ -514,7 +514,31 @@ public class Tablero {
 	    }
 	 }
 
-		
-	
+	//Verifica si hay rocas para romper en la proximidad
+	private void destruirRocas(Entidad e)
+	{
+	  int fila=e.getFila();
+	  int columna=e.getColumna();
+	  //si no esta en la primer fila verifica si hay una roca al norte
+	  if(fila!=0 && t[fila-1][columna].getEntidad().obtenerColor()==7) 
+	  {
+		t[fila-1][columna].getEntidad().romper();
+	  }
+	  //si no esta en la primer columna verifica si hay una roca al oeste
+	  if(columna!=0 && t[fila-1][columna].getEntidad().obtenerColor()==7) 
+	  {
+		t[fila][columna-1].getEntidad().romper();
+	  }
+	  //si no esta en la ultima fila verifica si hay una roca al sur
+	  if(fila!=filas-1 && t[fila+1][columna].getEntidad().obtenerColor()==7)
+	  {
+		t[fila+1][columna].getEntidad().romper();
+	  }
+	  //si no esta en la ultima columna verifica si hay una roca al este
+	  if(columna!=columnas-1 && t[fila][columna+1].getEntidad().obtenerColor()==7)
+	  {
+		t[fila][columna+1].getEntidad().romper();
+	  }
+	}
 
 }

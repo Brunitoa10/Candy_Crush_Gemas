@@ -1,5 +1,7 @@
 package Entidades;
 
+import Logica.Color;
+
 public class GemaEnvuelta extends Gema{
 
 	public GemaEnvuelta(int f, int c, int col) {
@@ -7,48 +9,51 @@ public class GemaEnvuelta extends Gema{
 	}
 
 	@Override
-	public void romper(Entidad e) {
-		int fila=e.getFila();
-		int columna=e.getColumna();
+	public void romper() {
+		int f=fila;
+		int c=columna;
 		int topeFila=miTablero.getFila();
 		int topeColumna=miTablero.getColumna();
 		int i=0;
 		int j=0;
 
-		if(fila!=0)
+		if(f!=0)
 		{
 			i=fila-1;
 		}
 
-		if(columna!=0)
+		if(c!=0)
 		{
 			j=columna-1;
 		}
 
-        if(topeFila-1!=fila)
+        if(topeFila-1!=f)
 		{
           topeFila=fila+1;		
 		}
 
-		if(topeColumna-1!=columna)
+		if(topeColumna-1!=c)
 		{
 			topeColumna=columna+1;
 		}
 
 		while(i!=topeFila)
 		{
-          int c=j;
-          while(c!=topeColumna)
+          int aux=j;
+          while(aux!=topeColumna)
 		  {
-			if(i==fila && c==columna)
+			if(i==fila && aux==columna)
 			{
-				miTablero.getEntidad(i,c).setImagenesRep("0");
+				    System.out.println("destruido gema envuelta "+ this.color + " en: "+fila+","+columna );
+	 			    color = Color.TRANSPARENTE;
+				    cargarImagenesRepresentativas(ruta);
+				    entidadG.notificarse_explosion();
 			}
 			else
 			{
-                miTablero.getEntidad(i, c).destruir();
+                miTablero.getEntidad(i, aux).destruir();
 			}
-			c=c+1;
+			aux=aux+1;
 		  }
 		  i=i++;
 		}

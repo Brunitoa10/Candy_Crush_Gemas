@@ -1,5 +1,7 @@
 package Entidades;
 
+import Logica.Color;
+
 public class Hielo extends Obstaculo {
 
 	public Hielo(int f, int c, int col) {
@@ -39,7 +41,10 @@ public class Hielo extends Obstaculo {
 		imagenes[1] = ri + color +"-cursor.png";
 	}
 
-	public void romper(Entidad e) {
-		e.setImagenesRep("0");
+	public void romper() {
+		    System.out.println("destruido "+ this.color + " en: "+fila+","+columna );
+		    color = Color.TRANSPARENTE;
+		    cargarImagenesRepresentativas(ruta);
+	        entidadG.notificarse_explosion();
 	}
 }
