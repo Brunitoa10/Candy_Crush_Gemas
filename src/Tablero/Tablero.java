@@ -88,9 +88,10 @@ public class Tablero {
 		return (int)(Math.random()*cotaSuperior+cotaInferior);
 	}
 
-	private void intecambiarPriv(int f1,int c1, int f2, int c2) {
+	private boolean intecambiarPriv(int f1,int c1, int f2, int c2) {
 		Entidad aux;
 		aux =t[f1][c1].getEntidad();
+		boolean toReturn;
 		
 		t[f1][c1].setEntidad(t[f2][c2].getEntidad());
 		t[f2][c2].setEntidad(aux);
@@ -113,14 +114,15 @@ public class Tablero {
 		boolean movValido = manejarColisiones(CheckCruz(f1,c1,f2,c2),t[f1][c1],t[f2][c2],0); 
 		if(movValido) {
 			caida();
-			int i = 0;
+			toReturn = true;
 		}
 		else {intercambiarSinCheck(f2,c2,f1,c1);
 			t[f1][c1].notificarCeldaEnfocar();
 			t[f2][c2].notificarCeldaDesenfocar();
+			toReturn = false;
 		
 		}
-		
+		return toReturn;
 	}
 	
 	private LinkedList<Celda> checkFila(int f) {
@@ -220,6 +222,7 @@ public class Tablero {
 								color2 = c.getEntidad().obtenerColor();
 							else if(color2 == c.getEntidad().obtenerColor())
 								    posibleT = true;
+					destruirRocas(c.getEntidad());
 					c.getEntidad().destruir();
 					combo = 1;
 					if(c == c1 || c ==c2) {
@@ -235,6 +238,7 @@ public class Tablero {
 					c = it.next();
 					
 					if(c != null) {
+						destruirRocas(c.getEntidad());
 						c.getEntidad().destruir();
 						combo++;
 						if(c == c1 || c ==c2) {
@@ -442,28 +446,27 @@ public class Tablero {
 	
 	/* intercambia dede la posicion del cursor a direccion 0 derecha, 1 abajo, 2 izquierda, 3 arriba
 	 * en caso de no ser posible por out of bounds, no hace nada*/
-	public void intercambiar(int dir) {
-		
+	public boolean intercambiar(int dir) {
+		boolean toReturn=false;
 		switch(dir) {
 		case GUI.DERECHA:
 			if(cJugador < columnas -1) {
-				System.out.println("derecha");
-				if(t[fJugador][cJugador].getEntidad().esPosibleIntercambiar(t[fJugador][cJugador+1].getEntidad()) && t[fJugador][cJugador+1].getEntidad().esPosibleIntercambiar(t[fJugador][cJugador].getEntidad())) {
-					intecambiarPriv(fJugador,cJugador,fJugador,cJugador+1);
+				if(t[fJugador][cJugador].getEntidad().esPosibleIntercambiar(t[fJugador][cJugador+1].getEntidad()) && t[fJugador][cJugador+1].getEntidad().esPosibleIntercambiar(t[fJugador][cJugador].getEntidad())) {					
+					toReturn = intecambiarPriv(fJugador,cJugador,fJugador,cJugador+1);
 					}}
 		break;
 		case GUI.ARRIBA:
 			if(fJugador>0) {
 				System.out.println("arriba");
-				if(t[fJugador][cJugador].getEntidad().esPosibleIntercambiar(t[fJugador-1][cJugador].getEntidad()) && t[fJugador-1][cJugador].getEntidad().esPosibleIntercambiar(t[fJugador][cJugador].getEntidad())) {
-					intecambiarPriv(fJugador,cJugador,fJugador-1,cJugador);
+				if(t[fJugador][cJugador].getEntidad().esPosibleIntercambiar(t[fJugador-1][cJugador].getEntidad()) && t[fJugador-1][cJugador].getEntidad().esPosibleIntercambiar(t[fJugador][cJugador].getEntidad())) {					
+					toReturn = intecambiarPriv(fJugador,cJugador,fJugador-1,cJugador);
 					}}
 		break;
 		case GUI.IZQUIERDA:
 			if(cJugador>0) {
 				System.out.println("izquierda");
-				if(t[fJugador][cJugador].getEntidad().esPosibleIntercambiar(t[fJugador][cJugador-1].getEntidad()) && t[fJugador][cJugador-1].getEntidad().esPosibleIntercambiar(t[fJugador][cJugador].getEntidad())) {
-					intecambiarPriv(fJugador,cJugador,fJugador,cJugador-1);
+				if(t[fJugador][cJugador].getEntidad().esPosibleIntercambiar(t[fJugador][cJugador-1].getEntidad()) && t[fJugador][cJugador-1].getEntidad().esPosibleIntercambiar(t[fJugador][cJugador].getEntidad())) {					
+					toReturn =intecambiarPriv(fJugador,cJugador,fJugador,cJugador-1);
 					}}
 			
 		break;
@@ -471,12 +474,13 @@ public class Tablero {
 			if(fJugador<filas -1 ) {
 				System.out.println("abajo");
 				if(t[fJugador][cJugador].getEntidad().esPosibleIntercambiar(t[fJugador+1][cJugador].getEntidad()) && t[fJugador+1][cJugador].getEntidad().esPosibleIntercambiar(t[fJugador][cJugador].getEntidad())) {
-					intecambiarPriv(fJugador,cJugador,fJugador+1,cJugador);
+					toReturn = intecambiarPriv(fJugador,cJugador,fJugador+1,cJugador);
 					}}
 		break;
 		default: System.out.println("mover jugador(): direccion incorrecta");
 		}
 	    printTable();
+	    return toReturn;
 	}
 	
 	

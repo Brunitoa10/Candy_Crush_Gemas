@@ -37,8 +37,8 @@ public class Logica {
 	}
 
 	public void intercambiar(int direccion) {
-		miTablero.intercambiar(direccion);
-		miNivel.restarMovimientos();
+		if(miTablero.intercambiar(direccion))
+		    miNivel.restarMovimientos();
 		miGUI.actualizarMovimientos(miNivel.getMovimientos());
 	}
 
