@@ -1,16 +1,13 @@
-/.metadata/
-
+.metadata/
 
 /bin/
 
+*.project
 
+*.classpath
 
-.project
+.settings/
 
-.classpath
+*.class
 
-/.settings/
-
-.class
-
-/.vs/
+.vs/
