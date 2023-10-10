@@ -16,5 +16,8 @@ public class GemaNormal extends Gema{
 	  		entidadG.notificarse_explosion();
 		}
 
+		public void explosionAdyacente()
+		{}
+
 
 }

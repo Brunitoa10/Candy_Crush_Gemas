@@ -47,4 +47,7 @@ public class Hielo extends Obstaculo {
 		    cargarImagenesRepresentativas(ruta);
 	        entidadG.notificarse_explosion();
 	}
+
+	public void explosionAdyacente()
+	{}
 }

@@ -59,4 +59,6 @@ public class GemaEnvuelta extends Gema{
 		}
 	}
 
+	public void explosionAdyacente()
+	{}
 }

@@ -41,4 +41,7 @@ public class Roca extends Obstaculo{
 	        entidadG.notificarse_explosion();
 	}
 
+	public void explosionAdyacente() {
+		romper();
+	}
 }

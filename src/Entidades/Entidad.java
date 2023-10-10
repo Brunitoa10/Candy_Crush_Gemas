@@ -120,4 +120,6 @@ public abstract class Entidad implements EntidadLogica, Enfocable{
 	public abstract boolean esPosibleIntercambiar(Entidad e);
 
 	public abstract void romper();
+
+	public abstract void explosionAdyacente();
 }

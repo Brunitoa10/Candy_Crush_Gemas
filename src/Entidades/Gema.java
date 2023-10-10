@@ -47,6 +47,8 @@ public abstract class Gema extends Entidad{
 	}
 
 	public abstract void romper();
+
+	public abstract void explosionAdyacente();
   
 	
 }

@@ -519,25 +519,25 @@ public class Tablero {
 	{
 	  int fila=e.getFila();
 	  int columna=e.getColumna();
-	  //si no esta en la primer fila verifica si hay una roca al norte
-	  if(fila!=0 && t[fila-1][columna].getEntidad().obtenerColor()==7) 
+	  //si no esta en la primer fila manda mensaje
+	  if(fila!=0) 
 	  {
-		t[fila-1][columna].getEntidad().romper();
+		t[fila-1][columna].getEntidad().explosionAdyacente();
 	  }
-	  //si no esta en la primer columna verifica si hay una roca al oeste
-	  if(columna!=0 && t[fila-1][columna].getEntidad().obtenerColor()==7) 
+	  //si no esta en la primer columna manda mensaje
+	  if(columna!=0) 
 	  {
-		t[fila][columna-1].getEntidad().romper();
+		t[fila][columna-1].getEntidad().explosionAdyacente();
 	  }
-	  //si no esta en la ultima fila verifica si hay una roca al sur
-	  if(fila!=filas-1 && t[fila+1][columna].getEntidad().obtenerColor()==7)
+	  //si no esta en la ultima fila manda mensaje
+	  if(fila!=filas-1)
 	  {
-		t[fila+1][columna].getEntidad().romper();
+		t[fila+1][columna].getEntidad().explosionAdyacente();
 	  }
-	  //si no esta en la ultima columna verifica si hay una roca al este
-	  if(columna!=columnas-1 && t[fila][columna+1].getEntidad().obtenerColor()==7)
+	  //si no esta en la ultima columna manda mensaje
+	  if(columna!=columnas-1)
 	  {
-		t[fila][columna+1].getEntidad().romper();
+		t[fila][columna+1].getEntidad().explosionAdyacente();
 	  }
 	}
 

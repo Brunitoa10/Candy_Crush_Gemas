@@ -61,4 +61,6 @@ public class GemaRayada extends Gema{
 	   }
 	}
 
+	public void explosionAdyacente()
+	{}
 }
