@@ -8,6 +8,8 @@ import java.awt.GridBagConstraints;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.Insets;
+
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -22,7 +24,7 @@ public class GUI extends JFrame {
 	protected Logica milogica;
 	protected int filas,columnas;
 	protected JPanel panel_principal;
-	protected JLabel timerLabel;
+	protected JLabel timerLabel,objetivosLabel;
 	protected int tiempoRestante;
 	protected CentralAnimaciones mi_animador;
 	protected int animaciones_pendientes;
@@ -53,7 +55,9 @@ public class GUI extends JFrame {
 		inicializar();
 	}
 	
-	
+	public void mostrarObjetivos() {
+		objetivosLabel.setText(milogica.obtenerInfoObjetivos());
+	}
 	protected void inicializar() {
 		setTitle("Proyecto Candy Crush - Comision-06");
 		setExtendedState(JFrame.MAXIMIZED_BOTH); 
@@ -67,7 +71,8 @@ public class GUI extends JFrame {
 		setLayout(new GridBagLayout());
 
 		timerLabel = new JLabel("Tiempo restante: "+ tiempoRestante);
-		movimientosLabel = new JLabel ("Movimientos restantes: "+ + movimientosRestantes);
+		movimientosLabel = new JLabel ("Movimientos restantes: "+movimientosRestantes);
+		objetivosLabel = new JLabel (milogica.obtenerInfoObjetivos());
 		
 		panel_principal = new JPanel();
 		panel_principal.setSize(size_label * filas, size_label * columnas);
@@ -101,6 +106,16 @@ public class GUI extends JFrame {
 		c.anchor = GridBagConstraints.FIRST_LINE_END;
 		c.insets = new Insets(10,10,0,0);
 		getContentPane().add(movimientosLabel, c);
+		
+		//Agregado por bruno------------------
+		c.anchor = GridBagConstraints.PAGE_START; 
+	    c.insets = new Insets(10, 0, 0, 10);      
+	    c.gridx = 1;                               
+	    c.gridy = 1; // Cambiado de 0 a 1 para que aparezca debajo de 'objetivosLabel'
+		getContentPane().add(objetivosLabel, c);
+		//mostrarImagenGema(objetivosLabel.getText());
+
+		//---------------------------
 		panel_principal.setFocusable(true);
 	}
 	
@@ -151,7 +166,7 @@ public class GUI extends JFrame {
 	
 	public void actualizarMovimientos(int movimientos) {
 		movimientosRestantes = milogica.getMovimientos();
-		movimientosLabel.setText("Movimientos restantes: "+ + movimientosRestantes);
+		movimientosLabel.setText("Movimientos restantes: "+movimientosRestantes);
 	}
 
 	public void iniciarTiempo() {
@@ -173,6 +188,11 @@ public class GUI extends JFrame {
 		
 	}
 	
+	public void mostrarMensajeVictoriaPorObjetivos() {
+		// TODO Auto-generated method stub
+		
+	}
+
 	public void mostrarMensajeDerrotaPorTiempo() {
 		System.out.println("GUI :: derrotaPorTiempo");
 	}
@@ -206,8 +226,18 @@ public class GUI extends JFrame {
 	}
 
 
-	
-
-
+	/*public void mostrarImagenGema(String rutaImagen) {
+	    ImageIcon icono = new ImageIcon(rutaImagen);
+	    JLabel label = new JLabel(icono);
+	    
+	    GridBagConstraints c = new GridBagConstraints();
+	    c.anchor = GridBagConstraints.PAGE_START;
+	    c.insets = new Insets(10, 0, 0, 10);
+	    c.gridx = 1;
+	    c.gridy = 1;
+	    
+	    getContentPane().add(label, c);
+	    revalidate(); // Asegura que la GUI se actualice correctamente
+	}*/
 	
 }

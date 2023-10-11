@@ -20,4 +20,5 @@ public interface EntidadLogica {
 	//solo cambia los valores de x e y
 	public void intercambiarPosicion(int x, int y);
 
-	public String getImagenRep();}
+	public String getImagenRep();
+}

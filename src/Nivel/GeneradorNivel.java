@@ -1,6 +1,7 @@
 package Nivel;
 
 
+
 import Entidades.GemaNormal;
 import Logica.Logica;
 
@@ -40,13 +41,16 @@ public class GeneradorNivel {
 			//Mejorar
 			
 			// Leer objetivos hasta encontrar la marca 'f'
+			int id = 0;
 			while (input.hasNextLine()) {
 				String line = input.nextLine();
 				if (line.equals("f")) {
 					break;
 				}
 				String[] gemaData = line.split(",");
-				miNivel.agregarObjetivo(Integer.parseInt(gemaData[0].trim()), Integer.parseInt(gemaData[1].trim()));
+				Objetivos objetivo = new Objetivos(Integer.parseInt(gemaData[0].trim()), Integer.parseInt(gemaData[1].trim()));
+				miNivel.agregarObjetivo(id,objetivo);
+				id++;
 			}
 
 
@@ -67,9 +71,8 @@ public class GeneradorNivel {
 			System.out.println("posY :: "+miNivel.getColumnaInicialJugador());
 			System.out.println("Movimientos :: "+miNivel.getMovimientos());
 			System.out.println("Tiempo :: "+miNivel.getTiempo());
-			for(int i = 0; i < miNivel.sizeObjetivos(); i++) {
-				System.out.println("CantGemas :: "+miNivel.getObjetivo(i).getCantGemas()+" tipoGema :: "+miNivel.getObjetivo(i).getTipoGema());
-			}
+			
+			miNivel.imprimirObjetivos();
 			System.out.println("------------------------------------------------");
 			
 		} catch (Exception ex) {

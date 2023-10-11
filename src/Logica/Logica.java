@@ -37,9 +37,11 @@ public class Logica {
 	}
 
 	public void intercambiar(int direccion) {
-		if(miTablero.intercambiar(direccion))
-		    miNivel.restarMovimientos();
-		miGUI.actualizarMovimientos(miNivel.getMovimientos());
+		System.out.println(miTablero.intercambiar(direccion));
+		if(miTablero.intercambiar(direccion)) {
+			 miNivel.restarMovimientos();
+			 miGUI.actualizarMovimientos(miNivel.getMovimientos());
+		}
 	}
 
 	public void notificarDerrotaPorMovimientos() {
@@ -58,10 +60,19 @@ public class Logica {
 		reiniciarNivel();
 	}
 	
-	public void notificarVictoriaPorObjetivos() {
+	public void notificarVictoriaPorMovimientos() {
 		miGUI.mostrarMensajeVictoriaPorMovimientos();
 	}
-
+	
+	public void notificarVictoriaPorObjetivos() {
+		miGUI.mostrarMensajeVictoriaPorObjetivos();
+	}
+	
+	public String obtenerInfoObjetivos() {
+	    return miNivel.obtenerInfoObjetivos();
+	}
+	
+	
 	private void asociarEntidadesLogicasGraficas() {
 		Entidad ent;
 		EntidadGrafica egrafica;
@@ -144,6 +155,11 @@ public class Logica {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
 		}
+	}
+
+
+	public String obtenerTipoDeGema(int tipoGema) {
+		return miTablero.obtenerTipoGema(tipoGema);
 	}
 
 

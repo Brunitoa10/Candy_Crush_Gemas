@@ -545,4 +545,22 @@ public class Tablero {
 	  }
 	}
 
+	
+	//Metodo Agregado por bruno
+	public String obtenerTipoGema(int tipoGema) {
+		boolean encontre = false;
+		String nombreGema = " ";
+		for(int i = 0; i<filas && !encontre; i++) {
+			for (int j = 0; j<columnas && !encontre; j++) {
+				if (t[i][j].getEntidad().obtenerColor() == tipoGema) {
+					encontre = true; 
+					if(encontre) {
+						nombreGema = t[i][j].getEntidad().getImagenRep();
+					}
+				}
+			}
+		}
+		return nombreGema;
+	}
+
 }

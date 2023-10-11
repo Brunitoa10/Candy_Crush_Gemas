@@ -1,32 +1,32 @@
 package Nivel;
 
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
+import GUI.EntidadGrafica;
 import Logica.Logica;
-import Tablero.Tablero;
 
 
 public class Nivel {
 	//Atributos
 	protected int movimientos,totalmovimientos;
-	protected ArrayList<Objetivos> objetivo; // ArrayList para almacenar los objetivos
+	protected Map<Integer, Objetivos> mapaDeObjetivos; // ArrayList para almacenar los objetivos
 	protected int fila_inicial_jugador;
 	protected int columna_inicial_jugador;
 	protected int tiempo;
 	protected int vidas;
 	//Dudoso
 	private Logica miLogica;
-	private Tablero miTablero;
 
 	//Constructor
 	public Nivel(int posX, int posY,Logica l) {
 		fila_inicial_jugador = posX;
 		columna_inicial_jugador = posY;
 		vidas = 3;
-		this.objetivo = new ArrayList<>(); // Inicializamos la lista de objetivos
+		this.mapaDeObjetivos = new HashMap<>(); // Inicializamos la lista de objetivos
 		miLogica = l;
 	}
-
+		
 	//Metodos
 	public int getFilaInicialJugador() {
 		return fila_inicial_jugador;
@@ -73,16 +73,12 @@ public class Nivel {
 	}
 	
 	// Método para agregar un objetivo
-	public void agregarObjetivo(int cantGemas, int tipoGema) {
-		objetivo.add(new Objetivos(cantGemas, tipoGema));
-	}
+	public void agregarObjetivo(int id, Objetivos objetivo) {
+		mapaDeObjetivos.put(id, objetivo);
+    }
 
-	public int sizeObjetivos() {
-		return objetivo.size();
-	}
-	
-	public Objetivos getObjetivo(int indice) {
-		return objetivo.get(indice);
+    public Objetivos obtenerObjetivo(int id) {
+        return mapaDeObjetivos.get(id);
     }
 	
 	public void setTiempo(int tiempo) {
@@ -119,34 +115,30 @@ public class Nivel {
 		}
 	}
 
-	public boolean verificarObjetivosCumplidos() {
-	    int cantGemas = 0, tipoGema = 0, cantidadGemasTipo = 0;
-	     //Si anda mejorar codigo y ciclo de corte
-		for (Objetivos objetivo : objetivo) {
-	        cantGemas = objetivo.getCantGemas();
-	        tipoGema = objetivo.getTipoGema();
-	        cantidadGemasTipo = contarGemasDelTipo(tipoGema);
-	        System.out.println("cantGemas "+cantGemas+" tipoGema "+tipoGema+" cantidadGemasTipo "+cantidadGemasTipo);
-	        if (cantidadGemasTipo < cantGemas) {
-	            return false; // El objetivo no está cumplido.
-	        }
-	    }
-	    return true; // Todos los objetivos están cumplidos.
-	}
-
-	private int contarGemasDelTipo(int tipoGema) {
-	    int contador = 0;
-	    for (int i = 0; i < miTablero.getFila(); i++) {
-	        for (int j = 0; j < miTablero.getColumna(); j++) {
-	            if (miTablero.getEntidad(i, j).obtenerColor() == tipoGema) {
-	                contador++;
-	            }
-	        }
-	    }
-	    return contador;
-	}
 
 	public void setVidas(int vida) {
 		this.vidas = vida;
+	}
+
+	public void imprimirObjetivos() {
+        for (int id : mapaDeObjetivos.keySet()) {
+            Objetivos objetivo = mapaDeObjetivos.get(id);
+            if (objetivo != null) {
+                System.out.println("ID: " + id + ", Objetivo: " + objetivo.getCantGemas() + " " + objetivo.getTipoGema());
+            }
+        }
+    }
+	
+	public String obtenerInfoObjetivos() {
+	    StringBuilder info = new StringBuilder();
+	    for (Map.Entry<Integer, Objetivos> entry : mapaDeObjetivos.entrySet()) {
+	        Objetivos objetivo = entry.getValue();
+	        info.append("Cantidad de Gemas: ").append(objetivo.getCantGemas()).append(", Tipo de Gema: ").append(buscarTipo(objetivo.getTipoGema())).append(" ");
+	    }
+	    return info.toString();
+	}
+
+	private String buscarTipo(int tipoGema) {
+		return miLogica.obtenerTipoDeGema(tipoGema);
 	}
 }

@@ -26,4 +26,8 @@ public class Objetivos {
     public boolean estaCumplido() {
         return progreso >= cantGemas;
     }
+
+	public int getProgreso() {
+		return progreso;
+	}
 }
