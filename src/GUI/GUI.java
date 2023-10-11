@@ -119,8 +119,8 @@ public class GUI extends JFrame {
 		//Constraints PANEL OBJETIVOS
 		c.insets = new Insets(0, 10, 0, 0);      
 	    c.gridx = 0;                               
-	    c.gridy = 5;
-		c.gridwidth = 4;
+	    c.gridy = 1;
+		c.gridwidth = 2;
 		c.gridheight = 1;
 		getContentPane().add(panel_objetivos, c);
 
@@ -131,7 +131,7 @@ public class GUI extends JFrame {
 		c.gridwidth = 4;
 		c.gridheight = 4;
 		c.weightx = 1;
-		c.weighty = 2;
+		c.weighty = 1;
 		c.anchor = GridBagConstraints.CENTER;
 		getContentPane().add(panel_principal,c);
 

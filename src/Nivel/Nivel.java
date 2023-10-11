@@ -125,6 +125,9 @@ public class Nivel {
 	/*
 	Cambie obtenerInfoObjetivos para que devuelva un array de strings para poder 
 	ponerlo en 3 JLabels distintos mas facil 
+
+	Y comenté el texto porque al aparecer 3 veces hace que sea demasiado largo y rompe
+	los grids, una vez solucionemos eso lo cambiamos
 	- Nacho
 	*/
 	public String[] obtenerInfoObjetivos() {
@@ -136,8 +139,8 @@ public class Nivel {
 
 	    for (Map.Entry<Integer, Objetivos> entry : mapeoDeObjetivos.entrySet()) {
 	        Objetivos objetivo = entry.getValue();
-	        info[0].append("Cantidad de Gemas: ").append(objetivo.getCantGemas());
-			info[1].append("Tipo de Gema: ");
+	        info[0].append("a:"/*"Cantidad de Gemas: "*/).append(objetivo.getCantGemas());
+			info[1].append("b:"/*"Tipo de Gema: "*/);
 			info[2].append(buscarTipo(objetivo.getTipoGema())).append(" ");
 	    }
 
