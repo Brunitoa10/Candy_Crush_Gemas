@@ -198,6 +198,7 @@ public class Tablero {
 		 */
 		
 		if(!l.isEmpty()) {
+			miLogica.actualizarObjetivos(l);
 			Iterator<Celda> it = l.iterator();
 			Celda c = null;
 			Celda aux;

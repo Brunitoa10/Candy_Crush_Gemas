@@ -1,11 +1,13 @@
 package Logica;
 
 import java.awt.EventQueue;
+import java.util.LinkedList;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import Entidades.Entidad;
 import GUI.GUI;
+import GUI.Celda;
 import GUI.EntidadGrafica;
 import Nivel.GeneradorNivel;
 import Nivel.Nivel;
@@ -161,6 +163,11 @@ public class Logica {
 
 	public String obtenerTipoDeGema(int tipoGema) {
 		return miTablero.obtenerTipoGema(tipoGema);
+	}
+
+
+	public void actualizarObjetivos(LinkedList<Celda> l) {
+		
 	}
 
 
