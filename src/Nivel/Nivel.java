@@ -9,7 +9,7 @@ import Logica.Logica;
 public class Nivel {
 	//Atributos
 	protected int movimientos,totalmovimientos;
-	protected Map<Integer, Objetivos> mapaDeObjetivos; 
+	protected Map<Integer, Objetivos> mapeoDeObjetivos; 
 	protected int fila_inicial_jugador;
 	protected int columna_inicial_jugador;
 	protected int tiempo;
@@ -21,7 +21,7 @@ public class Nivel {
 		fila_inicial_jugador = posX;
 		columna_inicial_jugador = posY;
 		vidas = 3;
-		this.mapaDeObjetivos = new HashMap<>(); // Inicializamos la lista de objetivos
+		mapeoDeObjetivos = new HashMap<>(); // Inicializamos la lista de objetivos
 		miLogica = l;
 	}
 		
@@ -69,13 +69,16 @@ public class Nivel {
 		return vidas;
 	}
 	
-
+	public int getCantidadDeObjetivos() {
+		return mapeoDeObjetivos.size();
+	}
+	
 	public void agregarObjetivo(int id, Objetivos objetivo) {
-		mapaDeObjetivos.put(id, objetivo);
+		mapeoDeObjetivos.put(id, objetivo);
     }
 
     public Objetivos obtenerObjetivo(int id) {
-        return mapaDeObjetivos.get(id);
+        return mapeoDeObjetivos.get(id);
     }
 	
 	public void setTiempo(int tiempo) {
@@ -85,6 +88,7 @@ public class Nivel {
 	public void restarMovimientos() {
 	    movimientos--;
 	    System.out.println("Movientos :: "+movimientos);
+	    System.out.println("Cantidad de objetivos :: "+mapeoDeObjetivos.size());
 	    if (movimientos == 0) {
 	    	restarVidas();
 	    	System.out.println("Nivel :: vidas "+vidas);
@@ -110,8 +114,8 @@ public class Nivel {
 	}
 
 	public void imprimirObjetivos() {
-        for (int id : mapaDeObjetivos.keySet()) {
-            Objetivos objetivo = mapaDeObjetivos.get(id);
+        for (int id : mapeoDeObjetivos.keySet()) {
+            Objetivos objetivo = mapeoDeObjetivos.get(id);
             if (objetivo != null) {
                 System.out.println("ID: " + id + ", Objetivo: " + objetivo.getCantGemas() + " " + objetivo.getTipoGema());
             }
@@ -130,7 +134,7 @@ public class Nivel {
 		info[1] = new StringBuilder("");
 		info[2] = new StringBuilder("");
 
-	    for (Map.Entry<Integer, Objetivos> entry : mapaDeObjetivos.entrySet()) {
+	    for (Map.Entry<Integer, Objetivos> entry : mapeoDeObjetivos.entrySet()) {
 	        Objetivos objetivo = entry.getValue();
 	        info[0].append("Cantidad de Gemas: ").append(objetivo.getCantGemas());
 			info[1].append("Tipo de Gema: ");

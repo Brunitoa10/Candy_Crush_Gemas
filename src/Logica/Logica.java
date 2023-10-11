@@ -72,7 +72,9 @@ public class Logica {
 	    return miNivel.obtenerInfoObjetivos();
 	}
 	
-	
+	public int getCantidadDeObjetivos() {
+		return miNivel.getCantidadDeObjetivos();
+	}
 	private void asociarEntidadesLogicasGraficas() {
 		Entidad ent;
 		EntidadGrafica egrafica;
