@@ -179,17 +179,15 @@ public class GUI extends JFrame {
 	}
 
 	public void mostrarMensajeDerrotaPorVidas() {
-		// TODO Auto-generated method stub
+
 		
 	}
 
 	public void mostrarMensajeVictoriaPorMovimientos() {
-		// TODO Auto-generated method stub
 		
 	}
 	
 	public void mostrarMensajeVictoriaPorObjetivos() {
-		// TODO Auto-generated method stub
 		
 	}
 

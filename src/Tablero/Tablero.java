@@ -6,7 +6,7 @@ import GUI.Celda;
 import GUI.EntidadGrafica;
 import GUI.GUI;
 import Logica.Logica;
-
+import java.util.Random;
 import java.util.Iterator;
 import java.util.LinkedList;
 
@@ -545,7 +545,15 @@ public class Tablero {
 	  }
 	}
 
-	
+	//Crea una gema random para poner en el tope
+	private Entidad generarGemaRandom(int fila, int columna)
+	{
+		Random random = new Random();
+		int color = random.nextInt(6) + 1; //genera un numero entre 1 y 6
+		Entidad toret= new GemaNormal(fila, columna, color); //Crea la gema random
+		return toret;
+	}
+
 	//Metodo Agregado por bruno
 	public String obtenerTipoGema(int tipoGema) {
 		boolean encontre = false;
@@ -562,5 +570,6 @@ public class Tablero {
 		}
 		return nombreGema;
 	}
+
 
 }
