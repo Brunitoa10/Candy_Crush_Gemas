@@ -104,7 +104,7 @@ public class GUI extends JFrame {
 
 		mostrarObjetivos();
 
-		//Constraints timer
+		//Constraints TIMER
 		GridBagConstraints c = new GridBagConstraints();
 		c.insets = new Insets(0,10,0,0);
 
@@ -116,6 +116,7 @@ public class GUI extends JFrame {
 		c.weightx = 0;
 		getContentPane().add(timerLabel,c);
 	
+		//Constraints PANEL OBJETIVOS
 		c.insets = new Insets(0, 10, 0, 0);      
 	    c.gridx = 0;                               
 	    c.gridy = 5;
@@ -123,8 +124,8 @@ public class GUI extends JFrame {
 		c.gridheight = 1;
 		getContentPane().add(panel_objetivos, c);
 
+		//Constraints TABLERO
 		c.insets = new Insets(0,0,0,0);
-
 		c.gridx = 2;
 		c.gridy = 1;
 		c.gridwidth = 4;
@@ -134,7 +135,7 @@ public class GUI extends JFrame {
 		c.anchor = GridBagConstraints.CENTER;
 		getContentPane().add(panel_principal,c);
 
-		//Constraints movimientos
+		//Constraints MOVIMIENTOS
 		c.gridx = 6;
 		c.gridy = 0;
 		c.gridwidth = 2;
