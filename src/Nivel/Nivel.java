@@ -118,13 +118,29 @@ public class Nivel {
         }
     }
 	
-	public String obtenerInfoObjetivos() {
-	    StringBuilder info = new StringBuilder();
+	/*
+	Cambie obtenerInfoObjetivos para que devuelva un array de strings para poder 
+	ponerlo en 3 JLabels distintos mas facil 
+	- Nacho
+	*/
+	public String[] obtenerInfoObjetivos() {
+		String[] devolver = new String[3];
+	    StringBuilder[] info = new StringBuilder[3];
+		info[0] = new StringBuilder("");
+		info[1] = new StringBuilder("");
+		info[2] = new StringBuilder("");
+
 	    for (Map.Entry<Integer, Objetivos> entry : mapaDeObjetivos.entrySet()) {
 	        Objetivos objetivo = entry.getValue();
-	        info.append("Cantidad de Gemas: ").append(objetivo.getCantGemas()).append(", Tipo de Gema: ").append(buscarTipo(objetivo.getTipoGema())).append(" ");
+	        info[0].append("Cantidad de Gemas: ").append(objetivo.getCantGemas());
+			info[1].append("Tipo de Gema: ");
+			info[2].append(buscarTipo(objetivo.getTipoGema())).append(" ");
 	    }
-	    return info.toString();
+
+		devolver[0] = info[0].toString();
+		devolver[1] = info[1].toString();
+		devolver[2] = info[2].toString();
+	    return devolver;
 	}
 
 	private String buscarTipo(int tipoGema) {

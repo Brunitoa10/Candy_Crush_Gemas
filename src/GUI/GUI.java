@@ -8,8 +8,11 @@ import java.awt.GridBagConstraints;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.Insets;
-
+import java.awt.Toolkit;
+import java.awt.Image;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import java.awt.Dimension;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -23,8 +26,8 @@ import Threads.CentralAnimaciones;
 public class GUI extends JFrame {
 	protected Logica milogica;
 	protected int filas,columnas;
-	protected JPanel panel_principal;
-	protected JLabel timerLabel,objetivosLabel;
+	protected JPanel panel_principal, panel_objetivos;
+	protected JLabel timerLabel,objetivosLabel1,objetivosLabel2,objetivosLabel3;
 	protected int tiempoRestante;
 	protected CentralAnimaciones mi_animador;
 	protected int animaciones_pendientes;
@@ -32,7 +35,7 @@ public class GUI extends JFrame {
 	protected JLabel movimientosLabel;
 	protected int movimientosRestantes;
 	protected AnimadorCronometro animadorTiempo;
-	private int size_label = 100;
+	private int size_label = 70;
 
 	//Movimientos
 	public static final int ARRIBA = 15000;
@@ -55,11 +58,12 @@ public class GUI extends JFrame {
 		inicializar();
 	}
 	
-	public void mostrarObjetivos() {
-		objetivosLabel.setText(milogica.obtenerInfoObjetivos());
-	}
+	
 	protected void inicializar() {
+			
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		setTitle("Proyecto Candy Crush - Comision-06");
+		setSize(screenSize);
 		setExtendedState(JFrame.MAXIMIZED_BOTH); 
 		setLocationRelativeTo(null);
 		//----------------------------------------------------
@@ -68,15 +72,19 @@ public class GUI extends JFrame {
 		//----------------------------------------------------
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setLayout(new GridBagLayout());
+		getContentPane();
 
 		timerLabel = new JLabel("Tiempo restante: "+ tiempoRestante);
 		movimientosLabel = new JLabel ("Movimientos restantes: "+movimientosRestantes);
-		objetivosLabel = new JLabel (milogica.obtenerInfoObjetivos());
 		
+		panel_objetivos = new JPanel();
 		panel_principal = new JPanel();
 		panel_principal.setSize(size_label * filas, size_label * columnas);
 		panel_principal.setLayout(new GridBagLayout());
+		panel_objetivos.setSize(100,100);
+		panel_objetivos.setLayout(new GridBagLayout());
 		
 		panel_principal.addKeyListener(new KeyAdapter() {
 			@Override
@@ -94,29 +102,80 @@ public class GUI extends JFrame {
 			}
 		});
 
+		mostrarObjetivos();
+
 		//Constraints timer
 		GridBagConstraints c = new GridBagConstraints();
-		c.anchor = GridBagConstraints.FIRST_LINE_START;
-		c.insets = new Insets(10,0,0,10);
-		getContentPane().add(timerLabel,c);
+		c.insets = new Insets(0,10,0,0);
 
-		getContentPane().add(panel_principal);
+		c.gridx = 0;                               
+	    c.gridy = 0;
+		c.gridwidth = 2;
+		c.gridheight = 1;
+		c.weightx = 0;
+		c.weightx = 0;
+		getContentPane().add(timerLabel,c);
+	
+		c.insets = new Insets(0, 10, 0, 0);      
+	    c.gridx = 0;                               
+	    c.gridy = 5;
+		c.gridwidth = 4;
+		c.gridheight = 1;
+		getContentPane().add(panel_objetivos, c);
+
+		c.insets = new Insets(0,0,0,0);
+
+		c.gridx = 2;
+		c.gridy = 1;
+		c.gridwidth = 4;
+		c.gridheight = 4;
+		c.weightx = 1;
+		c.weighty = 2;
+		c.anchor = GridBagConstraints.CENTER;
+		getContentPane().add(panel_principal,c);
 
 		//Constraints movimientos
-		c.anchor = GridBagConstraints.FIRST_LINE_END;
-		c.insets = new Insets(10,10,0,0);
+		c.gridx = 6;
+		c.gridy = 0;
+		c.gridwidth = 2;
+		c.gridheight = 1;
+		c.weightx = 0;
+		c.weightx = 0;
+		c.insets = new Insets(0,0,0,10);
 		getContentPane().add(movimientosLabel, c);
 		
-		//Agregado por bruno------------------
-		c.anchor = GridBagConstraints.PAGE_START; 
-	    c.insets = new Insets(10, 0, 0, 10);      
-	    c.gridx = 1;                               
-	    c.gridy = 1; // Cambiado de 0 a 1 para que aparezca debajo de 'objetivosLabel'
-		getContentPane().add(objetivosLabel, c);
-		//mostrarImagenGema(objetivosLabel.getText());
-
-		//---------------------------
 		panel_principal.setFocusable(true);
+	}
+
+	public void mostrarObjetivos() {
+		objetivosLabel1 = new JLabel();
+		objetivosLabel2 = new JLabel();
+		objetivosLabel3 = new JLabel();
+
+		//pone el texto a los 2 primeros objetivoLabels
+		objetivosLabel1.setText(milogica.obtenerInfoObjetivos()[0]);
+		objetivosLabel2.setText(milogica.obtenerInfoObjetivos()[1]);
+
+		//pone la imagen en el objetivosLabel3
+		ImageIcon imgIcon = new ImageIcon(this.getClass().getResource(milogica.obtenerInfoObjetivos()[2]));
+		Image imgEscalada = imgIcon.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+		Icon iconoEscalado = new ImageIcon(imgEscalada);
+
+		objetivosLabel3.setIcon(iconoEscalado);
+
+
+		//asigno los contraints a cada componente
+		GridBagConstraints c = new GridBagConstraints();
+		c.insets = new Insets(0, 0, 0, 0);      
+	   	c.gridx = 0;                               
+	    c.gridy = 0;
+		c.gridwidth = 1;
+		//agrego los 3 labels al panel con los objetivos
+		panel_objetivos.add(objetivosLabel1,c);
+		c.gridy = 1;
+		panel_objetivos.add(objetivosLabel2,c);
+		c.gridx = 1;
+		panel_objetivos.add(objetivosLabel3,c);
 	}
 	
 	public int getTiempoRestante() {

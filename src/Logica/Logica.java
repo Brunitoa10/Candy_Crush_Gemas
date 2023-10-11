@@ -68,7 +68,7 @@ public class Logica {
 		miGUI.mostrarMensajeVictoriaPorObjetivos();
 	}
 	
-	public String obtenerInfoObjetivos() {
+	public String[] obtenerInfoObjetivos() {
 	    return miNivel.obtenerInfoObjetivos();
 	}
 	
