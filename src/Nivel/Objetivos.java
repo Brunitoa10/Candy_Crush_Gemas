@@ -1,10 +1,12 @@
 package Nivel;
 
 public class Objetivos {
-	private int cantGemas;
-    private int tipoGema;
-    private int progreso;
+	//Atributos
+	protected int cantGemas;
+    protected int tipoGema;
+    protected int progreso;
     
+    //Constructor
     public Objetivos(int cantGemas, int tipoGema) {
         this.cantGemas = cantGemas;
         this.tipoGema = tipoGema;

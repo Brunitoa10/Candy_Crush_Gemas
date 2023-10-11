@@ -97,7 +97,6 @@ public class Logica {
             	reiniciarNivel();
             	tiempo = miNivel.getTiempo();
             }else {
-            	miGUI.mostrarMensajeDerrotaPorTiempo();
             	miGUI.mostrarMensajeDerrotaPorVidas();
             }
         }else {

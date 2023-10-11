@@ -3,20 +3,18 @@ package Nivel;
 import java.util.HashMap;
 import java.util.Map;
 
-import GUI.EntidadGrafica;
 import Logica.Logica;
 
 
 public class Nivel {
 	//Atributos
 	protected int movimientos,totalmovimientos;
-	protected Map<Integer, Objetivos> mapaDeObjetivos; // ArrayList para almacenar los objetivos
+	protected Map<Integer, Objetivos> mapaDeObjetivos; 
 	protected int fila_inicial_jugador;
 	protected int columna_inicial_jugador;
 	protected int tiempo;
 	protected int vidas;
-	//Dudoso
-	private Logica miLogica;
+	protected Logica miLogica;
 
 	//Constructor
 	public Nivel(int posX, int posY,Logica l) {
@@ -36,12 +34,11 @@ public class Nivel {
 		return columna_inicial_jugador;
 	}
 
-	// Método para establecer los movimientos
+
 	public void setMovimientos(int movimientos) {
 		this.movimientos = movimientos;
 	}
 
-	// Método para establecer la posición del jugador
 	public void setPosicionJugador(int posX, int posY) {
 		fila_inicial_jugador = posX;
 		columna_inicial_jugador = posY;
@@ -50,7 +47,7 @@ public class Nivel {
 	public int getMovimientos() {
 		return movimientos;
 	}
-	//------------------------------------------
+	
 	public int getTotalMovimientos() {
 		return movimientos;
 	}
@@ -63,7 +60,7 @@ public class Nivel {
 	public void setTotalTiempo(int t) {
 		 tiempo = t;
 	}
-	//----------------------------------------
+
 	public int getTiempo() {
 		return tiempo;
 	}
@@ -72,7 +69,7 @@ public class Nivel {
 		return vidas;
 	}
 	
-	// Método para agregar un objetivo
+
 	public void agregarObjetivo(int id, Objetivos objetivo) {
 		mapaDeObjetivos.put(id, objetivo);
     }
@@ -97,14 +94,6 @@ public class Nivel {
 	    	}else {
 	    		miLogica.notificarDerrotaPorVidas();
 	    	}
-	    	
-            
-	        /*if (verificarObjetivosCumplidos()) {
-	            miLogica.notificarVictoriaPorObjetivos(); // Notificar a la lógica si se cumplieron los objetivos.
-	        } else {
-	        	restarVidas();
-	            miLogica.notificarDerrotaPorMovimientos(); // Notificar a la lógica si no se cumplieron los objetivos.
-	        }*/
 	    }
 	}
 
