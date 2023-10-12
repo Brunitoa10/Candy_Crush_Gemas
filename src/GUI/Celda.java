@@ -29,15 +29,20 @@ public class Celda extends JLabel implements EntidadGrafica{
     public void notificarse_cambio_estado() {
 		cambiar_imagen(ent.getImagenRep());
 	}
+    
+    
 	
 	public void notificarse_explosion() {
 		cambiar_explosion();
-
 	}
 
 	@Override
 	public void notificarse_intercambio_posicion(){
 		miGUI.animar_movimiento(this);
+	}
+	
+	public void notificarse_caida(){
+		miGUI.animar_caida(this);
 	}
 	
 	public void notificarCeldaDesenfocar(){

@@ -101,12 +101,12 @@ public class Tablero {
 		t[f1][c1].notificarCeldaEnfocar();
 		t[f2][c2].notificarCeldaDesenfocar();
 
-		t[f1][c1].notificarse_intercambio_posicion();
+		/*t[f1][c1].notificarse_intercambio_posicion();
 		t[f2][c2].notificarse_intercambio_posicion();
-		
-		t[f1][c1].notificarse_cambio_estado();
+		*/
+		/*t[f1][c1].notificarse_cambio_estado();
 		t[f2][c2].notificarse_cambio_estado();
-		
+		*/
 		
 		System.out.println("INTERCAMBIADO: "+"["+f1+"]"+"["+c1+"]" +" y "+"["+f2+"]" +"["+c2+"]");
 		
@@ -273,13 +273,13 @@ public class Tablero {
 		t[f1][c1].setEntidad(t[f2][c2].getEntidad());
 		t[f2][c2].setEntidad(aux);
 		
-		t[f1][c1].getEntidad().intercambiarPosicion(f1,c1);
-		t[f2][c2].getEntidad().intercambiarPosicion(f2,c2);
+		//t[f1][c1].getEntidad().intercambiarPosicion(f1,c1);
+		//t[f2][c2].getEntidad().intercambiarPosicion(f2,c2);
 		//t[f1][c1].notificarCeldaEnfocar();
 		//t[f2][c2].notificarCeldaDesenfocar();
 		
-		t[f1][c1].notificarse_cambio_estado();
-		t[f2][c2].notificarse_cambio_estado();
+		//t[f1][c1].notificarse_cambio_estado();
+		//t[f2][c2].notificarse_cambio_estado();
 		
 		//t[f1][c1].notificarse_intercambio_posicion();
 		//t[f2][c2].notificarse_intercambio_posicion();
@@ -288,13 +288,21 @@ public class Tablero {
 		
 	}
 	private void intercambiarCaida(int f1, int c1, int f2, int c2) {
-		Entidad aux;
-		aux =t[f1][c1].getEntidad();
+		Entidad aux = t[f1][c1].getEntidad();
+		EntidadGrafica auxG = aux.getEGrafica();
+		
 		t[f1][c1].setEntidad(t[f2][c2].getEntidad());
 		t[f2][c2].setEntidad(aux);
 		
-		t[f1][c1].getEntidad().intercambiarPosicion(f1,c1);
-		t[f2][c2].getEntidad().intercambiarPosicion(f2,c2);
+		t[f1][c1].getEntidad().intercambiarCaida(f1,c1);
+		t[f1][c1].getEntidad().setEntidadGrafica(t[f2][c2].getEntidad().getEGrafica());
+		
+		t[f2][c2].getEntidad().intercambiarCaida(f2,c2);
+		t[f2][c2].getEntidad().setEntidadGrafica(auxG);
+		
+		
+		
+		
 		//t[f1][c1].notificarCeldaEnfocar();
 		//t[f2][c2].notificarCeldaDesenfocar();
 		
@@ -449,35 +457,35 @@ public class Tablero {
 	public boolean intercambiar(int dir) {
 		boolean toReturn=false;
 		switch(dir) {
-		case GUI.DERECHA:
-			if(cJugador < columnas -1) {
-				if(t[fJugador][cJugador].getEntidad().esPosibleIntercambiar(t[fJugador][cJugador+1].getEntidad()) && t[fJugador][cJugador+1].getEntidad().esPosibleIntercambiar(t[fJugador][cJugador].getEntidad())) {					
-					toReturn = intecambiarPriv(fJugador,cJugador,fJugador,cJugador+1);
-					}}
-		break;
-		case GUI.ARRIBA:
-			if(fJugador>0) {
-				System.out.println("arriba");
-				if(t[fJugador][cJugador].getEntidad().esPosibleIntercambiar(t[fJugador-1][cJugador].getEntidad()) && t[fJugador-1][cJugador].getEntidad().esPosibleIntercambiar(t[fJugador][cJugador].getEntidad())) {					
-					toReturn = intecambiarPriv(fJugador,cJugador,fJugador-1,cJugador);
-					}}
-		break;
-		case GUI.IZQUIERDA:
-			if(cJugador>0) {
-				System.out.println("izquierda");
-				if(t[fJugador][cJugador].getEntidad().esPosibleIntercambiar(t[fJugador][cJugador-1].getEntidad()) && t[fJugador][cJugador-1].getEntidad().esPosibleIntercambiar(t[fJugador][cJugador].getEntidad())) {					
-					toReturn =intecambiarPriv(fJugador,cJugador,fJugador,cJugador-1);
-					}}
-			
-		break;
-		case GUI.ABAJO:
-			if(fJugador<filas -1 ) {
-				System.out.println("abajo");
-				if(t[fJugador][cJugador].getEntidad().esPosibleIntercambiar(t[fJugador+1][cJugador].getEntidad()) && t[fJugador+1][cJugador].getEntidad().esPosibleIntercambiar(t[fJugador][cJugador].getEntidad())) {
-					toReturn = intecambiarPriv(fJugador,cJugador,fJugador+1,cJugador);
-					}}
-		break;
-		default: System.out.println("mover jugador(): direccion incorrecta");
+			case GUI.DERECHA:
+					if(cJugador < columnas -1) {
+						if(t[fJugador][cJugador].getEntidad().esPosibleIntercambiar(t[fJugador][cJugador+1].getEntidad()) && t[fJugador][cJugador+1].getEntidad().esPosibleIntercambiar(t[fJugador][cJugador].getEntidad())) {					
+							toReturn = intecambiarPriv(fJugador,cJugador,fJugador,cJugador+1);
+							}}
+				break;
+				case GUI.ARRIBA:
+					if(fJugador>0) {
+						System.out.println("arriba");
+						if(t[fJugador][cJugador].getEntidad().esPosibleIntercambiar(t[fJugador-1][cJugador].getEntidad()) && t[fJugador-1][cJugador].getEntidad().esPosibleIntercambiar(t[fJugador][cJugador].getEntidad())) {					
+							toReturn = intecambiarPriv(fJugador,cJugador,fJugador-1,cJugador);
+							}}
+				break;
+				case GUI.IZQUIERDA:
+					if(cJugador>0) {
+						System.out.println("izquierda");
+						if(t[fJugador][cJugador].getEntidad().esPosibleIntercambiar(t[fJugador][cJugador-1].getEntidad()) && t[fJugador][cJugador-1].getEntidad().esPosibleIntercambiar(t[fJugador][cJugador].getEntidad())) {					
+							toReturn =intecambiarPriv(fJugador,cJugador,fJugador,cJugador-1);
+							}}
+					
+				break;
+				case GUI.ABAJO:
+					if(fJugador<filas -1 ) {
+						System.out.println("abajo");
+						if(t[fJugador][cJugador].getEntidad().esPosibleIntercambiar(t[fJugador+1][cJugador].getEntidad()) && t[fJugador+1][cJugador].getEntidad().esPosibleIntercambiar(t[fJugador][cJugador].getEntidad())) {
+							toReturn = intecambiarPriv(fJugador,cJugador,fJugador+1,cJugador);
+							}}
+				break;
+			default: System.out.println("mover jugador(): direccion incorrecta");
 		}
 	    printTable();
 	    return toReturn;
@@ -495,12 +503,12 @@ public class Tablero {
 				if(t[i][j].getEntidad().obtenerColor() == 0) {
 					caido = true;
 					if(i == 0) {
-						egrafica = t[i][j].getEntidad().getEGrafica();
+						egrafica = t[i][j];/*.getEntidad().getEGrafica();*/
 						t[i][j].setEntidad(new GemaNormal(i,j,colorAleatorio(1,6)));
 						t[i][j].getEntidad().setEntidadGrafica(egrafica);
 						t[i][j].notificarse_cambio_estado();}
-					else 
-					    intercambiarCaida(i-1,j,i,j);//VERIFICAR
+					else
+					 intercambiarCaida(i-1,j,i,j);//VERIFICAR
 				}
 			}
 		}

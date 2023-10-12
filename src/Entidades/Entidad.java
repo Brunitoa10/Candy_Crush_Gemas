@@ -82,6 +82,11 @@ public abstract class Entidad implements EntidadLogica, Enfocable{
 		entidadG.notificarse_intercambio_posicion();
 	}
 
+	public void intercambiarCaida(int nf, int nc) {
+		fila = nf;
+		columna = nc;
+		entidadG.notificarse_caida();
+	}
 
 	//enfoca la entidad
 	public boolean enfocar() {

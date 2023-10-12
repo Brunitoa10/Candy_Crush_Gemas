@@ -221,6 +221,10 @@ public class GUI extends JFrame {
 	public void animar_explosion(Celda c) {
 		mi_animador.animar_explosion(c);
 	}
+	
+	public void animar_caida(Celda c) {
+		mi_animador.animar_caida(c);
+	}
 
 	//Metodos agregados por bruno
 	
@@ -240,7 +244,6 @@ public class GUI extends JFrame {
 
 	public void mostrarMensajeDerrotaPorVidas() {
 
-		
 	}
 
 	public void mostrarMensajeVictoriaPorMovimientos() {
@@ -282,20 +285,4 @@ public class GUI extends JFrame {
 	public boolean getBloquear_intercambios() {
 		return bloquear_intercambios;
 	}
-
-
-	/*public void mostrarImagenGema(String rutaImagen) {
-	    ImageIcon icono = new ImageIcon(rutaImagen);
-	    JLabel label = new JLabel(icono);
-	    
-	    GridBagConstraints c = new GridBagConstraints();
-	    c.anchor = GridBagConstraints.PAGE_START;
-	    c.insets = new Insets(10, 0, 0, 10);
-	    c.gridx = 1;
-	    c.gridy = 1;
-	    
-	    getContentPane().add(label, c);
-	    revalidate(); // Asegura que la GUI se actualice correctamente
-	}*/
-	
 }

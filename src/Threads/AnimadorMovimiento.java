@@ -46,8 +46,16 @@ public class AnimadorMovimiento extends Thread implements Animador {
 	}
 	
 	@Override
-	public void comenzar_animacion() {
+	public synchronized void comenzar_animacion() {
 		this.start();
+	}
+	
+	public void esperar() {
+		try {
+			this.join();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	@Override

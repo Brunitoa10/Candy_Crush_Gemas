@@ -26,30 +26,35 @@ public class AnimadorExplosion extends Thread implements Animador {
 	}
 	
 	@Override
-	public void comenzar_animacion() {
+	public synchronized void comenzar_animacion() {
 		this.start();
 	}
 
     @Override
 	public void run() {
-        Icon icon = new ImageIcon(this.getClass().getResource("/assets/gemas/detonado.gif"));
+        
 		new Thread(()-> {
-			try {
-				sleep(delay);
-				mi_celda_animada.setIcon(icon);
-            
-				sleep(1000);
-            }catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            
-            ImageIcon iconoVacio = new ImageIcon(this.getClass().getResource("/assets/gemas/gema_normal/0.png"));
-		    Image imgEscalada = iconoVacio.getImage().getScaledInstance(mi_celda_animada.getSizeLabel(), mi_celda_animada.getSizeLabel(), Image.SCALE_SMOOTH);
-		    Icon iconoEscalado = new ImageIcon(imgEscalada);
-			mi_celda_animada.setIcon(iconoEscalado);
-
-			mi_manager.notificarse_finalizacion_animacion(this);
+			explotar(mi_celda_animada, this, mi_manager);
 		 }).start();
 		
+    }
+    
+    private static synchronized void explotar(Celda c, AnimadorExplosion a, ManejadorAnimaciones m) {
+  
+    	Icon icon = new ImageIcon(a.getClass().getResource("/assets/gemas/detonado.gif"));
+		c.setIcon(icon);
+        try {
+			sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+        ImageIcon iconoVacio = new ImageIcon(a.getClass().getResource("/assets/gemas/gema_normal/0.png"));
+	    Image imgEscalada = iconoVacio.getImage().getScaledInstance(c.getSizeLabel(), c.getSizeLabel(), Image.SCALE_SMOOTH);
+	    Icon iconoEscalado = new ImageIcon(imgEscalada);
+		c.setIcon(iconoEscalado);
+
+		m.notificarse_finalizacion_animacion(a);
     }
 }

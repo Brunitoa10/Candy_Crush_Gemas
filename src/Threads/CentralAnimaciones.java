@@ -39,7 +39,7 @@ public class CentralAnimaciones implements ManejadorAnimaciones{
 		Animador animador = new AnimadorMovimiento(this, 10, 50, c);
 		miGUI.notificarse_animacion_en_progreso();
 		
-		if (tiene_animaciones_en_progreso (c) ) {
+		if (tiene_animaciones_en_progreso(c) ) {
 			mapeo_celda_animaciones.get(c).add(animador);
 		}else {
 			mapeo_celda_animaciones.put(c, new LinkedList<Animador>());
@@ -48,6 +48,22 @@ public class CentralAnimaciones implements ManejadorAnimaciones{
 		}
 	}
 
+	
+	public void animar_caida(Celda c) {
+		Animador animador = new AnimadorCaida(this, c);
+		miGUI.notificarse_animacion_en_progreso();
+		
+		if (tiene_animaciones_en_progreso(c) ) {
+			System.out.println("Animador caida :: animacion en progreso");
+			mapeo_celda_animaciones.get(c).add(animador);
+		}else {
+			System.out.println("Animador caida :: no tengo animacion en progreso");
+			mapeo_celda_animaciones.put(c, new LinkedList<Animador>());
+			mapeo_celda_animaciones.get(c).add(animador);
+			animador.comenzar_animacion();
+		}
+	}
+	
 	public void animar_explosion(Celda c) {
 		Animador animador;
 		miGUI.notificarse_animacion_en_progreso();
@@ -60,7 +76,7 @@ public class CentralAnimaciones implements ManejadorAnimaciones{
 			mapeo_celda_animaciones.put(c, new LinkedList<Animador>());
 			mapeo_celda_animaciones.get(c).add(animador);
 			animador.comenzar_animacion();
-		}
+		}	
 	}
 	
 	/**
