@@ -2,7 +2,7 @@ package GUI;
 
 
 
-
+import Tablero.Tablero;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.event.KeyAdapter;
@@ -31,6 +31,7 @@ public class GUI extends JFrame {
 	protected int tiempoRestante;
 	protected CentralAnimaciones mi_animador;
 	protected int animaciones_pendientes;
+	protected Tablero miTablero;
 	protected boolean bloquear_intercambios;
 	protected JLabel movimientosLabel;
 	protected int movimientosRestantes;
@@ -44,8 +45,9 @@ public class GUI extends JFrame {
 	public static final int DERECHA = 15003;
 	
 	
-	public GUI(Logica l, int f, int c) {
+	public GUI(Logica l,Tablero t, int f, int c) {
 		milogica = l;
+		miTablero = t;
 		filas = f;
 		mi_animador = new CentralAnimaciones(this);
 		columnas = c;
@@ -187,14 +189,19 @@ public class GUI extends JFrame {
 		tiempoRestante = tiempo;
 		timerLabel.setText("Tiempo restante: " + tiempoRestante);
 	}
+	
 	public EntidadGrafica agregar_entidad(Entidad e) {
 		GridBagConstraints c = new GridBagConstraints();
 		Celda celda = new Celda(this, e, size_label);
+		e.setEntidadGrafica(celda);
 		c.gridx = celda.getEntidad().getFila();
 		c.gridx = celda.getEntidad().getColumna();
 		panel_principal.add(celda,c);
+		panel_principal.revalidate();
+		panel_principal.repaint();
 		return celda;
 	}
+
 
 	public void notificarse_animacion_en_progreso() {
 		synchronized(this){
@@ -207,13 +214,41 @@ public class GUI extends JFrame {
 		synchronized(this){
 			animaciones_pendientes --;
 			bloquear_intercambios = animaciones_pendientes > 0;
+			panel_principal = new JPanel();
+			panel_principal.setSize(size_label * filas, size_label * columnas);
+			panel_principal.setLayout(new GridBagLayout());
+			limpiarMatrizGUI();
+			reiniciarGUI();
+			GridBagConstraints gbc = new GridBagConstraints();
+			gbc.insets = new Insets(0,0,0,0);
+			gbc.gridx = 2;
+			gbc.gridy = 1;
+			gbc.gridwidth = 4;
+			gbc.gridheight = 4;
+			gbc.weightx = 1;
+			gbc.weighty = 1;
+			gbc.anchor = GridBagConstraints.CENTER;
+			getContentPane().add(panel_principal,gbc);
 		}
 	}
 	
 	public void animar_movimiento(Celda c) {
-		mi_animador.animar_cambio_posicion(c);
+		synchronized(c){
+			mi_animador.animar_cambio_posicion(c);
+		}
 	}
-	
+
+	//este proyecto es un crimen de odio a la programacion
+	private void reiniciarGUI() {
+		for(int i=0;i<filas;i++) {
+			for(int j=0;j<columnas;j++) {
+				agregar_entidad(miTablero.getEntidad(i, j));
+				revalidate();
+				repaint();
+			}
+		}
+	}
+
 	public void animar_cambio_estado(Celda c) {
 		mi_animador.animar_cambio_estado(c);
 	}

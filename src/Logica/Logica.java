@@ -25,7 +25,7 @@ public class Logica {
 	public Logica(){
 		miTablero = new Tablero(this,miGUI);
 		miNivel = GeneradorNivel.cargar_nivel_y_tablero(miTablero,1,this);
-		miGUI = new GUI(this, miTablero.getFila(), miTablero.getColumna());
+		miGUI = new GUI(this, miTablero, miTablero.getFila(), miTablero.getColumna());
 		miTablero.asignarGUI(miGUI);	
 		asociarEntidadesLogicasGraficas();
 		miTablero.fijarJugador(miNivel.getFilaInicialJugador(), miNivel.getColumnaInicialJugador());
