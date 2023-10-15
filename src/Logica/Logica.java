@@ -77,6 +77,7 @@ public class Logica {
 	public int getCantidadDeObjetivos() {
 		return miNivel.getCantidadDeObjetivos();
 	}
+	
 	private void asociarEntidadesLogicasGraficas() {
 		Entidad ent;
 		EntidadGrafica egrafica;
@@ -167,7 +168,11 @@ public class Logica {
 
 
 	public void actualizarObjetivos(LinkedList<Celda> l) {
-		
+		for (int pos = 0; pos<l.size()-1;pos++) {
+            System.out.print(l.get(pos).getColorEntidad()+" ");
+        }
+		miNivel.actualizarObjetivos(l);
+		//miGUI.actualizarObjetivos(miNivel.getCantObjetivo());
 	}
 
 

@@ -75,6 +75,7 @@ public class Tablero {
 				while (it.hasNext()) {
 					toReturn.addLast(it.next());}
 			}
+			miLogica.actualizarObjetivos(toReturn);
 		return toReturn;
 		}
 		else {
@@ -198,7 +199,6 @@ public class Tablero {
 		 */
 		
 		if(!l.isEmpty()) {
-			miLogica.actualizarObjetivos(l);
 			Iterator<Celda> it = l.iterator();
 			Celda c = null;
 			Celda aux;

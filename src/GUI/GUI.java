@@ -104,7 +104,7 @@ public class GUI extends JFrame {
 			}
 		});
 
-		mostrarObjetivos();
+		//mostrarObjetivos();
 
 		//Constraints TIMER
 		GridBagConstraints c = new GridBagConstraints();

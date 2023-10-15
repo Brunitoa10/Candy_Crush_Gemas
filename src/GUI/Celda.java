@@ -86,4 +86,5 @@ public class Celda extends JLabel implements EntidadGrafica{
 	public void actualizarXY(int x, int y) {
 		ent.intercambiarPosicion(x,y);
 	}
+	
 }

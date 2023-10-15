@@ -1,8 +1,10 @@
 package Nivel;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 
+import GUI.Celda;
 import Logica.Logica;
 
 
@@ -122,6 +124,8 @@ public class Nivel {
         }
     }
 	
+	
+	
 	/*
 	Cambie obtenerInfoObjetivos para que devuelva un array de strings para poder 
 	ponerlo en 3 JLabels distintos mas facil 
@@ -153,4 +157,27 @@ public class Nivel {
 	private String buscarTipo(int tipoGema) {
 		return miLogica.obtenerTipoDeGema(tipoGema);
 	}
+
+	public void actualizarObjetivos(LinkedList<Celda> l) {
+		int i = 1;
+		for(int pos = 0; pos<l.size()-1; pos++) {
+			if(l.get(pos) != null) {
+				int tipoGema = l.get(pos).getColorEntidad();
+				for (Objetivos objetivo : mapeoDeObjetivos.values()) {
+					if (objetivo.getTipoGema() == tipoGema && objetivo.getCantGemas() > 0 && !objetivo.estaCumplido()) {
+						objetivo.aumentarProgreso(i);
+						//miLogica.getCantidadObjetivo(objetivo.getCantGemas());
+						i++;
+						System.out.println("Nivel cantGemas :: "+objetivo.getCantGemas());
+					}else {
+						i = 1;
+					}
+				}
+				
+			}else {
+				System.out.println("Nivel :: Soy nulo");
+			}
+		}
+	}
+
 }
