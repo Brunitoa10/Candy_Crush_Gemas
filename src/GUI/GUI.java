@@ -27,7 +27,7 @@ public class GUI extends JFrame {
 	protected Logica milogica;
 	protected int filas,columnas;
 	protected JPanel panel_principal, panel_objetivos;
-	protected JLabel timerLabel,objetivosLabel1,objetivosLabel2,objetivosLabel3;
+	protected JLabel timerLabel;
 	protected int tiempoRestante;
 	protected CentralAnimaciones mi_animador;
 	protected int animaciones_pendientes;
@@ -104,7 +104,7 @@ public class GUI extends JFrame {
 			}
 		});
 
-		//mostrarObjetivos();
+		mostrarObjetivos();
 
 		//Constraints TIMER
 		GridBagConstraints c = new GridBagConstraints();
@@ -123,7 +123,7 @@ public class GUI extends JFrame {
 	    c.gridx = 0;                               
 	    c.gridy = 1;
 		c.gridwidth = 2;
-		c.gridheight = 1;
+		c.gridheight = 2;
 		getContentPane().add(panel_objetivos, c);
 
 		//Constraints TABLERO
@@ -150,35 +150,53 @@ public class GUI extends JFrame {
 		panel_principal.setFocusable(true);
 	}
 
-	public void mostrarObjetivos() {
-		objetivosLabel1 = new JLabel();
-		objetivosLabel2 = new JLabel();
-		objetivosLabel3 = new JLabel();
+	public void mostrarObjetivos() {	
+		JLabel tituloObjetivo = new JLabel();
+		tituloObjetivo.setText("OBJETIVOS:");
+		GridBagConstraints cTitulo = new GridBagConstraints();
+		cTitulo.insets = new Insets(0, 0, 0, 0);      
+	   	cTitulo.gridx = 0;                               
+	    cTitulo.gridy = 0;
+		cTitulo.gridwidth = 1;
+			
+		panel_objetivos.add(tituloObjetivo,cTitulo);
 
-		//pone el texto a los 2 primeros objetivoLabels
-		objetivosLabel1.setText(milogica.obtenerInfoObjetivos()[0]);
-		objetivosLabel2.setText(milogica.obtenerInfoObjetivos()[1]);
+		//sirve para setear el gridy, aumenta con cada iteracion para poder setear el siguiente objetivo
+		//debajo del anterior
 
-		//pone la imagen en el objetivosLabel3
-		ImageIcon imgIcon = new ImageIcon(this.getClass().getResource(milogica.obtenerInfoObjetivos()[2]));
-		Image imgEscalada = imgIcon.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
-		Icon iconoEscalado = new ImageIcon(imgEscalada);
+		int coordenada_y = 1;
+		
+		for(int i=0;i<milogica.getCantidadDeObjetivos()*2; i = i+2) {
+			JLabel objetivosTexto = new JLabel();
+			JLabel objetivosImagen = new JLabel();
 
-		objetivosLabel3.setIcon(iconoEscalado);
+			//obtenerInfoObjetivos[i] siempre devuelve el texto
+			//obtenerInfoObjetivos[i+1] siempre devuelve la imagen de la gema correspondiente
 
+			objetivosTexto.setText(milogica.obtenerInfoObjetivos()[i]);
+		
+			ImageIcon imgIcon = new ImageIcon(this.getClass().getResource(milogica.obtenerInfoObjetivos()[i+1]));
+			Image imgEscalada = imgIcon.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+			Icon iconoEscalado = new ImageIcon(imgEscalada);
 
-		//asigno los contraints a cada componente
-		GridBagConstraints c = new GridBagConstraints();
-		c.insets = new Insets(0, 0, 0, 0);      
-	   	c.gridx = 0;                               
-	    c.gridy = 0;
-		c.gridwidth = 1;
-		//agrego los 3 labels al panel con los objetivos
-		panel_objetivos.add(objetivosLabel1,c);
-		c.gridy = 1;
-		panel_objetivos.add(objetivosLabel2,c);
-		c.gridx = 1;
-		panel_objetivos.add(objetivosLabel3,c);
+			objetivosImagen.setIcon(iconoEscalado);
+
+			//seteo los constraints y los posiciono
+
+			GridBagConstraints c = new GridBagConstraints();
+			c.insets = new Insets(0, 20, 0, 0);      
+	   		c.gridx = 0;                               
+	    	c.gridy = coordenada_y;
+			c.gridwidth = 1;
+			
+			//seteo el texto en posicion [0,coordenada_y]
+			panel_objetivos.add(objetivosTexto,c);
+			c.gridx = 1;
+			//seteo la imagen en posicion [1,coordenada_y]
+			panel_objetivos.add(objetivosImagen,c);
+
+			coordenada_y++;
+		}
 	}
 	
 	public int getTiempoRestante() {

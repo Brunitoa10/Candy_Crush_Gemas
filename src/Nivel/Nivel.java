@@ -135,22 +135,33 @@ public class Nivel {
 	- Nacho
 	*/
 	public String[] obtenerInfoObjetivos() {
-		String[] devolver = new String[3];
-	    StringBuilder[] info = new StringBuilder[3];
-		info[0] = new StringBuilder("");
-		info[1] = new StringBuilder("");
-		info[2] = new StringBuilder("");
+		
+		int array_lengths = (miLogica.getCantidadDeObjetivos()*2);
+		System.out.println(array_lengths);
+		String[] devolver = new String[array_lengths];
+	    StringBuilder[] info = new StringBuilder[array_lengths];
+		
+		for(int i=0;i<info.length;i++) {
+			info[i] = new StringBuilder("");
+		}
+
+		int i=-1;
 
 	    for (Map.Entry<Integer, Objetivos> entry : mapeoDeObjetivos.entrySet()) {
+			i++;
 	        Objetivos objetivo = entry.getValue();
-	        info[0].append("a:"/*"Cantidad de Gemas: "*/).append(objetivo.getCantGemas());
-			info[1].append("b:"/*"Tipo de Gema: "*/);
-			info[2].append(buscarTipo(objetivo.getTipoGema())).append(" ");
+	        info[i].append("Destruir ").append(objetivo.getCantGemas());
+			info[i].append(" gemas de tipo: ");
+			System.out.println(i+ ": "+info[i].toString());
+			i++;
+			info[i].append(buscarTipo(objetivo.getTipoGema())).append(" ");
+			System.out.println(i+ ": "+info[i].toString());
 	    }
 
-		devolver[0] = info[0].toString();
-		devolver[1] = info[1].toString();
-		devolver[2] = info[2].toString();
+		for(int j=0;j<info.length;j++) {
+			devolver[j] = info[j].toString();
+		}
+		
 	    return devolver;
 	}
 
