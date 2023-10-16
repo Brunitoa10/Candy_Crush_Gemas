@@ -148,6 +148,10 @@ public class Logica {
 	public void notificar_actualizacion_objetivos(int cant, int tipoGema) {
 		miGUI.actualizarProgreso(cant, tipoGema);
 	}
+
+	public int getVidas() {
+		return miNivel.getVidas();
+	}
 	
 	/**
 	 * Launch the application.

@@ -26,7 +26,7 @@ import Threads.CentralAnimaciones;
 public class GUI extends JFrame {
 	protected Logica milogica;
 	protected int filas,columnas;
-	protected JPanel panel_principal, panel_objetivos;
+	protected JPanel panel_principal, panel_objetivos, panelVidas;
 	protected JLabel timerLabel;
 	protected int tiempoRestante;
 	protected CentralAnimaciones mi_animador;
@@ -109,6 +109,7 @@ public class GUI extends JFrame {
 		});
 
 		mostrarObjetivos();
+		mostrarVidas();
 
 		//Constraints TIMER
 		GridBagConstraints c = new GridBagConstraints();
@@ -141,6 +142,16 @@ public class GUI extends JFrame {
 		c.anchor = GridBagConstraints.CENTER;
 		getContentPane().add(panel_principal,c);
 
+		//Constraints VIDAS
+		c.gridx = 6;
+		c.gridy = 6;
+		c.gridwidth = 2;
+		c.gridheight = 1;
+		c.weightx = 0;
+		c.weightx = 0;
+		c.insets = new Insets(0,0,0,10);
+		getContentPane().add(panelVidas,c);
+
 		//Constraints MOVIMIENTOS
 		c.gridx = 6;
 		c.gridy = 0;
@@ -154,6 +165,47 @@ public class GUI extends JFrame {
 		panel_principal.setFocusable(true);
 	}
 
+	public void mostrarVidas() {
+		panelVidas = new JPanel();
+		panelVidas.setLayout(new GridBagLayout());
+		JLabel label_corazon1 = new JLabel();
+		JLabel label_corazon2 = new JLabel();
+		JLabel label_corazon3 = new JLabel();
+
+		ImageIcon imgIconCorazon = new ImageIcon(this.getClass().getResource("/assets/nivel/corazon.png"));
+		Image imgEscaladaCorazon = imgIconCorazon.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+		Icon iconoEscaladoCorazon = new ImageIcon(imgEscaladaCorazon);
+
+		ImageIcon imgIconCorazonVacio = new ImageIcon(this.getClass().getResource("/assets/nivel/corazonVacio.png"));
+		Image imgEscaladaCorazonVacio = imgIconCorazonVacio.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+		Icon iconoEscaladoCorazonVacio = new ImageIcon(imgEscaladaCorazonVacio);
+		
+		if(milogica.getVidas() == 3) {
+			label_corazon1.setIcon(iconoEscaladoCorazon);
+			label_corazon3.setIcon(iconoEscaladoCorazon);
+			label_corazon2.setIcon(iconoEscaladoCorazon);
+		} else if(milogica.getVidas() == 2) {
+					label_corazon1.setIcon(iconoEscaladoCorazon);
+					label_corazon2.setIcon(iconoEscaladoCorazon);
+					label_corazon3.setIcon(iconoEscaladoCorazonVacio);
+				}else if(milogica.getVidas() == 1) {
+					label_corazon1.setIcon(iconoEscaladoCorazon);
+					label_corazon2.setIcon(iconoEscaladoCorazonVacio);
+					label_corazon3.setIcon(iconoEscaladoCorazonVacio);
+				}
+
+		GridBagConstraints gbc = new GridBagConstraints();
+
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gbc.insets = new Insets(0,5,0,5);
+		panelVidas.add(label_corazon1,gbc);
+		gbc.gridx = 1;
+		panelVidas.add(label_corazon2,gbc);
+		gbc.gridx = 2;
+		panelVidas.add(label_corazon3,gbc);
+	}
+	
 	public void mostrarObjetivos() {	
 		JLabel tituloObjetivo = new JLabel();
 		tituloObjetivo.setText("OBJETIVOS:");
