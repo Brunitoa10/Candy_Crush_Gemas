@@ -136,8 +136,7 @@ public class Nivel {
 	*/
 	public String[] obtenerInfoObjetivos() {
 		
-		int array_lengths = (miLogica.getCantidadDeObjetivos()*2);
-		System.out.println(array_lengths);
+		int array_lengths = (miLogica.getCantidadDeObjetivos()*4);
 		String[] devolver = new String[array_lengths];
 	    StringBuilder[] info = new StringBuilder[array_lengths];
 		
@@ -152,10 +151,12 @@ public class Nivel {
 	        Objetivos objetivo = entry.getValue();
 	        info[i].append("Destruir ").append(objetivo.getCantGemas());
 			info[i].append(" gemas de tipo: ");
-			System.out.println(i+ ": "+info[i].toString());
 			i++;
 			info[i].append(buscarTipo(objetivo.getTipoGema())).append(" ");
-			System.out.println(i+ ": "+info[i].toString());
+			i++;
+			info[i].append(objetivo.getCantGemas());
+			i++;
+			info[i].append(objetivo.getTipoGema());
 	    }
 
 		for(int j=0;j<info.length;j++) {

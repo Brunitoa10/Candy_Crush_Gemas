@@ -34,6 +34,8 @@ public class GUI extends JFrame {
 	protected Tablero miTablero;
 	protected boolean bloquear_intercambios;
 	protected JLabel movimientosLabel;
+	protected JLabel[] objetivosProgreso;
+	protected int[] objetivosColores;
 	protected int movimientosRestantes;
 	protected AnimadorCronometro animadorTiempo;
 	private int size_label = 70;
@@ -55,6 +57,8 @@ public class GUI extends JFrame {
 		movimientosRestantes = milogica.getMovimientos();
 		animaciones_pendientes = 0;
 		bloquear_intercambios = false;
+		objetivosColores = new int[milogica.getCantidadDeObjetivos()];
+		objetivosProgreso = new JLabel[milogica.getCantidadDeObjetivos()];
 		animadorTiempo = new AnimadorCronometro(tiempoRestante, this);
 		
 		inicializar();
@@ -157,7 +161,7 @@ public class GUI extends JFrame {
 		cTitulo.insets = new Insets(0, 0, 0, 0);      
 	   	cTitulo.gridx = 0;                               
 	    cTitulo.gridy = 0;
-		cTitulo.gridwidth = 1;
+		cTitulo.gridwidth = 2;
 			
 		panel_objetivos.add(tituloObjetivo,cTitulo);
 
@@ -165,10 +169,14 @@ public class GUI extends JFrame {
 		//debajo del anterior
 
 		int coordenada_y = 1;
-		
-		for(int i=0;i<milogica.getCantidadDeObjetivos()*2; i = i+2) {
+		int numeroDeObjetivo = 0;
+
+		for(int i=0;i<milogica.obtenerInfoObjetivos().length; i = i+4) {
+			int color = Integer.parseInt(milogica.obtenerInfoObjetivos()[i+3]);
+			objetivosColores[numeroDeObjetivo] = color;
 			JLabel objetivosTexto = new JLabel();
 			JLabel objetivosImagen = new JLabel();
+			JLabel objetivosNumero = objetivosProgreso[numeroDeObjetivo] = new JLabel();
 
 			//obtenerInfoObjetivos[i] siempre devuelve el texto
 			//obtenerInfoObjetivos[i+1] siempre devuelve la imagen de la gema correspondiente
@@ -180,6 +188,8 @@ public class GUI extends JFrame {
 			Icon iconoEscalado = new ImageIcon(imgEscalada);
 
 			objetivosImagen.setIcon(iconoEscalado);
+
+			objetivosNumero.setText("0/"+milogica.obtenerInfoObjetivos()[i+2]);
 
 			//seteo los constraints y los posiciono
 
@@ -194,8 +204,34 @@ public class GUI extends JFrame {
 			c.gridx = 1;
 			//seteo la imagen en posicion [1,coordenada_y]
 			panel_objetivos.add(objetivosImagen,c);
+			//seteo el progreso
 
-			coordenada_y++;
+			c.gridx = 0;
+			c.insets = new Insets(0, 0, 0, 0);
+			c.gridy = coordenada_y+1;
+			c.gridwidth = 2;
+
+			panel_objetivos.add(objetivosNumero,c);
+
+			coordenada_y = coordenada_y + 2;
+
+		
+		}
+	}
+
+	public void actualizarProgreso(int gemasRestantes, int tipoGema) {
+		for(int i=0; i<objetivosColores.length;i++) {
+			System.out.println(tipoGema);
+			System.out.println(objetivosColores[i]);
+			if(tipoGema == objetivosColores[i]) {
+				String aux = objetivosProgreso[i].getText();
+				String[] partes = aux.split("/");
+				Integer num = Integer.valueOf(partes[1]);
+				int gemasTotales = num.intValue();
+				int progreso = gemasTotales - gemasRestantes;
+
+				objetivosProgreso[i].setText(progreso+"/"+gemasTotales);
+			}
 		}
 	}
 	
