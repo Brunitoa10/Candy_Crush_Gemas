@@ -221,7 +221,7 @@ public class GUI extends JFrame {
 
 	public void actualizarProgreso(int gemasRestantes, int tipoGema) {
 		for(int i=0; i<objetivosColores.length;i++) {
-			System.out.println(tipoGema);
+			
 			System.out.println(objetivosColores[i]);
 			if(tipoGema == objetivosColores[i]) {
 				String aux = objetivosProgreso[i].getText();

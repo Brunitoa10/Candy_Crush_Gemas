@@ -178,6 +178,7 @@ public class Nivel {
 				for (Objetivos objetivo : mapeoDeObjetivos.values()) {
 					if (objetivo.getTipoGema() == tipoGema && objetivo.getCantGemas() > 0 && !objetivo.estaCumplido()) {
 						objetivo.aumentarProgreso(i);
+						miLogica.notificar_actualizacion_objetivos(objetivo.getCantGemas(),objetivo.getTipoGema());
 						/*if(mapeoDeObjetivos.get(l.get(pos)).estaCumplido()) {
 							
 						}*/

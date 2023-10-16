@@ -144,6 +144,10 @@ public class Logica {
         }, 1000, 1000); // Inicia el temporizador después de 1 segundo y se ejecuta cada 1 segundo
 		
 	}
+
+	public void notificar_actualizacion_objetivos(int cant, int tipoGema) {
+		miGUI.actualizarProgreso(cant, tipoGema);
+	}
 	
 	/**
 	 * Launch the application.
