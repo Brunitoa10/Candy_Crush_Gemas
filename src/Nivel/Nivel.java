@@ -170,16 +170,20 @@ public class Nivel {
 	}
 
 	public void actualizarObjetivos(LinkedList<Celda> l) {
-		int i = 1;
+		int i = 1,tipoGema = 0;
 		for(int pos = 0; pos<l.size()-1; pos++) {
 			if(l.get(pos) != null) {
-				int tipoGema = l.get(pos).getColorEntidad();
+				tipoGema = l.get(pos).getColorEntidad();
 				for (Objetivos objetivo : mapeoDeObjetivos.values()) {
 					if (objetivo.getTipoGema() == tipoGema && objetivo.getCantGemas() > 0 && !objetivo.estaCumplido()) {
 						objetivo.aumentarProgreso(i);
-						//miLogica.getCantidadObjetivo(objetivo.getCantGemas());
+						/*if(mapeoDeObjetivos.get(l.get(pos)).estaCumplido()) {
+							
+						}*/
 						i++;
-						System.out.println("Nivel cantGemas :: "+objetivo.getCantGemas());
+					
+						System.out.println("\nNivel cantGemas :: "+objetivo.getCantGemas());
+						System.out.println("\ncumplido :: "+objetivo.estaCumplido());
 					}else {
 						i = 1;
 					}

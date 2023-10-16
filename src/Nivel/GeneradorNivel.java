@@ -13,7 +13,7 @@ public class GeneradorNivel {
 	public static Nivel cargar_nivel_y_tablero(Tablero t, int nivel,Logica l) {
 		Nivel miNivel = new Nivel(0,0,l);
 		try {
-			Scanner input = new Scanner(new File("src//Niveles//Nivel" + 2 + ".txt"));
+			Scanner input = new Scanner(new File("src//Niveles//Nivel" + nivel+ ".txt"));
 
 			// Leer tamaño del tablero
 			int filas = Integer.parseInt(input.nextLine().trim());
