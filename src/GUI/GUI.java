@@ -62,6 +62,7 @@ public class GUI extends JFrame {
 		animadorTiempo = new AnimadorCronometro(tiempoRestante, this);
 		
 		inicializar();
+		//mostrarVidas();
 	}
 	
 	
@@ -174,7 +175,10 @@ public class GUI extends JFrame {
 	public void mostrarVidas() {
 		panelVidas = new JPanel();
 		panelVidas.setLayout(new GridBagLayout());
-		
+		 // Elimina las declaraciones locales de las JLabel
+	    label_corazon1 = new JLabel();
+	    label_corazon2 = new JLabel();
+	    label_corazon3 = new JLabel();
 
 		ImageIcon imgIconCorazon = new ImageIcon(this.getClass().getResource("/assets/nivel/corazon.png"));
 		Image imgEscaladaCorazon = imgIconCorazon.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
@@ -216,15 +220,17 @@ public class GUI extends JFrame {
 		System.out.println("Vidas restantes: "+milogica.getVidas());
 
 		if(milogica.getVidas() == 2) {
-			label_corazon1.setIcon(iconoEscaladoCorazon);
+			label_corazon1.setIcon(iconoEscaladoCorazonVacio);
 			label_corazon2.setIcon(iconoEscaladoCorazon);
-			label_corazon3.setIcon(iconoEscaladoCorazonVacio);
-		}else if(milogica.getVidas() == 1) {
-				label_corazon1.setIcon(iconoEscaladoCorazon);
+			label_corazon3.setIcon(iconoEscaladoCorazon);
+		}else {
+			if(milogica.getVidas() == 1) {
+				label_corazon1.setIcon(iconoEscaladoCorazonVacio);
 				label_corazon2.setIcon(iconoEscaladoCorazonVacio);
-				label_corazon3.setIcon(iconoEscaladoCorazonVacio);
-				}
-
+				label_corazon3.setIcon(iconoEscaladoCorazon);
+			}
+		}
+		
 		GridBagConstraints gbc = new GridBagConstraints();
 
 		gbc.gridx = 0;
