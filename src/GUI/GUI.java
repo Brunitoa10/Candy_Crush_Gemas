@@ -66,7 +66,9 @@ public class GUI extends JFrame {
 	
 	
 	protected void inicializar() {
-			
+		ImageIcon logo = new ImageIcon(this.getClass().getResource("/assets/nivel/Icono.png"));
+		setIconImage(logo.getImage());
+
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		setTitle("Proyecto Candy Crush - Comision-06");
 		setSize(screenSize);
@@ -165,13 +167,44 @@ public class GUI extends JFrame {
 		panel_principal.setFocusable(true);
 	}
 
+	private JLabel label_corazon1 = new JLabel();
+	private JLabel label_corazon2 = new JLabel();
+	private JLabel label_corazon3 = new JLabel();
+
 	public void mostrarVidas() {
 		panelVidas = new JPanel();
 		panelVidas.setLayout(new GridBagLayout());
+		
+
+		ImageIcon imgIconCorazon = new ImageIcon(this.getClass().getResource("/assets/nivel/corazon.png"));
+		Image imgEscaladaCorazon = imgIconCorazon.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+		Icon iconoEscaladoCorazon = new ImageIcon(imgEscaladaCorazon);
+		
+		label_corazon1.setIcon(iconoEscaladoCorazon);
+		label_corazon3.setIcon(iconoEscaladoCorazon);
+		label_corazon2.setIcon(iconoEscaladoCorazon);
+
+		GridBagConstraints gbc = new GridBagConstraints();
+
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gbc.insets = new Insets(0,5,0,5);
+		panelVidas.add(label_corazon1,gbc);
+		gbc.gridx = 1;
+		panelVidas.add(label_corazon2,gbc);
+		gbc.gridx = 2;
+		panelVidas.add(label_corazon3,gbc);
+	}
+
+	public void actualizarVidas() {
+		panelVidas.remove(label_corazon1);
+		panelVidas.remove(label_corazon2);
+		panelVidas.remove(label_corazon3);
+		
 		JLabel label_corazon1 = new JLabel();
 		JLabel label_corazon2 = new JLabel();
 		JLabel label_corazon3 = new JLabel();
-
+		
 		ImageIcon imgIconCorazon = new ImageIcon(this.getClass().getResource("/assets/nivel/corazon.png"));
 		Image imgEscaladaCorazon = imgIconCorazon.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
 		Icon iconoEscaladoCorazon = new ImageIcon(imgEscaladaCorazon);
@@ -179,19 +212,17 @@ public class GUI extends JFrame {
 		ImageIcon imgIconCorazonVacio = new ImageIcon(this.getClass().getResource("/assets/nivel/corazonVacio.png"));
 		Image imgEscaladaCorazonVacio = imgIconCorazonVacio.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
 		Icon iconoEscaladoCorazonVacio = new ImageIcon(imgEscaladaCorazonVacio);
-		
-		if(milogica.getVidas() == 3) {
+
+		System.out.println("Vidas restantes: "+milogica.getVidas());
+
+		if(milogica.getVidas() == 2) {
 			label_corazon1.setIcon(iconoEscaladoCorazon);
-			label_corazon3.setIcon(iconoEscaladoCorazon);
 			label_corazon2.setIcon(iconoEscaladoCorazon);
-		} else if(milogica.getVidas() == 2) {
-					label_corazon1.setIcon(iconoEscaladoCorazon);
-					label_corazon2.setIcon(iconoEscaladoCorazon);
-					label_corazon3.setIcon(iconoEscaladoCorazonVacio);
-				}else if(milogica.getVidas() == 1) {
-					label_corazon1.setIcon(iconoEscaladoCorazon);
-					label_corazon2.setIcon(iconoEscaladoCorazonVacio);
-					label_corazon3.setIcon(iconoEscaladoCorazonVacio);
+			label_corazon3.setIcon(iconoEscaladoCorazonVacio);
+		}else if(milogica.getVidas() == 1) {
+				label_corazon1.setIcon(iconoEscaladoCorazon);
+				label_corazon2.setIcon(iconoEscaladoCorazonVacio);
+				label_corazon3.setIcon(iconoEscaladoCorazonVacio);
 				}
 
 		GridBagConstraints gbc = new GridBagConstraints();
@@ -409,6 +440,8 @@ public class GUI extends JFrame {
 	    
 
 	    limpiarMatrizGUI();
+
+		mostrarVidas();
 	    
 
 	    timerLabel.setText("Tiempo restante: " + tiempoRestante);

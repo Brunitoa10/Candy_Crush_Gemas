@@ -330,7 +330,6 @@ public class Tablero {
 	       
 	        for (int i = 0; i < filas; i++) {
 	            for (int j = 0; j < columnas; j++) {
-	            	 System.out.println("ciclo en reset tablero");
 	            	 //Dejar el parametro j y el parametro 0
 	                t[i][j] = new Celda(miGui,new GemaNormal(i,j,0), 60); 
 	            }
