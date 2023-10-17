@@ -22,7 +22,7 @@ public class Nivel {
 	public Nivel(int posX, int posY,Logica l) {
 		fila_inicial_jugador = posX;
 		columna_inicial_jugador = posY;
-		vidas = 3;
+		//vidas = 3;
 		mapeoDeObjetivos = new HashMap<>(); // Inicializamos la lista de objetivos
 		miLogica = l;
 	}
