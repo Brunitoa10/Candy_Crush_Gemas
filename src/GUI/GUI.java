@@ -213,9 +213,6 @@ public class GUI extends JFrame {
 	}
 
 	public void actualizarVidas() {
-		panelVidas.remove(label_corazon1);
-		panelVidas.remove(label_corazon2);
-		panelVidas.remove(label_corazon3);
 		
 		JLabel label_corazon1 = new JLabel();
 		JLabel label_corazon2 = new JLabel();
@@ -229,13 +226,15 @@ public class GUI extends JFrame {
 		Image imgEscaladaCorazonVacio = imgIconCorazonVacio.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
 		Icon iconoEscaladoCorazonVacio = new ImageIcon(imgEscaladaCorazonVacio);
 
-		System.out.println("Vidas restantes: "+milogica.getVidas());
+		
 
 		if(milogica.getVidas() == 2) {
+			System.out.println("QUEDAN 2 VIDAS");
 			label_corazon1.setIcon(iconoEscaladoCorazon);
 			label_corazon2.setIcon(iconoEscaladoCorazon);
 			label_corazon3.setIcon(iconoEscaladoCorazonVacio);
-		}else if(milogica.getVidas() == 1) {
+		} else if(milogica.getVidas() == 1) {
+				System.out.println("QUEDA 1 VIDA");
 				label_corazon1.setIcon(iconoEscaladoCorazon);
 				label_corazon2.setIcon(iconoEscaladoCorazonVacio);
 				label_corazon3.setIcon(iconoEscaladoCorazonVacio);
