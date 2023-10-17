@@ -20,8 +20,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+
 import Entidades.Entidad;
-import Logica.Color;
 import Logica.Logica;
 import Threads.AnimadorCronometro;
 import Threads.CentralAnimaciones;
@@ -67,7 +68,6 @@ public class GUI extends JFrame {
 		animadorTiempo = new AnimadorCronometro(tiempoRestante, this);
 		
 		inicializar();
-		//mostrarVidas();
 	}
 	
 	
@@ -101,7 +101,7 @@ public class GUI extends JFrame {
 
 		panel_principal = new JPanel();
 		panel_principal.setSize(size_label * filas, size_label * columnas);
-		panel_principal.setLayout(new GridBagLayout());
+		panel_principal.setLayout(new GridLayout(filas,columnas,0,0));
 
 		panel_objetivos = new JPanel();
 		panel_objetivos.setSize(100,100);
@@ -188,10 +188,9 @@ public class GUI extends JFrame {
 
 	public void mostrarVidas() {
 		panelVidas = new JPanel();
-		panelVidas.setLayout(new GridBagLayout());
+		panelVidas.setLayout(new GridLayout(1,3,5,5));
 		panelVidas.setBackground(new Color(0,0,0,0));
 		
-
 		
 		ImageIcon imgIconCorazon = new ImageIcon(this.getClass().getResource("/assets/nivel/corazon.png"));
 		Image imgEscaladaCorazon = imgIconCorazon.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
@@ -202,27 +201,12 @@ public class GUI extends JFrame {
 		label_corazon2.setIcon(iconoEscaladoCorazon);
 
 
-		GridBagConstraints gbc = new GridBagConstraints();
-
-		gbc.gridx = 0;
-		gbc.gridy = 0;
-		gbc.insets = new Insets(0,5,0,5);
-		panelVidas.add(label_corazon1,gbc);
-		gbc.gridx = 1;
-		panelVidas.add(label_corazon2,gbc);
-		gbc.gridx = 2;
-		panelVidas.add(label_corazon3,gbc);
+		panelVidas.add(label_corazon1);
+		panelVidas.add(label_corazon2);
+		panelVidas.add(label_corazon3);
 	}
 
 	public void actualizarVidas() {
-		
-		JLabel label_corazon1 = new JLabel();
-		JLabel label_corazon2 = new JLabel();
-		JLabel label_corazon3 = new JLabel();
-		
-		ImageIcon imgIconCorazon = new ImageIcon(this.getClass().getResource("/assets/nivel/corazon.png"));
-		Image imgEscaladaCorazon = imgIconCorazon.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
-		Icon iconoEscaladoCorazon = new ImageIcon(imgEscaladaCorazon);
 
 		ImageIcon imgIconCorazonVacio = new ImageIcon(this.getClass().getResource("/assets/nivel/corazonVacio.png"));
 		Image imgEscaladaCorazonVacio = imgIconCorazonVacio.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
@@ -231,27 +215,24 @@ public class GUI extends JFrame {
 		
 
 		if(milogica.getVidas() == 2) {
-			System.out.println("QUEDAN 2 VIDAS");
-			label_corazon1.setIcon(iconoEscaladoCorazon);
-			label_corazon2.setIcon(iconoEscaladoCorazon);
+
 			label_corazon3.setIcon(iconoEscaladoCorazonVacio);
 		} else if(milogica.getVidas() == 1) {
 				System.out.println("QUEDA 1 VIDA");
-				label_corazon1.setIcon(iconoEscaladoCorazon);
 				label_corazon2.setIcon(iconoEscaladoCorazonVacio);
-				label_corazon3.setIcon(iconoEscaladoCorazon);
+				label_corazon3.setIcon(iconoEscaladoCorazonVacio);
 			}
-		
-		GridBagConstraints gbc = new GridBagConstraints();
 
-		gbc.gridx = 0;
-		gbc.gridy = 0;
-		gbc.insets = new Insets(0,5,0,5);
-		panelVidas.add(label_corazon1,gbc);
-		gbc.gridx = 1;
-		panelVidas.add(label_corazon2,gbc);
-		gbc.gridx = 2;
-		panelVidas.add(label_corazon3,gbc);
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.gridx = 6;
+		gbc.gridy = 6;
+		gbc.gridwidth = 2;
+		gbc.gridheight = 1;
+		gbc.weightx = 0;
+		gbc.weightx = 0;
+		gbc.insets = new Insets(0,0,0,10);
+			
+		getContentPane().add(panelVidas,gbc);
 	}
 	
 	public void mostrarObjetivos() {	
