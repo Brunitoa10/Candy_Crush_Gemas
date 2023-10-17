@@ -1,7 +1,9 @@
 package Tablero;
 
 import Entidades.Entidad;
+import Entidades.GemaEnvuelta;
 import Entidades.GemaNormal;
+import Entidades.GemaRayada;
 import GUI.Celda;
 import GUI.EntidadGrafica;
 import GUI.GUI;
@@ -201,33 +203,42 @@ public class Tablero {
 		if(!l.isEmpty()) {
 			Iterator<Celda> it = l.iterator();
 			Celda c = null;
-			Celda aux;
+			int cf = -1;
+			int cc = -1; // -1 para detectar out of bounds
+			Celda aux= null;
 			int color1 = -1;
 			int color2 = -2;
+			int colorT = -3;
 			int combo = 0;
+			int direccRay;
 			boolean posibleT = false;//marca si puede pasar que estemos en un combo t, se genera bomba(envuelta?)
 			
 			while(it.hasNext()) {//[1],[1],[1],[1],null,[4][4][4][4],null,[1][1][1]
 				
 				if(c == null) {//principio de combo
 					c = it.next();
+					cf = c.getEntidad().getFila();
+					cc = c.getEntidad().getColumna();
 					posibleT = false;
 					if(color1 == -1) {
 						color1 = c.getEntidad().obtenerColor();
 					}else 
 						if(color1 == c.getEntidad().obtenerColor()) {
 							posibleT = true;
+							colorT = color1;
 						}else 
 							if(color2 == -2) 
 								color2 = c.getEntidad().obtenerColor();
-							else if(color2 == c.getEntidad().obtenerColor())
+							else if(color2 == c.getEntidad().obtenerColor()) {
 								    posibleT = true;
-					destruirRocas(c.getEntidad());
+								    colorT = color2;}
+					destruirRocas(c.getEntidad());// destruiur rocas
 					c.getEntidad().destruir();
 					combo = 1;
 					if(c == c1 || c ==c2) {
 						if(posibleT) {
 							System.out.println("generar bomba!!!!!");
+							c.setEntidad(new GemaEnvuelta(cf,cc,colorT));
 							//generar bomba en la celda c
 							}
 						else aux = c;
@@ -238,18 +249,29 @@ public class Tablero {
 					c = it.next();
 					
 					if(c != null) {
-						destruirRocas(c.getEntidad());
+						
+						if(cf == c.getEntidad().getFila()) {
+							//se mueve a travez de las filas
+							direccRay = 0;}
+						else direccRay = 1;//se mueve a travez de las columnas
+						
+						cf= c.getEntidad().getFila();
+						cc = c.getEntidad().getColumna();
+						
+						destruirRocas(c.getEntidad());//destruir rocas
 						c.getEntidad().destruir();
 						combo++;
 						if(c == c1 || c ==c2) {
 							if(posibleT) {
 								System.out.println("generar bomba!!!!!");
+								c.setEntidad(new GemaEnvuelta(cf,cc,colorT));
 								//generar bomba en la celda c
 							}
 							else aux = c;
 						}
 						if(combo>=4 && !posibleT) {
 							System.out.println("generar rayada!!!!!");
+							aux.setEntidad(new GemaRayada(cf,cc, c.getEntidad().obtenerColor(), direccRay));
 							//generar rayada en aux
 							while(c!= null) {
 								c = it.next();
@@ -345,7 +367,7 @@ public class Tablero {
 		System.out.println("");
 		for(int i = 0; i<filas; i++) {
 			for (int j = 0; j<columnas ; j++) {
-				System.out.print("["+ t[i][j].getEntidad().obtenerColor() +"]");
+				System.out.print("["+ t[fJugador][cJugador].getEntidad().getClass().getName()+" " +t[i][j].getEntidad().obtenerColor() +"]");
 			}
 			System.out.println("");
 		}
@@ -449,6 +471,8 @@ public class Tablero {
 		break;
 		default: System.out.println("mover jugador(): direccion incorrecta");
 		}
+
+		System.out.println("mirando: " +t[fJugador][cJugador].getEntidad().getClass().getName() );
 	}
 	
 	/* intercambia dede la posicion del cursor a direccion 0 derecha, 1 abajo, 2 izquierda, 3 arriba

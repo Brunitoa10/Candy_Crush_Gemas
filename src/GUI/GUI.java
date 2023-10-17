@@ -21,7 +21,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import java.awt.GridBagLayout;
 import Entidades.Entidad;
-import Logica.Color;
 import Logica.Logica;
 import Threads.AnimadorCronometro;
 import Threads.CentralAnimaciones;
