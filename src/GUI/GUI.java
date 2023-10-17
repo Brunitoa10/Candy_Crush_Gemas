@@ -67,6 +67,7 @@ public class GUI extends JFrame {
 		animadorTiempo = new AnimadorCronometro(tiempoRestante, this);
 		
 		inicializar();
+		//mostrarVidas();
 	}
 	
 	
@@ -191,6 +192,7 @@ public class GUI extends JFrame {
 		panelVidas.setBackground(new Color(0,0,0,0));
 		
 
+		
 		ImageIcon imgIconCorazon = new ImageIcon(this.getClass().getResource("/assets/nivel/corazon.png"));
 		Image imgEscaladaCorazon = imgIconCorazon.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
 		Icon iconoEscaladoCorazon = new ImageIcon(imgEscaladaCorazon);
@@ -237,9 +239,10 @@ public class GUI extends JFrame {
 				System.out.println("QUEDA 1 VIDA");
 				label_corazon1.setIcon(iconoEscaladoCorazon);
 				label_corazon2.setIcon(iconoEscaladoCorazonVacio);
-				label_corazon3.setIcon(iconoEscaladoCorazonVacio);
-				}
-
+				label_corazon3.setIcon(iconoEscaladoCorazon);
+			}
+		}
+		
 		GridBagConstraints gbc = new GridBagConstraints();
 
 		gbc.gridx = 0;
