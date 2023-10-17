@@ -1,7 +1,7 @@
 package GUI;
 
 
-
+import java.awt.Color;
 import Tablero.Tablero;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
@@ -13,11 +13,15 @@ import java.awt.Image;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Graphics;
+
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import java.awt.GridBagLayout;
 import Entidades.Entidad;
+import Logica.Color;
 import Logica.Logica;
 import Threads.AnimadorCronometro;
 import Threads.CentralAnimaciones;
@@ -46,6 +50,7 @@ public class GUI extends JFrame {
 	public static final int IZQUIERDA = 15002;
 	public static final int DERECHA = 15003;
 	
+	Imagenfondo fondo = new Imagenfondo();
 	
 	public GUI(Logica l,Tablero t, int f, int c) {
 		milogica = l;
@@ -66,6 +71,8 @@ public class GUI extends JFrame {
 	
 	
 	protected void inicializar() {
+		this.setContentPane(fondo);
+
 		ImageIcon logo = new ImageIcon(this.getClass().getResource("/assets/nivel/Icono.png"));
 		setIconImage(logo.getImage());
 
@@ -85,14 +92,20 @@ public class GUI extends JFrame {
 		getContentPane();
 
 		timerLabel = new JLabel("Tiempo restante: "+ tiempoRestante);
+		timerLabel.setFont(new Font("Algerian", Font.PLAIN, 30));
+		timerLabel.setForeground(Color.WHITE);
 		movimientosLabel = new JLabel ("Movimientos restantes: "+movimientosRestantes);
-		
-		panel_objetivos = new JPanel();
+		movimientosLabel.setFont(new Font("Algerian", Font.PLAIN, 20));
+		movimientosLabel.setForeground(Color.WHITE);
+
 		panel_principal = new JPanel();
 		panel_principal.setSize(size_label * filas, size_label * columnas);
 		panel_principal.setLayout(new GridBagLayout());
+
+		panel_objetivos = new JPanel();
 		panel_objetivos.setSize(100,100);
 		panel_objetivos.setLayout(new GridBagLayout());
+		panel_objetivos.setBackground(new Color(0,0,0,120));
 		
 		panel_principal.addKeyListener(new KeyAdapter() {
 			@Override
@@ -142,6 +155,7 @@ public class GUI extends JFrame {
 		c.weightx = 1;
 		c.weighty = 1;
 		c.anchor = GridBagConstraints.CENTER;
+		
 		getContentPane().add(panel_principal,c);
 
 		//Constraints VIDAS
@@ -174,6 +188,7 @@ public class GUI extends JFrame {
 	public void mostrarVidas() {
 		panelVidas = new JPanel();
 		panelVidas.setLayout(new GridBagLayout());
+		panelVidas.setBackground(new Color(0,0,0,0));
 		
 
 		ImageIcon imgIconCorazon = new ImageIcon(this.getClass().getResource("/assets/nivel/corazon.png"));
@@ -183,6 +198,7 @@ public class GUI extends JFrame {
 		label_corazon1.setIcon(iconoEscaladoCorazon);
 		label_corazon3.setIcon(iconoEscaladoCorazon);
 		label_corazon2.setIcon(iconoEscaladoCorazon);
+
 
 		GridBagConstraints gbc = new GridBagConstraints();
 
@@ -239,7 +255,9 @@ public class GUI extends JFrame {
 	
 	public void mostrarObjetivos() {	
 		JLabel tituloObjetivo = new JLabel();
+		tituloObjetivo.setFont(new Font("Algerian", Font.PLAIN, 20));
 		tituloObjetivo.setText("OBJETIVOS:");
+		tituloObjetivo.setForeground(Color.WHITE);
 		GridBagConstraints cTitulo = new GridBagConstraints();
 		cTitulo.insets = new Insets(0, 0, 0, 0);      
 	   	cTitulo.gridx = 0;                               
@@ -259,7 +277,11 @@ public class GUI extends JFrame {
 			objetivosColores[numeroDeObjetivo] = color;
 			JLabel objetivosTexto = new JLabel();
 			JLabel objetivosImagen = new JLabel();
+			objetivosTexto.setForeground(Color.WHITE);
+			objetivosTexto.setFont(new Font("Algerian", Font.PLAIN, 15));
 			JLabel objetivosNumero = objetivosProgreso[numeroDeObjetivo] = new JLabel();
+			objetivosNumero.setForeground(Color.WHITE);
+			objetivosNumero.setFont(new Font("Arial", Font.PLAIN, 15));
 
 			//obtenerInfoObjetivos[i] siempre devuelve el texto
 			//obtenerInfoObjetivos[i+1] siempre devuelve la imagen de la gema correspondiente
@@ -297,8 +319,6 @@ public class GUI extends JFrame {
 			panel_objetivos.add(objetivosNumero,c);
 
 			coordenada_y = coordenada_y + 2;
-
-		
 		}
 	}
 
@@ -459,4 +479,21 @@ public class GUI extends JFrame {
 	public boolean getBloquear_intercambios() {
 		return bloquear_intercambios;
 	}
+
+
+	//Clase auxiliar para poder hacer el fondo
+
+
+	public class Imagenfondo extends JPanel{
+		
+		private Image imagen;
+		
+		public void paint(Graphics g) {
+			imagen = new ImageIcon(getClass().getResource("/assets/nivel/3_Nivel.png")).getImage();
+			g.drawImage(imagen, 0, 0, getWidth(), getHeight(), this);
+			setOpaque(false); 
+			super.paint(g);
+		}
+	}
 }
+

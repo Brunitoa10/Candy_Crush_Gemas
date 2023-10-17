@@ -72,7 +72,7 @@ public class CentralAnimaciones implements ManejadorAnimaciones{
 			animador = new AnimadorExplosion(this, c, 0);
 			mapeo_celda_animaciones.get(c).add(animador);
 		}else {
-			animador = new AnimadorExplosion(this, c, 700);
+			animador = new AnimadorExplosion(this, c, 1000);
 			mapeo_celda_animaciones.put(c, new LinkedList<Animador>());
 			mapeo_celda_animaciones.get(c).add(animador);
 			animador.comenzar_animacion();
