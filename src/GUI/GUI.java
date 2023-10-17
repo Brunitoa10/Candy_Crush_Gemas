@@ -73,7 +73,7 @@ public class GUI extends JFrame {
 	
 	protected void inicializar() {
 		this.setContentPane(fondo);
-
+		
 		ImageIcon logo = new ImageIcon(this.getClass().getResource("/assets/nivel/Icono.png"));
 		setIconImage(logo.getImage());
 

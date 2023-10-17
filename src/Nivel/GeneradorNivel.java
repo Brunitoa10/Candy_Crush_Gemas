@@ -3,8 +3,11 @@ package Nivel;
 
 
 import Entidades.GemaNormal;
+import Entidades.GemaRayada;
+import Entidades.Roca;
 import Logica.Logica;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import Tablero.Tablero;
@@ -59,14 +62,30 @@ public class GeneradorNivel {
 
 			t.resetearTablero(filas, columnas);
 
-			// Leer y establecer gemas
+			
 			for (int i = 0; i < filas; i++) {
-				String[] valores = input.nextLine().split(" ");
-				for (int j = 0; j < columnas; j++) {
-					t.agregarEntidad(new GemaNormal(i, j, Integer.parseInt(valores[j].trim())));
-				}
-			}
+		        String[] valores = input.nextLine().split(" ");
+		        for (int j = 0; j < columnas; j++) {
+		            String[] partes = valores[j].split(",");
+		            if (partes[0].equals("n")) {
+		                t.agregarEntidad(new GemaNormal(i, j, Integer.parseInt(partes[1].trim())));
+		            }else {
+		            	if(partes[0].equals("r")) {
+		            		t.agregarEntidad(new Roca(i, j));
+		            	}else{
+		            		if(partes[0].equals("p")) {
+		            			t.agregarEntidad(new GemaRayada(i, j,Integer.parseInt(partes[1].trim())%10,Integer.parseInt(partes[1].trim())/10));
+		            		}
+		            	}
+		            }
+		        }
+		    }
+			
+		
+
 			input.close();
+		
+			
 			System.out.println("------------------------------------------------");
 			System.out.println("Fila :: "+filas);
 			System.out.println("Col :: "+columnas);

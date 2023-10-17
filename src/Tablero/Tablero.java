@@ -1,7 +1,9 @@
 package Tablero;
 
 import Entidades.Entidad;
+import Entidades.GemaEnvuelta;
 import Entidades.GemaNormal;
+import Entidades.GemaRayada;
 import GUI.Celda;
 import GUI.EntidadGrafica;
 import GUI.GUI;
@@ -112,8 +114,11 @@ public class Tablero {
 		System.out.println("INTERCAMBIADO: "+"["+f1+"]"+"["+c1+"]" +" y "+"["+f2+"]" +"["+c2+"]");
 		
 		boolean movValido = manejarColisiones(CheckCruz(f1,c1,f2,c2),t[f1][c1],t[f2][c2],0); 
+		printTable();
 		if(movValido) {
-			caida();
+			do {
+				caida();
+			}while(checkExhaustivo());
 			toReturn = true;
 		}
 		else {intercambiarSinCheck(f2,c2,f1,c1);
@@ -201,16 +206,23 @@ public class Tablero {
 		if(!l.isEmpty()) {
 			Iterator<Celda> it = l.iterator();
 			Celda c = null;
-			Celda aux;
+			int cf = -1;
+			int cc = -1; // -1 para detectar out of bounds
+			Celda aux= null;
 			int color1 = -1;
 			int color2 = -2;
+			int colorT = -3;
 			int combo = 0;
+			int direccRay;
 			boolean posibleT = false;//marca si puede pasar que estemos en un combo t, se genera bomba(envuelta?)
 			
 			while(it.hasNext()) {//[1],[1],[1],[1],null,[4][4][4][4],null,[1][1][1]
 				
 				if(c == null) {//principio de combo
 					c = it.next();
+					cf = c.getEntidad().getFila();
+					cc = c.getEntidad().getColumna();
+					colorT = c.getEntidad().obtenerColor();
 					posibleT = false;
 					if(color1 == -1) {
 						color1 = c.getEntidad().obtenerColor();
@@ -220,14 +232,16 @@ public class Tablero {
 						}else 
 							if(color2 == -2) 
 								color2 = c.getEntidad().obtenerColor();
-							else if(color2 == c.getEntidad().obtenerColor())
-								    posibleT = true;
-					destruirRocas(c.getEntidad());
-					c.getEntidad().destruir();
+							else if(color2 == c.getEntidad().obtenerColor()) {
+								    posibleT = true;}
+					destruirRocas(c.getEntidad());// destruiur rocas
+					c.getEntidad().romper();
 					combo = 1;
 					if(c == c1 || c ==c2) {
 						if(posibleT) {
 							System.out.println("generar bomba!!!!!");
+							c.setEntidad(new GemaEnvuelta(cf,cc,colorT));
+							System.out.println(c.getEntidad().getClass().getName());
 							//generar bomba en la celda c
 							}
 						else aux = c;
@@ -238,18 +252,30 @@ public class Tablero {
 					c = it.next();
 					
 					if(c != null) {
-						destruirRocas(c.getEntidad());
-						c.getEntidad().destruir();
+						
+						if(cf == c.getEntidad().getFila()) {
+							//se mueve a travez de las filas
+							direccRay = 0;}
+						else direccRay = 1;//se mueve a travez de las columnas
+						
+						cf= c.getEntidad().getFila();
+						cc = c.getEntidad().getColumna();
+						
+						destruirRocas(c.getEntidad());//destruir rocas
+						c.getEntidad().romper();
 						combo++;
 						if(c == c1 || c ==c2) {
 							if(posibleT) {
 								System.out.println("generar bomba!!!!!");
+								c.setEntidad(new GemaEnvuelta(cf,cc,colorT));
 								//generar bomba en la celda c
 							}
 							else aux = c;
 						}
 						if(combo>=4 && !posibleT) {
 							System.out.println("generar rayada!!!!!");
+							aux.setEntidad(new GemaRayada(cf,cc, colorT, direccRay));
+							//System.out.println(aux.getEntidad().getClass().getName());
 							//generar rayada en aux
 							while(c!= null) {
 								c = it.next();
@@ -345,7 +371,7 @@ public class Tablero {
 		System.out.println("");
 		for(int i = 0; i<filas; i++) {
 			for (int j = 0; j<columnas ; j++) {
-				System.out.print("["+ t[i][j].getEntidad().obtenerColor() +"]");
+				System.out.print("["+ t[i][j].getEntidad().getClass().getName()+" " +t[i][j].getEntidad().obtenerColor() +"]");
 			}
 			System.out.println("");
 		}
@@ -449,6 +475,8 @@ public class Tablero {
 		break;
 		default: System.out.println("mover jugador(): direccion incorrecta");
 		}
+
+		System.out.println("mirando: " +t[fJugador][cJugador].getEntidad().getClass().getName() );
 	}
 	
 	/* intercambia dede la posicion del cursor a direccion 0 derecha, 1 abajo, 2 izquierda, 3 arriba
@@ -491,7 +519,51 @@ public class Tablero {
 	}
 	
 	
-	public LinkedList<Entidad> checkExhaustivo() {return null;}
+	public boolean checkExhaustivo() {
+		int color = -1;
+		int combo;
+		Celda c;
+		boolean combeado = false;
+		
+		for (int i = 0; i< filas; i++) {
+			combo = 1;
+			for (int j = 0;j<columnas; j++) {//a travez de las filas quiza
+				if(t[i][j].getEntidad().obtenerColor() != color)
+					combo = 1;
+				if(combo ==3) {
+					t[i][j].getEntidad().destruir();
+					t[i][j-1].getEntidad().destruir();
+				    t[i][j-2].getEntidad().destruir();
+				    combeado = true;}
+				if(combo == 4) {
+					t[i][j].getEntidad().destruir();
+					t[i][j].setEntidad(new GemaRayada(i,j,color,0));}
+				combo ++;
+				color = t[i][j].getEntidad().obtenerColor();
+			}
+		}
+		for (int i = 0; i< columnas; i++) {
+			combo = 1;
+			for (int j = 0;j<filas; j++) {//a travez de las columnas quiza
+				if(t[j][i].getEntidad().obtenerColor() != color)
+					combo = 1;
+				if(combo ==3) {
+					t[j][i].getEntidad().destruir();
+					t[j-1][i].getEntidad().destruir();
+				    t[j-2][i].getEntidad().destruir();
+				    combeado = true;}
+				if(combo == 4) {
+					t[j][i].getEntidad().destruir();
+					t[j][i].setEntidad(new GemaRayada(j,i,color,1));}
+				combo ++;
+				color = t[j][i].getEntidad().obtenerColor();
+			}
+		}
+		
+		
+		
+		return combeado;
+	}
 	
 	public boolean caida() {
 		//verificar que la fila 0 es la de arriba
@@ -511,6 +583,7 @@ public class Tablero {
 				}
 			}
 		}
+		printTable();
 		if(caido) {
 			caida();
 			return true;}

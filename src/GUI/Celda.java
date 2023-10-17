@@ -62,6 +62,7 @@ public class Celda extends JLabel implements EntidadGrafica{
 
 	public void setEntidad(Entidad l) {
 		ent = l;
+		l.setEntidadGrafica(this);
 	}
 	
 	public void setGUI(GUI g) {

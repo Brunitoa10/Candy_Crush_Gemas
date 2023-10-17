@@ -7,7 +7,7 @@ public class GemaRayada extends Gema{
 	//direccion en la que la gema explotara
 	//en caso de cambiar los valores de horizontal y vertical, adaptar el nombre de los assets en /assets/gema_rayada/
 	private int d;
-	public static final int HORIZONTAL = 0;
+	public static final int HORIZONTAL = 5; //MODIFICADO POR BRUNO
 	public static final int VERTICAL = 1;
 
 	public GemaRayada(int f, int c, int col, int direccion) {
@@ -23,7 +23,7 @@ public class GemaRayada extends Gema{
 		int f=fila;
 		int c=columna;
         int tope=0;
-       if(d==0) //es Horizontal
+       if(d==5) //es Horizontal
 	   {
           tope=miTablero.getColumna();
 		  for(int i=0;i<tope;i++)
