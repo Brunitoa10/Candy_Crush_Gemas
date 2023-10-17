@@ -5,7 +5,7 @@ import Logica.Color;
 public class Hielo extends Obstaculo {
 
 	public Hielo(int f, int c, int col) {
-		super(f, c, "/assets/gema_normal/", col);
+		super(f, c, "/assets/obstaculo/hielo", col);
 	}
 	
 	public boolean esPosibleIntercambiar(Entidad e) {
