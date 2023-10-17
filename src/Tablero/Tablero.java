@@ -114,6 +114,7 @@ public class Tablero {
 		System.out.println("INTERCAMBIADO: "+"["+f1+"]"+"["+c1+"]" +" y "+"["+f2+"]" +"["+c2+"]");
 		
 		boolean movValido = manejarColisiones(CheckCruz(f1,c1,f2,c2),t[f1][c1],t[f2][c2],0); 
+		printTable();
 		if(movValido) {
 			caida();
 			toReturn = true;
@@ -219,19 +220,18 @@ public class Tablero {
 					c = it.next();
 					cf = c.getEntidad().getFila();
 					cc = c.getEntidad().getColumna();
+					colorT = c.getEntidad().obtenerColor();
 					posibleT = false;
 					if(color1 == -1) {
 						color1 = c.getEntidad().obtenerColor();
 					}else 
 						if(color1 == c.getEntidad().obtenerColor()) {
 							posibleT = true;
-							colorT = color1;
 						}else 
 							if(color2 == -2) 
 								color2 = c.getEntidad().obtenerColor();
 							else if(color2 == c.getEntidad().obtenerColor()) {
-								    posibleT = true;
-								    colorT = color2;}
+								    posibleT = true;}
 					destruirRocas(c.getEntidad());// destruiur rocas
 					c.getEntidad().destruir();
 					combo = 1;
@@ -239,6 +239,7 @@ public class Tablero {
 						if(posibleT) {
 							System.out.println("generar bomba!!!!!");
 							c.setEntidad(new GemaEnvuelta(cf,cc,colorT));
+							System.out.println(c.getEntidad().getClass().getName());
 							//generar bomba en la celda c
 							}
 						else aux = c;
@@ -271,7 +272,8 @@ public class Tablero {
 						}
 						if(combo>=4 && !posibleT) {
 							System.out.println("generar rayada!!!!!");
-							aux.setEntidad(new GemaRayada(cf,cc, c.getEntidad().obtenerColor(), direccRay));
+							aux.setEntidad(new GemaRayada(cf,cc, colorT, direccRay));
+							//System.out.println(aux.getEntidad().getClass().getName());
 							//generar rayada en aux
 							while(c!= null) {
 								c = it.next();
@@ -367,7 +369,7 @@ public class Tablero {
 		System.out.println("");
 		for(int i = 0; i<filas; i++) {
 			for (int j = 0; j<columnas ; j++) {
-				System.out.print("["+ t[fJugador][cJugador].getEntidad().getClass().getName()+" " +t[i][j].getEntidad().obtenerColor() +"]");
+				System.out.print("["+ t[i][j].getEntidad().getClass().getName()+" " +t[i][j].getEntidad().obtenerColor() +"]");
 			}
 			System.out.println("");
 		}
@@ -535,6 +537,7 @@ public class Tablero {
 				}
 			}
 		}
+		printTable();
 		if(caido) {
 			caida();
 			return true;}
