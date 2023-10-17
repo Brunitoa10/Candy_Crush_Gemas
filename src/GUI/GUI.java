@@ -241,7 +241,6 @@ public class GUI extends JFrame {
 				label_corazon2.setIcon(iconoEscaladoCorazonVacio);
 				label_corazon3.setIcon(iconoEscaladoCorazon);
 			}
-		}
 		
 		GridBagConstraints gbc = new GridBagConstraints();
 
