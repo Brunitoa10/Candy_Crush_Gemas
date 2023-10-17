@@ -5,7 +5,7 @@ import Logica.Color;
 public class Roca extends Obstaculo{
 
 	public Roca(int f, int c) {
-		super(f, c, "/assets/obstaculo/gema_normal/", 7);
+		super(f, c, "/assets/obstaculo/", 7);
 	}
 
 	public boolean puedeRecibir(GemaNormal g) {
