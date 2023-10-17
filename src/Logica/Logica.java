@@ -97,10 +97,13 @@ public class Logica {
         if (tiempo == 0) {
             timer.cancel();
             miGUI.mostrarMensajeDerrotaPorTiempo();
-            if(miNivel.getVidas() >= 1) {
+            if(miNivel.getVidas() >= 0) {
             	miNivel.restarVidas();
+            	int tmpVidas = miNivel.getVidas();
 				miGUI.actualizarVidas();
             	reiniciarNivel();
+            	System.out.println("Logica vidas en disminuirTiempo :: "+tmpVidas);
+            	miNivel.setVidas(tmpVidas);
             	tiempo = miNivel.getTiempo();
             }else {
             	miGUI.mostrarMensajeDerrotaPorVidas();

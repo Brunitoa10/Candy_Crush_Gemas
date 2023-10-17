@@ -29,7 +29,10 @@ public class GeneradorNivel {
 			miNivel.setTotalMovimientos(miNivel.getMovimientos());
 			//Leo tiempo del nivel
 			miNivel.setTiempo(Integer.parseInt(input.nextLine().trim()));
-
+			
+			//Leo vidas
+			miNivel.setVidas(Integer.parseInt(input.nextLine().trim()));
+			
 			// Leer terminador
 			String terminador = input.nextLine();
 			if (!terminador.equals("t")) {
