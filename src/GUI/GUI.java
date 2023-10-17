@@ -175,11 +175,7 @@ public class GUI extends JFrame {
 	public void mostrarVidas() {
 		panelVidas = new JPanel();
 		panelVidas.setLayout(new GridBagLayout());
-		 // Elimina las declaraciones locales de las JLabel
-	    label_corazon1 = new JLabel();
-	    label_corazon2 = new JLabel();
-	    label_corazon3 = new JLabel();
-
+		
 		ImageIcon imgIconCorazon = new ImageIcon(this.getClass().getResource("/assets/nivel/corazon.png"));
 		Image imgEscaladaCorazon = imgIconCorazon.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
 		Icon iconoEscaladoCorazon = new ImageIcon(imgEscaladaCorazon);
