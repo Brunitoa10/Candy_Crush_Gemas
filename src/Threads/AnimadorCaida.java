@@ -2,7 +2,7 @@ package Threads;
 
 import GUI.Celda;
 
-public class AnimadorCaida extends Thread implements Animador {
+public class AnimadorCaida extends Thread implements Animador, Comparable<Animador> {
 
 	protected ManejadorAnimaciones mi_manager;
 	protected Celda mi_celda_animada;
@@ -10,6 +10,8 @@ public class AnimadorCaida extends Thread implements Animador {
 	
 	protected int step;
 	protected int delay;
+
+	protected int prioridad;
 	
 	/**
 	 * Inicializa el estado del animador, considerando
@@ -21,6 +23,8 @@ public class AnimadorCaida extends Thread implements Animador {
 	public AnimadorCaida(ManejadorAnimaciones m, Celda c){
 		mi_manager = m;
 		mi_celda_animada = c;
+
+		prioridad = 3;
 		
 		step = 10;
 		delay = 50;
@@ -62,5 +66,20 @@ public class AnimadorCaida extends Thread implements Animador {
 		}
 		*/
 		mi_manager.notificarse_finalizacion_animacion(this);
+	}
+
+	@Override
+	public int compareTo(Animador a) {
+		if (prioridad < a.getPrioridad()) {
+			return -1;
+		} else if (prioridad > a.getPrioridad()) {
+					return 1;
+				}
+
+		return 0;
+	}
+
+	public int getPrioridad() {
+		return prioridad;
 	}
 }

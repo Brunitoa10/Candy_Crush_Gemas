@@ -1,8 +1,7 @@
 package Threads;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.Iterator;
+import java.util.PriorityQueue;
 import GUI.Celda;
 import GUI.GUI;
 
@@ -18,12 +17,12 @@ import GUI.GUI;
 public class CentralAnimaciones implements ManejadorAnimaciones{
 	
 	protected GUI miGUI;
-	protected HashMap<Celda, List<Animador>> mapeo_celda_animaciones;
+	protected PriorityQueue<Animador> colaConPrioridadAnimaciones;
 	protected int size_label;
 	
 	public CentralAnimaciones(GUI g) {
 		miGUI = g;
-		mapeo_celda_animaciones = new HashMap<Celda, List<Animador>>();
+		colaConPrioridadAnimaciones = new PriorityQueue<Animador>();
 	}
 	
 	/**
@@ -39,11 +38,10 @@ public class CentralAnimaciones implements ManejadorAnimaciones{
 		Animador animador = new AnimadorMovimiento(this, 10, 50, c);
 		miGUI.notificarse_animacion_en_progreso();
 		
-		if (tiene_animaciones_en_progreso(c) ) {
-			mapeo_celda_animaciones.get(c).add(animador);
+		if (tiene_animaciones_en_progreso() ) {
+			colaConPrioridadAnimaciones.add(animador);
 		}else {
-			mapeo_celda_animaciones.put(c, new LinkedList<Animador>());
-			mapeo_celda_animaciones.get(c).add(animador);
+			colaConPrioridadAnimaciones.add(animador);
 			animador.comenzar_animacion();
 		}
 	}
@@ -53,13 +51,10 @@ public class CentralAnimaciones implements ManejadorAnimaciones{
 		Animador animador = new AnimadorCaida(this, c);
 		miGUI.notificarse_animacion_en_progreso();
 		
-		if (tiene_animaciones_en_progreso(c) ) {
-			System.out.println("Animador caida :: animacion en progreso");
-			mapeo_celda_animaciones.get(c).add(animador);
+		if (tiene_animaciones_en_progreso() ) {
+			colaConPrioridadAnimaciones.add(animador);
 		}else {
-			System.out.println("Animador caida :: no tengo animacion en progreso");
-			mapeo_celda_animaciones.put(c, new LinkedList<Animador>());
-			mapeo_celda_animaciones.get(c).add(animador);
+			colaConPrioridadAnimaciones.add(animador);
 			animador.comenzar_animacion();
 		}
 	}
@@ -67,14 +62,12 @@ public class CentralAnimaciones implements ManejadorAnimaciones{
 	public void animar_explosion(Celda c) {
 		Animador animador;
 		miGUI.notificarse_animacion_en_progreso();
-		
-		if (tiene_animaciones_en_progreso (c) ) {
-			animador = new AnimadorExplosion(this, c, 0);
-			mapeo_celda_animaciones.get(c).add(animador);
+		animador = new AnimadorExplosion(this, c, 0);
+
+		if (tiene_animaciones_en_progreso () ) {
+			colaConPrioridadAnimaciones.add(animador);
 		}else {
-			animador = new AnimadorExplosion(this, c, 1000);
-			mapeo_celda_animaciones.put(c, new LinkedList<Animador>());
-			mapeo_celda_animaciones.get(c).add(animador);
+			colaConPrioridadAnimaciones.add(animador);
 			animador.comenzar_animacion();
 		}	
 	}
@@ -86,32 +79,18 @@ public class CentralAnimaciones implements ManejadorAnimaciones{
 	 * se realicen primero.
 	 * @param c Celda que debe animarse, en relación a la imagen actual que la representa.
 	 */
-	public void animar_cambio_estado(Celda c) {
-		Animador animador = new AnimadorCambioEstado(this, c);
-		miGUI.notificarse_animacion_en_progreso();
-		
-		if (tiene_animaciones_en_progreso (c) ) {
-			mapeo_celda_animaciones.get(c).add(animador);
-		}else {
-			mapeo_celda_animaciones.put(c, new LinkedList<Animador>());
-			mapeo_celda_animaciones.get(c).add(animador);
-			animador.comenzar_animacion();
-		}
-		
-	}
+
 
 	@Override
 	public void notificarse_finalizacion_animacion(Animador a) {
 		Animador animador;
-		List<Animador> animaciones_para_celda;
 		
 		miGUI.notificarse_animacion_finalizada();
 		
-		animaciones_para_celda = mapeo_celda_animaciones.get(a.get_celda_asociada());
-		animaciones_para_celda.remove(a);
+		Iterator<Animador> iterador_animaciones_pendientes = colaConPrioridadAnimaciones.iterator();
 		
-		if (!animaciones_para_celda.isEmpty()) {
-			animador = animaciones_para_celda.get(0);
+		if (!iterador_animaciones_pendientes.hasNext()) {
+			animador = iterador_animaciones_pendientes.next();
 			animador.comenzar_animacion();
 		}
 	}
@@ -121,10 +100,10 @@ public class CentralAnimaciones implements ManejadorAnimaciones{
 	 * @param c Celda que se desea considerar para el chequeo de animaciones en progreso.
 	 * @return True si la celda tiene animaciones actualmente en progreso; false en caso contrario.
 	 */
-	private boolean tiene_animaciones_en_progreso(Celda c) {
+	private boolean tiene_animaciones_en_progreso() {
 		boolean retorno = false;
-		if (mapeo_celda_animaciones.get(c) != null) {
-			retorno = !mapeo_celda_animaciones.get(c).isEmpty();
+		if (colaConPrioridadAnimaciones.peek() != null) {
+			retorno = !colaConPrioridadAnimaciones.isEmpty();
 		}
 		return retorno;
 	}

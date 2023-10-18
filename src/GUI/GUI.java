@@ -36,10 +36,10 @@ public class GUI extends JFrame {
 	protected int tiempoRestante;
 	protected CentralAnimaciones mi_animador;
 	protected int animaciones_pendientes;
-	protected Tablero miTablero;
 	protected boolean bloquear_intercambios;
 	protected JLabel movimientosLabel;
 	protected JLabel[] objetivosProgreso;
+	protected Celda matrizDeCeldas[][];
 	protected int[] objetivosColores;
 	protected int movimientosRestantes;
 	protected AnimadorCronometro animadorTiempo;
@@ -53,15 +53,15 @@ public class GUI extends JFrame {
 	
 	Imagenfondo fondo = new Imagenfondo();
 	
-	public GUI(Logica l,Tablero t, int f, int c) {
+	public GUI(Logica l, int f, int c) {
 		milogica = l;
-		miTablero = t;
 		filas = f;
 		mi_animador = new CentralAnimaciones(this);
 		columnas = c;
 		tiempoRestante = milogica.getTiempo();
 		movimientosRestantes = milogica.getMovimientos();
 		animaciones_pendientes = 0;
+		matrizDeCeldas = new Celda[filas][columnas];
 		bloquear_intercambios = false;
 		objetivosColores = new int[milogica.getCantidadDeObjetivos()];
 		objetivosProgreso = new JLabel[milogica.getCantidadDeObjetivos()];
@@ -102,6 +102,7 @@ public class GUI extends JFrame {
 		panel_principal = new JPanel();
 		panel_principal.setSize(size_label * filas, size_label * columnas);
 		panel_principal.setLayout(new GridLayout(filas,columnas,0,0));
+		panel_principal.setBackground(new Color(0,0,0,120));
 
 		panel_objetivos = new JPanel();
 		panel_objetivos.setSize(100,100);
@@ -207,11 +208,9 @@ public class GUI extends JFrame {
 	}
 
 	public void actualizarVidas() {
-
 		ImageIcon imgIconCorazonVacio = new ImageIcon(this.getClass().getResource("/assets/nivel/corazonVacio.png"));
 		Image imgEscaladaCorazonVacio = imgIconCorazonVacio.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
 		Icon iconoEscaladoCorazonVacio = new ImageIcon(imgEscaladaCorazonVacio);
-
 		
 
 		if(milogica.getVidas() == 2) {
@@ -330,17 +329,14 @@ public class GUI extends JFrame {
 	}
 	
 	public EntidadGrafica agregar_entidad(Entidad e) {
-		GridBagConstraints c = new GridBagConstraints();
 		Celda celda = new Celda(this, e, size_label);
 		e.setEntidadGrafica(celda);
-		c.gridx = celda.getEntidad().getFila();
-		c.gridx = celda.getEntidad().getColumna();
-		panel_principal.add(celda,c);
+		matrizDeCeldas[e.getFila()][e.getColumna()] = celda;
+		panel_principal.add(matrizDeCeldas[e.getFila()][e.getColumna()]);
 		panel_principal.revalidate();
 		panel_principal.repaint();
 		return celda;
 	}
-
 
 	public void notificarse_animacion_en_progreso() {
 		synchronized(this){
@@ -353,21 +349,6 @@ public class GUI extends JFrame {
 		synchronized(this){
 			animaciones_pendientes --;
 			bloquear_intercambios = animaciones_pendientes > 0;
-			panel_principal = new JPanel();
-			panel_principal.setSize(size_label * filas, size_label * columnas);
-			panel_principal.setLayout(new GridBagLayout());
-			limpiarMatrizGUI();
-			reiniciarGUI();
-			GridBagConstraints gbc = new GridBagConstraints();
-			gbc.insets = new Insets(0,0,0,0);
-			gbc.gridx = 2;
-			gbc.gridy = 1;
-			gbc.gridwidth = 4;
-			gbc.gridheight = 4;
-			gbc.weightx = 1;
-			gbc.weighty = 1;
-			gbc.anchor = GridBagConstraints.CENTER;
-			getContentPane().add(panel_principal,gbc);
 		}
 	}
 	
@@ -375,21 +356,6 @@ public class GUI extends JFrame {
 		synchronized(c){
 			mi_animador.animar_cambio_posicion(c);
 		}
-	}
-
-	//este proyecto es un crimen de odio a la programacion
-	private void reiniciarGUI() {
-		for(int i=0;i<filas;i++) {
-			for(int j=0;j<columnas;j++) {
-				agregar_entidad(miTablero.getEntidad(i, j));
-				revalidate();
-				repaint();
-			}
-		}
-	}
-
-	public void animar_cambio_estado(Celda c) {
-		mi_animador.animar_cambio_estado(c);
 	}
 
 	public void animar_explosion(Celda c) {

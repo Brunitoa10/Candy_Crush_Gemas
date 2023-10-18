@@ -6,18 +6,18 @@ import javax.swing.ImageIcon;
 
 import GUI.Celda;
 
-public class AnimadorExplosion extends Thread implements Animador {
+public class AnimadorExplosion extends Thread implements Animador, Comparable<Animador> {
 
     protected ManejadorAnimaciones mi_manager;
 	protected Celda mi_celda_animada;
-
+	protected int prioridad;
 	protected int delay;
 
     public AnimadorExplosion(ManejadorAnimaciones m, Celda c, int d) {
 		delay = d;
 		mi_manager = m;
 		mi_celda_animada = c;
-		
+		prioridad = 2;
 		int size_label = mi_celda_animada.getSizeLabel();
 	}
 
@@ -52,4 +52,19 @@ public class AnimadorExplosion extends Thread implements Animador {
 		 }).start();
 		
     }
+
+	@Override
+	public int compareTo(Animador a) {
+		if (prioridad < a.getPrioridad()) {
+			return -1;
+		} else if (prioridad > a.getPrioridad()) {
+					return 1;
+				}
+
+		return 0;
+	}
+
+	public int getPrioridad() {
+		return prioridad;
+	}
 }

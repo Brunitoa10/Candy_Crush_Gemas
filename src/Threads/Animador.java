@@ -19,4 +19,6 @@ public interface Animador {
 	 * Inicia el comportamiento asociado con la animación.
 	 */
 	public void comenzar_animacion();
+
+	public int getPrioridad();
 }
