@@ -37,7 +37,7 @@ public class GemaRayada extends Gema{
 			}
 			else
 			{
-			miTablero.getEntidad(fila, i).destruir();	
+			miTablero.getEntidad(fila, i).romper();	
 			}
 		  }
 	   }
@@ -55,7 +55,7 @@ public class GemaRayada extends Gema{
 			}
 			else
 			{
-			miTablero.getEntidad(fila, i).destruir();	
+			miTablero.getEntidad(fila, i).romper();	
 			}
 		  }
 	   }

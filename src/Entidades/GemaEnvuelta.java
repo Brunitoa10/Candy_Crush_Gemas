@@ -51,7 +51,7 @@ public class GemaEnvuelta extends Gema{
 			}
 			else
 			{
-                miTablero.getEntidad(i, aux).destruir();
+                miTablero.getEntidad(i, aux).romper();
 			}
 			aux=aux+1;
 		  }

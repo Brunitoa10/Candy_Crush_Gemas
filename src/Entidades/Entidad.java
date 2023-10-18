@@ -100,15 +100,6 @@ public abstract class Entidad implements EntidadLogica, Enfocable{
 		enfocada = false;
 		entidadG.notificarse_cambio_estado();
 	}
-	
-    //envia un mensaje si se destruye
-	public boolean destruir(){
-	   System.out.println("destruido "+ this.color + " en: "+fila+","+columna );
-	   color = Color.TRANSPARENTE;
-	   cargarImagenesRepresentativas(ruta);
-	   entidadG.notificarse_explosion();
-	   return true;
-	}
 
     //verifica si puede recibir dicha entidad para el cambio
 	public boolean puedeRecibir(Entidad entidad) {
