@@ -1,10 +1,13 @@
 package GUI;
 
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import Tablero.Tablero;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.Insets;
@@ -12,6 +15,8 @@ import java.awt.Toolkit;
 import java.awt.Image;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -31,7 +36,7 @@ import Threads.CentralAnimaciones;
 public class GUI extends JFrame {
 	protected Logica milogica;
 	protected int filas,columnas;
-	protected JPanel panel_principal, panel_objetivos, panelVidas;
+	protected JPanel panel_principal, panel_objetivos, panelVidas,mainPanel;
 	protected JLabel timerLabel;
 	protected int tiempoRestante;
 	protected CentralAnimaciones mi_animador;
@@ -77,9 +82,15 @@ public class GUI extends JFrame {
 		ImageIcon logo = new ImageIcon(this.getClass().getResource("/assets/nivel/Icono.png"));
 		setIconImage(logo.getImage());
 
+		mainPanel = new JPanel();
+		mainPanel.setBackground(new Color(0,0,0,0));
+		
+
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		setTitle("Proyecto Candy Crush - Comision-06");
+		mainPanel.setSize(screenSize);
 		setSize(screenSize);
+		setLayout(new BorderLayout());
 		setExtendedState(JFrame.MAXIMIZED_BOTH); 
 		setLocationRelativeTo(null);
 		//----------------------------------------------------
@@ -89,25 +100,33 @@ public class GUI extends JFrame {
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
-		setLayout(new GridBagLayout());
-		getContentPane();
+		mainPanel.setLayout(new GridBagLayout());
 
 		timerLabel = new JLabel("Tiempo restante: "+ tiempoRestante);
+		timerLabel.setOpaque(true);
 		timerLabel.setFont(new Font("Algerian", Font.PLAIN, 30));
 		timerLabel.setForeground(Color.WHITE);
+		timerLabel.setBackground(new Color(0,0,0,255));
+
 		movimientosLabel = new JLabel ("Movimientos restantes: "+movimientosRestantes);
+		movimientosLabel.setOpaque(true);
 		movimientosLabel.setFont(new Font("Algerian", Font.PLAIN, 20));
 		movimientosLabel.setForeground(Color.WHITE);
+		movimientosLabel.setBackground(new Color(0,0,0,255));
 
 		panel_principal = new JPanel();
 		panel_principal.setSize(size_label * filas, size_label * columnas);
 		panel_principal.setLayout(new GridLayout(filas,columnas,0,0));
-		panel_principal.setBackground(new Color(0,0,0,120));
+		panel_principal.setOpaque(true);
+		panel_principal.setBackground(new Color(0,0,0,255));
+
 
 		panel_objetivos = new JPanel();
 		panel_objetivos.setSize(100,100);
 		panel_objetivos.setLayout(new GridBagLayout());
-		panel_objetivos.setBackground(new Color(0,0,0,120));
+		panel_objetivos.setOpaque(true);
+		panel_objetivos.setBackground(new Color(0,0,0,255));
+
 		
 		panel_principal.addKeyListener(new KeyAdapter() {
 			@Override
@@ -138,7 +157,8 @@ public class GUI extends JFrame {
 		c.gridheight = 1;
 		c.weightx = 0;
 		c.weightx = 0;
-		getContentPane().add(timerLabel,c);
+		
+		mainPanel.add(timerLabel,c);
 	
 		//Constraints PANEL OBJETIVOS
 		c.insets = new Insets(0, 10, 0, 0);      
@@ -146,7 +166,7 @@ public class GUI extends JFrame {
 	    c.gridy = 1;
 		c.gridwidth = 2;
 		c.gridheight = 2;
-		getContentPane().add(panel_objetivos, c);
+		mainPanel.add(panel_objetivos, c);
 
 		//Constraints TABLERO
 		c.insets = new Insets(0,0,0,0);
@@ -158,7 +178,7 @@ public class GUI extends JFrame {
 		c.weighty = 1;
 		c.anchor = GridBagConstraints.CENTER;
 		
-		getContentPane().add(panel_principal,c);
+		mainPanel.add(panel_principal,c);
 
 		//Constraints VIDAS
 		c.gridx = 6;
@@ -168,7 +188,7 @@ public class GUI extends JFrame {
 		c.weightx = 0;
 		c.weightx = 0;
 		c.insets = new Insets(0,0,0,10);
-		getContentPane().add(panelVidas,c);
+		mainPanel.add(panelVidas,c);
 
 		//Constraints MOVIMIENTOS
 		c.gridx = 6;
@@ -178,9 +198,10 @@ public class GUI extends JFrame {
 		c.weightx = 0;
 		c.weightx = 0;
 		c.insets = new Insets(0,0,0,10);
-		getContentPane().add(movimientosLabel, c);
+		mainPanel.add(movimientosLabel, c);
 		
 		panel_principal.setFocusable(true);
+		getContentPane().add(mainPanel);
 	}
 
 	private JLabel label_corazon1 = new JLabel();
@@ -231,7 +252,7 @@ public class GUI extends JFrame {
 		gbc.weightx = 0;
 		gbc.insets = new Insets(0,0,0,10);
 			
-		getContentPane().add(panelVidas,gbc);
+		mainPanel.add(panelVidas,gbc);
 	}
 	
 	public void mostrarObjetivos() {	
@@ -383,19 +404,143 @@ public class GUI extends JFrame {
 	}
 
 	public void mostrarMensajeDerrotaPorVidas() {
+		mainPanel.setVisible(false);
+		JPanel p1 = new JPanel();
+		p1.setSize(new Dimension(MAXIMIZED_HORIZ, MAXIMIZED_HORIZ));
+		p1.setBackground(new Color(0,0,0,120));
+		JLabel label = new JLabel("Perdiste, no tienes mas vidas");
+		JButton botonReiniciar = new JButton("Reiniciar");
 
+		p1.add(label);
+		p1.add(botonReiniciar);
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.fill = GridBagConstraints.VERTICAL;
+		gbc.anchor = GridBagConstraints.CENTER;
+
+		getContentPane().add(p1,gbc);
+		
+
+		p1.setVisible(true);
+		mainPanel.repaint();
+
+		botonReiniciar.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				mainPanel.setVisible(true);
+				p1.setVisible(false);
+				milogica.notificarDerrotaPorVidas();
+			}
+		});
 	}
 
 	public void mostrarMensajeVictoriaPorMovimientos() {
+		mainPanel.setVisible(false);
+		JPanel p1 = new JPanel();
+		p1.setSize(new Dimension(MAXIMIZED_HORIZ, MAXIMIZED_HORIZ));
+		p1.setBackground(new Color(0,0,0,120));
+		JLabel label = new JLabel("GANASTE");
+		JButton botonReiniciar = new JButton("Siguiente Nivel");
+
+		p1.add(label);
+		p1.add(botonReiniciar);
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.fill = GridBagConstraints.VERTICAL;
+		gbc.anchor = GridBagConstraints.CENTER;
+
+		getContentPane().add(p1,gbc);
 		
+
+		p1.setVisible(true);
+		mainPanel.repaint();
+
+		botonReiniciar.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				mainPanel.setVisible(true);
+				p1.setVisible(false);
+				milogica.notificarDerrotaPorVidas();
+			}
+		});
 	}
 	
 	public void mostrarMensajeVictoriaPorObjetivos() {
+		mainPanel.setVisible(false);
+		JPanel p1 = new JPanel();
+		p1.setSize(new Dimension(MAXIMIZED_HORIZ, MAXIMIZED_HORIZ));
+		p1.setBackground(new Color(0,0,0,120));
+		JLabel label = new JLabel("GANASTE!");
+		JButton botonReiniciar = new JButton("Siguiente Nivel");
+
+		p1.add(label);
+		p1.add(botonReiniciar);
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.fill = GridBagConstraints.VERTICAL;
+		gbc.anchor = GridBagConstraints.CENTER;
+
+		getContentPane().add(p1,gbc);
 		
+
+		p1.setVisible(true);
+		mainPanel.repaint();
+
+		botonReiniciar.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				mainPanel.setVisible(true);
+				p1.setVisible(false);
+				milogica.notificarVictoriaPorObjetivos();
+			}
+		});
 	}
 
 	public void mostrarMensajeDerrotaPorTiempo() {
-		System.out.println("GUI :: derrotaPorTiempo");
+		mainPanel.setVisible(false);
+		JPanel p1 = new JPanel();
+		p1.setLayout(new GridBagLayout());
+		p1.setSize(new Dimension(MAXIMIZED_HORIZ, MAXIMIZED_HORIZ));
+		p1.setBackground(new Color(0,0,0,120));
+
+		JLabel labelPerdiste1 = new JLabel("PERDISTE");
+		labelPerdiste1.setFont(new Font("Algerian", Font.PLAIN, 50));
+		labelPerdiste1.setForeground(Color.WHITE);
+		JLabel labelPerdiste2 = new JLabel("Te quedaste sin tiempo");
+		labelPerdiste2.setFont(new Font("Algerian", Font.PLAIN, 30));
+		labelPerdiste2.setForeground(Color.WHITE);
+		JLabel labelPerdiste3 = new JLabel("Pierdes una vida");
+		labelPerdiste3.setFont(new Font("Algerian", Font.PLAIN, 30));
+		labelPerdiste3.setForeground(Color.WHITE);
+		JButton botonReiniciar = new JButton("Reintentar");
+		botonReiniciar.setBackground(new Color(0,0,0,200));
+		labelPerdiste3.setForeground(Color.WHITE);
+
+		GridBagConstraints gbc = new GridBagConstraints();
+
+		gbc.gridy = 0;
+		p1.add(labelPerdiste1,gbc);
+		gbc.gridy = 1;
+		p1.add(labelPerdiste2,gbc);
+		gbc.gridy = 2;
+		p1.add(labelPerdiste3,gbc);
+		gbc.gridy = 3;
+		p1.add(botonReiniciar,gbc);
+
+		getContentPane().add(p1);
+		
+
+		p1.setVisible(true);
+		mainPanel.repaint();
+
+		botonReiniciar.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				mainPanel.setVisible(true);
+				p1.setVisible(false);
+				milogica.notificarDerrotaPorMovimientos();
+			}
+		});
 	}
 	
 	//--------------------------------------------------------

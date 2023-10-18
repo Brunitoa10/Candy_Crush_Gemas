@@ -59,13 +59,6 @@ public class Logica {
 		}	
 	}
 	
-	public void notificarDerrotaPorTiempo() {
-		miGUI.mostrarMensajeDerrotaPorTiempo();
-		if(miNivel.getVidas() > 0) {
-			reiniciarNivel();
-		}
-	}
-	
 	public void notificarVictoriaPorMovimientos() {
 		miGUI.mostrarMensajeVictoriaPorMovimientos();
 	}

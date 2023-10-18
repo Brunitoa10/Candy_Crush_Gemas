@@ -94,9 +94,8 @@ public class Nivel {
 	    if (movimientos == 0) {
 	    	restarVidas();
 	    	System.out.println("Nivel :: vidas "+vidas);
-	    	miLogica.notificarDerrotaPorMovimientos();
 	    	if(vidas>0) {
-	    		miLogica.reiniciarNivel();
+				miLogica.notificarDerrotaPorMovimientos();
 	    	}else {
 	    		miLogica.notificarDerrotaPorVidas();
 	    	}
