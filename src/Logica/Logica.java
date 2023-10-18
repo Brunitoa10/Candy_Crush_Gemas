@@ -48,15 +48,26 @@ public class Logica {
 
 	public void notificarDerrotaPorMovimientos() {
 		miGUI.mostrarMensajeDerrotaPorMovimientos();
-		reiniciarNivel();
 	}
-
+	
+	public void notificarDerrotaPorTiempo() {
+		miNivel.restarVidas();
+		
+		if(miNivel.getVidas() >= 1) {
+        	int tmpVidas = miNivel.getVidas();
+        	reiniciarNivel();
+        	System.out.println("Logica vidas en notificarDerrotaPorTiempo :: "+tmpVidas);
+        	miNivel.setVidas(tmpVidas);
+			miGUI.actualizarVidas();
+        }else {
+        	System.out.println("notificarDerrotaPorTiempo");
+        	miGUI.mostrarMensajeDerrotaPorVidas();
+        }
+	}
 	
 	public void notificarDerrotaPorVidas() {
-		miGUI.mostrarMensajeDerrotaPorVidas();
-		if(miNivel.getVidas() > 0) {
-			reiniciarNivel();
-		}	
+		System.out.println("notificarDerrotaPorVidas");
+		reiniciarNivel();
 	}
 	
 	public void notificarVictoriaPorMovimientos() {
@@ -94,17 +105,6 @@ public class Logica {
         if (tiempo == 0) {
             timer.cancel();
             miGUI.mostrarMensajeDerrotaPorTiempo();
-            if(miNivel.getVidas() >= 1) {
-            	miNivel.restarVidas();
-            	int tmpVidas = miNivel.getVidas();
-            	reiniciarNivel();
-            	System.out.println("Logica vidas en disminuirTiempo :: "+tmpVidas);
-            	miNivel.setVidas(tmpVidas);
-				miGUI.actualizarVidas();
-            	tiempo = miNivel.getTiempo();
-            }else {
-            	miGUI.mostrarMensajeDerrotaPorVidas();
-            }
         }else {
         	miNivel.setTiempo(tiempo);
         }
@@ -183,6 +183,9 @@ public class Logica {
 		miNivel.actualizarObjetivos(l);
 		//miGUI.actualizarObjetivos(miNivel.getCantObjetivo());
 	}
+
+
+	
 
 
 }

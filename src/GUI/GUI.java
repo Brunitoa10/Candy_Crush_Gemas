@@ -403,6 +403,7 @@ public class GUI extends JFrame {
 	}
 
 	public void mostrarMensajeDerrotaPorVidas() {
+	
 		mainPanel.setVisible(false);
 		JPanel p1 = new JPanel();
 		p1.setSize(new Dimension(MAXIMIZED_HORIZ, MAXIMIZED_HORIZ));
@@ -422,7 +423,7 @@ public class GUI extends JFrame {
 
 		p1.setVisible(true);
 		mainPanel.repaint();
-
+		
 		botonReiniciar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -459,7 +460,7 @@ public class GUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				mainPanel.setVisible(true);
 				p1.setVisible(false);
-				milogica.notificarDerrotaPorVidas();
+				//milogica.notificarDerrotaPorVidas();
 			}
 		});
 	}
@@ -496,6 +497,7 @@ public class GUI extends JFrame {
 	}
 
 	public void mostrarMensajeDerrotaPorTiempo() {
+		this.repaint();
 		mainPanel.setVisible(false);
 		JPanel p1 = new JPanel();
 		p1.setLayout(new GridBagLayout());
@@ -537,11 +539,14 @@ public class GUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				mainPanel.setVisible(true);
 				p1.setVisible(false);
-				milogica.notificarDerrotaPorMovimientos();
+				milogica.notificarDerrotaPorTiempo();
 			}
 		});
 	}
-	
+	public void mostrarMensajeJuegoPerdido() {
+		System.out.println("GUI :: Perdiste");
+		
+	}
 	//--------------------------------------------------------
 	public void limpiarGUI() {
 	   
@@ -587,5 +592,8 @@ public class GUI extends JFrame {
 			super.paint(g);
 		}
 	}
+
+
+	
 }
 
