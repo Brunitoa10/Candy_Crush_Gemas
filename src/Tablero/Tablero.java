@@ -522,7 +522,7 @@ public class Tablero {
 	public boolean checkExhaustivo() {
 		int color = -1;
 		int combo;
-		Celda c;
+		//Celda c;
 		boolean combeado = false;
 		
 		for (int i = 0; i< filas; i++) {

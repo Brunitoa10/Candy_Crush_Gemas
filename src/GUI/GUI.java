@@ -3,7 +3,6 @@ package GUI;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import Tablero.Tablero;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;

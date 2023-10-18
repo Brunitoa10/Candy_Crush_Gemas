@@ -3,8 +3,7 @@ package Entidades;
 
 
 import GUI.EntidadGrafica;
-import Logica.Color;
-import Logica.EntidadLogica;
+import Logica.*;
 import Tablero.*;
 
 public abstract class Entidad implements EntidadLogica, Enfocable{

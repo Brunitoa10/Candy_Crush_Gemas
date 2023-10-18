@@ -18,7 +18,6 @@ public class AnimadorExplosion extends Thread implements Animador, Comparable<An
 		mi_manager = m;
 		mi_celda_animada = c;
 		prioridad = 2;
-		int size_label = mi_celda_animada.getSizeLabel();
 	}
 
     public Celda get_celda_asociada() {

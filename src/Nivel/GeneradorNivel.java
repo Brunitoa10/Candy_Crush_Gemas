@@ -7,8 +7,7 @@ import Entidades.GemaRayada;
 import Entidades.Roca;
 import Logica.Logica;
 
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.*;
 
 import Tablero.Tablero;
 import java.io.File;
