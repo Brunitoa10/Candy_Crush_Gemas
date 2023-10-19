@@ -44,7 +44,6 @@ public class GUI extends JFrame {
 	protected JLabel movimientosLabel;
 	protected JLabel[] objetivosProgreso;
 	protected Celda matrizDeCeldas[][];
-	protected Tablero miTablero;
 	protected int[] objetivosColores;
 	protected int movimientosRestantes;
 	private int size_label = 70;
@@ -57,10 +56,9 @@ public class GUI extends JFrame {
 	public static final int DERECHA = 15003;
 	
 	
-	public GUI(Logica l, int f, int c, Tablero t) {
+	public GUI(Logica l, int f, int c) {
 		milogica = l;
 		filas = f;
-		miTablero = t;
 		mi_animador = new CentralAnimaciones(this);
 		columnas = c;
 		tiempoRestante = milogica.getTiempo();
@@ -228,7 +226,7 @@ public class GUI extends JFrame {
 	}
 
 	public void actualizarBloque(int posX, int posY) {
-		String rutaImagen = miTablero.getEntidad(posX, posY).getImagenRep();
+		String rutaImagen = milogica.getEntidadDelTablero(posX, posY).getImagenRep();
 		matrizDeCeldas[posX][posY].cambiar_imagen(rutaImagen);
 	}
 
@@ -423,9 +421,12 @@ public class GUI extends JFrame {
 	
 	//este proyecto es un crimen de odio a la programacion
 	private void reiniciarGUI() {
+		
 		for(int i=0;i<filas;i++) {
 			for(int j=0;j<columnas;j++) {
-				agregar_entidad(miTablero.getEntidad(i, j));
+				matrizDeCeldas[i][j] = (Celda) milogica.getEntidadDelTablero(i, j).getEGrafica();
+				matrizDeCeldas[i][j].getEntidad().setFilaColumna(i, j);
+				agregar_entidad(matrizDeCeldas[i][j].getEntidad());
 				revalidate();
 				repaint();
 			}
@@ -589,7 +590,8 @@ public class GUI extends JFrame {
 		
 
 		p1.setVisible(true);
-		mainPanel.repaint();
+		p1.invalidate();
+		p1.validate();
 
 		botonReiniciar.addActionListener(new ActionListener() {
 			@Override

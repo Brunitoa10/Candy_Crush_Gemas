@@ -357,7 +357,7 @@ public class Tablero {
 	        for (int i = 0; i < filas; i++) {
 	            for (int j = 0; j < columnas; j++) {
 	            	 //Dejar el parametro j y el parametro 0
-	                t[i][j] = new Celda(miGui,new GemaNormal(i,j,0), 60); 
+	                t[i][j] = new Celda(miGui,new GemaNormal(i,j,0), 70); 
 	            }
 	        }
 	    } catch (Exception e) {
