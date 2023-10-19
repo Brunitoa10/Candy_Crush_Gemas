@@ -320,13 +320,14 @@ public class GUI extends JFrame {
 			panel_objetivos.add(objetivosNumero,c);
 
 			coordenada_y = coordenada_y + 2;
+			numeroDeObjetivo++;
 		}
 	}
 
 	public void actualizarProgreso(int gemasRestantes, int tipoGema) {
 		for(int i=0; i<objetivosColores.length;i++) {
-			
-			System.out.println(objetivosColores[i]);
+			System.out.println("Color: "+objetivosColores[i]);
+			System.out.print("Destruir"+objetivosProgreso[i].getText());
 			if(tipoGema == objetivosColores[i]) {
 				String aux = objetivosProgreso[i].getText();
 				String[] partes = aux.split("/");
@@ -335,6 +336,7 @@ public class GUI extends JFrame {
 				int progreso = gemasTotales - gemasRestantes;
 
 				objetivosProgreso[i].setText(progreso+"/"+gemasTotales);
+				System.out.print(" -> "+objetivosProgreso[i].getText());
 			}
 		}
 	}

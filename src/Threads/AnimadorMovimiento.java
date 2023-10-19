@@ -10,14 +10,14 @@ import GUI.Celda;
  * @author FJoaquin (federico.joaquin@cs.uns.edu.ar)
  *
  */
-public class AnimadorMovimiento extends Thread implements Animador, Comparable<Animador> {
+public class AnimadorMovimiento extends Thread implements Animador {
 
 	protected ManejadorAnimaciones mi_manager;
 	protected Celda mi_celda_animada;
 	
 	protected int pos_x_destino;
 	protected int pos_y_destino;
-	protected int prioridad;
+	
 	protected int step;
 	protected int delay;
 	
@@ -34,8 +34,6 @@ public class AnimadorMovimiento extends Thread implements Animador, Comparable<A
 		
 		this.step = step;
 		delay = d;
-
-		prioridad = 1;
 		
 		int size_label = mi_celda_animada.getSizeLabel();
 		pos_x_destino = c.getEntidad().getColumna() * size_label;
@@ -48,16 +46,8 @@ public class AnimadorMovimiento extends Thread implements Animador, Comparable<A
 	}
 	
 	@Override
-	public synchronized void comenzar_animacion() {
+	public void comenzar_animacion() {
 		this.start();
-	}
-	
-	public void esperar() {
-		try {
-			this.join();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 	}
 	
 	@Override
@@ -91,20 +81,5 @@ public class AnimadorMovimiento extends Thread implements Animador, Comparable<A
 		}
 		
 		mi_manager.notificarse_finalizacion_animacion(this);
-	}
-
-	@Override
-	public int compareTo(Animador a) {
-		if (prioridad < a.getPrioridad()) {
-			return -1;
-		} else if (prioridad > a.getPrioridad()) {
-					return 1;
-				}
-
-		return 0;
-	}
-
-	public int getPrioridad() {
-		return prioridad;
 	}
 }

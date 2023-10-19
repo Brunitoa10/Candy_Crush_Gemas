@@ -2,7 +2,7 @@ package Threads;
 
 import GUI.Celda;
 
-public class AnimadorCaida extends Thread implements Animador, Comparable<Animador> {
+public class AnimadorCaida extends Thread implements Animador {
 
 	protected ManejadorAnimaciones mi_manager;
 	protected Celda mi_celda_animada;
@@ -10,8 +10,6 @@ public class AnimadorCaida extends Thread implements Animador, Comparable<Animad
 	
 	protected int step;
 	protected int delay;
-
-	protected int prioridad;
 	
 	/**
 	 * Inicializa el estado del animador, considerando
@@ -23,8 +21,6 @@ public class AnimadorCaida extends Thread implements Animador, Comparable<Animad
 	public AnimadorCaida(ManejadorAnimaciones m, Celda c){
 		mi_manager = m;
 		mi_celda_animada = c;
-
-		prioridad = 3;
 		
 		step = 10;
 		delay = 50;
@@ -41,13 +37,23 @@ public class AnimadorCaida extends Thread implements Animador, Comparable<Animad
 	}
 	
 	@Override
-	public synchronized void comenzar_animacion() {
-        
+	public void comenzar_animacion() {
+        try{
+            sleep(2000);
+			this.start();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 	}
 	
 	@Override
 	public void run() {
-		/*int size_label = mi_celda_animada.getSizeLabel();
+		try {
+			sleep(2000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		int size_label = mi_celda_animada.getSizeLabel();
 		int pos_x_actual = mi_celda_animada.getX();
 		int pos_y_actual = mi_celda_animada.getY();
 		System.out.println("Y actual: "+ pos_x_actual);
@@ -64,22 +70,7 @@ public class AnimadorCaida extends Thread implements Animador, Comparable<Animad
 				e.printStackTrace();
 			}
 		}
-		*/
+		
 		mi_manager.notificarse_finalizacion_animacion(this);
-	}
-
-	@Override
-	public int compareTo(Animador a) {
-		if (prioridad < a.getPrioridad()) {
-			return -1;
-		} else if (prioridad > a.getPrioridad()) {
-					return 1;
-				}
-
-		return 0;
-	}
-
-	public int getPrioridad() {
-		return prioridad;
 	}
 }

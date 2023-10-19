@@ -20,5 +20,4 @@ public interface Animador {
 	 */
 	public void comenzar_animacion();
 
-	public int getPrioridad();
 }
