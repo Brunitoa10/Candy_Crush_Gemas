@@ -374,8 +374,11 @@ public class Tablero {
 			}
 			System.out.println("");
 		}
+		
+	}
+
+	public void actualizarTableroGUI() {
 		miLogica.actualizarTablero();
-		t[fJugador][cJugador].getEntidad().enfocar();
 	}
 	
 	public void asignarGUI(GUI g) {
@@ -447,16 +450,20 @@ public class Tablero {
 		switch(dir) {
 		case GUI.DERECHA:
 			if(cJugador < columnas -1) {
+				System.out.print("me movi de ("+fJugador+","+cJugador+")");
 				t[fJugador][cJugador].notificarCeldaDesenfocar();
 				cJugador++;
 				t[fJugador][cJugador].notificarCeldaEnfocar();
+				System.out.println("a ("+fJugador+","+cJugador+")");
 			}
 		break;
 		case GUI.ARRIBA:
 			if(fJugador >0) {
+				System.out.print("me movi de ("+fJugador+","+cJugador+")");
 				t[fJugador][cJugador].notificarCeldaDesenfocar();
 				fJugador--;
 				t[fJugador][cJugador].notificarCeldaEnfocar();
+				System.out.println("a ("+fJugador+","+cJugador+")");
 			}	
 		break;
 		case GUI.IZQUIERDA:
@@ -584,7 +591,7 @@ public class Tablero {
 				}
 			}
 		}
-		printTable();
+		actualizarTableroGUI();
 		if(caido) {
 			caida();
 			return true;}

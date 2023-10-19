@@ -25,10 +25,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-
 import Entidades.Entidad;
 import Logica.Logica;
-import Tablero.Tablero;
 import Threads.CentralAnimaciones;
 
 
@@ -133,10 +131,10 @@ public class GUI extends JFrame {
 					case KeyEvent.VK_RIGHT: { milogica.mover_jugador(DERECHA); break; }
 					case KeyEvent.VK_UP: 	{ milogica.mover_jugador(ARRIBA);break; }
 					case KeyEvent.VK_DOWN: 	{ milogica.mover_jugador(ABAJO); break; }
-					case KeyEvent.VK_W:		{ if (!bloquear_intercambios) milogica.intercambiar(ARRIBA); /*iniciarTiempo();*/ break; }
-					case KeyEvent.VK_S:		{ if (!bloquear_intercambios) milogica.intercambiar(ABAJO); /*iniciarTiempo();*/ break; }
-					case KeyEvent.VK_A:		{ if (!bloquear_intercambios) milogica.intercambiar(IZQUIERDA); /*iniciarTiempo();*/ break; }
-					case KeyEvent.VK_D:		{ if (!bloquear_intercambios) milogica.intercambiar(DERECHA); /*iniciarTiempo();*/ break; } 
+					case KeyEvent.VK_W:		{ if (!bloquear_intercambios) milogica.intercambiar(ARRIBA);  break; }
+					case KeyEvent.VK_S:		{ if (!bloquear_intercambios) milogica.intercambiar(ABAJO); break; }
+					case KeyEvent.VK_A:		{ if (!bloquear_intercambios) milogica.intercambiar(IZQUIERDA); break; }
+					case KeyEvent.VK_D:		{ if (!bloquear_intercambios) milogica.intercambiar(DERECHA);  break; } 
 				}
 			}
 		});
@@ -223,11 +221,6 @@ public class GUI extends JFrame {
 		panelVidas.add(label_corazon1);
 		panelVidas.add(label_corazon2);
 		panelVidas.add(label_corazon3);
-	}
-
-	public void actualizarBloque(int posX, int posY) {
-		String rutaImagen = milogica.getEntidadDelTablero(posX, posY).getImagenRep();
-		matrizDeCeldas[posX][posY].cambiar_imagen(rutaImagen);
 	}
 
 	public void actualizarVidas() {
@@ -329,8 +322,6 @@ public class GUI extends JFrame {
 
 	public void actualizarProgreso(int gemasRestantes, int tipoGema) {
 		for(int i=0; i<objetivosColores.length;i++) {
-			System.out.println("Color: "+objetivosColores[i]);
-			System.out.print("Destruir"+objetivosProgreso[i].getText());
 			if(tipoGema == objetivosColores[i]) {
 				String aux = objetivosProgreso[i].getText();
 				String[] partes = aux.split("/");
@@ -339,7 +330,6 @@ public class GUI extends JFrame {
 				int progreso = gemasTotales - gemasRestantes;
 
 				objetivosProgreso[i].setText(progreso+"/"+gemasTotales);
-				System.out.print(" -> "+objetivosProgreso[i].getText());
 			}
 		}
 	}
@@ -368,6 +358,7 @@ public class GUI extends JFrame {
 	public EntidadGrafica agregar_entidad(Entidad e) {
 		Celda celda = new Celda(this, e, size_label);
 		e.setEntidadGrafica(celda);
+
 		matrizDeCeldas[e.getFila()][e.getColumna()] = celda;
 		panel_principal.add(matrizDeCeldas[e.getFila()][e.getColumna()]);
 		panel_principal.revalidate();
@@ -391,44 +382,22 @@ public class GUI extends JFrame {
 	}
 
 	public void reiniciarTablero() {
-		System.out.println("TABLERO REINICIADO");
-		mainPanel.remove(panel_principal);
-		panel_principal = new JPanel();
-		panel_principal.setSize(size_label * filas, size_label * columnas);
-		panel_principal.setLayout(new GridLayout(filas,columnas,0,0));
-		panel_principal.setOpaque(true);
-		panel_principal.setBackground(new Color(0,0,0,255));
-		limpiarMatrizGUI();
-		reiniciarGUI();
+		reiniciarCeldas();
 
-		GridBagConstraints gbc = new GridBagConstraints();
-
-		//Constraints TABLERO
-		gbc.insets = new Insets(0,0,0,0);
-		gbc.gridx = 2;
-		gbc.gridy = 1;
-		gbc.gridwidth = 4;
-		gbc.gridheight = 4;
-		gbc.weightx = 1;
-		gbc.weighty = 1;
-		gbc.anchor = GridBagConstraints.CENTER;
-		
-		mainPanel.add(panel_principal,gbc);
 		invalidate();
 		validate();
-		panel_principal.setVisible(true);
+
 	}
 	
 	//este proyecto es un crimen de odio a la programacion
-	private void reiniciarGUI() {
-		
+	private void reiniciarCeldas() {
+
 		for(int i=0;i<filas;i++) {
 			for(int j=0;j<columnas;j++) {
-				matrizDeCeldas[i][j] = (Celda) milogica.getEntidadDelTablero(i, j).getEGrafica();
-				matrizDeCeldas[i][j].getEntidad().setFilaColumna(i, j);
-				agregar_entidad(matrizDeCeldas[i][j].getEntidad());
-				revalidate();
-				repaint();
+				matrizDeCeldas[i][j].setEntidad(milogica.getEntidadDelTablero(i, j));
+				matrizDeCeldas[i][j].notificarse_cambio_estado();
+				matrizDeCeldas[i][j].validate();
+				matrizDeCeldas[i][j].repaint();
 			}
 		}
 	}

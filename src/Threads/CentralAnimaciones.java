@@ -110,10 +110,6 @@ public class CentralAnimaciones implements ManejadorAnimaciones{
 		miGUI.notificarse_animacion_finalizada();
 	}
 
-	public void actualizarCelda(int posx,int posy) {
-		miGUI.actualizarBloque(posx, posy);
-	}
-	
 	/**
 	 * Estima si la celda parametrizada actualmente cuenta con animaciones en progreso. 
 	 * @param c Celda que se desea considerar para el chequeo de animaciones en progreso.
