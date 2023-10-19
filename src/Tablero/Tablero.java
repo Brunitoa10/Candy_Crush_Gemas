@@ -329,8 +329,8 @@ public class Tablero {
 		
 		
 		
-		//t[f1][c1].notificarCeldaEnfocar();
-		//t[f2][c2].notificarCeldaDesenfocar();
+		t[f1][c1].notificarCeldaEnfocar();
+		t[f2][c2].notificarCeldaDesenfocar();
 		
 	    //t[f1][c1].notificarse_cambio_estado();
 		//t[f2][c2].notificarse_cambio_estado();
@@ -371,7 +371,7 @@ public class Tablero {
 		System.out.println("");
 		for(int i = 0; i<filas; i++) {
 			for (int j = 0; j<columnas ; j++) {
-				System.out.print("["+ t[i][j].getEntidad().getClass().getName()+" " +t[i][j].getEntidad().obtenerColor() +"]");
+				System.out.print("[" +t[i][j].getEntidad().obtenerColor() +"]");
 			}
 			System.out.println("");
 		}
@@ -575,6 +575,7 @@ public class Tablero {
 					caido = true;
 					if(i == 0) {
 						egrafica = t[i][j];/*.getEntidad().getEGrafica();*/
+
 						t[i][j].setEntidad(new GemaNormal(i,j,colorAleatorio(1,6)));
 						t[i][j].getEntidad().setEntidadGrafica(egrafica);
 						t[i][j].notificarse_cambio_estado();}

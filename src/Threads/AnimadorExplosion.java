@@ -34,9 +34,7 @@ public class AnimadorExplosion extends Thread implements Animador{
         Icon icon = new ImageIcon(this.getClass().getResource("/assets/gemas/detonado.gif"));
 		new Thread(()-> {
 			try {
-				sleep(delay);
 				mi_celda_animada.setIcon(icon);
-            
 				sleep(1000);
             }catch (InterruptedException e) {
                 e.printStackTrace();
@@ -47,6 +45,7 @@ public class AnimadorExplosion extends Thread implements Animador{
 		    Icon iconoEscalado = new ImageIcon(imgEscalada);
 			mi_celda_animada.setIcon(iconoEscalado);
 
+			mi_manager.actualizarCelda(mi_celda_animada.getEntidad().getFila(),mi_celda_animada.getEntidad().getColumna());
 			mi_manager.notificarse_finalizacion_animacion(this);
 		 }).start();
 		

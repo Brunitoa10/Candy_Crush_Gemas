@@ -28,6 +28,7 @@ import java.awt.GridLayout;
 
 import Entidades.Entidad;
 import Logica.Logica;
+import Tablero.Tablero;
 import Threads.AnimadorCronometro;
 import Threads.CentralAnimaciones;
 
@@ -44,10 +45,12 @@ public class GUI extends JFrame {
 	protected JLabel movimientosLabel;
 	protected JLabel[] objetivosProgreso;
 	protected Celda matrizDeCeldas[][];
+	protected Tablero miTablero;
 	protected int[] objetivosColores;
 	protected int movimientosRestantes;
 	protected AnimadorCronometro animadorTiempo;
 	private int size_label = 70;
+	private Imagenfondo fondo = new Imagenfondo();
 
 	//Movimientos
 	public static final int ARRIBA = 15000;
@@ -55,11 +58,11 @@ public class GUI extends JFrame {
 	public static final int IZQUIERDA = 15002;
 	public static final int DERECHA = 15003;
 	
-	Imagenfondo fondo = new Imagenfondo();
 	
-	public GUI(Logica l, int f, int c) {
+	public GUI(Logica l, int f, int c, Tablero t) {
 		milogica = l;
 		filas = f;
+		miTablero = t;
 		mi_animador = new CentralAnimaciones(this);
 		columnas = c;
 		tiempoRestante = milogica.getTiempo();
@@ -227,6 +230,11 @@ public class GUI extends JFrame {
 		panelVidas.add(label_corazon3);
 	}
 
+	public void actualizarBloque(int posX, int posY) {
+		String rutaImagen = miTablero.getEntidad(posX, posY).getImagenRep();
+		matrizDeCeldas[posX][posY].cambiar_imagen(rutaImagen);
+	}
+
 	public void actualizarVidas() {
 		ImageIcon imgIconCorazonVacio = new ImageIcon(this.getClass().getResource("/assets/nivel/corazonVacio.png"));
 		Image imgEscaladaCorazonVacio = imgIconCorazonVacio.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
@@ -340,6 +348,18 @@ public class GUI extends JFrame {
 			}
 		}
 	}
+
+	public void reiniciarProgreso() {
+		for(int i=0; i<objetivosColores.length; i++) {
+			String aux = objetivosProgreso[i].getText();
+			String[] partes = aux.split("/");
+			Integer num = Integer.valueOf(partes[1]);
+			int gemasTotales = num.intValue();
+			int progreso = 0;
+
+			objetivosProgreso[i].setText(progreso+"/"+gemasTotales);
+		}
+	}
 	
 	public int getTiempoRestante() {
 		return tiempoRestante;
@@ -376,16 +396,16 @@ public class GUI extends JFrame {
 	
 	public void animar_movimiento(Celda c) {
 		synchronized(c){
-			mi_animador.animar_cambio_posicion(c);
+			mi_animador.agregar_movimiento(c);
 		}
 	}
 
 	public void animar_explosion(Celda c) {
-		mi_animador.animar_explosion(c);
+		mi_animador.agregar_explosion(c);
 	}
 	
 	public void animar_caida(Celda c) {
-		mi_animador.animar_caida(c);
+		mi_animador.agregar_caida(c);
 	}
 
 	//Metodos agregados por bruno

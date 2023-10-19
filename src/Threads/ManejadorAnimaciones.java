@@ -13,5 +13,7 @@ public interface ManejadorAnimaciones {
 	 * @param a Animador que se encontraba en progreso y finalizó su actividad
 	 */
 	public void notificarse_finalizacion_animacion(Animador a);
+	public void actualizarCelda(int posx,int posy);
+	public void animar_explosion();
 	
 }

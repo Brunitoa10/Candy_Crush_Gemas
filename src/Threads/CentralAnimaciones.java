@@ -1,8 +1,6 @@
 package Threads;
 
-import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.List;
 import GUI.Celda;
 import GUI.GUI;
 
@@ -18,12 +16,16 @@ import GUI.GUI;
 public class CentralAnimaciones implements ManejadorAnimaciones{
 	
 	protected GUI miGUI;
-	protected HashMap<Celda, List<Animador>> mapeo_celda_animaciones;
+	protected LinkedList<Animador> animacionesIntercambioPendientes;
+	protected LinkedList<Animador> animacionesExplosionPendientes;
+	protected LinkedList<Animador> animacionesCaidaPendientes;
 	protected int size_label;
 	
 	public CentralAnimaciones(GUI g) {
 		miGUI = g;
-		mapeo_celda_animaciones = new HashMap<Celda, List<Animador>>();
+		animacionesIntercambioPendientes = new LinkedList<Animador>();
+		animacionesExplosionPendientes = new LinkedList<Animador>();
+		animacionesCaidaPendientes = new LinkedList<Animador>();
 	}
 	
 	/**
@@ -35,63 +37,80 @@ public class CentralAnimaciones implements ManejadorAnimaciones{
 	 * referenciada por c.
 	 */
 
-	public void animar_cambio_posicion(Celda c) {
-		Animador animador = new AnimadorMovimiento(this, 10, 50, c);
+	public void agregar_movimiento(Celda c) {
+		AnimadorMovimiento animador = new AnimadorMovimiento(this, 10, 50, c);
 		miGUI.notificarse_animacion_en_progreso();
 		
-		if (tiene_animaciones_en_progreso (c) ) {
-			mapeo_celda_animaciones.get(c).add(animador);
-		}else {
-			mapeo_celda_animaciones.put(c, new LinkedList<Animador>());
-			mapeo_celda_animaciones.get(c).add(animador);
+		if(!tiene_animaciones_en_progreso(animacionesIntercambioPendientes))  {
+			System.out.println("animacion intercambio");
+			animacionesIntercambioPendientes.addLast(animador);
 			animador.comenzar_animacion();
+		}
+		else{
+			animacionesIntercambioPendientes.addLast(animador);
 		}
 	}
 
-	public void animar_explosion(Celda c) {
-		Animador animador;
-		miGUI.notificarse_animacion_en_progreso();
-		
-		if (tiene_animaciones_en_progreso (c) ) {
-			animador = new AnimadorExplosion(this, c, 0);
-			mapeo_celda_animaciones.get(c).add(animador);
-		}else {
-			animador = new AnimadorExplosion(this, c, 700);
-			mapeo_celda_animaciones.put(c, new LinkedList<Animador>());
-			mapeo_celda_animaciones.get(c).add(animador);
-			animador.comenzar_animacion();
+	public void animar_movimiento(Celda c) {
+		while(!animacionesIntercambioPendientes.isEmpty()) {
+			animacionesIntercambioPendientes.removeFirst().comenzar_animacion();
 		}
 	}
 
-	public void animar_caida(Celda c) {
-		Animador animador = new AnimadorCaida(this, c);
+	public void agregar_explosion(Celda c) {
+		AnimadorExplosion animador = new AnimadorExplosion(this, c, 50);
 		miGUI.notificarse_animacion_en_progreso();
 		
-		if (tiene_animaciones_en_progreso(c) ) {
-			System.out.println("Animador caida :: animacion en progreso");
-			mapeo_celda_animaciones.get(c).add(animador);
-		}else {
-			System.out.println("Animador caida :: no tengo animacion en progreso");
-			mapeo_celda_animaciones.put(c, new LinkedList<Animador>());
-			mapeo_celda_animaciones.get(c).add(animador);
-			animador.comenzar_animacion();
+		if(tiene_animaciones_en_progreso(animacionesIntercambioPendientes))  {
+			animacionesExplosionPendientes.addLast(animador);
+		}
+		else {
+			animacionesExplosionPendientes.addLast(animador);
+			animar_explosion();
+		}
+	}
+
+	public void animar_explosion() {
+		while(!animacionesExplosionPendientes.isEmpty()) {
+			System.out.println("animacion explosion");
+			animacionesExplosionPendientes.removeFirst().comenzar_animacion();
+		}
+
+		if(tiene_animaciones_en_progreso(animacionesCaidaPendientes)) {
+			animar_caida();
+		}
+	}
+
+	public void agregar_caida(Celda c) {
+		AnimadorCaida animador = new AnimadorCaida(this, c);
+		miGUI.notificarse_animacion_en_progreso();
+		
+		if(tiene_animaciones_en_progreso(animacionesExplosionPendientes))  {
+			animacionesCaidaPendientes.addLast(animador);
+		}
+		else {
+			animacionesCaidaPendientes.addLast(animador);
+			animar_caida();
+		}
+	}
+
+	public void animar_caida() {
+		while(!animacionesCaidaPendientes.isEmpty()) {
+			System.out.println("animacion caida");
+				animacionesCaidaPendientes.removeFirst().comenzar_animacion();
+		}
+		if(tiene_animaciones_en_progreso(animacionesExplosionPendientes)) {
+			animar_explosion();
 		}
 	}
 
 	@Override
 	public void notificarse_finalizacion_animacion(Animador a) {
-		Animador animador;
-		List<Animador> animaciones_para_celda;
-		
 		miGUI.notificarse_animacion_finalizada();
-		
-		animaciones_para_celda = mapeo_celda_animaciones.get(a.get_celda_asociada());
-		animaciones_para_celda.remove(a);
-		
-		if (!animaciones_para_celda.isEmpty()) {
-			animador = animaciones_para_celda.get(0);
-			animador.comenzar_animacion();
-		}
+	}
+
+	public void actualizarCelda(int posx,int posy) {
+		miGUI.actualizarBloque(posx, posy);
 	}
 	
 	/**
@@ -99,11 +118,7 @@ public class CentralAnimaciones implements ManejadorAnimaciones{
 	 * @param c Celda que se desea considerar para el chequeo de animaciones en progreso.
 	 * @return True si la celda tiene animaciones actualmente en progreso; false en caso contrario.
 	 */
-	private boolean tiene_animaciones_en_progreso(Celda c) {
-		boolean retorno = false;
-		if (mapeo_celda_animaciones.get(c) != null) {
-			retorno = !mapeo_celda_animaciones.get(c).isEmpty();
-		}
-		return retorno;
+	private boolean tiene_animaciones_en_progreso(LinkedList<Animador> l) {
+		return !l.isEmpty();
 	}
 }

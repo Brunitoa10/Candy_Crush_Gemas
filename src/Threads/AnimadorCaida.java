@@ -48,11 +48,7 @@ public class AnimadorCaida extends Thread implements Animador {
 	
 	@Override
 	public void run() {
-		try {
-			sleep(2000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+		/*
 		int size_label = mi_celda_animada.getSizeLabel();
 		int pos_x_actual = mi_celda_animada.getX();
 		int pos_y_actual = mi_celda_animada.getY();
@@ -69,8 +65,9 @@ public class AnimadorCaida extends Thread implements Animador {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-		}
+		}*/
 		
+		mi_manager.actualizarCelda(mi_celda_animada.getEntidad().getFila(),mi_celda_animada.getEntidad().getColumna());
 		mi_manager.notificarse_finalizacion_animacion(this);
 	}
 }
