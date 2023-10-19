@@ -31,16 +31,16 @@ public class Celda extends JLabel implements EntidadGrafica{
     
 	
 	public void notificarse_explosion() {
-		cambiar_explosion();
+		//miGUI.animar_explosion(this);
 	}
 
 	@Override
 	public void notificarse_intercambio_posicion(){
-		miGUI.animar_movimiento(this);
+		//miGUI.animar_movimiento(this);
 	}
 	
 	public void notificarse_caida(){
-		miGUI.animar_caida(this);
+		//miGUI.animar_caida(this);
 	}
 	
 	public void notificarCeldaDesenfocar(){
@@ -75,9 +75,6 @@ public class Celda extends JLabel implements EntidadGrafica{
 		setIcon(iconoEscalado);
 	}
 
-	protected void cambiar_explosion() {
-		miGUI.animar_explosion(this);
-	}
 	
 	public int getColorEntidad() {
 		return ent.obtenerColor();

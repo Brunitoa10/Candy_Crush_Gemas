@@ -155,6 +155,10 @@ public class Logica {
 	public int getVidas() {
 		return miNivel.getVidas();
 	}
+
+	public void actualizarTablero() {
+		miGUI.reiniciarTablero();
+	}
 	
 	/**
 	 * Launch the application.

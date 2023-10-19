@@ -26,8 +26,6 @@ public class AnimadorCaida extends Thread implements Animador {
 		delay = 50;
 		
 		int size_label = mi_celda_animada.getSizeLabel();
-		System.out.println(c.getEntidad().getFila());
-		System.out.println(size_label);
 		pos_y_destino = c.getEntidad().getColumna() * size_label;		
 	}
 	

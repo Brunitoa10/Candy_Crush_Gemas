@@ -29,7 +29,6 @@ import java.awt.GridLayout;
 import Entidades.Entidad;
 import Logica.Logica;
 import Tablero.Tablero;
-import Threads.AnimadorCronometro;
 import Threads.CentralAnimaciones;
 
 
@@ -48,7 +47,6 @@ public class GUI extends JFrame {
 	protected Tablero miTablero;
 	protected int[] objetivosColores;
 	protected int movimientosRestantes;
-	protected AnimadorCronometro animadorTiempo;
 	private int size_label = 70;
 	private Imagenfondo fondo = new Imagenfondo();
 
@@ -72,7 +70,6 @@ public class GUI extends JFrame {
 		bloquear_intercambios = false;
 		objetivosColores = new int[milogica.getCantidadDeObjetivos()];
 		objetivosProgreso = new JLabel[milogica.getCantidadDeObjetivos()];
-		animadorTiempo = new AnimadorCronometro(tiempoRestante, this);
 		
 		inicializar();
 	}
@@ -391,6 +388,47 @@ public class GUI extends JFrame {
 		synchronized(this){
 			animaciones_pendientes --;
 			bloquear_intercambios = animaciones_pendientes > 0;
+			System.out.println(animaciones_pendientes);
+		}
+	}
+
+	public void reiniciarTablero() {
+		System.out.println("TABLERO REINICIADO");
+		mainPanel.remove(panel_principal);
+		panel_principal = new JPanel();
+		panel_principal.setSize(size_label * filas, size_label * columnas);
+		panel_principal.setLayout(new GridLayout(filas,columnas,0,0));
+		panel_principal.setOpaque(true);
+		panel_principal.setBackground(new Color(0,0,0,255));
+		limpiarMatrizGUI();
+		reiniciarGUI();
+
+		GridBagConstraints gbc = new GridBagConstraints();
+
+		//Constraints TABLERO
+		gbc.insets = new Insets(0,0,0,0);
+		gbc.gridx = 2;
+		gbc.gridy = 1;
+		gbc.gridwidth = 4;
+		gbc.gridheight = 4;
+		gbc.weightx = 1;
+		gbc.weighty = 1;
+		gbc.anchor = GridBagConstraints.CENTER;
+		
+		mainPanel.add(panel_principal,gbc);
+		invalidate();
+		validate();
+		panel_principal.setVisible(true);
+	}
+	
+	//este proyecto es un crimen de odio a la programacion
+	private void reiniciarGUI() {
+		for(int i=0;i<filas;i++) {
+			for(int j=0;j<columnas;j++) {
+				agregar_entidad(miTablero.getEntidad(i, j));
+				revalidate();
+				repaint();
+			}
 		}
 	}
 	
@@ -415,9 +453,6 @@ public class GUI extends JFrame {
 		movimientosLabel.setText("Movimientos restantes: "+movimientosRestantes);
 	}
 
-	public void iniciarTiempo() {
-		animadorTiempo.iniciarTiempo();
-	}
 
 	public void mostrarMensajeDerrotaPorMovimientos() {
 		System.out.println("GUI :: derrotaPorMovimientos");

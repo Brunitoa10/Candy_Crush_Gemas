@@ -114,7 +114,7 @@ public class Tablero {
 		System.out.println("INTERCAMBIADO: "+"["+f1+"]"+"["+c1+"]" +" y "+"["+f2+"]" +"["+c2+"]");
 		
 		boolean movValido = manejarColisiones(CheckCruz(f1,c1,f2,c2),t[f1][c1],t[f2][c2],0); 
-		printTable();
+
 		if(movValido) {
 			do {
 				caida();
@@ -360,7 +360,6 @@ public class Tablero {
 	                t[i][j] = new Celda(miGui,new GemaNormal(i,j,0), 60); 
 	            }
 	        }
-	        this.printTable();
 	    } catch (Exception e) {
 	        System.out.println("Tablero :: Error al resetear " + e.getMessage());
 	    }
@@ -375,6 +374,8 @@ public class Tablero {
 			}
 			System.out.println("");
 		}
+		miLogica.actualizarTablero();
+		t[fJugador][cJugador].getEntidad().enfocar();
 	}
 	
 	public void asignarGUI(GUI g) {
@@ -514,7 +515,6 @@ public class Tablero {
 				break;
 			default: System.out.println("mover jugador(): direccion incorrecta");
 		}
-	    printTable();
 	    return toReturn;
 	}
 	

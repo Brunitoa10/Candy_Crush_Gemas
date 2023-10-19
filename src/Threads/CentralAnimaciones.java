@@ -102,6 +102,7 @@ public class CentralAnimaciones implements ManejadorAnimaciones{
 		if(tiene_animaciones_en_progreso(animacionesExplosionPendientes)) {
 			animar_explosion();
 		}
+
 	}
 
 	@Override
