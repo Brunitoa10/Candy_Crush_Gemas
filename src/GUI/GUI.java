@@ -360,16 +360,15 @@ public class GUI extends JFrame {
 		}
 	}
 
-	public void reiniciarTablero() {
-		reiniciarCeldas();
+	public void actualizarTablero() {
+		actualizarCeldas();
 
 		invalidate();
 		validate();
 		
 	}
 	
-	//este proyecto es un crimen de odio a la programacion
-	private void reiniciarCeldas() {
+	private void actualizarCeldas() {
 
 		for(int i=0;i<filas;i++) {
 			for(int j=0;j<columnas;j++) {
@@ -573,6 +572,11 @@ public class GUI extends JFrame {
 				//milogica.notificarDerrotaPorTiempo();
 			}
 		});
+	}
+
+	public void mostrarMensajeJuegoPerdido() {
+		System.out.println("GUI :: Perdiste");
+		
 	}
 	
 	public void limpiarGUI() {

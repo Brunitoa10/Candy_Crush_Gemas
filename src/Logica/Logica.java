@@ -98,7 +98,7 @@ public class Logica {
         if (tiempo == 0) {
 			timer.cancel();
 			if(getVidas()>0) {
-            	miGUI.mostrarMensajeVictoriaPorObjetivos();
+            	miGUI.mostrarMensajeDerrotaPorTiempo();
 			} else miGUI.mostrarMensajeDerrotaPorVidas();
         }else {
         	miNivel.setTiempo(tiempo);
@@ -159,7 +159,7 @@ public class Logica {
 	}
 
 	public void actualizarTablero() {
-		miGUI.reiniciarTablero();
+		miGUI.actualizarTablero();
 	}
 	
 	/**

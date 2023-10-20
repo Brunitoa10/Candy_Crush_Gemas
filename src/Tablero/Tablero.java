@@ -531,16 +531,19 @@ System.out.println("a ("+fJugador+","+cJugador+")");
 
 						t[i][j].setEntidad(new GemaNormal(i,j,colorAleatorio(1,6)));
 						t[i][j].getEntidad().setEntidadGrafica(egrafica);
-						t[i][j].notificarse_cambio_estado();}
+						t[i][j].notificarse_cambio_estado();
+					}
 					else
-					 intercambiarCaida(i-1,j,i,j);//VERIFICAR
+						intercambiarCaida(i-1,j,i,j);//VERIFICAR
 				}
 			}
 		}
 		miLogica.actualizarTablero();
+
 		if(caido) {
 			caida();
 			return true;}
+			
 		else return false;
 	}
 		
