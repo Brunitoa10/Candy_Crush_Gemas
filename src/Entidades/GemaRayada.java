@@ -34,7 +34,7 @@ public class GemaRayada extends Gema{
 			{
               System.out.println("destruido gema rayada Horizontal"+ this.color + " en: "+f+","+c );
 	          color = Color.TRANSPARENTE;
-	          cargarImagenesRepresentativas("/assets/obstaculo/");
+	          cargarImagenesRepresentativas(ruta);
 	          entidadG.notificarse_explosion();
 			}
 			else
@@ -55,7 +55,7 @@ public class GemaRayada extends Gema{
 			{
                  System.out.println("destruido gema rayada Vertical "+ this.color + " en: "+f+","+c );
 	             color = Color.TRANSPARENTE;
-				 cargarImagenesRepresentativas("/assets/obstaculo/");
+				 cargarImagenesRepresentativas(ruta);
 	  			 entidadG.notificarse_explosion();;
 			}
 			else
