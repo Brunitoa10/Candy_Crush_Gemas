@@ -120,8 +120,5 @@ public class CentralAnimaciones implements ManejadorAnimaciones{
 	}
 
 	@Override
-	public void actualizarCelda(int posx, int posy) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'actualizarCelda'");
-	}
+	public void actualizarCelda(int posx, int posy) {}
 }

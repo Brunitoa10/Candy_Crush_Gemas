@@ -119,9 +119,9 @@ public class Tablero {
 	}
 	
 	private LinkedList<Celda> checkFila(int f) {
-		LinkedList<Celda> toReturn = new LinkedList<Celda>();
-		int combo = 0;
-		for(int i = 1; i< filas; i++) {
+		 LinkedList<Celda> toReturn = new LinkedList<Celda>();
+    int combo = 0;
+    for (int i = 1; i < columnas; i++) {
 			if(t[f][i-1].getColorEntidad() == t[f][i].getColorEntidad() && t[f][i].getColorEntidad() != 7&& t[f][i].getColorEntidad() != 8 ) {
 				
 				combo++;
@@ -145,8 +145,8 @@ public class Tablero {
 	
 	private LinkedList<Celda> checkColumna(int c) {
 		LinkedList<Celda> toReturn = new LinkedList<Celda>();
-		int combo = 0;
-		for(int i = 1; i< columnas; i++) {
+    	int combo = 0;
+    	 for (int i = 1; i < filas; i++) {
 			if(t[i-1][c].getColorEntidad() == t[i][c].getColorEntidad() && t[i][c].getColorEntidad() != 7 && t[i][c].getColorEntidad() != 8 ) {
 				
 				combo++;
