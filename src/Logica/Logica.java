@@ -130,7 +130,6 @@ public class Logica {
 	    miNivel.setTiempo(miNivel.getTotalTiempo());
 	    miTablero.fijarJugador(miNivel.getFilaInicialJugador(), miNivel.getColumnaInicialJugador());
 	    inicializarTiempo();
-	    
 	}
 
 	
@@ -191,7 +190,6 @@ public class Logica {
 		miNivel.actualizarObjetivos(l);
 	}
 
-
 	public void cambiarNivel() {
 	    System.out.println("Logica :: cambiarNivel");
 	    nivelActual++;
@@ -204,9 +202,6 @@ public class Logica {
 		asociarEntidadesLogicasGraficas();
 		
 		miTablero.fijarJugador(miNivel.getFilaInicialJugador(), miNivel.getColumnaInicialJugador());
-	   
-		inicializarTiempo();
-	    
 	}
 
 	
