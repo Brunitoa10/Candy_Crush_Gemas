@@ -361,7 +361,8 @@ public class GUI extends JFrame {
 	}
 
 	public void actualizarTablero() {
-	    for(int i = 0; i < filas; i++) {
+		 invalidate();
+		for(int i = 0; i < filas; i++) {
 	        for(int j = 0; j < columnas; j++) {
 	            Celda celda = matrizDeCeldas[i][j];
 	            Entidad entidad = milogica.getEntidadDelTablero(i, j);
@@ -372,7 +373,7 @@ public class GUI extends JFrame {
 	        }
 	    }
 
-	    invalidate();
+	   
 	    validate();
 	    repaint();
 	}
