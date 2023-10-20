@@ -361,24 +361,21 @@ public class GUI extends JFrame {
 	}
 
 	public void actualizarTablero() {
-		actualizarCeldas();
+		 invalidate();
+		for(int i = 0; i < filas; i++) {
+	        for(int j = 0; j < columnas; j++) {
+	            Celda celda = matrizDeCeldas[i][j];
+	            Entidad entidad = milogica.getEntidadDelTablero(i, j);
+	            
+	            celda.setEntidad(entidad);
+	            entidad.setEntidadGrafica(celda);
+	            celda.notificarse_cambio_estado();
+	        }
+	    }
 
-		invalidate();
-		validate();
-		
-	}
-	
-	private void actualizarCeldas() {
-
-		for(int i=0;i<filas;i++) {
-			for(int j=0;j<columnas;j++) {
-				matrizDeCeldas[i][j].setEntidad(milogica.getEntidadDelTablero(i, j));
-				matrizDeCeldas[i][j].getEntidad().setEntidadGrafica(matrizDeCeldas[i][j]);
-				//matrizDeCeldas[i][j].notificarse_cambio_estado();
-				//matrizDeCeldas[i][j].validate();
-				//matrizDeCeldas[i][j].repaint();
-			}
-		}
+	   
+	    validate();
+	    repaint();
 	}
 	
 	public void animar_movimiento(Celda c) {
@@ -525,6 +522,7 @@ public class GUI extends JFrame {
 				mainPanel.setVisible(true);
 				p1.setVisible(false);
 				milogica.cambiarNivel();
+				//milogica.notificarVictoriaPorObjetivos();
 			}
 		});
 	}

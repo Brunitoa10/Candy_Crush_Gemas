@@ -26,8 +26,6 @@ public class Celda extends JLabel implements EntidadGrafica{
     //Metodos
     public void notificarse_cambio_estado() {
 		cambiar_imagen(ent.getImagenRep());
-		validate();
-		repaint();
 	}
     
     
