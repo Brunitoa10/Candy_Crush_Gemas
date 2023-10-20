@@ -39,7 +39,7 @@ public class GemaRayada extends Gema{
 			}
 			else
 			{
-				if(miTablero.getEntidad(i, columna).obtenerColor()!=0)
+				if(miTablero.getEntidad(fila,i).obtenerColor()!=0)
 				{
 					miTablero.getEntidad(fila, i).romper(miTablero);
 				}	
