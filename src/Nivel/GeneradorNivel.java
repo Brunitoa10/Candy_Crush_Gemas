@@ -84,19 +84,7 @@ public class GeneradorNivel {
 		
 
 			input.close();
-		
-			
-			System.out.println("------------------------------------------------");
-			System.out.println("Fila :: "+filas);
-			System.out.println("Col :: "+columnas);
-			System.out.println("PosX :: "+miNivel.getFilaInicialJugador());
-			System.out.println("posY :: "+miNivel.getColumnaInicialJugador());
-			System.out.println("Movimientos :: "+miNivel.getMovimientos());
-			System.out.println("Tiempo :: "+miNivel.getTiempo());
-			
-			miNivel.imprimirObjetivos();
-			System.out.println("------------------------------------------------");
-			
+
 		} catch (Exception ex) {
 			System.out.println("GenerarNivelDefinitivo :: ME ROMPI");
 			ex.getStackTrace();

@@ -42,7 +42,7 @@ public class GUI extends JFrame {
 	protected JLabel movimientosLabel;
 	protected JLabel[] objetivosProgreso;
 	protected Celda matrizDeCeldas[][];
-		protected int[] objetivosColores;
+	protected int[] objetivosColores;
 	protected int movimientosRestantes;
 	private int size_label = 70;
 	private Imagenfondo fondo = new Imagenfondo();
@@ -232,7 +232,6 @@ public class GUI extends JFrame {
 		
 
 		if(milogica.getVidas() == 2) {
-
 			label_corazon3.setIcon(iconoEscaladoCorazonVacio);
 		} else if(milogica.getVidas() == 1) {
 				System.out.println("QUEDA 1 VIDA");
@@ -324,7 +323,7 @@ public class GUI extends JFrame {
 
 	public void actualizarProgreso(int gemasRestantes, int tipoGema) {
 		for(int i=0; i<objetivosColores.length;i++) {
-						if(tipoGema == objetivosColores[i]) {
+			if(tipoGema == objetivosColores[i]) {
 				String aux = objetivosProgreso[i].getText();
 				String[] partes = aux.split("/");
 				Integer num = Integer.valueOf(partes[1]);
@@ -332,7 +331,7 @@ public class GUI extends JFrame {
 				int progreso = gemasTotales - gemasRestantes;
 
 				objetivosProgreso[i].setText(progreso+"/"+gemasTotales);
-							}
+			}
 		}
 	}
 
@@ -468,7 +467,7 @@ public class GUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				mainPanel.setVisible(true);
 				p1.setVisible(false);
-				milogica.notificarDerrotaPorVidas();
+				//milogica.notificarDerrotaPorVidas();
 			}
 		});
 	}
@@ -505,6 +504,7 @@ public class GUI extends JFrame {
 	}
 	
 	public void mostrarMensajeVictoriaPorObjetivos() {
+		System.out.println("ENTREEEE");
 		mainPanel.setVisible(false);
 		JPanel p1 = new JPanel();
 		p1.setSize(new Dimension(MAXIMIZED_HORIZ, MAXIMIZED_HORIZ));
@@ -530,7 +530,7 @@ public class GUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				mainPanel.setVisible(true);
 				p1.setVisible(false);
-				milogica.notificarVictoriaPorObjetivos();
+				//milogica.notificarVictoriaPorObjetivos();
 			}
 		});
 	}
@@ -579,7 +579,7 @@ public class GUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				mainPanel.setVisible(true);
 				p1.setVisible(false);
-				milogica.notificarDerrotaPorTiempo();
+				//milogica.notificarDerrotaPorTiempo();
 			}
 		});
 	}
@@ -587,7 +587,7 @@ public class GUI extends JFrame {
 		System.out.println("GUI :: Perdiste");
 		
 	}
-	//--------------------------------------------------------
+	
 	public void limpiarGUI() {
 	   
 	    tiempoRestante = milogica.getTiempo();
@@ -619,7 +619,6 @@ public class GUI extends JFrame {
 
 
 	//Clase auxiliar para poder hacer el fondo
-
 
 	public class Imagenfondo extends JPanel{
 		

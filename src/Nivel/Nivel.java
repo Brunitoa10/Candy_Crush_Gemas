@@ -12,6 +12,7 @@ public class Nivel {
 	//Atributos
 	protected int movimientos,totalmovimientos;
 	protected Map<Integer, Objetivos> mapeoDeObjetivos; 
+	protected Map<Objetivos, Boolean> mapeo; 
 	protected int fila_inicial_jugador;
 	protected int columna_inicial_jugador;
 	protected int tiempo;
@@ -22,8 +23,8 @@ public class Nivel {
 	public Nivel(int posX, int posY,Logica l) {
 		fila_inicial_jugador = posX;
 		columna_inicial_jugador = posY;
-		//vidas = 3;
-		mapeoDeObjetivos = new HashMap<>(); // Inicializamos la lista de objetivos
+		mapeoDeObjetivos = new HashMap<>();
+		mapeo = new HashMap<>();
 		miLogica = l;
 	}
 		
@@ -114,86 +115,50 @@ public class Nivel {
 		this.vidas = vida;
 	}
 
-	public void imprimirObjetivos() {
-        for (int id : mapeoDeObjetivos.keySet()) {
-            Objetivos objetivo = mapeoDeObjetivos.get(id);
-            if (objetivo != null) {
-                System.out.println("ID: " + id + ", Objetivo: " + objetivo.getCantGemas() + " " + objetivo.getTipoGema());
-            }
-        }
-    }
-	
-	
-	
-	/*
-	Cambie obtenerInfoObjetivos para que devuelva un array de strings para poder 
-	ponerlo en 3 JLabels distintos mas facil 
-
-	Y comenté el texto porque al aparecer 3 veces hace que sea demasiado largo y rompe
-	los grids, una vez solucionemos eso lo cambiamos
-	- Nacho
-	*/
 	public String[] obtenerInfoObjetivos() {
-		
-		int array_lengths = (miLogica.getCantidadDeObjetivos()*4);
-		String[] devolver = new String[array_lengths];
-	    StringBuilder[] info = new StringBuilder[array_lengths];
-		
-		for(int i=0;i<info.length;i++) {
-			info[i] = new StringBuilder("");
-		}
+	    String[] info = new String[miLogica.getCantidadDeObjetivos() * 4];
 
-		int i=-1;
+	    int i = 0;
 
-	    for (Map.Entry<Integer, Objetivos> entry : mapeoDeObjetivos.entrySet()) {
-			i++;
-	        Objetivos objetivo = entry.getValue();
-	        info[i].append("Destruir ").append(objetivo.getCantGemas());
-			info[i].append(" gemas de tipo: ");
-			i++;
-			info[i].append(buscarTipo(objetivo.getTipoGema())).append(" ");
-			i++;
-			info[i].append(objetivo.getCantGemas());
-			i++;
-			info[i].append(objetivo.getTipoGema());
+	    for (Objetivos objetivo : mapeoDeObjetivos.values()) {
+	        info[i++] = "Destruir " + objetivo.getCantGemas() + " gemas de tipo: ";
+	        info[i++] = buscarTipo(objetivo.getTipoGema()) + " ";
+	        info[i++] = String.valueOf(objetivo.getCantGemas());
+	        info[i++] = String.valueOf(objetivo.getTipoGema());
 	    }
 
-		for(int j=0;j<info.length;j++) {
-			devolver[j] = info[j].toString();
-		}
-		
-	    return devolver;
+	    return info;
 	}
-
+	
 	private String buscarTipo(int tipoGema) {
 		return miLogica.obtenerTipoDeGema(tipoGema);
 	}
-
+	
 	public void actualizarObjetivos(LinkedList<Celda> l) {
-		int i = 1,tipoGema = 0;
-		for(int pos = 0; pos<l.size()-1; pos++) {
-			if(l.get(pos) != null) {
+		int progreso = 0, tipoGema = 0; 
+		
+		for (int pos = 0; pos < l.size() - 1; pos++) {
+			if (l.get(pos) != null) {
 				tipoGema = l.get(pos).getColorEntidad();
 				for (Objetivos objetivo : mapeoDeObjetivos.values()) {
-					if (objetivo.getTipoGema() == tipoGema && objetivo.getCantGemas() > 0 && !objetivo.estaCumplido()) {
-						objetivo.aumentarProgreso(i);
-						miLogica.notificar_actualizacion_objetivos(objetivo.getCantGemas(),objetivo.getTipoGema());
-						/*if(mapeoDeObjetivos.get(l.get(pos)).estaCumplido()) {
-							
-						}*/
-						i++;
-					
-						System.out.println("\nNivel cantGemas :: "+objetivo.getCantGemas());
-						System.out.println("\ncumplido :: "+objetivo.estaCumplido());
-					}else {
-						i = 1;
-					}
+					if (!objetivo.estaCumplido() && objetivo.getTipoGema() == tipoGema) {
+						progreso++;
+						objetivo.aumentarProgreso(progreso);
+						if(objetivo.estaCumplido()) {
+							mapeo.put(objetivo, true);
+						}
+						miLogica.notificar_actualizacion_objetivos(objetivo.getCantGemas(), objetivo.getTipoGema());
+					}	
 				}
-				
-			}else {
+			} else {
 				System.out.println("Nivel :: Soy nulo");
 			}
 		}
-	}
-
+		if(mapeo.size() == mapeoDeObjetivos.size()) {
+			mapeo.clear();
+			//miLogica.notificarVictoriaPorObjetivos();
+			miLogica.cambiarNivel();
+		}
+	
+	}  
 }

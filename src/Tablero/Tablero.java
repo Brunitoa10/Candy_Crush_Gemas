@@ -98,13 +98,7 @@ public class Tablero {
 		t[f1][c1].notificarCeldaEnfocar();
 		t[f2][c2].notificarCeldaDesenfocar();
 
-		/*t[f1][c1].notificarse_intercambio_posicion();
-		t[f2][c2].notificarse_intercambio_posicion();
-		*/
-		/*t[f1][c1].notificarse_cambio_estado();
-		t[f2][c2].notificarse_cambio_estado();
-		*/
-		
+
 		System.out.println("INTERCAMBIADO: "+"["+f1+"]"+"["+c1+"]" +" y "+"["+f2+"]" +"["+c2+"]");
 		
 		boolean movValido = manejarColisiones(CheckCruz(f1,c1,f2,c2),t[f1][c1],t[f2][c2],0); 
@@ -292,21 +286,8 @@ public class Tablero {
 		aux =t[f1][c1].getEntidad();
 		t[f1][c1].setEntidad(t[f2][c2].getEntidad());
 		t[f2][c2].setEntidad(aux);
-		
-		//t[f1][c1].getEntidad().intercambiarPosicion(f1,c1);
-		//t[f2][c2].getEntidad().intercambiarPosicion(f2,c2);
-		//t[f1][c1].notificarCeldaEnfocar();
-		//t[f2][c2].notificarCeldaDesenfocar();
-		
-		//t[f1][c1].notificarse_cambio_estado();
-		//t[f2][c2].notificarse_cambio_estado();
-		
-		//t[f1][c1].notificarse_intercambio_posicion();
-		//t[f2][c2].notificarse_intercambio_posicion();
-		
-		
-		
 	}
+	
 	private void intercambiarCaida(int f1, int c1, int f2, int c2) {
 		Entidad aux = t[f1][c1].getEntidad();
 		EntidadGrafica auxG = aux.getEGrafica();
@@ -320,19 +301,9 @@ public class Tablero {
 		t[f2][c2].getEntidad().intercambiarCaida(f2,c2);
 		t[f2][c2].getEntidad().setEntidadGrafica(auxG);
 		
-		
-		
-		
+
 		t[f1][c1].notificarCeldaEnfocar();
 		t[f2][c2].notificarCeldaDesenfocar();
-		
-	    //t[f1][c1].notificarse_cambio_estado();
-		//t[f2][c2].notificarse_cambio_estado();
-		
-		//t[f1][c1].notificarse_intercambio_posicion();
-		//t[f2][c2].notificarse_intercambio_posicion();
-		
-		
 		
 	}
 	
@@ -371,10 +342,6 @@ public class Tablero {
 
 	}
 
-	public void actualizarTableroGUI() {
-		miLogica.actualizarTablero();
-			}
-	
 	public void asignarGUI(GUI g) {
 		miGui = g;
 		for(int i = 0; i<filas;i++) {
@@ -562,7 +529,7 @@ System.out.println("a ("+fJugador+","+cJugador+")");
 				if(t[i][j].getEntidad().obtenerColor() == 0) {
 					caido = true;
 					if(i == 0) {
-						egrafica = t[i][j];/*.getEntidad().getEGrafica();*/
+						egrafica = t[i][j];
 
 						t[i][j].setEntidad(new GemaNormal(i,j,colorAleatorio(1,6)));
 						t[i][j].getEntidad().setEntidadGrafica(egrafica);
@@ -572,7 +539,7 @@ System.out.println("a ("+fJugador+","+cJugador+")");
 				}
 			}
 		}
-		actualizarTableroGUI();
+		miLogica.actualizarTablero();
 		if(caido) {
 			caida();
 			return true;}
