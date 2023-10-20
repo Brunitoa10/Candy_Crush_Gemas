@@ -523,7 +523,7 @@ public class GUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				mainPanel.setVisible(true);
 				p1.setVisible(false);
-				//metodo que llama a logica para pasar al siguiente nivel
+				milogica.cambiarNivel();
 			}
 		});
 	}

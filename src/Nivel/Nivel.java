@@ -156,8 +156,7 @@ public class Nivel {
 		}
 		if(mapeo.size() == mapeoDeObjetivos.size()) {
 			mapeo.clear();
-			//miLogica.notificarVictoriaPorObjetivos();
-			miLogica.cambiarNivel();
+			miLogica.notificarVictoriaPorObjetivos();
 		}
 	
 	}  
