@@ -147,59 +147,46 @@ public class GUI extends JFrame {
 		//Constraints TIMER
 		GridBagConstraints c = new GridBagConstraints();
 		c.insets = new Insets(0,10,0,0);
-
-		c.gridx = 0;                               
-	    c.gridy = 0;
-		c.gridwidth = 3;
-		c.gridheight = 1;
-		c.weightx = 0;
-		c.weightx = 0;
-		
-		mainPanel.add(timerPanel,c);
+		agregarConGBCs(timerPanel, mainPanel, c, 0, 0, 3, 1);
 	
 		//Constraints PANEL OBJETIVOS
-		c.insets = new Insets(0, 10, 0, 0);      
-	    c.gridx = 0;                               
-	    c.gridy = 1;
-		c.gridwidth = 2;
-		c.gridheight = 2;
-		mainPanel.add(panel_objetivos, c);
+		c.insets = new Insets(0, 10, 0, 0);   
+		agregarConGBCs(panel_objetivos, mainPanel, c, 0, 1, 2, 2);   
 
 		//Constraints TABLERO
 		c.insets = new Insets(0,0,0,0);
-		c.gridx = 2;
-		c.gridy = 1;
-		c.gridwidth = 4;
-		c.gridheight = 4;
 		c.weightx = 1;
 		c.weighty = 1;
 		c.anchor = GridBagConstraints.CENTER;
+		agregarConGBCs(panel_principal, mainPanel, c, 2, 1, 4, 4); 
 		
-		mainPanel.add(panel_principal,c);
-
 		//Constraints VIDAS
-		c.gridx = 6;
-		c.gridy = 6;
-		c.gridwidth = 2;
-		c.gridheight = 1;
 		c.weightx = 0;
 		c.weightx = 0;
 		c.insets = new Insets(0,0,0,10);
-		mainPanel.add(panelVidas,c);
+		agregarConGBCs(panelVidas, mainPanel, c, 6, 6, 2, 1); 
 
 		//Constraints MOVIMIENTOS
-		c.gridx = 6;
-		c.gridy = 0;
-		c.gridwidth = 2;
-		c.gridheight = 1;
 		c.weightx = 0;
 		c.weightx = 0;
 		c.insets = new Insets(0,0,0,10);
-		mainPanel.add(movimientosLabel, c);
+		agregarConGBCs(movimientosLabel, mainPanel, c, 6, 0, 2, 1); 
 		
 		panel_principal.setFocusable(true);
 		getContentPane().add(mainPanel);
 	}
+
+	public EntidadGrafica agregar_entidad(Entidad e) {
+		Celda celda = new Celda(this, e, size_label);
+		e.setEntidadGrafica(celda);
+
+		matrizDeCeldas[e.getFila()][e.getColumna()] = celda;
+		panel_principal.add(matrizDeCeldas[e.getFila()][e.getColumna()]);
+		panel_principal.revalidate();
+		panel_principal.repaint();
+		return celda;
+	}
+
 
 	private JLabel label_corazon1 = new JLabel();
 	private JLabel label_corazon2 = new JLabel();
@@ -240,15 +227,10 @@ public class GUI extends JFrame {
 			}
 
 		GridBagConstraints gbc = new GridBagConstraints();
-		gbc.gridx = 6;
-		gbc.gridy = 6;
-		gbc.gridwidth = 2;
-		gbc.gridheight = 1;
 		gbc.weightx = 0;
 		gbc.weightx = 0;
 		gbc.insets = new Insets(0,0,0,10);
-			
-		mainPanel.add(panelVidas,gbc);
+		agregarConGBCs(panelVidas, mainPanel, gbc, 6, 6, 2, 1); 
 	}
 	
 	public void mostrarObjetivos() {	
@@ -263,6 +245,7 @@ public class GUI extends JFrame {
 		cTitulo.gridwidth = 2;
 			
 		panel_objetivos.add(tituloObjetivo,cTitulo);
+		agregarConGBCs(tituloObjetivo, panel_objetivos, cTitulo, 0, 0, 2, 1); 
 
 		//sirve para setear el gridy, aumenta con cada iteracion para poder setear el siguiente objetivo
 		//debajo del anterior
@@ -275,9 +258,11 @@ public class GUI extends JFrame {
 			objetivosColores[numeroDeObjetivo] = color;
 			JLabel objetivosTexto = new JLabel();
 			JLabel objetivosImagen = new JLabel();
+			JLabel objetivosNumero = objetivosProgreso[numeroDeObjetivo] = new JLabel();
+
 			objetivosTexto.setForeground(Color.WHITE);
 			objetivosTexto.setFont(new Font("Algerian", Font.PLAIN, 15));
-			JLabel objetivosNumero = objetivosProgreso[numeroDeObjetivo] = new JLabel();
+			
 			objetivosNumero.setForeground(Color.WHITE);
 			objetivosNumero.setFont(new Font("Arial", Font.PLAIN, 15));
 
@@ -298,23 +283,18 @@ public class GUI extends JFrame {
 
 			GridBagConstraints c = new GridBagConstraints();
 			c.insets = new Insets(0, 20, 0, 0);      
-	   		c.gridx = 0;                               
-	    	c.gridy = coordenada_y;
-			c.gridwidth = 1;
-			
+	   		c.weightx = 0;
+
 			//seteo el texto en posicion [0,coordenada_y]
-			panel_objetivos.add(objetivosTexto,c);
+			agregarConGBCs(objetivosTexto, panel_objetivos, c, 0, coordenada_y, 1, 1);
+			
 			c.gridx = 1;
 			//seteo la imagen en posicion [1,coordenada_y]
-			panel_objetivos.add(objetivosImagen,c);
+			agregarConGBCs(objetivosImagen, panel_objetivos, c, 1, coordenada_y, 1, 1);
+			
 			//seteo el progreso
-
-			c.gridx = 0;
 			c.insets = new Insets(0, 0, 0, 0);
-			c.gridy = coordenada_y+1;
-			c.gridwidth = 2;
-
-			panel_objetivos.add(objetivosNumero,c);
+			agregarConGBCs(objetivosNumero, panel_objetivos, c, 0, coordenada_y+1, 2, 1);
 
 			coordenada_y = coordenada_y + 2;
 			numeroDeObjetivo++;
@@ -363,17 +343,6 @@ public class GUI extends JFrame {
 				padding = "0";
 			}
 		return padding+tiempo;
-	}
-	
-	public EntidadGrafica agregar_entidad(Entidad e) {
-		Celda celda = new Celda(this, e, size_label);
-		e.setEntidadGrafica(celda);
-
-		matrizDeCeldas[e.getFila()][e.getColumna()] = celda;
-		panel_principal.add(matrizDeCeldas[e.getFila()][e.getColumna()]);
-		panel_principal.revalidate();
-		panel_principal.repaint();
-		return celda;
 	}
 
 	public void notificarse_animacion_en_progreso() {
@@ -451,14 +420,9 @@ public class GUI extends JFrame {
 
 		p1.add(label);
 		p1.add(botonReiniciar);
-		GridBagConstraints gbc = new GridBagConstraints();
-		gbc.fill = GridBagConstraints.HORIZONTAL;
-		gbc.fill = GridBagConstraints.VERTICAL;
-		gbc.anchor = GridBagConstraints.CENTER;
 
-		getContentPane().add(p1,gbc);
+		getContentPane().add(p1);
 		
-
 		p1.setVisible(true);
 		mainPanel.repaint();
 		
@@ -482,14 +446,9 @@ public class GUI extends JFrame {
 
 		p1.add(label);
 		p1.add(botonReiniciar);
-		GridBagConstraints gbc = new GridBagConstraints();
-		gbc.fill = GridBagConstraints.HORIZONTAL;
-		gbc.fill = GridBagConstraints.VERTICAL;
-		gbc.anchor = GridBagConstraints.CENTER;
 
-		getContentPane().add(p1,gbc);
+		getContentPane().add(p1);
 		
-
 		p1.setVisible(true);
 		mainPanel.repaint();
 
@@ -558,17 +517,12 @@ public class GUI extends JFrame {
 
 		GridBagConstraints gbc = new GridBagConstraints();
 
-		gbc.gridy = 0;
-		p1.add(labelPerdiste1,gbc);
-		gbc.gridy = 1;
-		p1.add(labelPerdiste2,gbc);
-		gbc.gridy = 2;
-		p1.add(labelPerdiste3,gbc);
-		gbc.gridy = 3;
-		p1.add(botonReiniciar,gbc);
+		agregarConGBCs(labelPerdiste1, p1, gbc, 0, 0, 1, 1);
+		agregarConGBCs(labelPerdiste2, p1, gbc, 0, 1, 1, 1);
+		agregarConGBCs(labelPerdiste3, p1, gbc, 0, 2, 1, 1);
+		agregarConGBCs(botonReiniciar, p1, gbc, 0, 3, 1, 1);
 
 		getContentPane().add(p1);
-		
 
 		p1.setVisible(true);
 		p1.invalidate();
@@ -583,6 +537,7 @@ public class GUI extends JFrame {
 			}
 		});
 	}
+
 	public void mostrarMensajeJuegoPerdido() {
 		System.out.println("GUI :: Perdiste");
 		
@@ -617,6 +572,15 @@ public class GUI extends JFrame {
 		return bloquear_intercambios;
 	}
 
+	private void agregarConGBCs(Component componenteAAgregar, JPanel panelBase, GridBagConstraints gbc, int gridx, int gridy, int gridwidth,int gridheight) {
+		gbc.gridx = gridx;
+		gbc.gridy = gridy;
+		gbc.gridwidth = gridwidth;
+		gbc.gridheight = gridheight;
+
+		panelBase.add(componenteAAgregar,gbc);
+	}
+
 
 	//Clase auxiliar para poder hacer el fondo
 
@@ -631,8 +595,5 @@ public class GUI extends JFrame {
 			super.paint(g);
 		}
 	}
-
-
-	
 }
 
