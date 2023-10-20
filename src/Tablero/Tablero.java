@@ -223,13 +223,12 @@ public class Tablero {
 							else if(color2 == c.getEntidad().obtenerColor()) {
 								    posibleT = true;}
 					destruirRocas(c.getEntidad());// destruiur rocas
-					c.getEntidad().romper();
+					c.getEntidad().romper(this);
 					combo = 1;
 					if(c == c1 || c ==c2) {
 						if(posibleT) {
 							System.out.println("generar bomba!!!!!");
 							c.setEntidad(new GemaEnvuelta(cf,cc,colorT));
-							c.getEntidad().setTablero(this);
 							//generar bomba en la celda c
 							}
 						else aux = c;
@@ -250,13 +249,12 @@ public class Tablero {
 						cc = c.getEntidad().getColumna();
 						
 						destruirRocas(c.getEntidad());//destruir rocas
-						c.getEntidad().romper();
+						c.getEntidad().romper(this);
 						combo++;
 						if(c == c1 || c ==c2) {
 							if(posibleT) {
 								System.out.println("generar bomba!!!!!");
 								c.setEntidad(new GemaEnvuelta(cf,cc,colorT));
-								c.getEntidad().setTablero(this);
 								//generar bomba en la celda c
 							}
 							else aux = c;
@@ -264,7 +262,6 @@ public class Tablero {
 						if(combo>=4 && !posibleT) {
 							System.out.println("generar rayada!!!!!");
 							aux.setEntidad(new GemaRayada(cf,cc, colorT, direccRay));
-							aux.getEntidad().setTablero(this);
 							//generar rayada en aux
 							while(c!= null) {
 								c = it.next();
@@ -483,14 +480,13 @@ public class Tablero {
 				if(t[i][j].getEntidad().obtenerColor() != color)
 					combo = 1;
 				if(combo ==3) {
-					t[i][j].getEntidad().romper();
-					t[i][j-1].getEntidad().romper();
-				    t[i][j-2].getEntidad().romper();
+					t[i][j].getEntidad().romper(this);
+					t[i][j-1].getEntidad().romper(this);
+				    t[i][j-2].getEntidad().romper(this);
 				    combeado = true;}
 				if(combo == 4) {
-					t[i][j].getEntidad().romper();
-					t[i][j].setEntidad(new GemaRayada(i,j,color,1));
-				    t[i][j].getEntidad().setTablero(this);}
+					t[i][j].getEntidad().romper(this);
+					t[i][j].setEntidad(new GemaRayada(i,j,color,1));}
 				combo ++;
 				color = t[i][j].getEntidad().obtenerColor();
 			}
@@ -501,14 +497,13 @@ public class Tablero {
 				if(t[j][i].getEntidad().obtenerColor() != color)
 					combo = 1;
 				if(combo ==3) {
-					t[j][i].getEntidad().romper();
-					t[j-1][i].getEntidad().romper();
-				    t[j-2][i].getEntidad().romper();
+					t[j][i].getEntidad().romper(this);
+					t[j-1][i].getEntidad().romper(this);
+				    t[j-2][i].getEntidad().romper(this);
 				    combeado = true;}
 				if(combo == 4) {
-					t[j][i].getEntidad().romper();
-					t[j][i].setEntidad(new GemaRayada(j,i,color,5));
-				    t[j][i].getEntidad().setTablero(this);}
+					t[j][i].getEntidad().romper(this);
+					t[j][i].setEntidad(new GemaRayada(j,i,color,5));}
 				combo ++;
 				color = t[j][i].getEntidad().obtenerColor();
 			}

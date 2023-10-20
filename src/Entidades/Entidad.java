@@ -13,7 +13,6 @@ public abstract class Entidad implements EntidadLogica, Enfocable{
 	protected String[] imagenes;
 	protected EntidadGrafica entidadG;
 	protected int color;
-    protected Tablero miTablero;
 	protected String ruta;
 
    //crea una instancia de Entidad
@@ -33,12 +32,6 @@ public abstract class Entidad implements EntidadLogica, Enfocable{
 
 	public EntidadGrafica getEGrafica() {
 		return entidadG;
-	}
-
-	//Asigna un Tablero a la entidad
-	public void setTablero(Tablero t)
-	{
-		miTablero=t;
 	}
 	
 	//obtener la imagen dependiendo si esta enfocada o no dicha entidad
@@ -114,7 +107,7 @@ public abstract class Entidad implements EntidadLogica, Enfocable{
 
 	public abstract boolean esPosibleIntercambiar(Entidad e);
 
-	public abstract void romper();
+	public abstract void romper(Tablero t);
 
 	public abstract void explosionAdyacente();
 

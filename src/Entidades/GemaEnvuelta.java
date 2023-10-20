@@ -1,6 +1,7 @@
 package Entidades;
 
 import Logica.Color;
+import Tablero.Tablero;
 
 public class GemaEnvuelta extends Gema{
 
@@ -9,7 +10,7 @@ public class GemaEnvuelta extends Gema{
 	}
 
 	@Override
-	public void romper() {
+	public void romper(Tablero miTablero) {
 		int f=fila;
 		int c=columna;
 		int topeFila=miTablero.getFila();
@@ -53,7 +54,7 @@ public class GemaEnvuelta extends Gema{
 			{
 				if(miTablero.getEntidad(i, columna).obtenerColor()!=0)
 				{
-                	miTablero.getEntidad(i, aux).romper();
+                	miTablero.getEntidad(i, aux).romper(miTablero);
 				}
 			}
 			aux=aux+1;

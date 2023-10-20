@@ -1,6 +1,7 @@
 package Entidades;
 
 import Logica.Color;
+import Tablero.Tablero;
 
 public class GemaRayada extends Gema{
 	
@@ -19,7 +20,7 @@ public class GemaRayada extends Gema{
 	}
 
 	@Override
-	public void romper() {
+	public void romper(Tablero miTablero) {
 		int f=fila;
 		int c=columna;
         int tope=0;
@@ -33,14 +34,14 @@ public class GemaRayada extends Gema{
 			{
               System.out.println("destruido gema rayada Horizontal"+ this.color + " en: "+f+","+c );
 	          color = Color.TRANSPARENTE;
-	          cargarImagenesRepresentativas(ruta);
+	          cargarImagenesRepresentativas("/assets/obstaculo/");
 	          entidadG.notificarse_explosion();
 			}
 			else
 			{
 				if(miTablero.getEntidad(i, columna).obtenerColor()!=0)
 				{
-					miTablero.getEntidad(fila, i).romper();
+					miTablero.getEntidad(fila, i).romper(miTablero);
 				}	
 			}
 		  }
@@ -54,14 +55,14 @@ public class GemaRayada extends Gema{
 			{
                  System.out.println("destruido gema rayada Vertical "+ this.color + " en: "+f+","+c );
 	             color = Color.TRANSPARENTE;
-				 cargarImagenesRepresentativas(ruta);
+				 cargarImagenesRepresentativas("/assets/obstaculo/");
 	  			 entidadG.notificarse_explosion();;
 			}
 			else
 			{
 				if(miTablero.getEntidad(i, columna).obtenerColor()!=0)
 				{
-			  		miTablero.getEntidad(i, columna).romper();	
+			  		miTablero.getEntidad(i, columna).romper(miTablero);	
 			    }
 		    }
 		  }

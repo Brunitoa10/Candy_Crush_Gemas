@@ -2,6 +2,7 @@ package Nivel;
 
 
 
+import Entidades.GemaEnvuelta;
 import Entidades.GemaNormal;
 import Entidades.GemaRayada;
 import Entidades.Roca;
@@ -75,8 +76,11 @@ public class GeneradorNivel {
 		            	}else{
 		            		if(partes[0].equals("p")) {
 		            			t.setEntidad(new GemaRayada(i, j,Integer.parseInt(partes[1].trim())%10,Integer.parseInt(partes[1].trim())/10));
-								t.getEntidad(i,j).setTablero(t);
+		            		}else{
+		            		if(partes[0].equals("e")) {
+		            			t.setEntidad(new GemaEnvuelta(i, j,Integer.parseInt(partes[1].trim())/10));
 		            		}
+		            	}
 		            	}
 		            }
 		        }

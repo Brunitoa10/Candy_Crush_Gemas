@@ -374,9 +374,9 @@ public class GUI extends JFrame {
 			for(int j=0;j<columnas;j++) {
 				matrizDeCeldas[i][j].setEntidad(milogica.getEntidadDelTablero(i, j));
 				matrizDeCeldas[i][j].getEntidad().setEntidadGrafica(matrizDeCeldas[i][j]);
-				matrizDeCeldas[i][j].notificarse_cambio_estado();
-				matrizDeCeldas[i][j].validate();
-				matrizDeCeldas[i][j].repaint();
+				//matrizDeCeldas[i][j].notificarse_cambio_estado();
+				//matrizDeCeldas[i][j].validate();
+				//matrizDeCeldas[i][j].repaint();
 			}
 		}
 	}

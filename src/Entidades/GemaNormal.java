@@ -1,6 +1,7 @@
 package Entidades;
 
 import Logica.Color;
+import Tablero.Tablero;
 
 public class GemaNormal extends Gema{
 		
@@ -9,7 +10,7 @@ public class GemaNormal extends Gema{
 		}
 
 
-		public void romper() {
+		public void romper(Tablero t) {
 			//System.out.println("destruido "+this.getClass().getName()+ " "+ this.color + " en: "+fila+","+columna );
 	   		color = Color.TRANSPARENTE;
 	   		cargarImagenesRepresentativas(ruta);
@@ -18,6 +19,4 @@ public class GemaNormal extends Gema{
 
 		public void explosionAdyacente()
 		{}
-
-
 }
