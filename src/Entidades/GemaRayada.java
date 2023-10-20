@@ -38,7 +38,10 @@ public class GemaRayada extends Gema{
 			}
 			else
 			{
-			miTablero.getEntidad(fila, i).romper();	
+				if(miTablero.getEntidad(i, columna).obtenerColor()==0)
+				{
+					miTablero.getEntidad(fila, i).romper();
+				}	
 			}
 		  }
 	   }
@@ -56,8 +59,11 @@ public class GemaRayada extends Gema{
 			}
 			else
 			{
-			miTablero.getEntidad(i, columna).romper();	
-			}
+				if(miTablero.getEntidad(i, columna).obtenerColor()==0)
+				{
+			  		miTablero.getEntidad(i, columna).romper();	
+			    }
+		    }
 		  }
 	   }
 	}
