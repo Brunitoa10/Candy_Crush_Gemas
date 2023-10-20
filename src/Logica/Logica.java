@@ -59,18 +59,12 @@ public class Logica {
         	reiniciarNivel();
         	miNivel.setVidas(tmpVidas);
 			miGUI.actualizarVidas();
-        }else {
-        	miGUI.mostrarMensajeDerrotaPorVidas();
-        }
+		}
 	}
 	
 	public void notificarDerrotaPorVidas() {
 		System.out.println("notificarDerrotaPorVidas");
 		reiniciarNivel();
-	}
-	
-	public void notificarVictoriaPorMovimientos() {
-		miGUI.mostrarMensajeVictoriaPorMovimientos();
 	}
 	
 	public void notificarVictoriaPorObjetivos() {
@@ -102,8 +96,10 @@ public class Logica {
 	public int disminuirTiempo(Timer timer) {
 		int tiempo = miNivel.getTiempo()-1;
         if (tiempo == 0) {
-            timer.cancel();
-            miGUI.mostrarMensajeDerrotaPorTiempo();
+			timer.cancel();
+			if(getVidas()>0) {
+            	miGUI.mostrarMensajeVictoriaPorObjetivos();
+			} else miGUI.mostrarMensajeDerrotaPorVidas();
         }else {
         	miNivel.setTiempo(tiempo);
         }

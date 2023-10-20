@@ -405,96 +405,6 @@ public class GUI extends JFrame {
 
 
 	public void mostrarMensajeDerrotaPorMovimientos() {
-		System.out.println("GUI :: derrotaPorMovimientos");
-		
-	}
-
-	public void mostrarMensajeDerrotaPorVidas() {
-	
-		mainPanel.setVisible(false);
-		JPanel p1 = new JPanel();
-		p1.setSize(new Dimension(MAXIMIZED_HORIZ, MAXIMIZED_HORIZ));
-		p1.setBackground(new Color(0,0,0,120));
-		JLabel label = new JLabel("Perdiste, no tienes mas vidas");
-		JButton botonReiniciar = new JButton("Reiniciar");
-
-		p1.add(label);
-		p1.add(botonReiniciar);
-
-		getContentPane().add(p1);
-		
-		p1.setVisible(true);
-		mainPanel.repaint();
-		
-		botonReiniciar.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				mainPanel.setVisible(true);
-				p1.setVisible(false);
-				//milogica.notificarDerrotaPorVidas();
-			}
-		});
-	}
-
-	public void mostrarMensajeVictoriaPorMovimientos() {
-		mainPanel.setVisible(false);
-		JPanel p1 = new JPanel();
-		p1.setSize(new Dimension(MAXIMIZED_HORIZ, MAXIMIZED_HORIZ));
-		p1.setBackground(new Color(0,0,0,120));
-		JLabel label = new JLabel("GANASTE");
-		JButton botonReiniciar = new JButton("Siguiente Nivel");
-
-		p1.add(label);
-		p1.add(botonReiniciar);
-
-		getContentPane().add(p1);
-		
-		p1.setVisible(true);
-		mainPanel.repaint();
-
-		botonReiniciar.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				mainPanel.setVisible(true);
-				p1.setVisible(false);
-				//milogica.notificarDerrotaPorVidas();
-			}
-		});
-	}
-	
-	public void mostrarMensajeVictoriaPorObjetivos() {
-		System.out.println("ENTREEEE");
-		mainPanel.setVisible(false);
-		JPanel p1 = new JPanel();
-		p1.setSize(new Dimension(MAXIMIZED_HORIZ, MAXIMIZED_HORIZ));
-		p1.setBackground(new Color(0,0,0,120));
-		JLabel label = new JLabel("GANASTE!");
-		JButton botonReiniciar = new JButton("Siguiente Nivel");
-
-		p1.add(label);
-		p1.add(botonReiniciar);
-		GridBagConstraints gbc = new GridBagConstraints();
-		gbc.fill = GridBagConstraints.HORIZONTAL;
-		gbc.fill = GridBagConstraints.VERTICAL;
-		gbc.anchor = GridBagConstraints.CENTER;
-
-		getContentPane().add(p1,gbc);
-		
-
-		p1.setVisible(true);
-		mainPanel.repaint();
-
-		botonReiniciar.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				mainPanel.setVisible(true);
-				p1.setVisible(false);
-				//milogica.notificarVictoriaPorObjetivos();
-			}
-		});
-	}
-
-	public void mostrarMensajeDerrotaPorTiempo() {
 		this.repaint();
 		mainPanel.setVisible(false);
 		JPanel p1 = new JPanel();
@@ -505,7 +415,7 @@ public class GUI extends JFrame {
 		JLabel labelPerdiste1 = new JLabel("PERDISTE");
 		labelPerdiste1.setFont(new Font("Algerian", Font.PLAIN, 50));
 		labelPerdiste1.setForeground(Color.WHITE);
-		JLabel labelPerdiste2 = new JLabel("Te quedaste sin tiempo");
+		JLabel labelPerdiste2 = new JLabel("Te quedaste sin movimientos");
 		labelPerdiste2.setFont(new Font("Algerian", Font.PLAIN, 30));
 		labelPerdiste2.setForeground(Color.WHITE);
 		JLabel labelPerdiste3 = new JLabel("Pierdes una vida");
@@ -525,8 +435,7 @@ public class GUI extends JFrame {
 		getContentPane().add(p1);
 
 		p1.setVisible(true);
-		p1.invalidate();
-		p1.validate();
+		p1.revalidate();
 
 		botonReiniciar.addActionListener(new ActionListener() {
 			@Override
@@ -538,9 +447,132 @@ public class GUI extends JFrame {
 		});
 	}
 
-	public void mostrarMensajeJuegoPerdido() {
-		System.out.println("GUI :: Perdiste");
-		
+	public void mostrarMensajeDerrotaPorVidas() {
+		mainPanel.setVisible(false);
+		JPanel p1 = new JPanel();
+		p1.setLayout(new GridBagLayout());
+		p1.setSize(new Dimension(MAXIMIZED_HORIZ, MAXIMIZED_HORIZ));
+		p1.setBackground(new Color(0,0,0,120));
+
+		JLabel labelPerdiste1 = new JLabel("PERDISTE");
+		labelPerdiste1.setFont(new Font("Algerian", Font.PLAIN, 50));
+		labelPerdiste1.setForeground(Color.WHITE);
+
+		JLabel labelPerdiste2 = new JLabel("Ya no te quedan mas vidas");
+		labelPerdiste2.setFont(new Font("Algerian", Font.PLAIN, 30));
+		labelPerdiste2.setForeground(Color.WHITE);
+
+		JLabel labelPerdiste3 = new JLabel("Empieza de nuevo desde el nivel 1");
+		labelPerdiste3.setFont(new Font("Algerian", Font.PLAIN, 30));
+		labelPerdiste3.setForeground(Color.WHITE);
+
+		JButton botonReiniciarJuego = new JButton("Reintentar");
+		botonReiniciarJuego.setBackground(new Color(0,0,0,200));
+		botonReiniciarJuego.setForeground(Color.WHITE);
+
+		GridBagConstraints gbc = new GridBagConstraints();
+
+		agregarConGBCs(labelPerdiste1, p1, gbc, 0, 0, 1, 1);
+		agregarConGBCs(labelPerdiste2, p1, gbc, 0, 1, 1, 1);
+		agregarConGBCs(labelPerdiste3, p1, gbc, 0, 2, 1, 1);
+		agregarConGBCs(botonReiniciarJuego, p1, gbc, 0, 3, 1, 1);
+		getContentPane().add(p1);
+		p1.setVisible(true);
+		p1.revalidate();
+
+		botonReiniciarJuego.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				mainPanel.setVisible(true);
+				p1.setVisible(false);
+				//metodo que llama a logica para reiniciar el juego desde el nivel 1
+			}
+		});
+	}
+	
+	public void mostrarMensajeVictoriaPorObjetivos() {
+		mainPanel.setVisible(false);
+		JPanel p1 = new JPanel();
+		p1.setLayout(new GridBagLayout());
+		p1.setSize(new Dimension(MAXIMIZED_HORIZ, MAXIMIZED_HORIZ));
+		p1.setBackground(new Color(0,0,0,120));
+
+		JLabel labelGanaste1 = new JLabel("GANASTE");
+		labelGanaste1.setFont(new Font("Algerian", Font.PLAIN, 50));
+		labelGanaste1.setForeground(Color.WHITE);
+
+		JLabel labelGanaste2 = new JLabel("Felicidades! Avanza al siguiente nivel");
+		labelGanaste2.setFont(new Font("Algerian", Font.PLAIN, 30));
+		labelGanaste2.setForeground(Color.WHITE);
+
+		JButton botonSiguienteNivel = new JButton("Siguiente Nivel");
+		botonSiguienteNivel.setBackground(new Color(0,0,0,200));
+		botonSiguienteNivel.setForeground(Color.WHITE);
+
+		GridBagConstraints gbc = new GridBagConstraints();
+
+		agregarConGBCs(labelGanaste1, p1, gbc, 0, 0, 1, 1);
+		agregarConGBCs(labelGanaste2, p1, gbc, 0, 1, 1, 1);
+	
+		agregarConGBCs(botonSiguienteNivel, p1, gbc, 0, 3, 1, 1);
+		getContentPane().add(p1);
+		p1.setVisible(true);
+		p1.revalidate();
+
+		botonSiguienteNivel.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				mainPanel.setVisible(true);
+				p1.setVisible(false);
+				//metodo que llama a logica para pasar al siguiente nivel
+			}
+		});
+	}
+
+	public void mostrarMensajeDerrotaPorTiempo() {
+		this.repaint();
+		mainPanel.setVisible(false);
+		JPanel p1 = new JPanel();
+		p1.setLayout(new GridBagLayout());
+		p1.setSize(new Dimension(MAXIMIZED_HORIZ, MAXIMIZED_HORIZ));
+		p1.setBackground(new Color(0,0,0,120));
+
+		JLabel labelPerdiste1 = new JLabel("PERDISTE");
+		labelPerdiste1.setFont(new Font("Algerian", Font.PLAIN, 50));
+		labelPerdiste1.setForeground(Color.WHITE);
+
+		JLabel labelPerdiste2 = new JLabel("Te quedaste sin tiempo");
+		labelPerdiste2.setFont(new Font("Algerian", Font.PLAIN, 30));
+		labelPerdiste2.setForeground(Color.WHITE);
+
+		JLabel labelPerdiste3 = new JLabel("Pierdes una vida");
+		labelPerdiste3.setFont(new Font("Algerian", Font.PLAIN, 30));
+		labelPerdiste3.setForeground(Color.WHITE);
+
+		JButton botonReiniciar = new JButton("Reintentar");
+		botonReiniciar.setBackground(new Color(0,0,0,200));
+		labelPerdiste3.setForeground(Color.WHITE);
+
+		GridBagConstraints gbc = new GridBagConstraints();
+
+		agregarConGBCs(labelPerdiste1, p1, gbc, 0, 0, 1, 1);
+		agregarConGBCs(labelPerdiste2, p1, gbc, 0, 1, 1, 1);
+		agregarConGBCs(labelPerdiste3, p1, gbc, 0, 2, 1, 1);
+		agregarConGBCs(botonReiniciar, p1, gbc, 0, 3, 1, 1);
+
+		getContentPane().add(p1);
+
+		p1.setVisible(true);
+		p1.revalidate();
+
+		botonReiniciar.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				mainPanel.setVisible(true);
+				p1.setVisible(false);
+				//milogica.notificarDerrotaPorTiempo();
+			}
+		});
 	}
 	
 	public void limpiarGUI() {
