@@ -7,5 +7,9 @@ public abstract class Obstaculo extends Entidad{
 	}
 
 	public abstract void romper();
+
+	public boolean esPosibleIntercambiar(Entidad e) {
+		return false;
+	}
   
 }

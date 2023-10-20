@@ -42,7 +42,7 @@ public abstract class Entidad implements EntidadLogica, Enfocable{
 	}
 	
 	//obtener la imagen dependiendo si esta enfocada o no dicha entidad
-	public String getImagenesRep() {
+	public String getImagenRep() {
 		int indice = 0;
 		indice += (enfocada ? 1 : 0);
 		return imagenes[indice];

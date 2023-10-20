@@ -13,12 +13,6 @@ public abstract class Gema extends Entidad{
 	public boolean esPosibleIntercambiar(Entidad e) {
 		return e.puedeRecibir(this);
 	}
-	
-	public String getImagenRep() {
-		int indice = 0;
-		indice += (enfocada ? 1 : 0);
-		return imagenes[indice];
-	}
 
 
 	public boolean puedeRecibir(GemaNormal gm) {
