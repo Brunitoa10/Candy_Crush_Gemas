@@ -53,18 +53,20 @@ public class Logica {
 	
 	public void notificarDerrotaPorTiempo() {
 		miNivel.restarVidas();
-		
 		if(miNivel.getVidas() >= 1) {
         	int tmpVidas = miNivel.getVidas();
-        	reiniciarNivel();
+        	reiniciarNivel(nivelActual);
         	miNivel.setVidas(tmpVidas);
 			miGUI.actualizarVidas();
+		}else {
+			miGUI.mostrarMensajeDerrotaPorVidas();
 		}
 	}
 	
 	public void notificarDerrotaPorVidas() {
 		System.out.println("notificarDerrotaPorVidas");
-		reiniciarNivel();
+		nivelActual = 1;
+		reiniciarNivel(nivelActual);
 	}
 	
 	public void notificarVictoriaPorObjetivos() {
@@ -97,9 +99,7 @@ public class Logica {
 		int tiempo = miNivel.getTiempo()-1;
         if (tiempo == 0) {
 			timer.cancel();
-			if(getVidas()>0) {
-            	miGUI.mostrarMensajeDerrotaPorTiempo();
-			} else miGUI.mostrarMensajeDerrotaPorVidas();
+			miGUI.mostrarMensajeDerrotaPorTiempo();
         }else {
         	miNivel.setTiempo(tiempo);
         }
@@ -115,13 +115,13 @@ public class Logica {
 		return miNivel.getMovimientos();
 	}
 
-	public void reiniciarNivel() {
-		int tmpNivel = nivelActual; // Almacena el nivel actual antes de reiniciarlo
-
+	public void reiniciarNivel(int n) {
+		System.out.println("Logica :: Entre al reiniciar");
+		nivelActual = n;
 	    miTablero.resetearTablero(miTablero.getFila(), miTablero.getColumna());
 	    miGUI.limpiarGUI();
 	    miTablero.limpiarTablero();
-	    miNivel = GeneradorNivel.cargar_nivel_y_tablero(miTablero, tmpNivel, this); // Carga el nivel actual
+	    miNivel = GeneradorNivel.cargar_nivel_y_tablero(miTablero, nivelActual, this); // Carga el nivel actual
 	    miTablero.asignarGUI(miGUI);
 	    asociarEntidadesLogicasGraficas();
 	    miNivel.setMovimientos(miNivel.getTotalMovimientos());

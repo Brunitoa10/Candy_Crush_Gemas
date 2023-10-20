@@ -485,6 +485,7 @@ public class GUI extends JFrame {
 				mainPanel.setVisible(true);
 				p1.setVisible(false);
 				//metodo que llama a logica para reiniciar el juego desde el nivel 1
+				milogica.notificarDerrotaPorVidas();
 			}
 		});
 	}
@@ -569,7 +570,7 @@ public class GUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				mainPanel.setVisible(true);
 				p1.setVisible(false);
-				//milogica.notificarDerrotaPorTiempo();
+				milogica.notificarDerrotaPorTiempo();
 			}
 		});
 	}
