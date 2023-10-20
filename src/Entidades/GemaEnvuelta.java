@@ -51,7 +51,7 @@ public class GemaEnvuelta extends Gema{
 			}
 			else
 			{
-				if(miTablero.getEntidad(i, columna).obtenerColor()==0)
+				if(miTablero.getEntidad(i, columna).obtenerColor()!=0)
 				{
                 	miTablero.getEntidad(i, aux).romper();
 				}

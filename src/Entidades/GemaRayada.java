@@ -33,12 +33,12 @@ public class GemaRayada extends Gema{
 			{
               System.out.println("destruido gema rayada Horizontal"+ this.color + " en: "+f+","+c );
 	          color = Color.TRANSPARENTE;
-	          setImagenesRep("/assets/obstaculo/");
+	          cargarImagenesRepresentativas(ruta);
 	          entidadG.notificarse_explosion();
 			}
 			else
 			{
-				if(miTablero.getEntidad(i, columna).obtenerColor()==0)
+				if(miTablero.getEntidad(i, columna).obtenerColor()!=0)
 				{
 					miTablero.getEntidad(fila, i).romper();
 				}	
@@ -54,12 +54,12 @@ public class GemaRayada extends Gema{
 			{
                  System.out.println("destruido gema rayada Vertical "+ this.color + " en: "+f+","+c );
 	             color = Color.TRANSPARENTE;
-	   			 setImagenesRep("/assets/obstaculo/");
+				 cargarImagenesRepresentativas(ruta);
 	  			 entidadG.notificarse_explosion();;
 			}
 			else
 			{
-				if(miTablero.getEntidad(i, columna).obtenerColor()==0)
+				if(miTablero.getEntidad(i, columna).obtenerColor()!=0)
 				{
 			  		miTablero.getEntidad(i, columna).romper();	
 			    }
