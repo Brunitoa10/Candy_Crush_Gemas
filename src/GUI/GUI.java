@@ -97,11 +97,13 @@ public class GUI extends JFrame {
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		mainPanel.setLayout(new GridBagLayout());
 
-		timerLabel = new JLabel("Tiempo restante: "+ tiempoRestante);
+		JPanel timerPanel = new JPanel();
+		timerLabel = new JLabel("Tiempo restante: "+ agregarPaddingTiempo(tiempoRestante));
 		timerLabel.setOpaque(true);
 		timerLabel.setFont(new Font("Algerian", Font.PLAIN, 30));
 		timerLabel.setForeground(Color.WHITE);
 		timerLabel.setBackground(new Color(0,0,0,255));
+		timerPanel.add(timerLabel);
 
 		movimientosLabel = new JLabel ("Movimientos restantes: "+movimientosRestantes);
 		movimientosLabel.setOpaque(true);
@@ -148,12 +150,12 @@ public class GUI extends JFrame {
 
 		c.gridx = 0;                               
 	    c.gridy = 0;
-		c.gridwidth = 2;
+		c.gridwidth = 3;
 		c.gridheight = 1;
 		c.weightx = 0;
 		c.weightx = 0;
 		
-		mainPanel.add(timerLabel,c);
+		mainPanel.add(timerPanel,c);
 	
 		//Constraints PANEL OBJETIVOS
 		c.insets = new Insets(0, 10, 0, 0);      
@@ -351,8 +353,17 @@ public class GUI extends JFrame {
 	}
 
 	public void actualizarTiempo(int tiempo) {
-		tiempoRestante = tiempo;
-		timerLabel.setText("Tiempo restante: " + tiempoRestante);
+		timerLabel.setText("Tiempo restante: "+agregarPaddingTiempo(tiempo));
+	}
+
+	private String agregarPaddingTiempo(int tiempo) {
+		String padding = "";
+			if(tiempo <= 9) {
+			padding = "00";
+			} else if(tiempo <= 99) {
+				padding = "0";
+			}
+		return padding+tiempo;
 	}
 	
 	public EntidadGrafica agregar_entidad(Entidad e) {
