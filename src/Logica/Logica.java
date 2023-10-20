@@ -196,25 +196,17 @@ public class Logica {
 	    System.out.println("Logica :: cambiarNivel");
 	    nivelActual++;
 	    
-	    // Cargar nuevo nivel y tablero
-	    miNivel = GeneradorNivel.cargar_nivel_y_tablero(miTablero, nivelActual, this);
-
-	    // Actualizar la lógica
-	    miGUI.limpiarGUI();
-	    miTablero.asignarGUI(miGUI);
-	    asociarEntidadesLogicasGraficas();
-	    miTablero.fijarJugador(miNivel.getFilaInicialJugador(), miNivel.getColumnaInicialJugador());
-	    miNivel.setMovimientos(miNivel.getTotalMovimientos());
-	    miNivel.setTiempo(miNivel.getTotalTiempo());
-
-	    // Actualizar la GUI
+	    miGUI.dispose();
+	    miTablero = new Tablero(this,miGUI);
+		miNivel = GeneradorNivel.cargar_nivel_y_tablero(miTablero,nivelActual,this);
+		miGUI = new GUI(this, miTablero.getFila(), miTablero.getColumna());
+		miTablero.asignarGUI(miGUI);	
+		asociarEntidadesLogicasGraficas();
+		
+		miTablero.fijarJugador(miNivel.getFilaInicialJugador(), miNivel.getColumnaInicialJugador());
+	   
+		inicializarTiempo();
 	    
-	    miGUI.actualizarMovimientos(miNivel.getMovimientos());
-	    miGUI.reiniciarProgreso();
-	    miGUI.actualizarTiempo(getTiempo());
-	    miGUI.actualizarVidas();
-
-	    inicializarTiempo();
 	}
 
 	
