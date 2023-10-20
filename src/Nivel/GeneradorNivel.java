@@ -12,6 +12,7 @@ import java.util.*;
 import Tablero.Tablero;
 import java.io.File;
 public class GeneradorNivel {
+	
 	public static Nivel cargar_nivel_y_tablero(Tablero t, int nivel,Logica l) {
 		Nivel miNivel = new Nivel(0,0,l);
 		try {
@@ -67,13 +68,13 @@ public class GeneradorNivel {
 		        for (int j = 0; j < columnas; j++) {
 		            String[] partes = valores[j].split(",");
 		            if (partes[0].equals("n")) {
-		                t.agregarEntidad(new GemaNormal(i, j, Integer.parseInt(partes[1].trim())));
+		                t.setEntidad(new GemaNormal(i, j, Integer.parseInt(partes[1].trim())));
 		            }else {
 		            	if(partes[0].equals("r")) {
-		            		t.agregarEntidad(new Roca(i, j));
+		            		t.setEntidad(new Roca(i, j));
 		            	}else{
 		            		if(partes[0].equals("p")) {
-		            			t.agregarEntidad(new GemaRayada(i, j,Integer.parseInt(partes[1].trim())%10,Integer.parseInt(partes[1].trim())/10));
+		            			t.setEntidad(new GemaRayada(i, j,Integer.parseInt(partes[1].trim())%10,Integer.parseInt(partes[1].trim())/10));
 		            		}
 		            	}
 		            }

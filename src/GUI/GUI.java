@@ -42,7 +42,7 @@ public class GUI extends JFrame {
 	protected JLabel movimientosLabel;
 	protected JLabel[] objetivosProgreso;
 	protected Celda matrizDeCeldas[][];
-	protected int[] objetivosColores;
+		protected int[] objetivosColores;
 	protected int movimientosRestantes;
 	private int size_label = 70;
 	private Imagenfondo fondo = new Imagenfondo();
@@ -57,7 +57,7 @@ public class GUI extends JFrame {
 	public GUI(Logica l, int f, int c) {
 		milogica = l;
 		filas = f;
-		mi_animador = new CentralAnimaciones(this);
+				mi_animador = new CentralAnimaciones(this);
 		columnas = c;
 		tiempoRestante = milogica.getTiempo();
 		movimientosRestantes = milogica.getMovimientos();
@@ -322,7 +322,7 @@ public class GUI extends JFrame {
 
 	public void actualizarProgreso(int gemasRestantes, int tipoGema) {
 		for(int i=0; i<objetivosColores.length;i++) {
-			if(tipoGema == objetivosColores[i]) {
+						if(tipoGema == objetivosColores[i]) {
 				String aux = objetivosProgreso[i].getText();
 				String[] partes = aux.split("/");
 				Integer num = Integer.valueOf(partes[1]);
@@ -330,7 +330,7 @@ public class GUI extends JFrame {
 				int progreso = gemasTotales - gemasRestantes;
 
 				objetivosProgreso[i].setText(progreso+"/"+gemasTotales);
-			}
+							}
 		}
 	}
 
@@ -386,7 +386,7 @@ public class GUI extends JFrame {
 
 		invalidate();
 		validate();
-
+		
 	}
 	
 	//este proyecto es un crimen de odio a la programacion

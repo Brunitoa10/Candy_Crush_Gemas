@@ -1,15 +1,9 @@
 package Tablero;
 
-import Entidades.Entidad;
-import Entidades.GemaEnvuelta;
-import Entidades.GemaNormal;
-import Entidades.GemaRayada;
-import GUI.Celda;
-import GUI.EntidadGrafica;
-import GUI.GUI;
+import Entidades.*;
+import GUI.*;
 import Logica.Logica;
-import java.util.Iterator;
-import java.util.LinkedList;
+import java.util.*;
 
 public class Tablero {
 	
@@ -18,10 +12,10 @@ public class Tablero {
 	protected Logica miLogica;
     protected GUI miGui;
 	protected Celda t[][]; //[f][c]
-	int filas;
-	int columnas;
-	int fJugador;
-	int cJugador;
+	protected int filas;
+	protected int columnas;
+	protected int fJugador;
+	protected int cJugador;
 	
 	/*[fila,columna]
 	 * 
@@ -374,12 +368,12 @@ public class Tablero {
 			}
 			System.out.println("");
 		}
-		
+
 	}
 
 	public void actualizarTableroGUI() {
 		miLogica.actualizarTablero();
-	}
+			}
 	
 	public void asignarGUI(GUI g) {
 		miGui = g;
@@ -421,19 +415,6 @@ public class Tablero {
 		return columnas;
 	}
 	
-	public void agregarEntidad(Entidad e) throws Exception {
-		int tmpFil = e.getFila(), tmpCol = e.getColumna();
-		if(en_rango(tmpFil,tmpCol) && e != null) {
-			t[tmpFil][tmpCol].setEntidad(e);
-		}else {
-			if(en_rango(tmpFil,tmpCol)) {
-				throw new Exception("Tablero :: Fuera de rango en agregarEntidad ");
-			}else {
-				throw new Exception("Tablero :: Entidad null en agregarEntidad ");
-			}
-		}
-	}
-	
 	public void fijarJugador(int f, int c){
 		if(en_rango(f,c)) {
 			fJugador = f;
@@ -450,20 +431,20 @@ public class Tablero {
 		switch(dir) {
 		case GUI.DERECHA:
 			if(cJugador < columnas -1) {
-				System.out.print("me movi de ("+fJugador+","+cJugador+")");
+System.out.print("me movi de ("+fJugador+","+cJugador+")");
 				t[fJugador][cJugador].notificarCeldaDesenfocar();
 				cJugador++;
 				t[fJugador][cJugador].notificarCeldaEnfocar();
-				System.out.println("a ("+fJugador+","+cJugador+")");
+System.out.println("a ("+fJugador+","+cJugador+")");
 			}
 		break;
 		case GUI.ARRIBA:
 			if(fJugador >0) {
-				System.out.print("me movi de ("+fJugador+","+cJugador+")");
+System.out.print("me movi de ("+fJugador+","+cJugador+")");
 				t[fJugador][cJugador].notificarCeldaDesenfocar();
 				fJugador--;
 				t[fJugador][cJugador].notificarCeldaEnfocar();
-				System.out.println("a ("+fJugador+","+cJugador+")");
+System.out.println("a ("+fJugador+","+cJugador+")");
 			}	
 		break;
 		case GUI.IZQUIERDA:

@@ -118,4 +118,10 @@ public class CentralAnimaciones implements ManejadorAnimaciones{
 	private boolean tiene_animaciones_en_progreso(LinkedList<Animador> l) {
 		return !l.isEmpty();
 	}
+
+	@Override
+	public void actualizarCelda(int posx, int posy) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'actualizarCelda'");
+	}
 }
