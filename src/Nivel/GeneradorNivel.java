@@ -75,6 +75,7 @@ public class GeneradorNivel {
 		            	}else{
 		            		if(partes[0].equals("p")) {
 		            			t.setEntidad(new GemaRayada(i, j,Integer.parseInt(partes[1].trim())%10,Integer.parseInt(partes[1].trim())/10));
+								t.getEntidad(i,j).setTablero(t);
 		            		}
 		            	}
 		            }

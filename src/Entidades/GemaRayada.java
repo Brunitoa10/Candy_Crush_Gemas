@@ -28,6 +28,7 @@ public class GemaRayada extends Gema{
           tope=miTablero.getColumna();
 		  for(int i=0;i<tope;i++)
 		  {
+			
             if(i==c)
 			{
               System.out.println("destruido gema rayada Horizontal"+ this.color + " en: "+f+","+c );

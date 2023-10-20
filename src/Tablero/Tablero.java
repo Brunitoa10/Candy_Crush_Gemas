@@ -102,7 +102,7 @@ public class Tablero {
 		System.out.println("INTERCAMBIADO: "+"["+f1+"]"+"["+c1+"]" +" y "+"["+f2+"]" +"["+c2+"]");
 		
 		boolean movValido = manejarColisiones(CheckCruz(f1,c1,f2,c2),t[f1][c1],t[f2][c2],0); 
-
+        
 		if(movValido) {
 			do {
 				caida();
@@ -229,7 +229,7 @@ public class Tablero {
 						if(posibleT) {
 							System.out.println("generar bomba!!!!!");
 							c.setEntidad(new GemaEnvuelta(cf,cc,colorT));
-							System.out.println(c.getEntidad().getClass().getName());
+							c.getEntidad().setTablero(this);
 							//generar bomba en la celda c
 							}
 						else aux = c;
@@ -243,8 +243,8 @@ public class Tablero {
 						
 						if(cf == c.getEntidad().getFila()) {
 							//se mueve a travez de las filas
-							direccRay = 0;}
-						else direccRay = 1;//se mueve a travez de las columnas
+							direccRay = 1;}
+						else direccRay = 5;//se mueve a travez de las columnas
 						
 						cf= c.getEntidad().getFila();
 						cc = c.getEntidad().getColumna();
@@ -256,6 +256,7 @@ public class Tablero {
 							if(posibleT) {
 								System.out.println("generar bomba!!!!!");
 								c.setEntidad(new GemaEnvuelta(cf,cc,colorT));
+								c.getEntidad().setTablero(this);
 								//generar bomba en la celda c
 							}
 							else aux = c;
@@ -263,7 +264,7 @@ public class Tablero {
 						if(combo>=4 && !posibleT) {
 							System.out.println("generar rayada!!!!!");
 							aux.setEntidad(new GemaRayada(cf,cc, colorT, direccRay));
-							//System.out.println(aux.getEntidad().getClass().getName());
+							aux.getEntidad().setTablero(this);
 							//generar rayada en aux
 							while(c!= null) {
 								c = it.next();
@@ -405,11 +406,9 @@ public class Tablero {
 		break;
 		case GUI.ARRIBA:
 			if(fJugador >0) {
-System.out.print("me movi de ("+fJugador+","+cJugador+")");
 				t[fJugador][cJugador].notificarCeldaDesenfocar();
 				fJugador--;
 				t[fJugador][cJugador].notificarCeldaEnfocar();
-System.out.println("a ("+fJugador+","+cJugador+")");
 			}	
 		break;
 		case GUI.IZQUIERDA:
@@ -490,7 +489,8 @@ System.out.println("a ("+fJugador+","+cJugador+")");
 				    combeado = true;}
 				if(combo == 4) {
 					t[i][j].getEntidad().romper();
-					t[i][j].setEntidad(new GemaRayada(i,j,color,0));}
+					t[i][j].setEntidad(new GemaRayada(i,j,color,1));
+				    t[i][j].getEntidad().setTablero(this);}
 				combo ++;
 				color = t[i][j].getEntidad().obtenerColor();
 			}
@@ -507,7 +507,8 @@ System.out.println("a ("+fJugador+","+cJugador+")");
 				    combeado = true;}
 				if(combo == 4) {
 					t[j][i].getEntidad().romper();
-					t[j][i].setEntidad(new GemaRayada(j,i,color,1));}
+					t[j][i].setEntidad(new GemaRayada(j,i,color,5));
+				    t[j][i].getEntidad().setTablero(this);}
 				combo ++;
 				color = t[j][i].getEntidad().obtenerColor();
 			}

@@ -117,4 +117,5 @@ public abstract class Entidad implements EntidadLogica, Enfocable{
 	public abstract void romper();
 
 	public abstract void explosionAdyacente();
+
 }
