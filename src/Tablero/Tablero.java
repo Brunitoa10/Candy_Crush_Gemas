@@ -12,185 +12,35 @@ import Logica.EntidadLogica;
 import Logica.Logica;
 
 public class Tablero {
-	
-	//--------[ATRIBUTOS DE INSTANCIA]------------
-	
-	
-	/*[fila,columna]
-	 * 
-	 * [5,0][5,1][5,2][5,3]
-	 * [4,0][4,1][4,2][4,3]
-	 * [3,0][3,1][3,2][3,3]
-	 * [2,0][2,1][2,2][2,3]
-	 * [1,0][1,1][1,2][1,3]
-	 * [0,0][0,1][0,2][0,3]
-	 */
-	
-	//-----------[METODOS PRIVADOS]--------------------
-	
-	//RETORNA UNA UN ARRAY DE LISTAS COMO LinkedList<Entidad>[combos horizontales][combos veritcales]
-	/*private LinkedList<Celda> CheckCruz(int f1, int c1, int f2, int c2) {
-		//System.out.println("columnas "+ columnas+" filas "+ columnas+" f1 c1 "+ f1+" "+c1+" f2 c2 "+ f2+" "+c2);
-		//optimizar
-		LinkedList<Celda> toReturn = new LinkedList<Celda>(); 
-		if((0<=f1 && f1 <filas) && (0<=c1 && c1 <columnas) && (0<=f2 && f2 <filas) && (0<=c2 && c2 <columnas )){
-			LinkedList<Celda> aux;
-			Iterator<Celda> it;
-			if(f1 == f2) {
-				//caso dos filas iguales
 
-				aux = checkFila(f1);
-				it = aux.iterator();
-				while (it.hasNext()) {
-					toReturn.addLast(it.next());}
-				
-				aux = checkColumna(c1);
-				it = aux.iterator();
-				while (it.hasNext()) {
-					toReturn.addLast(it.next());}
-				
-				aux = checkColumna(c2);
-				it = aux.iterator();
-				while (it.hasNext()) {
-					toReturn.addLast(it.next());}
-			}
-			else {
-				aux = checkFila(f1);
-				it = aux.iterator();
-				while (it.hasNext()) {
-					toReturn.addLast(it.next());}
-				
-				aux = checkFila(f2);
-				it = aux.iterator();
-				while (it.hasNext()) {
-					toReturn.addLast(it.next());}
-				
-				aux = checkColumna(c2);
-				it = aux.iterator();
-				while (it.hasNext()) {
-					toReturn.addLast(it.next());}
-			}
-			miLogica.actualizarObjetivos(toReturn);
-		return toReturn;
-		}
-		else {
-			System.out.println("error en checkCruz() de tablero");
-			return null;
-		}
-	}*/
-	
 	private int colorAleatorio(int cotaInferior, int cotaSuperior) {
 		return (int)(Math.random()*cotaSuperior+cotaInferior);
 	}
 
-	/*private boolean intecambiarPriv(int f1,int c1, int f2, int c2) {
-		Entidad aux;
-		aux =t[f1][c1].getEntidad();
-		boolean toReturn;
-		
-		t[f1][c1].setEntidad(t[f2][c2].getEntidad());
-		t[f2][c2].setEntidad(aux);
-		
-		t[f1][c1].getEntidad().intercambiarPosicion(f1,c1);
-		t[f2][c2].getEntidad().intercambiarPosicion(f2,c2);
-		
-		t[f1][c1].notificarCeldaEnfocar();
-		t[f2][c2].notificarCeldaDesenfocar();
-
-
-		System.out.println("INTERCAMBIADO: "+"["+f1+"]"+"["+c1+"]" +" y "+"["+f2+"]" +"["+c2+"]");
-		
-		boolean movValido = manejarColisiones(CheckCruz(f1,c1,f2,c2),t[f1][c1],t[f2][c2],0); 
-        
-		if(movValido) {
-			do {
-				caida();
-			}while(checkExhaustivo());
-			toReturn = true;
-		}
-		else {intercambiarSinCheck(f2,c2,f1,c1);
-			t[f1][c1].notificarCeldaEnfocar();
-			t[f2][c2].notificarCeldaDesenfocar();
-			toReturn = false;
-		
-		}
-		return toReturn;
-	}*/
-	
-	/*private LinkedList<Celda> checkFila(int f) {
-		 LinkedList<Celda> toReturn = new LinkedList<Celda>();
-    int combo = 0;
-    for (int i = 1; i < columnas; i++) {
-			if(t[f][i-1].getColorEntidad() == t[f][i].getColorEntidad() && t[f][i].getColorEntidad() != 7&& t[f][i].getColorEntidad() != 8 ) {
-				
-				combo++;
-				if(combo == 2) {
-					toReturn.addLast(t[f][i-2]);
-					toReturn.addLast(t[f][i-1]);
-					toReturn.addLast(t[f][i]);}
-				if(combo> 2) {
-					toReturn.addLast(t[f][i]);}}		
-			else {
-				if(combo>=2) {
-					toReturn.addLast(null);}
-				combo = 0;
-				}
-		}//fin for
-		if(!toReturn.isEmpty() &&toReturn.getLast() != null) {
-			toReturn.addLast(null);}
-		return toReturn;	
-		//no es un error que la lista tenga nulls, se manejan apropiadamente y son importantes para su estructura
-	}*/
-	
-	/*private LinkedList<Celda> checkColumna(int c) {
-		LinkedList<Celda> toReturn = new LinkedList<Celda>();
-    	int combo = 0;
-    	 for (int i = 1; i < filas; i++) {
-			if(t[i-1][c].getColorEntidad() == t[i][c].getColorEntidad() && t[i][c].getColorEntidad() != 7 && t[i][c].getColorEntidad() != 8 ) {
-				
-				combo++;
-				if(combo == 2) {
-					toReturn.addLast(t[i-2][c]);
-					toReturn.addLast(t[i-1][c]);
-					toReturn.addLast(t[i][c]);}
-				if(combo> 2) {
-					toReturn.addLast(t[i][c]);}}		
-			else {
-				if(combo>=2) {
-					toReturn.addLast(null);}
-				combo = 0;
-				}
-		}//fin for
-		if(!toReturn.isEmpty() && toReturn.getLast() != null ) {
-			toReturn.addLast(null);}
-		return toReturn;
-		//no es un error que la lista tenga nulls, se manejan apropiadamente y son importantes para su estructura
-	}*/
-	
 	/*private boolean manejarColisiones(LinkedList<Celda> l,Celda c1, Celda c2, int dir) {
 		//RECORRER LA LISTA (los combos solo tienen 2 colores posibles, ambos diferentes)
 	    //A CADA ELEMENTO DE LA LISTA APLICARLE .DESTRUIR()
 		//SI HAY DOS COLORES IGUALES EN DIFERENTES SETS DE COMBOS GENERAR RAYADO EN CELDA 1
 		//SI HAY OTRO MAS EN CELDA 2, NO ES POSIBLE QUE HAYA UN TERCERO
 		//CUALQUIER PROBLEMA CON ESTO, CONSULTAR A VALEN
-		
+
 		//consigna:
 		/* rayado 
-		 * formacion:
-		 * Exactamente 4 caramelos regulares seguidos. 
-		 * en la posici�n hacia donde se movi� el caramelo que gener� la
-		 * formaci�n del mismo.
-		 * Si el caramelo rayado es el resultado de un movimiento horizontal, las rayas ser�n
-		 * horizontales, si es el resultado de un movimiento vertical, ser�n verticales y el resultado
-		 * es aleatorio durante las cascadas m�s grandes
-		 * 
-		 * envuelto
-		 * Formaci�n: 5 o 6 caramelos regulares en forma de T, L o +.
-		 * Ubicaci�n de aparici�n: en la posici�n hacia donde se movi� el caramelo que gener� la
-		 * formaci�n del mismo.
-		 */
-		
-		/*if(!l.isEmpty()) {
+	 * formacion:
+	 * Exactamente 4 caramelos regulares seguidos. 
+	 * en la posici�n hacia donde se movi� el caramelo que gener� la
+	 * formaci�n del mismo.
+	 * Si el caramelo rayado es el resultado de un movimiento horizontal, las rayas ser�n
+	 * horizontales, si es el resultado de un movimiento vertical, ser�n verticales y el resultado
+	 * es aleatorio durante las cascadas m�s grandes
+	 * 
+	 * envuelto
+	 * Formaci�n: 5 o 6 caramelos regulares en forma de T, L o +.
+	 * Ubicaci�n de aparici�n: en la posici�n hacia donde se movi� el caramelo que gener� la
+	 * formaci�n del mismo.
+	 */
+
+	/*if(!l.isEmpty()) {
 			Iterator<Celda> it = l.iterator();
 			Celda c = null;
 			int cf = -1;
@@ -202,9 +52,9 @@ public class Tablero {
 			int combo = 0;
 			int direccRay;
 			boolean posibleT = false;//marca si puede pasar que estemos en un combo t, se genera bomba(envuelta?)
-			
+
 			while(it.hasNext()) {//[1],[1],[1],[1],null,[4][4][4][4],null,[1][1][1]
-				
+
 				if(c == null) {//principio de combo
 					c = it.next();
 					cf = c.getEntidad().getFila();
@@ -232,21 +82,21 @@ public class Tablero {
 							}
 						else aux = c;
 					}
-								
+
 				}//end if (c == null)
 				else {//medio del combo
 					c = it.next();
-					
+
 					if(c != null) {
-						
+
 						if(cf == c.getEntidad().getFila()) {
 							//se mueve a travez de las filas
 							direccRay = 1;}
 						else direccRay = 5;//se mueve a travez de las columnas
-						
+
 						cf= c.getEntidad().getFila();
 						cc = c.getEntidad().getColumna();
-						
+
 						destruirRocas(c.getEntidad());//destruir rocas
 						c.getEntidad().romper(this);
 						combo++;
@@ -273,68 +123,43 @@ public class Tablero {
 		}//end if lista vacia  
 		else return false;
 	}*/
-	
+
 	private boolean en_rango(int nf, int nc){
 		return (((nf >= 0) && (nf < filas)) && ((nc >= 0) && (nc < columnas)));
 	}
-	
-	/*private void intercambiarSinCheck(int f1, int c1, int f2, int c2) {
-		Entidad aux;
-		aux =t[f1][c1].getEntidad();
-		t[f1][c1].setEntidad(t[f2][c2].getEntidad());
-		t[f2][c2].setEntidad(aux);
-	}
-	
-	private void intercambiarCaida(int f1, int c1, int f2, int c2) {
-		Entidad aux = t[f1][c1].getEntidad();
-		EntidadGrafica auxG = aux.getEGrafica();
-		
-		t[f1][c1].setEntidad(t[f2][c2].getEntidad());
-		t[f2][c2].setEntidad(aux);
-		
-		t[f1][c1].getEntidad().intercambiarCaida(f1,c1);
-		t[f1][c1].getEntidad().setEntidadGrafica(t[f2][c2].getEntidad().getEGrafica());
-		
-		t[f2][c2].getEntidad().intercambiarCaida(f2,c2);
-		t[f2][c2].getEntidad().setEntidadGrafica(auxG);
-		
 
-		t[f1][c1].notificarCeldaEnfocar();
-		t[f2][c2].notificarCeldaDesenfocar();
-		
-	}*/
-	
+
 	protected Logica miLogica;
 	protected Entidad entidades[][];
 	protected int filas;
 	protected int columnas;
 	protected int fJugador;
 	protected int cJugador;
-	
+
 	// Define un mapa para asociar las direcciones de intercambio con las funciones correspondientes
 	private final Map<Integer, BiFunction<Integer, Integer, Boolean>> operaciones = new HashMap<>();
-	
+
 	// Define un mapa para asociar las direcciones de movimientos con las funciones correspondientes
-    private final Map<Integer, BiConsumer<Integer, Integer>> movimientos = new HashMap<>();
-	
+	private final Map<Integer, BiConsumer<Integer, Integer>> movimientos = new HashMap<>();
+
 	public Tablero(Logica l) {
 		miLogica = l;
 		//Intercambios
 		operaciones.put(GUI.ABAJO, (fila, columna) -> intercambiar_auxiliar(fila + 1, columna));
-        operaciones.put(GUI.ARRIBA, (fila, columna) -> intercambiar_auxiliar(fila - 1, columna));
-        operaciones.put(GUI.IZQUIERDA, (fila, columna) -> intercambiar_auxiliar(fila, columna - 1));
-        operaciones.put(GUI.DERECHA, (fila, columna) -> intercambiar_auxiliar(fila, columna + 1));
-        //Movimientos
-        movimientos.put(GUI.ABAJO, (fila, columna) -> mover_jugador_auxiliar(fila + 1, columna));
-        movimientos.put(GUI.ARRIBA, (fila, columna) -> mover_jugador_auxiliar(fila - 1, columna));
-        movimientos.put(GUI.IZQUIERDA, (fila, columna) -> mover_jugador_auxiliar(fila, columna - 1));
-        movimientos.put(GUI.DERECHA, (fila, columna) -> mover_jugador_auxiliar(fila, columna + 1));
+		operaciones.put(GUI.ARRIBA, (fila, columna) -> intercambiar_auxiliar(fila - 1, columna));
+		operaciones.put(GUI.IZQUIERDA, (fila, columna) -> intercambiar_auxiliar(fila, columna - 1));
+		operaciones.put(GUI.DERECHA, (fila, columna) -> intercambiar_auxiliar(fila, columna + 1));
+		//Movimientos
+		movimientos.put(GUI.ABAJO, (fila, columna) -> mover_jugador_auxiliar(fila + 1, columna));
+		movimientos.put(GUI.ARRIBA, (fila, columna) -> mover_jugador_auxiliar(fila - 1, columna));
+		movimientos.put(GUI.IZQUIERDA, (fila, columna) -> mover_jugador_auxiliar(fila, columna - 1));
+		movimientos.put(GUI.DERECHA, (fila, columna) -> mover_jugador_auxiliar(fila, columna + 1));
 	}
-	
+
 	public Entidad get_entidad(int f, int c) {
 		return entidades[f][c];
 	}
-	
+
 	public void resetar_tablero(int f, int c) {
 		filas = f;
 		columnas = c;
@@ -342,35 +167,35 @@ public class Tablero {
 		cJugador = 0;
 		entidades = new Entidad[f][c];
 	}
-	
+
 	public void agregar_entidad(Entidad e) {
 		entidades[e.get_fila()][e.get_columna()] = e;
 	}
-	
+
 
 	public int getFila() {
 		return filas;
 	}
-	
+
 	public int getColumna() {
 		return columnas;
 	}
-	
+
 	public void fijarJugador(int f, int c) {
 		entidades[f][c].enfocar();
 		entidades[fJugador][cJugador].desenfocar();
 		fJugador = f;
 		cJugador = c;
 	}
-	
+
 	// Función mover_jugador usando el mapa
-    public void mover_jugador(int d) {
-        BiConsumer<Integer, Integer> movimiento = movimientos.get(d);
-        if (movimiento != null) {
-            movimiento.accept(fJugador, cJugador);
-        }
-    }
-	
+	public void mover_jugador(int d) {
+		BiConsumer<Integer, Integer> movimiento = movimientos.get(d);
+		if (movimiento != null) {
+			movimiento.accept(fJugador, cJugador);
+		}
+	}
+
 	private void mover_jugador_auxiliar(int nf, int nc) {
 		if ( en_rango(nf,nc) ) {
 			entidades[nf][nc].enfocar();
@@ -379,291 +204,263 @@ public class Tablero {
 			cJugador = nc;
 		}
 	}
-	
-	
-	public boolean intercambiar(int d) {
-        BiFunction<Integer, Integer, Boolean> operacion = operaciones.get(d);
-        boolean intercambioValido = false;
-        if (operacion != null) {
-        	intercambioValido = operacion.apply(fJugador, cJugador);
-        }
-        return intercambioValido;
-    }
-	
-	private boolean intercambiar_auxiliar(int nf, int nc) {
-	    int af = fJugador;
-	    int ac = cJugador;
-	    boolean movimientoValido = false;
 
-	    if (en_rango(nf, nc)) {
-	        if (entidades[af][ac].es_posible_intercambiar(entidades[nf][nc])) {
-	            // Anima el posible intercambio de entidades
-	            aplicar_intercambio(af, ac, nf, nc);
-	            // Llamamos a buscarCombos después de un intercambio exitoso
-                buscarCombos(af, ac, nf, nc);
-	            // Si el intercambio provoca un match de 2 o 3 entidades, chequea las combinaciones y detona lo necesario
-	            // De lo contrario, retrotae el intercambio anterior que no fue válido
-	            if (entidades[af][ac].machea(entidades[nf][nc])) {
-	                entidades[af][ac].detonar();
-	                entidades[nf][nc].detonar();
-    
-	            } else {
-	                aplicar_intercambio(nf, nc, af, ac);
-	            }
-	        }
-	        movimientoValido = true;
-	    }
-	    return movimientoValido;
+
+	public boolean intercambiar(int d) {
+		BiFunction<Integer, Integer, Boolean> operacion = operaciones.get(d);
+		boolean intercambioValido = false;
+		if (operacion != null) {
+			intercambioValido = operacion.apply(fJugador, cJugador);
+		}
+		return intercambioValido;
 	}
-	
+
+	private boolean intercambiar_auxiliar(int nf, int nc) {
+		int af = fJugador;
+		int ac = cJugador;
+		boolean movimientoValido = false;
+
+		if (en_rango(nf, nc)) {
+			if (entidades[af][ac].es_posible_intercambiar(entidades[nf][nc])) {
+				// Anima el posible intercambio de entidades
+				aplicar_intercambio(af, ac, nf, nc);
+				// Llamamos a buscarCombos después de un intercambio exitoso
+				buscarCombos(af, ac, nf, nc);
+				// Si el intercambio provoca un match de 2 o 3 entidades, chequea las combinaciones y detona lo necesario
+				// De lo contrario, retrotae el intercambio anterior que no fue válido
+				if (entidades[af][ac].machea(entidades[nf][nc])) {
+					entidades[af][ac].detonar();
+					entidades[nf][nc].detonar();
+
+				} else {
+					aplicar_intercambio(nf, nc, af, ac);
+				}
+			}
+			movimientoValido = true;
+		}
+		return movimientoValido;
+	}
+
 	private void aplicar_intercambio(int af, int ac, int nf, int nc) {
 		Entidad entidad_aux = entidades[af][ac];
-		
+
 		entidades[af][ac].cambiar_posicion(nf, nc);
 		entidades[nf][nc].cambiar_posicion(af, ac);
-		
+
 		entidades[af][ac] = entidades[nf][nc];
 		entidades[nf][nc] = entidad_aux;
-		
+
 		fJugador = nf;
 		cJugador = nc;
 	}
-	
-	private LinkedList<EntidadLogica> buscarCombos(int f1, int c1, int f2, int c2) {
-	    LinkedList<EntidadLogica> listaCombos = new LinkedList<>();
 
-	    if (esPosicionValida(f1, c1) && esPosicionValida(f2, c2)) {
-	    	listaCombos.addAll(buscarCombosEnFila(f1, c1));
-	    	listaCombos.addAll(buscarCombosEnColumna(f1, c1));
-	    	listaCombos.addAll(buscarCombosEnFila(f2, c2));
-	    	listaCombos.addAll(buscarCombosEnColumna(f2, c2));
-	    	miLogica.actualizarObjetivos(listaCombos);
-	        System.out.println("Tablero buscarCombos :: "+listaCombos.size());
-	        return listaCombos;
-	    } else {
-	        throw new IllegalArgumentException("Posición inválida en buscarCombos");
-	    }
+	private LinkedList<EntidadLogica> buscarCombos(int f1, int c1, int f2, int c2) {
+		LinkedList<EntidadLogica> listaCombos = new LinkedList<>();
+
+		if (esPosicionValida(f1, c1) && esPosicionValida(f2, c2)) {
+			listaCombos.addAll(buscarCombosEnFila(f1, c1));
+			listaCombos.addAll(buscarCombosEnColumna(f1, c1));
+			listaCombos.addAll(buscarCombosEnFila(f2, c2));
+			listaCombos.addAll(buscarCombosEnColumna(f2, c2));
+			miLogica.actualizarObjetivos(listaCombos);
+			System.out.println("Tablero buscarCombos :: "+listaCombos.size());
+			return listaCombos;
+		} else {
+			throw new IllegalArgumentException("Posición inválida en buscarCombos");
+		}
 	}
 
 	private LinkedList<EntidadLogica> buscarCombosEnFila(int fila, int columna) {
-	    LinkedList<EntidadLogica> combosEnFila = new LinkedList<>();
-	    
-	    // Obtener el tipo de gema en la posición (fila, columna)
-	    Entidad entidad = entidades[fila][columna];
-	    
-	    // Contador para el número de gemas iguales consecutivas
-	    int cantidad = 1;
-	    
-	    // Buscar hacia la izquierda
-	    int colIzquierda = columna - 1;
-	    while (colIzquierda >= 0 && entidades[fila][colIzquierda].get_color() == entidad.get_color()) {
-	        combosEnFila.add(entidades[fila][colIzquierda]); // Agregar a la lista de combos
-	        cantidad++;
-	        colIzquierda--;
-	    }
-	    
-	    // Buscar hacia la derecha
-	    int colDerecha = columna + 1;
-	    while (colDerecha < columnas && entidades[fila][colDerecha].get_color() == entidad.get_color()) {
-	        combosEnFila.add(entidades[fila][colDerecha]); // Agregar a la lista de combos
-	        cantidad++;
-	        colDerecha++;
-	    }
-	    
-	    // Si hay al menos 3 gemas iguales consecutivas, agregar la posición actual
-	    if (cantidad >= 3) {
-	        combosEnFila.add(entidad); // Agregar la posición actual a la lista de combos
+		LinkedList<EntidadLogica> combosEnFila = new LinkedList<>();
 
-	        if (cantidad == 4) {
-	            //entidad.marcarComoRayadaHorizontal(); // Suponiendo que hay un método para marcar como gema rayada horizontal
-	            System.out.println("Se genera una gema rayada horizontal");
-	        } else {
-	        	if (cantidad == 5 || cantidad == 6) {
-	        		 // Verificar combinaciones en forma de T, L o sigmoide
-	        		if (verificarCombinacionesEspecialesEnFila(fila, columna)) {
-		                //entidad.marcarComoEnvuelta();
-		                System.out.println("Se genera una gema Envuelta (Combinación especial en fila)");
-		            }
-		        }
-	        } 
-	    } else {
-	        combosEnFila.clear(); // No hay combos, limpiar la lista
-	    }
-	    
-	    return combosEnFila;
+		// Obtener el tipo de gema en la posición (fila, columna)
+		Entidad entidad = entidades[fila][columna];
+
+		// Contador para el número de gemas iguales consecutivas
+		int cantidad = 1;
+
+		// Buscar hacia la izquierda
+		int colIzquierda = columna - 1;
+		while (colIzquierda >= 0 && entidades[fila][colIzquierda].get_color() == entidad.get_color()) {
+			combosEnFila.add(entidades[fila][colIzquierda]); // Agregar a la lista de combos
+			cantidad++;
+			colIzquierda--;
+		}
+
+		// Buscar hacia la derecha
+		int colDerecha = columna + 1;
+		while (colDerecha < columnas && entidades[fila][colDerecha].get_color() == entidad.get_color()) {
+			combosEnFila.add(entidades[fila][colDerecha]); // Agregar a la lista de combos
+			cantidad++;
+			colDerecha++;
+		}
+
+		// Si hay al menos 3 gemas iguales consecutivas, agregar la posición actual
+		if (cantidad >= 3) {
+			combosEnFila.add(entidad); // Agregar la posición actual a la lista de combos
+
+			if (cantidad == 4) {
+				//entidad.marcarComoRayadaHorizontal(); // Suponiendo que hay un método para marcar como gema rayada horizontal
+				System.out.println("Se genera una gema rayada horizontal");
+			} else {
+				if (cantidad == 5 || cantidad == 6) {
+					// Verificar combinaciones en forma de T, L o sigmoide
+					if (verificarCombinacionesEspecialesEnFila(fila, columna)) {
+						//entidad.marcarComoEnvuelta();
+						System.out.println("Se genera una gema Envuelta (Combinación especial en fila)");
+					}
+				}
+			} 
+		} else {
+			combosEnFila.clear(); // No hay combos, limpiar la lista
+		}
+
+		return combosEnFila;
 	}
 
 	private boolean verificarCombinacionesEspecialesEnFila(int fila, int columna) {
-	    // Obtener el tipo de gema en la posición (fila, columna)
-	    int tipoGema = entidades[fila][columna].get_color();
-	    boolean verificaCombinacion = false;
-	    
-	    // Verificar combinación en forma de T
-	    if (columna >= 2 && columna < columnas - 1) {
-	        if (entidades[fila][columna - 1].get_color() == tipoGema &&
-	            entidades[fila][columna - 2].get_color() == tipoGema &&
-	            entidades[fila][columna + 1].get_color() == tipoGema) {
-	        	verificaCombinacion = true;
-	        	System.out.println("T fila");
-	        }
-	    }
+		// Obtener el tipo de gema en la posición (fila, columna)
+		int tipoGema = entidades[fila][columna].get_color();
+		boolean verificaCombinacion = false;
 
-	    // Verificar combinación en forma de L
-	    if (columna >= 2 && fila < filas - 1) {
-	        if (entidades[fila][columna - 1].get_color() == tipoGema &&
-	            entidades[fila][columna - 2].get_color() == tipoGema &&
-	            entidades[fila + 1][columna - 2].get_color() == tipoGema) {
-	        	verificaCombinacion = true;
-	        	System.out.println("L fila");
-	        }
-	    }
+		// Verificar combinación en forma de T
+		if (columna >= 2 && columna < columnas - 1) {
+			if (entidades[fila][columna - 1].get_color() == tipoGema &&
+					entidades[fila][columna - 2].get_color() == tipoGema &&
+					entidades[fila][columna + 1].get_color() == tipoGema) {
+				verificaCombinacion = true;
+				System.out.println("T fila");
+			}
+		}
 
-	    // Verificar combinación en forma de sigmoide (+)
-	    if (columna >= 1 && columna < columnas - 1 && fila >= 1 && fila < filas - 1) {
-	        if (entidades[fila][columna - 1].get_color() == tipoGema &&
-	            entidades[fila][columna + 1].get_color() == tipoGema &&
-	            entidades[fila - 1][columna].get_color() == tipoGema &&
-	            entidades[fila + 1][columna].get_color() == tipoGema) {
-	        	verificaCombinacion = true;
-	        	System.out.println("Sigmoide fila");
-	        }
-	    }
+		// Verificar combinación en forma de L
+		if (columna >= 2 && fila < filas - 1) {
+			if (entidades[fila][columna - 1].get_color() == tipoGema &&
+					entidades[fila][columna - 2].get_color() == tipoGema &&
+					entidades[fila + 1][columna - 2].get_color() == tipoGema) {
+				verificaCombinacion = true;
+				System.out.println("L fila");
+			}
+		}
 
-	    return verificaCombinacion;
+		// Verificar combinación en forma de sigmoide (+)
+		if (columna >= 1 && columna < columnas - 1 && fila >= 1 && fila < filas - 1) {
+			if (entidades[fila][columna - 1].get_color() == tipoGema &&
+					entidades[fila][columna + 1].get_color() == tipoGema &&
+					entidades[fila - 1][columna].get_color() == tipoGema &&
+					entidades[fila + 1][columna].get_color() == tipoGema) {
+				verificaCombinacion = true;
+				System.out.println("Sigmoide fila");
+			}
+		}
+
+		return verificaCombinacion;
 	}
 
 	private LinkedList<EntidadLogica> buscarCombosEnColumna(int fila, int columna) {
-	    LinkedList<EntidadLogica> combosEnColumna = new LinkedList<>();
+		LinkedList<EntidadLogica> combosEnColumna = new LinkedList<>();
 
-	    // Obtener el tipo de gema en la posición (fila, columna)
-	    Entidad entidad = entidades[fila][columna];
+		// Obtener el tipo de gema en la posición (fila, columna)
+		Entidad entidad = entidades[fila][columna];
 
-	    // Contador para el número de gemas iguales consecutivas
-	    int cantidad = 1;
+		// Contador para el número de gemas iguales consecutivas
+		int cantidad = 1;
 
-	    // Buscar hacia arriba
-	    int filaArriba = fila - 1;
-	    while (filaArriba >= 0 && entidades[filaArriba][columna].get_color() == entidad.get_color()) {
-	        combosEnColumna.add(entidades[filaArriba][columna]); // Agregar a la lista de combos
-	        cantidad++;
-	        filaArriba--;
-	    }
+		// Buscar hacia arriba
+		int filaArriba = fila - 1;
+		while (filaArriba >= 0 && entidades[filaArriba][columna].get_color() == entidad.get_color()) {
+			combosEnColumna.add(entidades[filaArriba][columna]); // Agregar a la lista de combos
+			cantidad++;
+			filaArriba--;
+		}
 
-	    // Buscar hacia abajo
-	    int filaAbajo = fila + 1;
-	    while (filaAbajo < filas && entidades[filaAbajo][columna].get_color() == entidad.get_color()) {
-	        combosEnColumna.add(entidades[filaAbajo][columna]); // Agregar a la lista de combos
-	        cantidad++;
-	        filaAbajo++;
-	    }
+		// Buscar hacia abajo
+		int filaAbajo = fila + 1;
+		while (filaAbajo < filas && entidades[filaAbajo][columna].get_color() == entidad.get_color()) {
+			combosEnColumna.add(entidades[filaAbajo][columna]); // Agregar a la lista de combos
+			cantidad++;
+			filaAbajo++;
+		}
 
-	    // Si hay al menos 3 gemas iguales consecutivas, agregar la posición actual
-	    if (cantidad >= 3) {
-	        combosEnColumna.add(entidad); // Agregar la posición actual a la lista de combos
+		// Si hay al menos 3 gemas iguales consecutivas, agregar la posición actual
+		if (cantidad >= 3) {
+			combosEnColumna.add(entidad); // Agregar la posición actual a la lista de combos
 
-	        if (cantidad == 4) {
-	            //entidad.marcarComoRayadaVertical(); // Suponiendo que hay un método para marcar como gema rayada vertical
-	            System.out.println("Se genera una gema rayada vertical");
-	        } else if (cantidad == 5 || cantidad == 6) {
-	        	if (verificarCombinacionesEspecialesEnColumna(fila, columna)) {
-	                //entidad.marcarComoEnvuelta();
-	                System.out.println("Se genera una gema Envuelta (Combinación especial en columna)");
-	            }
-	        } 
-	    } else {
-	        combosEnColumna.clear(); // No hay combos, limpiar la lista
-	    }
+			if (cantidad == 4) {
+				//entidad.marcarComoRayadaVertical(); // Suponiendo que hay un método para marcar como gema rayada vertical
+				System.out.println("Se genera una gema rayada vertical");
+			} else if (cantidad == 5 || cantidad == 6) {
+				if (verificarCombinacionesEspecialesEnColumna(fila, columna)) {
+					//entidad.marcarComoEnvuelta();
+					System.out.println("Se genera una gema Envuelta (Combinación especial en columna)");
+				}
+			} 
+		} else {
+			combosEnColumna.clear(); // No hay combos, limpiar la lista
+		}
 
-	    return combosEnColumna;
+		return combosEnColumna;
 	}
 
 	private boolean verificarCombinacionesEspecialesEnColumna(int fila, int columna) {
-	    // Obtener el tipo de gema en la posición (fila, columna)
-	    int tipoGema = entidades[fila][columna].get_color();
-	    boolean verificaCombinacion = false;
-	    // Verificar combinación en forma de T
-	    if (fila >= 2 && fila < filas - 1) {
-	        if (entidades[fila - 1][columna].get_color() == tipoGema &&
-	            entidades[fila - 2][columna].get_color() == tipoGema &&
-	            entidades[fila + 1][columna].get_color() == tipoGema) {
-	        	verificaCombinacion = true;
-	        	System.out.println("T columna");
-	        }
-	    }
+		// Obtener el tipo de gema en la posición (fila, columna)
+		int tipoGema = entidades[fila][columna].get_color();
+		boolean verificaCombinacion = false;
+		// Verificar combinación en forma de T
+		if (fila >= 2 && fila < filas - 1) {
+			if (entidades[fila - 1][columna].get_color() == tipoGema &&
+					entidades[fila - 2][columna].get_color() == tipoGema &&
+					entidades[fila + 1][columna].get_color() == tipoGema) {
+				verificaCombinacion = true;
+				System.out.println("T columna");
+			}
+		}
 
-	    // Verificar combinación en forma de L
-	    if (fila >= 2 && columna < columnas - 1) {
-	        if (entidades[fila - 1][columna].get_color() == tipoGema &&
-	            entidades[fila - 2][columna].get_color() == tipoGema &&
-	            entidades[fila - 2][columna + 1].get_color() == tipoGema) {
-	        	verificaCombinacion = true;
-	        	System.out.println("L columna");
-	        }
-	    }
+		// Verificar combinación en forma de L
+		if (fila >= 2 && columna < columnas - 1) {
+			if (entidades[fila - 1][columna].get_color() == tipoGema &&
+					entidades[fila - 2][columna].get_color() == tipoGema &&
+					entidades[fila - 2][columna + 1].get_color() == tipoGema) {
+				verificaCombinacion = true;
+				System.out.println("L columna");
+			}
+		}
 
-	    // Verificar combinación en forma de sigmoide (+)
-	    if (fila >= 1 && fila < filas - 1 && columna >= 1 && columna < columnas - 1) {
-	        if (entidades[fila - 1][columna].get_color() == tipoGema &&
-	            entidades[fila + 1][columna].get_color() == tipoGema &&
-	            entidades[fila][columna - 1].get_color() == tipoGema &&
-	            entidades[fila][columna + 1].get_color() == tipoGema) {
-	        	verificaCombinacion = true;
-	        	System.out.println("Sigmoide columna");
-	        }
-	    }
+		// Verificar combinación en forma de sigmoide (+)
+		if (fila >= 1 && fila < filas - 1 && columna >= 1 && columna < columnas - 1) {
+			if (entidades[fila - 1][columna].get_color() == tipoGema &&
+					entidades[fila + 1][columna].get_color() == tipoGema &&
+					entidades[fila][columna - 1].get_color() == tipoGema &&
+					entidades[fila][columna + 1].get_color() == tipoGema) {
+				verificaCombinacion = true;
+				System.out.println("Sigmoide columna");
+			}
+		}
 
-	    return verificaCombinacion;
+		return verificaCombinacion;
 	}
 
 	private boolean esPosicionValida(int fila, int columna) {
-	    return (0 <= fila && fila < filas) && (0 <= columna && columna < columnas);
+		return (0 <= fila && fila < filas) && (0 <= columna && columna < columnas);
 	}
-	/*public boolean checkExhaustivo() {
-		int color = -1;
-		int combo;
-		//Celda c;
-		boolean combeado = false;
-		
-		for (int i = 0; i< filas; i++) {
-			combo = 1;
-			for (int j = 0;j<columnas; j++) {//a travez de las filas quiza
-				if(t[i][j].getEntidad().obtenerColor() != color)
-					combo = 1;
-				if(combo ==3) {
-					t[i][j].getEntidad().romper(this);
-					t[i][j-1].getEntidad().romper(this);
-				    t[i][j-2].getEntidad().romper(this);
-				    combeado = true;}
-				if(combo == 4) {
-					t[i][j].getEntidad().romper(this);
-					t[i][j].setEntidad(new GemaRayada(i,j,color,1));}
-				combo ++;
-				color = t[i][j].getEntidad().obtenerColor();
+
+	//Metodo Agregado por bruno
+	public String obtenerTipoGema(int tipoGema) {
+		boolean encontre = false;
+		String nombreGema = " ";
+		for(int i = 0; i<filas && !encontre; i++) {
+			for (int j = 0; j<columnas && !encontre; j++) {
+				if (entidades[i][j].get_color() == tipoGema) {
+					encontre = true; 
+					if(encontre) {
+						nombreGema = entidades[i][j].get_imagen_representativa();
+					}
+				}
 			}
 		}
-		for (int i = 0; i< columnas; i++) {
-			combo = 1;
-			for (int j = 0;j<filas; j++) {//a travez de las columnas quiza
-				if(t[j][i].getEntidad().obtenerColor() != color)
-					combo = 1;
-				if(combo ==3) {
-					t[j][i].getEntidad().romper(this);
-					t[j-1][i].getEntidad().romper(this);
-				    t[j-2][i].getEntidad().romper(this);
-				    combeado = true;}
-				if(combo == 4) {
-					t[j][i].getEntidad().romper(this);
-					t[j][i].setEntidad(new GemaRayada(j,i,color,5));}
-				combo ++;
-				color = t[j][i].getEntidad().obtenerColor();
-			}
-		}
-		
-		
-		
-		return combeado;
-	}*/
-	
+		return nombreGema;
+	}
+
 	/*public boolean caida() {
 		//verificar que la fila 0 es la de arriba
 		EntidadGrafica egrafica;
@@ -689,10 +486,10 @@ public class Tablero {
 		if(caido) {
 			caida();
 			return true;}
-			
+
 		else return false;
 	}*/
-		
+
 	/*public void limpiarTablero() {
 		for (int i = 0; i < filas; i++) {
 	        for (int j = 0; j < columnas; j++) {
@@ -728,22 +525,33 @@ public class Tablero {
 	  }
 	}*/
 
-	//Metodo Agregado por bruno
-	public String obtenerTipoGema(int tipoGema) {
-		boolean encontre = false;
-		String nombreGema = " ";
-		for(int i = 0; i<filas && !encontre; i++) {
-			for (int j = 0; j<columnas && !encontre; j++) {
-				if (entidades[i][j].get_color() == tipoGema) {
-					encontre = true; 
-					if(encontre) {
-						nombreGema = entidades[i][j].get_imagen_representativa();
-					}
-				}
-			}
-		}
-		return nombreGema;
-	}
+	/*private void intercambiarSinCheck(int f1, int c1, int f2, int c2) {
+	Entidad aux;
+	aux =t[f1][c1].getEntidad();
+	t[f1][c1].setEntidad(t[f2][c2].getEntidad());
+	t[f2][c2].setEntidad(aux);
+}
+
+private void intercambiarCaida(int f1, int c1, int f2, int c2) {
+	Entidad aux = t[f1][c1].getEntidad();
+	EntidadGrafica auxG = aux.getEGrafica();
+
+	t[f1][c1].setEntidad(t[f2][c2].getEntidad());
+	t[f2][c2].setEntidad(aux);
+
+	t[f1][c1].getEntidad().intercambiarCaida(f1,c1);
+	t[f1][c1].getEntidad().setEntidadGrafica(t[f2][c2].getEntidad().getEGrafica());
+
+	t[f2][c2].getEntidad().intercambiarCaida(f2,c2);
+	t[f2][c2].getEntidad().setEntidadGrafica(auxG);
+
+
+	t[f1][c1].notificarCeldaEnfocar();
+	t[f2][c2].notificarCeldaDesenfocar();
+
+}*/
+
+
 
 
 }
