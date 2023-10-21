@@ -385,11 +385,15 @@ public class GUI extends JFrame {
 	}
 
 	public void animar_explosion(Celda c) {
+		synchronized(c){
 		mi_animador.agregar_explosion(c);
+		}
 	}
 	
 	public void animar_caida(Celda c) {
+		synchronized(c){
 		mi_animador.agregar_caida(c);
+		}
 	}
 
 	//Metodos agregados por bruno

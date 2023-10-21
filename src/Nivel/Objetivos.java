@@ -34,7 +34,7 @@ public class Objetivos {
     }
 
     public boolean estaCumplido() {
-        return cantGemas == 0;
+        return cantGemas <= 0;
     }
 
 	public void incrementarObjetivoCumplido() {

@@ -37,19 +37,20 @@ public class CentralAnimaciones implements ManejadorAnimaciones{
 	 * referenciada por c.
 	 */
 
-	public void agregar_movimiento(Celda c) {
-		AnimadorMovimiento animador = new AnimadorMovimiento(this, 10, 50, c);
-		miGUI.notificarse_animacion_en_progreso();
-		
-		if(!tiene_animaciones_en_progreso(animacionesIntercambioPendientes))  {
-			System.out.println("animacion intercambio");
-			animacionesIntercambioPendientes.addLast(animador);
-			animador.comenzar_animacion();
-		}
-		else{
-			animacionesIntercambioPendientes.addLast(animador);
-		}
-	}
+	 public void agregar_movimiento(Celda c) {
+        synchronized (animacionesIntercambioPendientes) {
+            AnimadorMovimiento animador = new AnimadorMovimiento(this, 10, 50, c);
+            miGUI.notificarse_animacion_en_progreso();
+
+            if (!tiene_animaciones_en_progreso(animacionesIntercambioPendientes)) {
+                System.out.println("animacion intercambio");
+                animacionesIntercambioPendientes.addLast(animador);
+                animador.comenzar_animacion();
+            } else {
+                animacionesIntercambioPendientes.addLast(animador);
+            }
+        }
+    }
 
 	public void animar_movimiento(Celda c) {
 		while(!animacionesIntercambioPendientes.isEmpty()) {
@@ -58,17 +59,18 @@ public class CentralAnimaciones implements ManejadorAnimaciones{
 	}
 
 	public void agregar_explosion(Celda c) {
-		AnimadorExplosion animador = new AnimadorExplosion(this, c, 50);
-		miGUI.notificarse_animacion_en_progreso();
-		
-		if(tiene_animaciones_en_progreso(animacionesIntercambioPendientes))  {
-			animacionesExplosionPendientes.addLast(animador);
-		}
-		else {
-			animacionesExplosionPendientes.addLast(animador);
-			animar_explosion();
-		}
-	}
+        synchronized (animacionesExplosionPendientes) {
+            AnimadorExplosion animador = new AnimadorExplosion(this, c, 50);
+            miGUI.notificarse_animacion_en_progreso();
+
+            if (tiene_animaciones_en_progreso(animacionesIntercambioPendientes)) {
+                animacionesExplosionPendientes.addLast(animador);
+            } else {
+                animacionesExplosionPendientes.addLast(animador);
+                animar_explosion();
+            }
+        }
+    }
 
 	public void animar_explosion() {
 		while(!animacionesExplosionPendientes.isEmpty()) {
@@ -82,17 +84,18 @@ public class CentralAnimaciones implements ManejadorAnimaciones{
 	}
 
 	public void agregar_caida(Celda c) {
-		AnimadorCaida animador = new AnimadorCaida(this, c);
-		miGUI.notificarse_animacion_en_progreso();
-		
-		if(tiene_animaciones_en_progreso(animacionesExplosionPendientes))  {
-			animacionesCaidaPendientes.addLast(animador);
-		}
-		else {
-			animacionesCaidaPendientes.addLast(animador);
-			animar_caida();
-		}
-	}
+        synchronized (animacionesCaidaPendientes) {
+            AnimadorCaida animador = new AnimadorCaida(this, c);
+            miGUI.notificarse_animacion_en_progreso();
+
+            if (tiene_animaciones_en_progreso(animacionesExplosionPendientes)) {
+                animacionesCaidaPendientes.addLast(animador);
+            } else {
+                animacionesCaidaPendientes.addLast(animador);
+                animar_caida();
+            }
+        }
+    }
 
 	public void animar_caida() {
 		while(!animacionesCaidaPendientes.isEmpty()) {
