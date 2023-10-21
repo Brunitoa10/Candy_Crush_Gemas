@@ -399,8 +399,7 @@ public class GUI extends JFrame {
 	//Metodos agregados por bruno
 	
 	public void actualizarMovimientos(int movimientos) {
-		movimientosRestantes = milogica.getMovimientos();
-		movimientosLabel.setText("Movimientos restantes: "+movimientosRestantes);
+		movimientosLabel.setText("Movimientos restantes: "+movimientos);
 	}
 
 
