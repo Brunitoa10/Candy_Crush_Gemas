@@ -441,7 +441,6 @@ public class GUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				mainPanel.setVisible(true);
 				p1.setVisible(false);
-				//milogica.notificarDerrotaPorTiempo();
 			}
 		});
 	}
@@ -489,6 +488,37 @@ public class GUI extends JFrame {
 			}
 		});
 	}
+
+	public void mostrarMensajeFinDelJuego() {
+		mainPanel.setVisible(false);
+		JPanel p1 = new JPanel();
+		p1.setLayout(new GridBagLayout());
+		p1.setSize(new Dimension(MAXIMIZED_HORIZ, MAXIMIZED_HORIZ));
+		p1.setBackground(new Color(0,0,0,120));
+
+		JLabel labelGanaste1 = new JLabel("GANASTE");
+		labelGanaste1.setFont(new Font("Algerian", Font.PLAIN, 50));
+		labelGanaste1.setForeground(Color.WHITE);
+
+		JLabel labelGanaste2 = new JLabel("Felicidades! Llegaste al final del juego");
+		labelGanaste2.setFont(new Font("Algerian", Font.PLAIN, 30));
+		labelGanaste2.setForeground(Color.WHITE);
+
+		JLabel labelGanaste3 = new JLabel("Gracias por jugar");
+		labelGanaste3.setFont(new Font("Algerian", Font.PLAIN, 30));
+		labelGanaste3.setForeground(Color.WHITE);
+
+		GridBagConstraints gbc = new GridBagConstraints();
+
+		agregarConGBCs(labelGanaste1, p1, gbc, 0, 0, 1, 1);
+		agregarConGBCs(labelGanaste2, p1, gbc, 0, 1, 1, 1);
+	
+		agregarConGBCs(labelGanaste3, p1, gbc, 0, 3, 1, 1);
+		getContentPane().add(p1);
+		p1.setVisible(true);
+		p1.revalidate();
+
+	}
 	
 	public void mostrarMensajeVictoriaPorObjetivos() {
 		mainPanel.setVisible(false);
@@ -525,7 +555,6 @@ public class GUI extends JFrame {
 				mainPanel.setVisible(true);
 				p1.setVisible(false);
 				milogica.cambiarNivel();
-				//milogica.notificarVictoriaPorObjetivos();
 			}
 		});
 	}
