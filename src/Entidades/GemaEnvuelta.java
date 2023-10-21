@@ -15,17 +15,15 @@ public class GemaEnvuelta extends Gema{
 		int c=columna;
 		int topeFila=miTablero.getFila();
 		int topeColumna=miTablero.getColumna();
-		int i=0;
-		int j=0;
 
 		if(f!=0)
 		{
-			i=fila-1;
+			f=fila-1;
 		}
 
 		if(c!=0)
 		{
-			j=columna-1;
+			c=columna-1;
 		}
 
         if(topeFila-1!=f)
@@ -35,32 +33,28 @@ public class GemaEnvuelta extends Gema{
 
 		if(topeColumna-1!=c)
 		{
-			topeColumna=columna+1;
+		   topeColumna=columna+1;
 		}
 
-		while(i!=topeFila)
-		{
-          int aux=j;
-          while(aux!=topeColumna)
-		  {
-			if(i==fila && aux==columna)
-			{
-				    System.out.println("destruido gema envuelta "+ this.color + " en: "+fila+","+columna );
-	 			    color = Color.TRANSPARENTE;
-				    cargarImagenesRepresentativas(ruta);
-				    entidadG.notificarse_explosion();
-			}
-			else
-			{
-				if(miTablero.getEntidad(i, columna).obtenerColor()!=0)
+		for(int i= f; i<topeFila; i++){
+		  	for(int j = c; j<topeFila; j++){
+				if(i==fila && j==columna)
 				{
-                	miTablero.getEntidad(i, aux).romper(miTablero);
+						System.out.println("destruido gema envuelta "+ this.color + " en: "+fila+","+columna );
+						color = Color.TRANSPARENTE;
+						cargarImagenesRepresentativas(ruta);
+						entidadG.notificarse_explosion();
+				}
+				else
+				{
+					if(miTablero.getEntidad(i, columna).obtenerColor()!=0)
+					{
+						miTablero.getEntidad(i, j).romper(miTablero);
+					}
 				}
 			}
-			aux=aux+1;
-		  }
-		  i=i++;
 		}
+
 	}
 
 	public void explosionAdyacente()

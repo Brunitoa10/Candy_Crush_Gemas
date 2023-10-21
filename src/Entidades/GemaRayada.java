@@ -13,6 +13,7 @@ public class GemaRayada extends Gema{
 
 	public GemaRayada(int f, int c, int col, int direccion) {
 		super(f, c,col, "/assets/gemas/gema_rayada/" + direccion);
+		d = direccion;
 	}
 	
 	public int getDireccion(){
@@ -21,6 +22,7 @@ public class GemaRayada extends Gema{
 
 	@Override
 	public void romper(Tablero miTablero) {
+		System.out.println("direccion  " + d);
 		int f=fila;
 		int c=columna;
         int tope=0;

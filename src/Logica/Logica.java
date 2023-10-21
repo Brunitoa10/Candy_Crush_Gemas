@@ -185,7 +185,8 @@ public class Logica {
 
 	public void actualizarObjetivos(LinkedList<Celda> l) {
 		for (int pos = 0; pos<l.size()-1;pos++) {
-            System.out.print(l.get(pos).getColorEntidad()+" ");
+			if(l.get(pos) != null)
+            	System.out.print(l.get(pos).getColorEntidad()+" ");
         }
 		miNivel.actualizarObjetivos(l);
 	}
