@@ -28,7 +28,6 @@ public class Logica {
 		miTablero = new Tablero(this);
 		miNivel = GeneradorNivel.cargar_nivel_y_tablero(miTablero,nivelActual,this);
 		miGUI = new GUI(this, miTablero.getFila(), miTablero.getColumna());
-		//miTablero.asignarGUI(miGUI);	
 		asociarEntidadesLogicasGraficas();
 		miTablero.fijarJugador(miNivel.getFilaInicialJugador(), miNivel.getColumnaInicialJugador());
 		
@@ -177,8 +176,8 @@ public class Logica {
 	}
 
 
-	public void actualizarObjetivos(LinkedList<Celda> l) {
-		miNivel.actualizarObjetivos(l);
+	public void actualizarObjetivos(LinkedList<EntidadLogica> listaCombos) {
+		miNivel.actualizarObjetivos(listaCombos);
 	}
 
 	public void cambiarNivel() {

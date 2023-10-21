@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.Map;
 
 import GUI.Celda;
+import Logica.EntidadLogica;
 import Logica.Logica;
 
 
@@ -134,30 +135,30 @@ public class Nivel {
 		return miLogica.obtenerTipoDeGema(tipoGema);
 	}
 	
-	public void actualizarObjetivos(LinkedList<Celda> l) {
-		int progreso = 0, tipoGema = 0; 
-		
-		/*for (int pos = 0; pos < l.size() - 1; pos++) {
-			if (l.get(pos) != null) {
-				tipoGema = l.get(pos).getColorEntidad();
-				for (Objetivos objetivo : mapeoDeObjetivos.values()) {
-					if (!objetivo.estaCumplido() && objetivo.getTipoGema() == tipoGema) {
-						progreso++;
-						objetivo.aumentarProgreso(progreso);
-						if(objetivo.estaCumplido()) {
-							mapeo.put(objetivo, true);
-						}
-						miLogica.notificar_actualizacion_objetivos(objetivo.getCantGemas(), objetivo.getTipoGema());
-					}	
-				}
-			} else {
-				System.out.println("Nivel :: Soy nulo");
-			}
-		}
-		if(mapeo.size() == mapeoDeObjetivos.size()) {
-			mapeo.clear();
-			miLogica.notificarVictoriaPorObjetivos();
-		}
-	*/
-	}  
+	public void actualizarObjetivos(LinkedList<EntidadLogica> listaCombos) {
+	    int progreso = 0, tipoGema = 0; 
+	    
+	    for (EntidadLogica entidad : listaCombos) {
+	        if (entidad != null) {
+	            tipoGema = entidad.get_color(); // Obtener el tipo de gema de la entidad
+	            for (Objetivos objetivo : mapeoDeObjetivos.values()) {
+	                if (!objetivo.estaCumplido() && objetivo.getTipoGema() == tipoGema) {
+	                    progreso++;
+	                    objetivo.aumentarProgreso(progreso);
+	                    if(objetivo.estaCumplido()) {
+	                        mapeo.put(objetivo, true);
+	                    }
+	                    miLogica.notificar_actualizacion_objetivos(objetivo.getCantGemas(), objetivo.getTipoGema());
+	                }   
+	            }
+	        } else {
+	            System.out.println("Entidad es nula");
+	        }
+	    }
+	    
+	    if(mapeo.size() == mapeoDeObjetivos.size()) {
+	        mapeo.clear();
+	        miLogica.notificarVictoriaPorObjetivos();
+	    }
+	}
 }

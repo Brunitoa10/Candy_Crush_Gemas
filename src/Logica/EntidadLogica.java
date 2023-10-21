@@ -21,4 +21,6 @@ public interface EntidadLogica {
 	 * @return la ruta hacia la imagen.
 	 */
 	public String get_imagen_representativa();
+	
+	public int get_color();
 }

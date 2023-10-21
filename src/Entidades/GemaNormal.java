@@ -1,7 +1,5 @@
 package Entidades;
 
-import Logica.Color;
-import Tablero.Tablero;
 
 public class GemaNormal extends Entidad{
 		

@@ -9,6 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.HashMap;
+import java.util.Map;
 import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.Image;
@@ -125,24 +127,47 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 		panel_objetivos.setBackground(new Color(0,0,0,255));
 
 		
-		panel_principal.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(KeyEvent e) {	
-				switch(e.getKeyCode()) {
-					case KeyEvent.VK_LEFT: 	{ milogica.mover_jugador(IZQUIERDA); break; }
-					case KeyEvent.VK_RIGHT: { milogica.mover_jugador(DERECHA); break; }
-					case KeyEvent.VK_UP: 	{ milogica.mover_jugador(ARRIBA);break; }
-					case KeyEvent.VK_DOWN: 	{ milogica.mover_jugador(ABAJO); break; }
-					case KeyEvent.VK_W:		{ if (!bloquear_intercambios) milogica.intercambiar(ARRIBA);  break; }
-					case KeyEvent.VK_S:		{ if (!bloquear_intercambios) milogica.intercambiar(ABAJO); break; }
-					case KeyEvent.VK_A:		{ if (!bloquear_intercambios) milogica.intercambiar(IZQUIERDA); break; }
-					case KeyEvent.VK_D:		{ if (!bloquear_intercambios) milogica.intercambiar(DERECHA);  break; } 
-				}
-			}
+		// Define un mapa para asociar los códigos de tecla con las acciones
+		Map<Integer, Runnable> acciones = new HashMap<>();
+
+		// Agrega las acciones al mapa
+		//Acciones del cursor
+		acciones.put(KeyEvent.VK_LEFT, () -> milogica.mover_jugador(IZQUIERDA));
+		acciones.put(KeyEvent.VK_RIGHT, () -> milogica.mover_jugador(DERECHA));
+		acciones.put(KeyEvent.VK_UP, () -> milogica.mover_jugador(ARRIBA));
+		acciones.put(KeyEvent.VK_DOWN, () -> milogica.mover_jugador(ABAJO));
+		
+		//Acciones de intercambio
+		acciones.put(KeyEvent.VK_W, () -> {
+		    if (!bloquear_intercambios) milogica.intercambiar(ARRIBA);
+		});
+		
+		acciones.put(KeyEvent.VK_S, () -> {
+		    if (!bloquear_intercambios) milogica.intercambiar(ABAJO);
+		});
+		
+		acciones.put(KeyEvent.VK_A, () -> {
+		    if (!bloquear_intercambios) milogica.intercambiar(IZQUIERDA);
+		});
+		
+		acciones.put(KeyEvent.VK_D, () -> {
+		    if (!bloquear_intercambios) milogica.intercambiar(DERECHA);
 		});
 
-		//mostrarObjetivos();
-		//mostrarVidas();
+		// Agrega el KeyListener
+		panel_principal.addKeyListener(new KeyAdapter() {
+		    @Override
+		    public void keyPressed(KeyEvent e) {
+		        // Verifica si la tecla presionada tiene una acción asociada
+		        Runnable accion = acciones.get(e.getKeyCode());
+		        if (accion != null) {
+		            accion.run();
+		        }
+		    }
+		});
+
+		mostrarObjetivos();
+		mostrarVidas();
 
 		//Constraints TIMER
 		GridBagConstraints c = new GridBagConstraints();
@@ -150,9 +175,9 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 		agregarConGBCs(timerPanel, mainPanel, c, 0, 0, 3, 1);
 	
 		//Constraints PANEL OBJETIVOS
-		/*c.insets = new Insets(0, 10, 0, 0);   
+		c.insets = new Insets(0, 10, 0, 0);   
 		agregarConGBCs(panel_objetivos, mainPanel, c, 0, 1, 2, 2);   
-		*/
+		
 		//Constraints TABLERO
 		c.insets = new Insets(0,0,0,0);
 		c.weightx = 1;
@@ -161,11 +186,11 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 		agregarConGBCs(panel_principal, mainPanel, c, 2, 1, 4, 4); 
 		
 		//Constraints VIDAS
-		/*c.weightx = 0;
+		c.weightx = 0;
 		c.weightx = 0;
 		c.insets = new Insets(0,0,0,10);
 		agregarConGBCs(panelVidas, mainPanel, c, 6, 6, 2, 1); 
-		 */
+		 
 		
 		//Constraints MOVIMIENTOS
 		c.weightx = 0;

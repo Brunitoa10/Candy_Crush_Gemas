@@ -94,6 +94,7 @@ public abstract class Entidad implements EntidadLogica, Enfocable, Intercambiabl
 	@Override
 	public void detonar() {
 		detonada = true;
+		System.out.println("BOOOM");
 		entidad_grafica.notificarse_cambio_estado();
 	}
 	
