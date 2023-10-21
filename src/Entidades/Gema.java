@@ -1,21 +1,14 @@
 package Entidades;
 
-import Tablero.Tablero;
-
 public abstract class Gema extends Entidad{
 
 	public Gema(int f, int c, int col, String ri) {
-		super(f, c, ri,col);
+		super(f, c,col,ri);
 	}
 
 	public int getColor() {
        return color;
 	}
-
-	public boolean esPosibleIntercambiar(Entidad e) {
-		return e.puedeRecibir(this);
-	}
-
 
 	public boolean puedeRecibir(GemaNormal gm) {
 		return true;
@@ -36,15 +29,7 @@ public abstract class Gema extends Entidad{
 		return true;
 	}
 
-	public void intercambiarPosicion(int f, int c) {
-		fila=f;
-		columna=c;
-		entidadG.notificarse_intercambio_posicion();
-	}
+	
 
-	public abstract void romper(Tablero t);
-
-	public abstract void explosionAdyacente();
-  
 	
 }

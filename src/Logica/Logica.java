@@ -21,13 +21,14 @@ public class Logica {
 	protected Nivel miNivel;
 	protected Thread contadorTiempo;
 	private int nivelActual;
+	
 	//Constructor
 	public Logica(){
 		nivelActual = 1;
-		miTablero = new Tablero(this,miGUI);
+		miTablero = new Tablero(this);
 		miNivel = GeneradorNivel.cargar_nivel_y_tablero(miTablero,nivelActual,this);
 		miGUI = new GUI(this, miTablero.getFila(), miTablero.getColumna());
-		miTablero.asignarGUI(miGUI);	
+		//miTablero.asignarGUI(miGUI);	
 		asociarEntidadesLogicasGraficas();
 		miTablero.fijarJugador(miNivel.getFilaInicialJugador(), miNivel.getColumnaInicialJugador());
 		
@@ -36,11 +37,10 @@ public class Logica {
 
 	
 	public void mover_jugador(int direccion) {
-		miTablero.moverJugador(direccion);
+		miTablero.mover_jugador(direccion);
 	}
 
 	public void intercambiar(int direccion) {
-		
 		if(miTablero.intercambiar(direccion)) {
 			 miNivel.restarMovimientos();
 			 miGUI.actualizarMovimientos(miNivel.getMovimientos());
@@ -82,14 +82,14 @@ public class Logica {
 	}
 	
 	private void asociarEntidadesLogicasGraficas() {
-		Entidad ent;
-		EntidadGrafica egrafica;
-
-		for (int f=0; f < miTablero.getFila(); f++) {
-			for (int c=0; c < miTablero.getColumna(); c++) {
-				ent = miTablero.getEntidad(f, c);
-				egrafica = miGUI.agregar_entidad(ent);
-				ent.setEntidadGrafica(egrafica);
+		Entidad e;
+		EntidadGrafica eg;
+		
+		for (int f=0; f<miTablero.getFila(); f++) {
+			for (int c=0; c<miTablero.getColumna(); c++) {
+				e = miTablero.get_entidad(f, c);
+				eg = miGUI.agregar_entidad(e);
+				e.set_entidad_grafica(eg);
 			}
 		}
 		miGUI.setVisible(true);
@@ -118,11 +118,9 @@ public class Logica {
 	public void reiniciarNivel(int n) {
 		System.out.println("Logica :: Entre al reiniciar");
 		nivelActual = n;
-	    miTablero.resetearTablero(miTablero.getFila(), miTablero.getColumna());
+	    miTablero.resetar_tablero(miTablero.getFila(), miTablero.getColumna());
 	    miGUI.limpiarGUI();
-	    miTablero.limpiarTablero();
 	    miNivel = GeneradorNivel.cargar_nivel_y_tablero(miTablero, nivelActual, this); // Carga el nivel actual
-	    miTablero.asignarGUI(miGUI);
 	    asociarEntidadesLogicasGraficas();
 	    miNivel.setMovimientos(miNivel.getTotalMovimientos());
 	    miGUI.actualizarMovimientos(miNivel.getMovimientos());
@@ -154,13 +152,9 @@ public class Logica {
 	}
 
 	public Entidad getEntidadDelTablero(int posx, int posy) {
-		return miTablero.getEntidad(posx, posy);
+		return miTablero.get_entidad(posx, posy);
 	}
 
-	public void actualizarTablero() {
-		miGUI.actualizarTablero();
-	}
-	
 	/**
 	 * Launch the application.
 	 */
@@ -184,10 +178,6 @@ public class Logica {
 
 
 	public void actualizarObjetivos(LinkedList<Celda> l) {
-		for (int pos = 0; pos<l.size()-1;pos++) {
-			if(l.get(pos) != null)
-            	System.out.print(l.get(pos).getColorEntidad()+" ");
-        }
 		miNivel.actualizarObjetivos(l);
 	}
 
@@ -197,12 +187,13 @@ public class Logica {
 	    
 		if(nivelActual<6) {
 	    	miGUI.dispose();
-	    	miTablero = new Tablero(this,miGUI);
+	    	miTablero = new Tablero(this);
 			miNivel = GeneradorNivel.cargar_nivel_y_tablero(miTablero,nivelActual,this);
-			miGUI = new GUI(this, miTablero.getFila(), miTablero.getColumna());
-			miTablero.asignarGUI(miGUI);	
+			miGUI = new GUI(this, miTablero.getFila(), miTablero.getColumna());	
 			asociarEntidadesLogicasGraficas();
-		} else miGUI.mostrarMensajeFinDelJuego();
+		} else {
+			miGUI.mostrarMensajeFinDelJuego();
+		}
 		
 		miTablero.fijarJugador(miNivel.getFilaInicialJugador(), miNivel.getColumnaInicialJugador());
 	}

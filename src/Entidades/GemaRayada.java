@@ -21,7 +21,66 @@ public class GemaRayada extends Gema{
 	}
 
 	@Override
-	public void romper(Tablero miTablero) {
+	public boolean es_posible_intercambiar(Entidad e) {
+		// TODO Auto-generated method stub
+		return e.puede_recibir(this);
+	}
+
+	@Override
+	public boolean puede_recibir(GemaNormal c) {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public boolean puede_recibir(Hielo g) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean puede_recibir(GemaRayada p) {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public boolean puede_recibir(GemaEnvuelta p) {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public boolean machea(Entidad e) {
+		// TODO Auto-generated method stub
+		return e.match_con(this);
+	}
+
+	@Override
+	public boolean match_con(GemaNormal c) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean match_con(GemaRayada p) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean match_con(GemaEnvuelta p) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean match_con(Hielo g) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+		/*public void romper(Tablero miTablero) {
 		System.out.println("direccion  " + d);
 		int f=fila;
 		int c=columna;
@@ -69,8 +128,7 @@ public class GemaRayada extends Gema{
 		    }
 		  }
 	   }
-	}
+	}*/
 
-	public void explosionAdyacente()
-	{}
+
 }

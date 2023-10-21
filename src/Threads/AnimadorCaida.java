@@ -25,8 +25,8 @@ public class AnimadorCaida extends Thread implements Animador {
 		step = 10;
 		delay = 50;
 		
-		int size_label = mi_celda_animada.getSizeLabel();
-		pos_y_destino = c.getEntidad().getColumna() * size_label;		
+		int size_label = mi_celda_animada.get_size_label();
+		pos_y_destino = c.get_entidad_logica().get_columna() * size_label;		
 	}
 	
 	@Override
@@ -65,7 +65,7 @@ public class AnimadorCaida extends Thread implements Animador {
 			}
 		}*/
 		
-		mi_manager.actualizarCelda(mi_celda_animada.getEntidad().getFila(),mi_celda_animada.getEntidad().getColumna());
+		//mi_manager.actualizarCelda(mi_celda_animada.getEntidad().getFila(),mi_celda_animada.getEntidad().getColumna());
 		mi_manager.notificarse_finalizacion_animacion(this);
 	}
 }

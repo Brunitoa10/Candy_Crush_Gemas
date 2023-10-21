@@ -31,7 +31,7 @@ public class AnimadorExplosion extends Thread implements Animador{
 
     @Override
 	public void run() {
-        Icon icon = new ImageIcon(this.getClass().getResource("/assets/gemas/detonado.gif"));
+      /*  Icon icon = new ImageIcon(this.getClass().getResource("/assets/gemas/detonado.gif"));
 		new Thread(()-> {
 			try {
 				mi_celda_animada.setIcon(icon);
@@ -48,6 +48,6 @@ public class AnimadorExplosion extends Thread implements Animador{
 			mi_manager.actualizarCelda(mi_celda_animada.getEntidad().getFila(),mi_celda_animada.getEntidad().getColumna());
 			mi_manager.notificarse_finalizacion_animacion(this);
 		 }).start();
-		
+	*/	
     }
 }

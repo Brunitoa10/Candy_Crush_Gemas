@@ -1,114 +1,113 @@
-
 package Entidades;
 
-
 import GUI.EntidadGrafica;
-import Logica.*;
-import Tablero.*;
+import Logica.EntidadLogica;
 
-public abstract class Entidad implements EntidadLogica, Enfocable{
+/**
+ * Generaliza el comportamiento estándar de todas las entidades que forman parte del tablero.
+ * @author FJoaquin (federico.joaquin@cs.uns.edu.ar)
+ *
+ */
+public abstract class Entidad implements EntidadLogica, Enfocable, Intercambiable, Matchable, Detonable {
 	protected int fila;
 	protected int columna;
-	protected boolean enfocada;
-	protected String[] imagenes;
-	protected EntidadGrafica entidadG;
 	protected int color;
-	protected String ruta;
-
-   //crea una instancia de Entidad
-	protected  Entidad(int f, int c, String ri, int col)  {
-		fila=f;
-		columna=c;
-		enfocada=false;
-		color=col;
-		ruta = ri;
-		cargarImagenesRepresentativas(ri);
-	}
-
-    //asigna una entidad grafica a la Entidad
-	public void setEntidadGrafica(EntidadGrafica eg){
-		entidadG=eg;
-	}
-
-	public EntidadGrafica getEGrafica() {
-		return entidadG;
+	
+	protected boolean enfocada;
+	protected boolean detonada;
+	
+	protected String [] imagenes_representativas;
+	protected EntidadGrafica entidad_grafica;
+	
+	/**
+	 * Inicializa el estado interno de una entidad, considerando
+	 * @param f La fila donde se ubica la entidad.
+	 * @param c La columna donde se ubica la entidad.
+	 * @param col El color asociado a la entidad. Se asume constante de la clase Color.
+	 * @param path_img Ruta donde se encuentran todas las imágenes asociadas a la entidad creada.
+	 */
+	protected Entidad(int f, int c, int col, String path_img) {
+		fila = f;
+		columna = c;
+		color = col;
+		enfocada = false;
+		detonada = false;
+		cargar_imagenes_representativas(path_img);
 	}
 	
-	//obtener la imagen dependiendo si esta enfocada o no dicha entidad
-	public String getImagenRep() {
-		int indice = 0;
-		indice += (enfocada ? 1 : 0);
-		return imagenes[indice];
+	/**
+	 * Vincula el elemento con su entidad gráfica asociada.
+	 * @param e Entidad gráfica que se encuentra asociada al elemento.
+	 */
+	public void set_entidad_grafica(EntidadGrafica e) {
+		entidad_grafica = e;
 	}
-
-	//obtener color de la entidad
-	public int obtenerColor() {
+	
+	/**
+	 * Retorna la fila donde se ubica la entidad.
+	 */
+	public int get_fila() {
+		return fila;
+	}
+	
+	/**
+	 * Retorna la columna donde se ubica la entidad.
+	 */
+	public int get_columna() {
+		return columna;
+	}
+	
+	/**
+	 * Retorna el color asociado a la entidad.
+	 * @return Constante numérica que representa el color de la entidad. Se asume un valor declarado en clase Color.
+	 */
+	public int get_color() {
 		return color;
 	}
 	
-	public void setFilaColumna(int f, int c) {
-		fila = f;
-		columna = c;}
-
-	//setear manualmente las imagenes
-	public void setImagenesRep(String g){
-		imagenes[0] = g + color +".png";
-		imagenes[1] = g + color +"-cursor.png";
-		entidadG.notificarse_cambio_estado();
+	public String get_imagen_representativa() {
+		int indice = 0;
+		indice += (enfocada ? 1 : 0);
+		indice += (detonada ? 2 : 0);
+		return imagenes_representativas[indice];
 	}
-
-    //obtener la fila
-	public int getFila(){
-		return fila;
-	}
-    
-	//obtener columna
-	public int getColumna(){
-		return columna;
-	}
-
-	//cambia la posicion de la entidad
-	public void intercambiarPosicion(int nf, int nc) {
-		fila = nf;
-		columna = nc;
-		entidadG.notificarse_intercambio_posicion();
-	}
-
-	public void intercambiarCaida(int nf, int nc) {
-		fila = nf;
-		columna = nc;
-		entidadG.notificarse_caida();
-	}
-
-	//enfoca la entidad
-	public boolean enfocar() {
+	
+	@Override
+	public void enfocar() {
 		enfocada = true;
-		entidadG.notificarse_cambio_estado();
-		return true; 
+		entidad_grafica.notificarse_cambio_estado();
 	}
-
-	//desenfoca la entidad
+	
+	@Override
 	public void desenfocar() {
 		enfocada = false;
-		entidadG.notificarse_cambio_estado();
+		entidad_grafica.notificarse_cambio_estado();
 	}
-
-    //verifica si puede recibir dicha entidad para el cambio
-	public boolean puedeRecibir(Entidad entidad) {
-		return true;
+	
+	@Override
+	public void cambiar_posicion(int nf, int nc) {
+		fila = nf;
+		columna = nc;
+		entidad_grafica.notificarse_cambio_posicion();
 	}
-
-	//carga las imagenes de la entidad con el cursor y sin el cursor
-	protected void cargarImagenesRepresentativas(String ri) {
-		imagenes = new String [2];
-		imagenes[0] = ri + color +".png";
-		imagenes[1] = ri + color +"-cursor.png";
+	
+	@Override
+	public void detonar() {
+		detonada = true;
+		entidad_grafica.notificarse_cambio_estado();
 	}
-
-	public abstract boolean esPosibleIntercambiar(Entidad e);
-
-	public abstract void romper(Tablero t);
-
-	public abstract void explosionAdyacente();
+	
+	/**
+	 * Inicializa el arreglo de paths que establecen las imágenes asociadas a los diferentes estados de la entidad.
+	 * @param path_img Ruta donde se encuentran todas las imágenes asociadas a la entidad creada.
+	 */
+	private void cargar_imagenes_representativas(String path_img) {
+		imagenes_representativas = new String [2];
+		imagenes_representativas[0] = path_img + color +".png";
+		imagenes_representativas[1] = path_img + color +"-cursor.png";
+		//imagenes_representativas[1] = path_img + color +"-enfocado.png";
+		//imagenes_representativas[2] = path_img + color +"-detonado.png";
+		//imagenes_representativas[3] = path_img + color +"-enfocado-detonado.png";
+	}
 
 }

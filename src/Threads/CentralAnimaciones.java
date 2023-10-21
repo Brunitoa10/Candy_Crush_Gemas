@@ -1,8 +1,12 @@
 package Threads;
 
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
+
 import GUI.Celda;
 import GUI.GUI;
+
 
 /**
  * Modela el manager de animaciones requerido para efectivizar las mismas en función al orden en el que fueron solicitadas desde la ventana.
@@ -15,17 +19,13 @@ import GUI.GUI;
  */
 public class CentralAnimaciones implements ManejadorAnimaciones{
 	
-	protected GUI miGUI;
-	protected LinkedList<Animador> animacionesIntercambioPendientes;
-	protected LinkedList<Animador> animacionesExplosionPendientes;
-	protected LinkedList<Animador> animacionesCaidaPendientes;
+	protected GUI ventana;
+	protected HashMap<Celda, List<Animador>> mapeo_celda_animaciones;
 	protected int size_label;
 	
-	public CentralAnimaciones(GUI g) {
-		miGUI = g;
-		animacionesIntercambioPendientes = new LinkedList<Animador>();
-		animacionesExplosionPendientes = new LinkedList<Animador>();
-		animacionesCaidaPendientes = new LinkedList<Animador>();
+	public CentralAnimaciones(GUI v) {
+		ventana = v;
+		mapeo_celda_animaciones = new HashMap<Celda, List<Animador>>();
 	}
 	
 	/**
@@ -36,92 +36,78 @@ public class CentralAnimaciones implements ManejadorAnimaciones{
 	 * @param c Celda que debe animarse, en relación a la posición que ubica la JLabel y la ubicación indicada por la entidad lógica
 	 * referenciada por c.
 	 */
-
-	 public void agregar_movimiento(Celda c) {
-        synchronized (animacionesIntercambioPendientes) {
-            AnimadorMovimiento animador = new AnimadorMovimiento(this, 10, 50, c);
-            miGUI.notificarse_animacion_en_progreso();
-
-            if (!tiene_animaciones_en_progreso(animacionesIntercambioPendientes)) {
-                System.out.println("animacion intercambio");
-                animacionesIntercambioPendientes.addLast(animador);
-                animador.comenzar_animacion();
-            } else {
-                animacionesIntercambioPendientes.addLast(animador);
-            }
-        }
-    }
-
-	public void animar_movimiento(Celda c) {
-		while(!animacionesIntercambioPendientes.isEmpty()) {
-			animacionesIntercambioPendientes.removeFirst().comenzar_animacion();
+	public void animar_cambio_posicion(Celda c) {
+		Animador animador = new AnimadorMovimiento(this, 10, 50, c);
+		ventana.notificarse_animacion_en_progreso();
+		
+		if (tiene_animaciones_en_progreso (c) ) {
+			mapeo_celda_animaciones.get(c).add(animador);
+		}else {
+			mapeo_celda_animaciones.put(c, new LinkedList<Animador>());
+			mapeo_celda_animaciones.get(c).add(animador);
+			animador.comenzar_animacion();
 		}
 	}
-
-	public void agregar_explosion(Celda c) {
-        synchronized (animacionesExplosionPendientes) {
-            AnimadorExplosion animador = new AnimadorExplosion(this, c, 50);
-            miGUI.notificarse_animacion_en_progreso();
-
-            if (tiene_animaciones_en_progreso(animacionesIntercambioPendientes)) {
-                animacionesExplosionPendientes.addLast(animador);
-            } else {
-                animacionesExplosionPendientes.addLast(animador);
-                animar_explosion();
-            }
-        }
-    }
-
-	public void animar_explosion() {
-		while(!animacionesExplosionPendientes.isEmpty()) {
-			System.out.println("animacion explosion");
-			animacionesExplosionPendientes.removeFirst().comenzar_animacion();
+	
+	/**
+	 * Indica que la celda parametrizada debe ser animada a partir de un cambio de estado.
+	 * La animación será lanzada de inmediato, siempre que no existan animaciones en progreso sobre c.
+	 * La animación será encolada para efectivizarse en el futuro, a la espera de que las animaciones solicitadas previamente sobre c
+	 * se realicen primero.
+	 * @param c Celda que debe animarse, en relación a la imagen actual que la representa.
+	 */
+	public void animar_cambio_estado(Celda c) {
+		Animador animador = new AnimadorCambioEstado(this, c);
+		ventana.notificarse_animacion_en_progreso();
+		
+		if (tiene_animaciones_en_progreso (c) ) {
+			mapeo_celda_animaciones.get(c).add(animador);
+		}else {
+			mapeo_celda_animaciones.put(c, new LinkedList<Animador>());
+			mapeo_celda_animaciones.get(c).add(animador);
+			animador.comenzar_animacion();
 		}
-
-		if(tiene_animaciones_en_progreso(animacionesCaidaPendientes)) {
-			animar_caida();
-		}
-	}
-
-	public void agregar_caida(Celda c) {
-        synchronized (animacionesCaidaPendientes) {
-            AnimadorCaida animador = new AnimadorCaida(this, c);
-            miGUI.notificarse_animacion_en_progreso();
-
-            if (tiene_animaciones_en_progreso(animacionesExplosionPendientes)) {
-                animacionesCaidaPendientes.addLast(animador);
-            } else {
-                animacionesCaidaPendientes.addLast(animador);
-                animar_caida();
-            }
-        }
-    }
-
-	public void animar_caida() {
-		while(!animacionesCaidaPendientes.isEmpty()) {
-			System.out.println("animacion caida");
-				animacionesCaidaPendientes.removeFirst().comenzar_animacion();
-		}
-		if(tiene_animaciones_en_progreso(animacionesExplosionPendientes)) {
-			animar_explosion();
-		}
-
+		
 	}
 
 	@Override
 	public void notificarse_finalizacion_animacion(Animador a) {
-		miGUI.notificarse_animacion_finalizada();
+		Animador animador;
+		List<Animador> animaciones_para_celda;
+		
+		ventana.notificarse_animacion_finalizada();
+		
+		animaciones_para_celda = mapeo_celda_animaciones.get(a.get_celda_asociada());
+		animaciones_para_celda.remove(a);
+		
+		if (!animaciones_para_celda.isEmpty()) {
+			animador = animaciones_para_celda.get(0);
+			animador.comenzar_animacion();
+		}
 	}
-
+	
 	/**
 	 * Estima si la celda parametrizada actualmente cuenta con animaciones en progreso. 
 	 * @param c Celda que se desea considerar para el chequeo de animaciones en progreso.
 	 * @return True si la celda tiene animaciones actualmente en progreso; false en caso contrario.
 	 */
-	private boolean tiene_animaciones_en_progreso(LinkedList<Animador> l) {
-		return !l.isEmpty();
+	private boolean tiene_animaciones_en_progreso(Celda c) {
+		boolean retorno = false;
+		if (mapeo_celda_animaciones.get(c) != null) {
+			retorno = !mapeo_celda_animaciones.get(c).isEmpty();
+		}
+		return retorno;
 	}
 
 	@Override
-	public void actualizarCelda(int posx, int posy) {}
+	public void actualizarCelda(int posx, int posy) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void animar_explosion() {
+		// TODO Auto-generated method stub
+		
+	}
 }

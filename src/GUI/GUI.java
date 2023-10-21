@@ -25,12 +25,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-import Entidades.Entidad;
+import Logica.EntidadLogica;
 import Logica.Logica;
 import Threads.CentralAnimaciones;
 
 
-public class GUI extends JFrame {
+public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 	protected Logica milogica;
 	protected int filas,columnas;
 	protected JPanel panel_principal, panel_objetivos, panelVidas,mainPanel;
@@ -57,7 +57,7 @@ public class GUI extends JFrame {
 	public GUI(Logica l, int f, int c) {
 		milogica = l;
 		filas = f;
-				mi_animador = new CentralAnimaciones(this);
+		mi_animador = new CentralAnimaciones(this);
 		columnas = c;
 		tiempoRestante = milogica.getTiempo();
 		movimientosRestantes = milogica.getMovimientos();
@@ -141,8 +141,8 @@ public class GUI extends JFrame {
 			}
 		});
 
-		mostrarObjetivos();
-		mostrarVidas();
+		//mostrarObjetivos();
+		//mostrarVidas();
 
 		//Constraints TIMER
 		GridBagConstraints c = new GridBagConstraints();
@@ -150,9 +150,9 @@ public class GUI extends JFrame {
 		agregarConGBCs(timerPanel, mainPanel, c, 0, 0, 3, 1);
 	
 		//Constraints PANEL OBJETIVOS
-		c.insets = new Insets(0, 10, 0, 0);   
+		/*c.insets = new Insets(0, 10, 0, 0);   
 		agregarConGBCs(panel_objetivos, mainPanel, c, 0, 1, 2, 2);   
-
+		*/
 		//Constraints TABLERO
 		c.insets = new Insets(0,0,0,0);
 		c.weightx = 1;
@@ -161,11 +161,12 @@ public class GUI extends JFrame {
 		agregarConGBCs(panel_principal, mainPanel, c, 2, 1, 4, 4); 
 		
 		//Constraints VIDAS
-		c.weightx = 0;
+		/*c.weightx = 0;
 		c.weightx = 0;
 		c.insets = new Insets(0,0,0,10);
 		agregarConGBCs(panelVidas, mainPanel, c, 6, 6, 2, 1); 
-
+		 */
+		
 		//Constraints MOVIMIENTOS
 		c.weightx = 0;
 		c.weightx = 0;
@@ -176,14 +177,9 @@ public class GUI extends JFrame {
 		getContentPane().add(mainPanel);
 	}
 
-	public EntidadGrafica agregar_entidad(Entidad e) {
+	public EntidadGrafica agregar_entidad(EntidadLogica e) {
 		Celda celda = new Celda(this, e, size_label);
-		e.setEntidadGrafica(celda);
-
-		matrizDeCeldas[e.getFila()][e.getColumna()] = celda;
-		panel_principal.add(matrizDeCeldas[e.getFila()][e.getColumna()]);
-		panel_principal.revalidate();
-		panel_principal.repaint();
+		panel_principal.add(celda);
 		return celda;
 	}
 
@@ -352,49 +348,35 @@ public class GUI extends JFrame {
 		}
 	}
 	
+	@Override
 	public void notificarse_animacion_finalizada() {
 		synchronized(this){
 			animaciones_pendientes --;
 			bloquear_intercambios = animaciones_pendientes > 0;
-			System.out.println(animaciones_pendientes);
 		}
-	}
-
-	public void actualizarTablero() {
-		 invalidate();
-		for(int i = 0; i < filas; i++) {
-	        for(int j = 0; j < columnas; j++) {
-	            Celda celda = matrizDeCeldas[i][j];
-	            Entidad entidad = milogica.getEntidadDelTablero(i, j);
-	            
-	            celda.setEntidad(entidad);
-	            entidad.setEntidadGrafica(celda);
-	            celda.notificarse_cambio_estado();
-	        }
-	    }
-
-	   
-	    validate();
-	    repaint();
 	}
 	
+	@Override
 	public void animar_movimiento(Celda c) {
-		synchronized(c){
-			mi_animador.agregar_movimiento(c);
-		}
+		mi_animador.animar_cambio_posicion(c);
+	}
+	
+	@Override
+	public void animar_cambio_estado(Celda c) {
+		mi_animador.animar_cambio_estado(c);
 	}
 
-	public void animar_explosion(Celda c) {
+	/*public void animar_explosion(Celda c) {
 		synchronized(c){
 		mi_animador.agregar_explosion(c);
 		}
 	}
 	
-	public void animar_caida(Celda c) {
+	/*public void animar_caida(Celda c) {
 		synchronized(c){
 		mi_animador.agregar_caida(c);
 		}
-	}
+	}*/
 
 	//Metodos agregados por bruno
 	
@@ -662,5 +644,8 @@ public class GUI extends JFrame {
 			super.paint(g);
 		}
 	}
+
+
+	
 }
 

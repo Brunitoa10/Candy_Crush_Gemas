@@ -1,7 +1,5 @@
 package Entidades;
 
-import Logica.Color;
-import Tablero.Tablero;
 
 public class GemaEnvuelta extends Gema{
 
@@ -9,8 +7,8 @@ public class GemaEnvuelta extends Gema{
 		super(f, c, col, "/assets/gemas/gema_envuelta/");
 	}
 
-	@Override
-	public void romper(Tablero miTablero) {
+	
+	/*public void romper() {
 		int f=fila;
 		int c=columna;
 		int topeFila=miTablero.getFila();
@@ -55,8 +53,66 @@ public class GemaEnvuelta extends Gema{
 			}
 		}
 
+	}*/
+
+
+	@Override
+	public boolean es_posible_intercambiar(Entidad e) {
+		// TODO Auto-generated method stub
+		return e.puede_recibir(this);
 	}
 
-	public void explosionAdyacente()
-	{}
+	@Override
+	public boolean puede_recibir(GemaNormal c) {
+		// TODO Auto-generated method stub
+		return true; 
+	}
+
+	@Override
+	public boolean puede_recibir(Hielo g) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean puede_recibir(GemaRayada p) {
+		// TODO Auto-generated method stub
+		return true; 
+	}
+
+	@Override
+	public boolean puede_recibir(GemaEnvuelta p) {
+		// TODO Auto-generated method stub
+		return true; 
+	}
+
+	@Override
+	public boolean machea(Entidad e) {
+		// TODO Auto-generated method stub
+		return e.match_con(this);
+	}
+
+	@Override
+	public boolean match_con(GemaNormal c) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean match_con(GemaRayada p) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean match_con(GemaEnvuelta p) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean match_con(Hielo g) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

@@ -11,7 +11,6 @@ import GUI.Celda;
  *
  */
 public class AnimadorMovimiento extends Thread implements Animador {
-
 	protected ManejadorAnimaciones mi_manager;
 	protected Celda mi_celda_animada;
 	
@@ -35,9 +34,9 @@ public class AnimadorMovimiento extends Thread implements Animador {
 		this.step = step;
 		delay = d;
 		
-		int size_label = mi_celda_animada.getSizeLabel();
-		pos_x_destino = c.getEntidad().getColumna() * size_label;
-		pos_y_destino = c.getEntidad().getFila() * size_label;		
+		int size_label = mi_celda_animada.get_size_label();
+		pos_x_destino = c.get_entidad_logica().get_columna() * size_label;
+		pos_y_destino = c.get_entidad_logica().get_fila() * size_label;		
 	}
 	
 	@Override
@@ -52,7 +51,7 @@ public class AnimadorMovimiento extends Thread implements Animador {
 	
 	@Override
 	public void run() {
-		int size_label = mi_celda_animada.getSizeLabel();
+		int size_label = mi_celda_animada.get_size_label();
 		int pos_x_actual = mi_celda_animada.getX();
 		int pos_y_actual = mi_celda_animada.getY();
 		
@@ -80,8 +79,6 @@ public class AnimadorMovimiento extends Thread implements Animador {
 			}
 		}
 		
-		
-		mi_manager.actualizarCelda(mi_celda_animada.getEntidad().getFila(),mi_celda_animada.getEntidad().getColumna());
 		mi_manager.notificarse_finalizacion_animacion(this);
 	}
 }

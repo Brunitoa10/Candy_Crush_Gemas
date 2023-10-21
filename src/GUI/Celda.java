@@ -6,83 +6,64 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 import Entidades.Entidad;
+import Logica.EntidadLogica;
 
-public class Celda extends JLabel implements EntidadGrafica{
-    //Atributos
-    protected GUI miGUI;
-    protected Entidad ent;
-    protected int size_label;
-
-    //Constructor
-    public Celda(GUI g, Entidad l,int s){
-        super();
-		miGUI = g;
-		ent = l;
+public class Celda extends JLabel implements EntidadGrafica {
+	
+	protected VentanaAnimable mi_ventana;
+	protected EntidadLogica entidad_logica;
+	protected int size_label;
+	
+	/**
+	 * Incicializa el estado interno de una celda, considerando
+	 * @param v La ventana a la que le solcitará animar cambios de estados o de posición, cuando la entidad lógica sí lo indique. 
+	 * @param e La entidad lógica que será representada con este elemento, y que notificará de cualquier cambio que requiera una actualización
+	 * desde la visión gráfica del mismo.
+	 * @param s El tamaño asociado a las JLabels que contienen las imágenes de todas las entidades lógicas de la aplicación.
+	 */
+	public Celda(VentanaAnimable v, EntidadLogica e, int s) {
+		super();
+		mi_ventana = v;
+		entidad_logica = e;
 		size_label = s;
-		setBounds(l.getColumna()*size_label, l.getFila()*size_label, size_label, size_label);
-		cambiar_imagen(l.getImagenRep());	
-    }
-
-    //Metodos
-    public void notificarse_cambio_estado() {
-		cambiar_imagen(ent.getImagenRep());
+		setBounds(e.get_columna()*size_label, e.get_fila()*size_label, size_label, size_label);
+		cambiar_imagen(e.get_imagen_representativa());	
 	}
-    
-    
 	
-	public void notificarse_explosion() {
-		//miGUI.animar_explosion(this);
-	}
-
 	@Override
-	public void notificarse_intercambio_posicion(){
-		//miGUI.animar_movimiento(this);
+	public void notificarse_cambio_estado() {
+		mi_ventana.animar_cambio_estado(this);
 	}
 	
-	public void notificarse_caida(){
-		//miGUI.animar_caida(this);
+	@Override
+	public void notificarse_cambio_posicion(){
+		mi_ventana.animar_movimiento(this);
 	}
 	
-	public void notificarCeldaDesenfocar(){
-		ent.desenfocar();
+	/**
+	 * Obtiene la entidad lógica asociada a la entidad gráfica.
+	 * @return La entidad lógica asociada.
+	 */
+	public EntidadLogica get_entidad_logica() {
+		return entidad_logica;
 	}
-
-	public void notificarCeldaEnfocar(){
-		ent.enfocar();
-	}
-
-	public int getSizeLabel() {
+	
+	/**
+	 * Obtiene el tamaño asociado a la JLabel que representa la celda.
+	 * @return El tamaño asociado.
+	 */
+	public int get_size_label() {
 		return size_label;
 	}
 	
-	public Entidad getEntidad() {
-		return ent;
-	}
-
-	public void setEntidad(Entidad l) {
-		ent = l;
-		l.setEntidadGrafica(this);
-	}
-	
-	public void setGUI(GUI g) {
-		miGUI = g;
-	}
-	
-	protected void cambiar_imagen(String miString) {
-		ImageIcon imgIcon = new ImageIcon(this.getClass().getResource(miString));
+	/**
+	 * Permite cambiar la imagen asociada a la celda, a partir de una ruta que especifica la ubicación de la nueva imagen.
+	 * @param i Ruta hacia la nueva imagen a establecer por sobre la celda.
+	 */
+	protected void cambiar_imagen(String i) {
+		ImageIcon imgIcon = new ImageIcon(this.getClass().getResource(i));
 		Image imgEscalada = imgIcon.getImage().getScaledInstance(size_label, size_label, Image.SCALE_SMOOTH);
 		Icon iconoEscalado = new ImageIcon(imgEscalada);
-		
 		setIcon(iconoEscalado);
 	}
-
-	
-	public int getColorEntidad() {
-		return ent.obtenerColor();
-	}
-	
-	public void actualizarXY(int x, int y) {
-		ent.intercambiarPosicion(x,y);
-	}
-	
 }

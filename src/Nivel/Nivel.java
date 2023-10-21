@@ -137,7 +137,7 @@ public class Nivel {
 	public void actualizarObjetivos(LinkedList<Celda> l) {
 		int progreso = 0, tipoGema = 0; 
 		
-		for (int pos = 0; pos < l.size() - 1; pos++) {
+		/*for (int pos = 0; pos < l.size() - 1; pos++) {
 			if (l.get(pos) != null) {
 				tipoGema = l.get(pos).getColorEntidad();
 				for (Objetivos objetivo : mapeoDeObjetivos.values()) {
@@ -158,6 +158,6 @@ public class Nivel {
 			mapeo.clear();
 			miLogica.notificarVictoriaPorObjetivos();
 		}
-	
+	*/
 	}  
 }

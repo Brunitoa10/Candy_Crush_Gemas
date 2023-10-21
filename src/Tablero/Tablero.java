@@ -3,15 +3,13 @@ package Tablero;
 import Entidades.*;
 import GUI.*;
 import Logica.Logica;
-import java.util.*;
 
 public class Tablero {
 	
 	//--------[ATRIBUTOS DE INSTANCIA]------------
 	
 	protected Logica miLogica;
-    protected GUI miGui;
-	protected Celda t[][]; //[f][c]
+	protected Entidad entidades[][];
 	protected int filas;
 	protected int columnas;
 	protected int fJugador;
@@ -30,7 +28,7 @@ public class Tablero {
 	//-----------[METODOS PRIVADOS]--------------------
 	
 	//RETORNA UNA UN ARRAY DE LISTAS COMO LinkedList<Entidad>[combos horizontales][combos veritcales]
-	private LinkedList<Celda> CheckCruz(int f1, int c1, int f2, int c2) {
+	/*private LinkedList<Celda> CheckCruz(int f1, int c1, int f2, int c2) {
 		//System.out.println("columnas "+ columnas+" filas "+ columnas+" f1 c1 "+ f1+" "+c1+" f2 c2 "+ f2+" "+c2);
 		//optimizar
 		LinkedList<Celda> toReturn = new LinkedList<Celda>(); 
@@ -78,13 +76,13 @@ public class Tablero {
 			System.out.println("error en checkCruz() de tablero");
 			return null;
 		}
-	}
+	}*/
 	
 	private int colorAleatorio(int cotaInferior, int cotaSuperior) {
 		return (int)(Math.random()*cotaSuperior+cotaInferior);
 	}
 
-	private boolean intecambiarPriv(int f1,int c1, int f2, int c2) {
+	/*private boolean intecambiarPriv(int f1,int c1, int f2, int c2) {
 		Entidad aux;
 		aux =t[f1][c1].getEntidad();
 		boolean toReturn;
@@ -116,9 +114,9 @@ public class Tablero {
 		
 		}
 		return toReturn;
-	}
+	}*/
 	
-	private LinkedList<Celda> checkFila(int f) {
+	/*private LinkedList<Celda> checkFila(int f) {
 		 LinkedList<Celda> toReturn = new LinkedList<Celda>();
     int combo = 0;
     for (int i = 1; i < columnas; i++) {
@@ -141,9 +139,9 @@ public class Tablero {
 			toReturn.addLast(null);}
 		return toReturn;	
 		//no es un error que la lista tenga nulls, se manejan apropiadamente y son importantes para su estructura
-	}
+	}*/
 	
-	private LinkedList<Celda> checkColumna(int c) {
+	/*private LinkedList<Celda> checkColumna(int c) {
 		LinkedList<Celda> toReturn = new LinkedList<Celda>();
     	int combo = 0;
     	 for (int i = 1; i < filas; i++) {
@@ -166,9 +164,9 @@ public class Tablero {
 			toReturn.addLast(null);}
 		return toReturn;
 		//no es un error que la lista tenga nulls, se manejan apropiadamente y son importantes para su estructura
-	}
+	}*/
 	
-	private boolean manejarColisiones(LinkedList<Celda> l,Celda c1, Celda c2, int dir) {
+	/*private boolean manejarColisiones(LinkedList<Celda> l,Celda c1, Celda c2, int dir) {
 		//RECORRER LA LISTA (los combos solo tienen 2 colores posibles, ambos diferentes)
 	    //A CADA ELEMENTO DE LA LISTA APLICARLE .DESTRUIR()
 		//SI HAY DOS COLORES IGUALES EN DIFERENTES SETS DE COMBOS GENERAR RAYADO EN CELDA 1
@@ -191,7 +189,7 @@ public class Tablero {
 		 * formaci�n del mismo.
 		 */
 		
-		if(!l.isEmpty()) {
+		/*if(!l.isEmpty()) {
 			Iterator<Celda> it = l.iterator();
 			Celda c = null;
 			int cf = -1;
@@ -273,13 +271,13 @@ public class Tablero {
 		    return true;	
 		}//end if lista vacia  
 		else return false;
-	}
+	}*/
 	
 	private boolean en_rango(int nf, int nc){
 		return (((nf >= 0) && (nf < filas)) && ((nc >= 0) && (nc < columnas)));
 	}
 	
-	private void intercambiarSinCheck(int f1, int c1, int f2, int c2) {
+	/*private void intercambiarSinCheck(int f1, int c1, int f2, int c2) {
 		Entidad aux;
 		aux =t[f1][c1].getEntidad();
 		t[f1][c1].setEntidad(t[f2][c2].getEntidad());
@@ -303,74 +301,46 @@ public class Tablero {
 		t[f1][c1].notificarCeldaEnfocar();
 		t[f2][c2].notificarCeldaDesenfocar();
 		
-	}
+	}*/
 	
 	//-----------[METODOS PUBLICOS]--------------------
-	public Tablero(Logica l,GUI g) {
+	public Tablero(Logica l) {
 		miLogica = l;
-		miGui = g;
 	}
 	
-	public void resetearTablero(int f, int c) {
-	    try {
-	        t = new Celda[f][c];
-	        filas = f;
-	        columnas = c;
-	       
-	        for (int i = 0; i < filas; i++) {
-	            for (int j = 0; j < columnas; j++) {
-	            	 //Dejar el parametro j y el parametro 0
-	                t[i][j] = new Celda(miGui,new GemaNormal(i,j,0), 70); 
-	            }
-	        }
-	    } catch (Exception e) {
-	        System.out.println("Tablero :: Error al resetear " + e.getMessage());
-	    }
-	   }
 	
-	
-	public void printTable() {
+	/*public void printTable() {
 		System.out.println("");
 		for(int i = 0; i<filas; i++) {
 			for (int j = 0; j<columnas ; j++) {
-				System.out.print("[" +t[i][j].getEntidad().obtenerColor() +"]");
+				System.out.print("[" +entidades[i][j].obtenerColor() +"]");
 			}
 			System.out.println("");
 		}
 
-	}
+	}*/
 
-	public void asignarGUI(GUI g) {
-		miGui = g;
-		for(int i = 0; i<filas;i++) {
-			for(int j = 0; j<columnas; j++) {
-				t[i][j].setGUI(g);
-			}
-		}
+	
+	public Entidad get_entidad(int f, int c) {
+		return entidades[f][c];
 	}
 	
-	public Entidad getEntidad(int f, int c) {
-		Entidad entidad = null;
-		if(en_rango(f,c)) {
-			entidad =  t[f][c].getEntidad();
-		}else {
-			System.out.println("Tablero :: fuera de rango en get entidad ");
-		}
-		return entidad;
+	public void resetar_tablero(int f, int c) {
+		filas = f;
+		columnas = c;
+		fJugador = 0;
+		cJugador = 0;
+		entidades = new Entidad[f][c];
 	}
 	
-	public void setEntidad(Entidad e) throws Exception {
-		int tmpFil = e.getFila(), tmpCol = e.getColumna();
-		if(en_rango(tmpFil,tmpCol) && e != null) {
-			t[tmpFil][tmpCol].setEntidad(e);
-		}else {
-			if(en_rango(tmpFil,tmpCol)) {
-				throw new Exception("Tablero :: Fuera de rango en setEntidad ");
-			}else {
-				throw new Exception("Tablero :: Entidad null en setEntidad ");
-			}
-		}
+	public void agregar_entidad(Entidad e) {
+		entidades[e.get_fila()][e.get_columna()] = e;
 	}
+	
+	
+	/*public void setEntidad(Entidad e) throws Exception {
+		
+	}*/
 	
 	public int getFila() {
 		return filas;
@@ -380,95 +350,105 @@ public class Tablero {
 		return columnas;
 	}
 	
-	public void fijarJugador(int f, int c){
-		if(en_rango(f,c)) {
-			fJugador = f;
-		    cJugador = c;
-		    t[fJugador][cJugador].notificarCeldaEnfocar();
-		}else {
-			System.out.println("Tablero :: fuera de rango en fijarJugador() ");
+	public void fijarJugador(int f, int c) {
+		entidades[f][c].enfocar();
+		entidades[fJugador][cJugador].desenfocar();
+		fJugador = f;
+		cJugador = c;
+	}
+	
+	public void mover_jugador(int d) {
+		switch(d) {
+			case GUI.ABAJO:{
+				mover_jugador_auxiliar(fJugador + 1, cJugador);
+				break;
+			}
+			case GUI.ARRIBA:{
+				mover_jugador_auxiliar(fJugador - 1, cJugador);
+				break;
+			}
+			case GUI.IZQUIERDA:{
+				mover_jugador_auxiliar(fJugador, cJugador - 1);
+				break;
+			}
+			case GUI.DERECHA:{
+				mover_jugador_auxiliar(fJugador, cJugador + 1);
+				break;
+			}
 		}
 	}
 	
-	/* mueve el cursor del jugador, en direccion 15003 derecha, 15001 abajo, 15002 izquierda, 15000 arriba*/
-	public void moverJugador(int dir) {
+	public boolean intercambiar(int d) {
+	
+		switch(d) {
+			case GUI.ABAJO:{
+				return intercambiar_auxiliar(fJugador + 1, cJugador);
+				//break;
+			}
+			case GUI.ARRIBA:{
+				return intercambiar_auxiliar(fJugador - 1, cJugador);
+				//break;
+			}
+			case GUI.IZQUIERDA:{
+				return intercambiar_auxiliar(fJugador, cJugador - 1);
+				//break;
+			}
+			case GUI.DERECHA:{
+				return intercambiar_auxiliar(fJugador, cJugador + 1);
+				//break;
+			}
+		}
+		return false;
+	}
+	
+	private void mover_jugador_auxiliar(int nf, int nc) {
+		if ( en_rango(nf,nc) ) {
+			entidades[nf][nc].enfocar();
+			entidades[fJugador][cJugador].desenfocar();
+			fJugador = nf;
+			cJugador = nc;
+		}
+	}
+	
+	private boolean intercambiar_auxiliar(int nf, int nc) {
+		int af = fJugador;
+		int ac = cJugador;
+		boolean movimientoValido = false;
+		if ( en_rango(nf, nc) ) {	
+			if (entidades[af][ac].es_posible_intercambiar( entidades[nf][nc] )) {
+				// Anima el posible intercambio de entidades
+				aplicar_intercambio(af, ac, nf, nc);
+				
+				// Si el intercambio provoca un match de 2 o 3 entidades, chequea las combinaciones y detona lo necesario
+				// De lo contrario, retrotae el intercambio anterior que no fue válido
+				if (entidades[af][ac].machea(entidades[nf][nc])) {
+					entidades[af][ac].detonar();
+					entidades[nf][nc].detonar();
+				}else {
+					aplicar_intercambio(nf, nc, af, ac);
+				}
+				
+			}
+			movimientoValido = true;
+		}
+		return movimientoValido;
+	}
+	
+	private void aplicar_intercambio(int af, int ac, int nf, int nc) {
+		Entidad entidad_aux = entidades[af][ac];
 		
-		switch(dir) {
-		case GUI.DERECHA:
-			if(cJugador < columnas -1) {
-				t[fJugador][cJugador].notificarCeldaDesenfocar();
-				cJugador++;
-				t[fJugador][cJugador].notificarCeldaEnfocar();
-			}
-		break;
-		case GUI.ARRIBA:
-			if(fJugador >0) {
-				t[fJugador][cJugador].notificarCeldaDesenfocar();
-				fJugador--;
-				t[fJugador][cJugador].notificarCeldaEnfocar();
-			}	
-		break;
-		case GUI.IZQUIERDA:
-			if(cJugador > 0) {
-				t[fJugador][cJugador].notificarCeldaDesenfocar();
-				cJugador--;
-				t[fJugador][cJugador].notificarCeldaEnfocar();
-			}
-			
-		break;
-		case GUI.ABAJO:
-			if(fJugador < columnas -1) {
-				t[fJugador][cJugador].notificarCeldaDesenfocar();
-				fJugador++;
-				t[fJugador][cJugador].notificarCeldaEnfocar();
-			}
-		break;
-		default: System.out.println("mover jugador(): direccion incorrecta");
-		}
-
-		System.out.println("mirando: " +t[fJugador][cJugador].getEntidad().getClass().getName() );
-	}
-	
-	/* intercambia dede la posicion del cursor a direccion 0 derecha, 1 abajo, 2 izquierda, 3 arriba
-	 * en caso de no ser posible por out of bounds, no hace nada*/
-	public boolean intercambiar(int dir) {
-		boolean toReturn=false;
-		switch(dir) {
-			case GUI.DERECHA:
-					if(cJugador < columnas -1) {
-						if(t[fJugador][cJugador].getEntidad().esPosibleIntercambiar(t[fJugador][cJugador+1].getEntidad()) && t[fJugador][cJugador+1].getEntidad().esPosibleIntercambiar(t[fJugador][cJugador].getEntidad())) {					
-							toReturn = intecambiarPriv(fJugador,cJugador,fJugador,cJugador+1);
-							}}
-				break;
-				case GUI.ARRIBA:
-					if(fJugador>0) {
-						System.out.println("arriba");
-						if(t[fJugador][cJugador].getEntidad().esPosibleIntercambiar(t[fJugador-1][cJugador].getEntidad()) && t[fJugador-1][cJugador].getEntidad().esPosibleIntercambiar(t[fJugador][cJugador].getEntidad())) {					
-							toReturn = intecambiarPriv(fJugador,cJugador,fJugador-1,cJugador);
-							}}
-				break;
-				case GUI.IZQUIERDA:
-					if(cJugador>0) {
-						System.out.println("izquierda");
-						if(t[fJugador][cJugador].getEntidad().esPosibleIntercambiar(t[fJugador][cJugador-1].getEntidad()) && t[fJugador][cJugador-1].getEntidad().esPosibleIntercambiar(t[fJugador][cJugador].getEntidad())) {					
-							toReturn =intecambiarPriv(fJugador,cJugador,fJugador,cJugador-1);
-							}}
-					
-				break;
-				case GUI.ABAJO:
-					if(fJugador<filas -1 ) {
-						System.out.println("abajo");
-						if(t[fJugador][cJugador].getEntidad().esPosibleIntercambiar(t[fJugador+1][cJugador].getEntidad()) && t[fJugador+1][cJugador].getEntidad().esPosibleIntercambiar(t[fJugador][cJugador].getEntidad())) {
-							toReturn = intecambiarPriv(fJugador,cJugador,fJugador+1,cJugador);
-							}}
-				break;
-			default: System.out.println("mover jugador(): direccion incorrecta");
-		}
-	    return toReturn;
+		entidades[af][ac].cambiar_posicion(nf, nc);
+		entidades[nf][nc].cambiar_posicion(af, ac);
+		
+		entidades[af][ac] = entidades[nf][nc];
+		entidades[nf][nc] = entidad_aux;
+		
+		fJugador = nf;
+		cJugador = nc;
 	}
 	
 	
-	public boolean checkExhaustivo() {
+	/*public boolean checkExhaustivo() {
 		int color = -1;
 		int combo;
 		//Celda c;
@@ -512,9 +492,9 @@ public class Tablero {
 		
 		
 		return combeado;
-	}
+	}*/
 	
-	public boolean caida() {
+	/*public boolean caida() {
 		//verificar que la fila 0 es la de arriba
 		EntidadGrafica egrafica;
 		boolean caido = false;
@@ -541,18 +521,18 @@ public class Tablero {
 			return true;}
 			
 		else return false;
-	}
+	}*/
 		
-	public void limpiarTablero() {
+	/*public void limpiarTablero() {
 		for (int i = 0; i < filas; i++) {
 	        for (int j = 0; j < columnas; j++) {
 	            t[i][j].setEntidad(new GemaNormal(i,j,0));
 	        }
 	    }
-	 }
+	 }*/
 
 	//Verifica si hay rocas para romper en la proximidad
-	private void destruirRocas(Entidad e)
+	/*private void destruirRocas(Entidad e)
 	{
 	  int fila=e.getFila();
 	  int columna=e.getColumna();
@@ -576,7 +556,7 @@ public class Tablero {
 	  {
 		t[fila][columna+1].getEntidad().explosionAdyacente();
 	  }
-	}
+	}*/
 
 	//Metodo Agregado por bruno
 	public String obtenerTipoGema(int tipoGema) {
@@ -584,10 +564,10 @@ public class Tablero {
 		String nombreGema = " ";
 		for(int i = 0; i<filas && !encontre; i++) {
 			for (int j = 0; j<columnas && !encontre; j++) {
-				if (t[i][j].getEntidad().obtenerColor() == tipoGema) {
+				if (entidades[i][j].get_color() == tipoGema) {
 					encontre = true; 
 					if(encontre) {
-						nombreGema = t[i][j].getEntidad().getImagenRep();
+						nombreGema = entidades[i][j].get_imagen_representativa();
 					}
 				}
 			}

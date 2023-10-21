@@ -8,14 +8,65 @@ public class Hielo extends Obstaculo {
 	public Hielo(int f, int c, int col) {
 		super(f, c, "/assets/obstaculo/gema_normal/", col);
 	}
-	
-	public void romper(Tablero  t) {
-		    System.out.println("destruido "+ this.color + " en: "+fila+","+columna );
-		    color = Color.TRANSPARENTE;
-		    cargarImagenesRepresentativas(ruta);
-	        entidadG.notificarse_explosion();
+
+
+	@Override
+	public boolean es_posible_intercambiar(Entidad e) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
-	public void explosionAdyacente()
-	{}
+	@Override
+	public boolean puede_recibir(GemaNormal c) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean puede_recibir(Hielo g) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean puede_recibir(GemaRayada p) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean puede_recibir(GemaEnvuelta p) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean machea(Entidad e) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean match_con(GemaNormal c) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean match_con(GemaRayada p) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean match_con(GemaEnvuelta p) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean match_con(Hielo g) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }
