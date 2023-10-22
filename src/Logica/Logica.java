@@ -44,8 +44,9 @@ public class Logica {
 			 miNivel.restarMovimientos();
 			 miGUI.actualizarMovimientos(miNivel.getMovimientos());
 		}
+		
 	}
-
+	
 	public void notificarDerrotaPorMovimientos() {
 		miGUI.mostrarMensajeDerrotaPorMovimientos();
 	}
@@ -115,17 +116,37 @@ public class Logica {
 	}
 
 	public void reiniciarNivel(int n) {
-		System.out.println("Logica :: Entre al reiniciar");
-		nivelActual = n;
+	    System.out.println("Logica :: Entre al reiniciar");
+
+	    // Establecer el nuevo nivel
+	    nivelActual = n;
+
+	    // Resetear el tablero
 	    miTablero.resetar_tablero(miTablero.getFila(), miTablero.getColumna());
+
+	    // Limpiar la GUI
 	    miGUI.limpiarGUI();
-	    miNivel = GeneradorNivel.cargar_nivel_y_tablero(miTablero, nivelActual, this); // Carga el nivel actual
+
+	    // Cargar el nuevo nivel
+	    miNivel = GeneradorNivel.cargar_nivel_y_tablero(miTablero, nivelActual, this);
+
+	    // Asociar entidades lógicas y gráficas
 	    asociarEntidadesLogicasGraficas();
+
+	    // Restablecer movimientos
 	    miNivel.setMovimientos(miNivel.getTotalMovimientos());
 	    miGUI.actualizarMovimientos(miNivel.getMovimientos());
-	    miGUI.reiniciarProgreso();
+
+	    // Actualizar vidas
+	    miGUI.actualizarVidas();
+
+	    // Restablecer tiempo
 	    miNivel.setTiempo(miNivel.getTotalTiempo());
+
+	    // Fijar posición inicial del jugador
 	    miTablero.fijarJugador(miNivel.getFilaInicialJugador(), miNivel.getColumnaInicialJugador());
+	    
+	    // Inicializar el tiempo
 	    inicializarTiempo();
 	}
 
@@ -135,11 +156,10 @@ public class Logica {
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                disminuirTiempo(timer);
+            	disminuirTiempo(timer);
                 miGUI.actualizarTiempo(getTiempo());
             }
         }, 1000, 1000); // Inicia el temporizador después de 1 segundo y se ejecuta cada 1 segundo
-		
 	}
 
 	public void notificar_actualizacion_objetivos(int cant, int tipoGema) {
@@ -196,8 +216,5 @@ public class Logica {
 		
 		miTablero.fijarJugador(miNivel.getFilaInicialJugador(), miNivel.getColumnaInicialJugador());
 	}
-
-	
-
 
 }

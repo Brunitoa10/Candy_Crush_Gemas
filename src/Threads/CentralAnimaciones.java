@@ -37,16 +37,20 @@ public class CentralAnimaciones implements ManejadorAnimaciones{
 	 * referenciada por c.
 	 */
 	public void animar_cambio_posicion(Celda c) {
-		Animador animador = new AnimadorMovimiento(this, 10, 50, c);
-		ventana.notificarse_animacion_en_progreso();
-		
-		if (tiene_animaciones_en_progreso (c) ) {
-			mapeo_celda_animaciones.get(c).add(animador);
-		}else {
-			mapeo_celda_animaciones.put(c, new LinkedList<Animador>());
-			mapeo_celda_animaciones.get(c).add(animador);
-			animador.comenzar_animacion();
-		}
+	    Animador animador = new AnimadorMovimiento(this, 10, 50, c);
+
+	    synchronized (this) {
+	    	ventana.repaint();
+	        ventana.notificarse_animacion_en_progreso();
+
+	        if (tiene_animaciones_en_progreso(c)) {
+	            mapeo_celda_animaciones.get(c).add(animador);
+	        } else {
+	            mapeo_celda_animaciones.put(c, new LinkedList<Animador>());
+	            mapeo_celda_animaciones.get(c).add(animador);
+	            animador.comenzar_animacion();
+	        }
+	    }
 	}
 	
 	/**
@@ -57,33 +61,36 @@ public class CentralAnimaciones implements ManejadorAnimaciones{
 	 * @param c Celda que debe animarse, en relación a la imagen actual que la representa.
 	 */
 	public void animar_cambio_estado(Celda c) {
-		Animador animador = new AnimadorCambioEstado(this, c);
-		ventana.notificarse_animacion_en_progreso();
-		
-		if (tiene_animaciones_en_progreso (c) ) {
-			mapeo_celda_animaciones.get(c).add(animador);
-		}else {
-			mapeo_celda_animaciones.put(c, new LinkedList<Animador>());
-			mapeo_celda_animaciones.get(c).add(animador);
-			animador.comenzar_animacion();
-		}
-		
+	    Animador animador = new AnimadorCambioEstado(this, c);
+
+	    synchronized (this) {
+	    	ventana.repaint();
+	        ventana.notificarse_animacion_en_progreso();
+
+	        if (tiene_animaciones_en_progreso(c)) {
+	            mapeo_celda_animaciones.get(c).add(animador);
+	        } else {
+	            mapeo_celda_animaciones.put(c, new LinkedList<Animador>());
+	            mapeo_celda_animaciones.get(c).add(animador);
+	            animador.comenzar_animacion();
+	        }
+	    }
 	}
 
 	@Override
 	public void notificarse_finalizacion_animacion(Animador a) {
-		Animador animador;
-		List<Animador> animaciones_para_celda;
-		
-		ventana.notificarse_animacion_finalizada();
-		
-		animaciones_para_celda = mapeo_celda_animaciones.get(a.get_celda_asociada());
-		animaciones_para_celda.remove(a);
-		
-		if (!animaciones_para_celda.isEmpty()) {
-			animador = animaciones_para_celda.get(0);
-			animador.comenzar_animacion();
-		}
+	    synchronized (this) {
+	    	ventana.repaint();
+	        List<Animador> animaciones_para_celda = mapeo_celda_animaciones.get(a.get_celda_asociada());
+	        animaciones_para_celda.remove(a);
+
+	        ventana.notificarse_animacion_finalizada();
+
+	        if (!animaciones_para_celda.isEmpty()) {
+	            Animador animador = animaciones_para_celda.get(0);
+	            animador.comenzar_animacion();
+	        }
+	    }
 	}
 	
 	/**
@@ -92,11 +99,16 @@ public class CentralAnimaciones implements ManejadorAnimaciones{
 	 * @return True si la celda tiene animaciones actualmente en progreso; false en caso contrario.
 	 */
 	private boolean tiene_animaciones_en_progreso(Celda c) {
-		boolean retorno = false;
-		if (mapeo_celda_animaciones.get(c) != null) {
-			retorno = !mapeo_celda_animaciones.get(c).isEmpty();
-		}
-		return retorno;
+	    boolean retorno = false;
+
+	    synchronized (this) {
+	        ventana.repaint();
+	        if (mapeo_celda_animaciones.get(c) != null) {
+	            retorno = !mapeo_celda_animaciones.get(c).isEmpty();
+	        }
+	    }
+
+	    return retorno;
 	}
 
 	@Override

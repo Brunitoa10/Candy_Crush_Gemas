@@ -212,6 +212,7 @@ public class Tablero {
 		if (operacion != null) {
 			intercambioValido = operacion.apply(fJugador, cJugador);
 		}
+		//miLogica.actualizarGUI();
 		return intercambioValido;
 	}
 
@@ -231,7 +232,6 @@ public class Tablero {
 				if (entidades[af][ac].machea(entidades[nf][nc])) {
 					entidades[af][ac].detonar();
 					entidades[nf][nc].detonar();
-
 				} else {
 					aplicar_intercambio(nf, nc, af, ac);
 				}
@@ -242,6 +242,7 @@ public class Tablero {
 	}
 
 	private void aplicar_intercambio(int af, int ac, int nf, int nc) {
+		
 		Entidad entidad_aux = entidades[af][ac];
 
 		entidades[af][ac].cambiar_posicion(nf, nc);
@@ -524,34 +525,5 @@ public class Tablero {
 		t[fila][columna+1].getEntidad().explosionAdyacente();
 	  }
 	}*/
-
-	/*private void intercambiarSinCheck(int f1, int c1, int f2, int c2) {
-	Entidad aux;
-	aux =t[f1][c1].getEntidad();
-	t[f1][c1].setEntidad(t[f2][c2].getEntidad());
-	t[f2][c2].setEntidad(aux);
-}
-
-private void intercambiarCaida(int f1, int c1, int f2, int c2) {
-	Entidad aux = t[f1][c1].getEntidad();
-	EntidadGrafica auxG = aux.getEGrafica();
-
-	t[f1][c1].setEntidad(t[f2][c2].getEntidad());
-	t[f2][c2].setEntidad(aux);
-
-	t[f1][c1].getEntidad().intercambiarCaida(f1,c1);
-	t[f1][c1].getEntidad().setEntidadGrafica(t[f2][c2].getEntidad().getEGrafica());
-
-	t[f2][c2].getEntidad().intercambiarCaida(f2,c2);
-	t[f2][c2].getEntidad().setEntidadGrafica(auxG);
-
-
-	t[f1][c1].notificarCeldaEnfocar();
-	t[f2][c2].notificarCeldaDesenfocar();
-
-}*/
-
-
-
 
 }
