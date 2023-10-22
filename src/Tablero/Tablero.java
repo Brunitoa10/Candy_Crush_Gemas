@@ -3,6 +3,7 @@ package Tablero;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.Random;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 
@@ -115,7 +116,7 @@ public class Tablero {
 				if (entidades[af][ac].machea(entidades[nf][nc])) {
 					// Llamamos a buscarCombos después de un intercambio exitoso
 					buscarCombos(af, ac, nf, nc);
-
+					
 
 				} else {
 					aplicar_intercambio(nf, nc, af, ac);
@@ -152,12 +153,38 @@ public class Tablero {
 
 			System.out.println("Tablero buscarCombos :: "+listaCombos.size());
 			detonarGemas(listaCombos);
+			generarNuevasGemasDespuesDeDetonar();
 			return listaCombos;
 		} else {
 			throw new IllegalArgumentException("Posición inválida en buscarCombos");
 		}
 	}
+	
+	private void generarNuevasGemasDespuesDeDetonar() {
+	    // Recorre todas las filas desde abajo hacia arriba
+	    for (int fila = filas - 1; fila >= 0; fila--) {
+	        for (int columna = 0; columna < columnas; columna++) {
+	            if (entidades[fila][columna] == null || entidades[fila][columna].get_color() == 0) {
+	                // Si no hay una entidad en esta posición, genera una nueva gema
+	                entidades[fila][columna] = generarNuevaGema(fila, columna);
+	            }
+	        }
+	    }
+	    
+	}
+	public Tablero obtenerTablero() {
+        return this;
+    }
+	private Entidad generarNuevaGema(int fila, int columna) {
+	    // Define un arreglo de tipos de gemas (pueden ser números, colores, etc.)
+	    int[] tiposDeGemas = {1, 2, 3, 4, 5,6,7,8}; // Ejemplo: 1=Rojo, 2=Verde, 3=Azul, etc.
 
+	    // Selecciona un tipo de gema aleatorio
+	    int tipoDeGemaAleatorio = tiposDeGemas[new Random().nextInt(tiposDeGemas.length)];
+
+	    // Crea y retorna una nueva entidad de gema con el tipo aleatorio y la posición dada
+	    return new GemaNormal(tipoDeGemaAleatorio, fila, columna);
+	}
 	private LinkedList<Entidad> buscarCombosEnFila(int fila, int columna) {
 		LinkedList<Entidad> combosEnFila = new LinkedList<>();
 
@@ -330,11 +357,16 @@ public class Tablero {
 	}
 
 
-	private void detonarGemas(LinkedList<Entidad> gemas) {
-		for (Entidad gema : gemas) {
-			gema.detonar();
-		}
+	private void detonarGemas(LinkedList<Entidad> gemasADetonar) {
+	    for (Entidad entidad : gemasADetonar) {
+	        int fila = entidad.get_fila();
+	        int columna = entidad.get_columna();
+
+	        // Aquí detonas la gema, realiza las acciones necesarias
+	         entidades[fila][columna].detonar();
+	    }
 	}
+
 
 	private boolean esPosicionValida(int fila, int columna) {
 		return (0 <= fila && fila < filas) && (0 <= columna && columna < columnas);

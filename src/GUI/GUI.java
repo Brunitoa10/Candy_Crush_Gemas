@@ -28,6 +28,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import Entidades.Entidad;
+
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import Logica.EntidadLogica;
@@ -436,14 +438,13 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 	    }
 	}
 	
+	
 	/*public void animar_caida(Celda c) {
 		synchronized(c){
 		mi_animador.agregar_caida(c);
 		}
 	}*/
 
-	//Metodos agregados por bruno
-	
 	public void actualizarMovimientos(int movimientos) {
 		movimientosLabel.setText("Movimientos restantes: "+movimientos);
 	}
@@ -691,7 +692,10 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 
 		panelBase.add(componenteAAgregar,gbc);
 	}
-	
+	public void cambiarFondo(int nivel) {
+        fondo.cambiarFondo(nivel);
+        repaint(); // Vuelve a pintar la GUI para reflejar el cambio de fondo
+    }
 	//Clase auxiliar para poder hacer el fondo
 
 	private class Imagenfondo extends JPanel{
@@ -702,15 +706,20 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 		private static final long serialVersionUID = 4180857344385898634L;
 		
 		private Image imagen;
-
-        public void paint(Graphics g) {
-            imagen = new ImageIcon(getClass().getResource("/assets/nivel/3_Nivel.png")).getImage();
+		private int nivelActual = 1;
+        
+		public void paint(Graphics g) {
+            imagen = new ImageIcon(getClass().getResource("/assets/nivel/"+nivelActual+"_Nivel.png")).getImage();
             g.drawImage(imagen, 0, 0, getWidth(), getHeight(), this);
             super.paint(g);
         }
+        
+        public void cambiarFondo(int nivel) {
+            nivelActual = nivel;
+            repaint(); // Vuelve a pintar el fondo con el nuevo nivel
+        }
+
     }
 
-
-	
 }
 
