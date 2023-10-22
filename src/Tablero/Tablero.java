@@ -196,6 +196,25 @@ public class Tablero {
 		}
 	}
 
+
+
+
+
+
+
+
+
+	public boolean intercambiar(int d) {
+		BiFunction<Integer, Integer, Boolean> operacion = operaciones.get(d);
+		boolean intercambioValido = false;
+		if (operacion != null) {
+			intercambioValido = operacion.apply(fJugador, cJugador);
+		}
+
+		return intercambioValido;
+	}
+
+
 	private void mover_jugador_auxiliar(int nf, int nc) {
 		if ( en_rango(nf,nc) ) {
 			entidades[nf][nc].enfocar();
@@ -205,46 +224,34 @@ public class Tablero {
 		}
 	}
 
-
-	public boolean intercambiar(int d) {
-		BiFunction<Integer, Integer, Boolean> operacion = operaciones.get(d);
-		boolean intercambioValido = false;
-		if (operacion != null) {
-			intercambioValido = operacion.apply(fJugador, cJugador);
-		}
-		//miLogica.actualizarGUI();
-		return intercambioValido;
-	}
-
 	private boolean intercambiar_auxiliar(int nf, int nc) {
 		int af = fJugador;
 		int ac = cJugador;
 		boolean movimientoValido = false;
-
+		LinkedList<EntidadLogica> list = new LinkedList<>();
 		if (en_rango(nf, nc)) {
 			if (entidades[af][ac].es_posible_intercambiar(entidades[nf][nc])) {
-				
+
 				// Anima el posible intercambio de entidades
 				aplicar_intercambio(af, ac, nf, nc);
-				// Llamamos a buscarCombos después de un intercambio exitoso
-				buscarCombos(af, ac, nf, nc);
+
 				// Si el intercambio provoca un match de 2 o 3 entidades, chequea las combinaciones y detona lo necesario
 				// De lo contrario, retrotae el intercambio anterior que no fue válido
 				if (entidades[af][ac].machea(entidades[nf][nc])) {
-					
-					entidades[af][ac].detonar();
-					entidades[nf][nc].detonar();
+					// Llamamos a buscarCombos después de un intercambio exitoso
+					buscarCombos(af, ac, nf, nc);
+
+
 				} else {
 					aplicar_intercambio(nf, nc, af, ac);
 				}
 			}
 			movimientoValido = true;
 		}
+
 		return movimientoValido;
 	}
-
 	private void aplicar_intercambio(int af, int ac, int nf, int nc) {
-		
 		Entidad entidad_aux = entidades[af][ac];
 
 		entidades[af][ac].cambiar_posicion(nf, nc);
@@ -257,8 +264,8 @@ public class Tablero {
 		cJugador = nc;
 	}
 
-	private LinkedList<EntidadLogica> buscarCombos(int f1, int c1, int f2, int c2) {
-		LinkedList<EntidadLogica> listaCombos = new LinkedList<>();
+	private LinkedList<Entidad> buscarCombos(int f1, int c1, int f2, int c2) {
+		LinkedList<Entidad> listaCombos = new LinkedList<>();
 
 		if (esPosicionValida(f1, c1) && esPosicionValida(f2, c2)) {
 			listaCombos.addAll(buscarCombosEnFila(f1, c1));
@@ -266,15 +273,17 @@ public class Tablero {
 			listaCombos.addAll(buscarCombosEnFila(f2, c2));
 			listaCombos.addAll(buscarCombosEnColumna(f2, c2));
 			miLogica.actualizarObjetivos(listaCombos);
+
 			System.out.println("Tablero buscarCombos :: "+listaCombos.size());
+			detonarGemas(listaCombos);
 			return listaCombos;
 		} else {
 			throw new IllegalArgumentException("Posición inválida en buscarCombos");
 		}
 	}
 
-	private LinkedList<EntidadLogica> buscarCombosEnFila(int fila, int columna) {
-		LinkedList<EntidadLogica> combosEnFila = new LinkedList<>();
+	private LinkedList<Entidad> buscarCombosEnFila(int fila, int columna) {
+		LinkedList<Entidad> combosEnFila = new LinkedList<>();
 
 		// Obtener el tipo de gema en la posición (fila, columna)
 		Entidad entidad = entidades[fila][columna];
@@ -300,6 +309,7 @@ public class Tablero {
 
 		// Si hay al menos 3 gemas iguales consecutivas, agregar la posición actual
 		if (cantidad >= 3) {
+
 			combosEnFila.add(entidad); // Agregar la posición actual a la lista de combos
 
 			if (cantidad == 4) {
@@ -360,8 +370,8 @@ public class Tablero {
 		return verificaCombinacion;
 	}
 
-	private LinkedList<EntidadLogica> buscarCombosEnColumna(int fila, int columna) {
-		LinkedList<EntidadLogica> combosEnColumna = new LinkedList<>();
+	private LinkedList<Entidad> buscarCombosEnColumna(int fila, int columna) {
+		LinkedList<Entidad> combosEnColumna = new LinkedList<>();
 
 		// Obtener el tipo de gema en la posición (fila, columna)
 		Entidad entidad = entidades[fila][columna];
@@ -441,6 +451,13 @@ public class Tablero {
 		}
 
 		return verificaCombinacion;
+	}
+
+
+	private void detonarGemas(LinkedList<Entidad> gemas) {
+		for (Entidad gema : gemas) {
+			gema.detonar();
+		}
 	}
 
 	private boolean esPosicionValida(int fila, int columna) {

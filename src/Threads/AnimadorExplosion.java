@@ -10,14 +10,10 @@ public class AnimadorExplosion extends Thread implements Animador{
 
     protected ManejadorAnimaciones mi_manager;
 	protected Celda mi_celda_animada;
-	protected int prioridad;
-	protected int delay;
 
-    public AnimadorExplosion(ManejadorAnimaciones m, Celda c, int d) {
-		delay = d;
+    public AnimadorExplosion(ManejadorAnimaciones m, Celda c) {
 		mi_manager = m;
 		mi_celda_animada = c;
-		prioridad = 2;
 	}
 
     public Celda get_celda_asociada() {
@@ -31,7 +27,7 @@ public class AnimadorExplosion extends Thread implements Animador{
 
     @Override
 	public void run() {
-      /*  Icon icon = new ImageIcon(this.getClass().getResource("/assets/gemas/detonado.gif"));
+        Icon icon = new ImageIcon(this.getClass().getResource("/assets/gemas/detonado.gif"));
 		new Thread(()-> {
 			try {
 				mi_celda_animada.setIcon(icon);
@@ -41,13 +37,13 @@ public class AnimadorExplosion extends Thread implements Animador{
             }
             
             ImageIcon iconoVacio = new ImageIcon(this.getClass().getResource("/assets/gemas/gema_normal/0.png"));
-		    Image imgEscalada = iconoVacio.getImage().getScaledInstance(mi_celda_animada.getSizeLabel(), mi_celda_animada.getSizeLabel(), Image.SCALE_SMOOTH);
+		    Image imgEscalada = iconoVacio.getImage().getScaledInstance(mi_celda_animada.get_size_label(),mi_celda_animada.get_size_label(), Image.SCALE_SMOOTH);
 		    Icon iconoEscalado = new ImageIcon(imgEscalada);
 			mi_celda_animada.setIcon(iconoEscalado);
 
-			mi_manager.actualizarCelda(mi_celda_animada.getEntidad().getFila(),mi_celda_animada.getEntidad().getColumna());
+
 			mi_manager.notificarse_finalizacion_animacion(this);
 		 }).start();
-	*/	
+	
     }
 }

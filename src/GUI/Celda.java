@@ -40,6 +40,10 @@ public class Celda extends JLabel implements EntidadGrafica {
 		mi_ventana.animar_movimiento(this);
 	}
 	
+	public void notificarse_explosion(){
+		mi_ventana.animar_explosion(this);
+	}
+	
 	/**
 	 * Obtiene la entidad lógica asociada a la entidad gráfica.
 	 * @return La entidad lógica asociada.

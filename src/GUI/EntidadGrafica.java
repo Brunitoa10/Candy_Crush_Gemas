@@ -18,4 +18,6 @@ public interface EntidadGrafica {
 	 * movimiento.
 	 */
 	public void notificarse_cambio_posicion();
+	
+	public void notificarse_explosion();
 }

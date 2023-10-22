@@ -196,7 +196,7 @@ public class Logica {
 	}
 
 
-	public void actualizarObjetivos(LinkedList<EntidadLogica> listaCombos) {
+	public void actualizarObjetivos(LinkedList<Entidad> listaCombos) {
 		miNivel.actualizarObjetivos(listaCombos);
 	}
 

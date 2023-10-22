@@ -46,7 +46,7 @@ public class GemaNormal extends Entidad{
 		@Override
 		public boolean match_con(GemaNormal c) {
 			// TODO Auto-generated method stub
-			return false;
+			return true;
 		}
 
 		@Override

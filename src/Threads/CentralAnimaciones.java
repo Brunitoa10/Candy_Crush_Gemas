@@ -64,7 +64,6 @@ public class CentralAnimaciones implements ManejadorAnimaciones{
 	    Animador animador = new AnimadorCambioEstado(this, c);
 
 	    synchronized (this) {
-	    	//ventana.repaint();
 	        ventana.notificarse_animacion_en_progreso();
 
 	        if (tiene_animaciones_en_progreso(c)) {
@@ -110,15 +109,19 @@ public class CentralAnimaciones implements ManejadorAnimaciones{
 	    return retorno;
 	}
 
-	@Override
-	public void actualizarCelda(int posx, int posy) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void animar_estado_explosion(Celda c) {
+	    Animador animador = new AnimadorExplosion(this, c);
 
-	@Override
-	public void animar_explosion() {
-		// TODO Auto-generated method stub
-		
+	    synchronized (this) {
+	        ventana.notificarse_animacion_en_progreso();
+
+	        if (tiene_animaciones_en_progreso(c)) {
+	            mapeo_celda_animaciones.get(c).add(animador);
+	        } else {
+	            mapeo_celda_animaciones.put(c, new LinkedList<Animador>());
+	            mapeo_celda_animaciones.get(c).add(animador);
+	            animador.comenzar_animacion();
+	        }
+	    }
 	}
 }

@@ -338,6 +338,7 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 	    c.gridheight = height;
 	    cont.add(comp, c);
 	}
+	
 	public void actualizarProgreso(int gemasRestantes, int tipoGema) {
 		for(int i = 0; i < objetivosColores.length; i++) {
 	        if(tipoGema == objetivosColores[i] && objetivosProgreso[i] != null) {
@@ -426,10 +427,12 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 		
 	}
 
-	/*public void animar_explosion(Celda c) {
-		synchronized(c){
-		mi_animador.agregar_explosion(c);
-		}
+	public void animar_explosion(Celda c) {
+	    synchronized (this) {
+	    	System.out.println("GUI :: BOOOM");
+	    	repaint();
+	    	mi_animador.animar_estado_explosion(c);
+	    }
 	}
 	
 	/*public void animar_caida(Celda c) {

@@ -21,4 +21,7 @@ public interface VentanaAnimable {
 	 * @param c La celda que debe modificar su imagen asociada, de forma animada.
 	 */
 	public void animar_cambio_estado(Celda c);
+
+	public void animar_explosion(Celda celda);
+
 }
