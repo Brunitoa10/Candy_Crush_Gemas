@@ -223,6 +223,7 @@ public class Tablero {
 
 		if (en_rango(nf, nc)) {
 			if (entidades[af][ac].es_posible_intercambiar(entidades[nf][nc])) {
+				
 				// Anima el posible intercambio de entidades
 				aplicar_intercambio(af, ac, nf, nc);
 				// Llamamos a buscarCombos después de un intercambio exitoso
@@ -230,6 +231,7 @@ public class Tablero {
 				// Si el intercambio provoca un match de 2 o 3 entidades, chequea las combinaciones y detona lo necesario
 				// De lo contrario, retrotae el intercambio anterior que no fue válido
 				if (entidades[af][ac].machea(entidades[nf][nc])) {
+					
 					entidades[af][ac].detonar();
 					entidades[nf][nc].detonar();
 				} else {

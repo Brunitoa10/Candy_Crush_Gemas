@@ -4,6 +4,7 @@ package GUI;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Container;
 import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -274,89 +275,83 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 	    agregarConGBCs(panelVidas, mainPanel, gbc, 6, 6, 2, 1);
 	}
 	
-	public void mostrarObjetivos() {
-	    agregarTituloObjetivo();
-	    
+	public void mostrarObjetivos() {   
+	    JLabel tituloObjetivo = crearLabel("OBJETIVOS:", "Algerian", Font.PLAIN, 20, Color.WHITE, 2, 1);
+	    GridBagConstraints cTitulo = new GridBagConstraints();
+	    cTitulo.insets = new Insets(0, 0, 0, 0);      
+	    cTitulo.gridx = 0;                               
+	    cTitulo.gridy = 0;
+	    panel_objetivos.add(tituloObjetivo, cTitulo);
+
 	    int coordenada_y = 1;
 	    int numeroDeObjetivo = 0;
 
-	    for (int i = 0; i < milogica.obtenerInfoObjetivos().length; i += 4) {
+	    for(int i = 0; i < milogica.obtenerInfoObjetivos().length; i += 4) {
 	        int color = Integer.parseInt(milogica.obtenerInfoObjetivos()[i + 3]);
 	        objetivosColores[numeroDeObjetivo] = color;
 
-	        JLabel objetivosTexto = crearLabelObjetivoTexto(i);
-	        JLabel objetivosImagen = crearLabelObjetivoImagen(i);
-	        JLabel objetivosNumero = crearLabelObjetivoNumero(i);
+	        JLabel objetivosTexto = crearLabel(milogica.obtenerInfoObjetivos()[i], "Algerian", Font.PLAIN, 15, Color.WHITE, 1, 1);
+	        JLabel objetivosImagen = crearImagen(milogica.obtenerInfoObjetivos()[i + 1]);
+	        JLabel objetivosNumero = crearLabel("0/" + milogica.obtenerInfoObjetivos()[i + 2], "Arial", Font.PLAIN, 15, Color.WHITE, 2, 1);
 
-	        agregarObjetivoAlPanel(objetivosTexto, 0, coordenada_y, 1, 1);
-	        agregarObjetivoAlPanel(objetivosImagen, 1, coordenada_y, 1, 1);
-	        agregarObjetivoAlPanel(objetivosNumero, 0, coordenada_y + 1, 2, 1);
+	        agregarConGBCs(objetivosTexto, panel_objetivos, 0, coordenada_y, 1, 1);
+	        agregarConGBCs(objetivosImagen, panel_objetivos, 1, coordenada_y, 1, 1);
+	        agregarConGBCs(objetivosNumero, panel_objetivos, 0, coordenada_y + 1, 2, 1);
+
+	        objetivosProgreso[numeroDeObjetivo] = objetivosNumero;
 
 	        coordenada_y += 2;
 	        numeroDeObjetivo++;
 	    }
 	}
 
-	private void agregarTituloObjetivo() {
-	    JLabel tituloObjetivo = new JLabel("OBJETIVOS:");
-	    tituloObjetivo.setFont(new Font("Algerian", Font.PLAIN, 20));
-	    tituloObjetivo.setForeground(Color.WHITE);
+	private JLabel crearLabel(String texto, String fuente, int estilo, int tamano, Color color, int gridwidth, int gridheight) {
+	    JLabel label = new JLabel(texto);
+	    label.setFont(new Font(fuente, estilo, tamano));
+	    label.setForeground(color);
 
-	    GridBagConstraints cTitulo = new GridBagConstraints();
-	    cTitulo.insets = new Insets(0, 0, 0, 0);
-	    cTitulo.gridx = 0;
-	    cTitulo.gridy = 0;
-	    cTitulo.gridwidth = 2;
-
-	    panel_objetivos.add(tituloObjetivo, cTitulo);
-	    agregarConGBCs(tituloObjetivo, panel_objetivos, cTitulo, 0, 0, 2, 1);
-	}
-
-	private JLabel crearLabelObjetivoTexto(int index) {
-	    JLabel objetivosTexto = new JLabel();
-	    objetivosTexto.setForeground(Color.WHITE);
-	    objetivosTexto.setFont(new Font("Algerian", Font.PLAIN, 15));
-	    objetivosTexto.setText(milogica.obtenerInfoObjetivos()[index]);
-	    return objetivosTexto;
-	}
-
-	private JLabel crearLabelObjetivoImagen(int index) {
-	    ImageIcon imgIcon = new ImageIcon(this.getClass().getResource(milogica.obtenerInfoObjetivos()[index + 1]));
-	    Image imgEscalada = imgIcon.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
-	    Icon iconoEscalado = new ImageIcon(imgEscalada);
-
-	    JLabel objetivosImagen = new JLabel();
-	    objetivosImagen.setIcon(iconoEscalado);
-
-	    return objetivosImagen;
-	}
-
-	private JLabel crearLabelObjetivoNumero(int index) {
-	    JLabel objetivosNumero = new JLabel("0/" + milogica.obtenerInfoObjetivos()[index + 2]);
-	    objetivosNumero.setForeground(Color.WHITE);
-	    objetivosNumero.setFont(new Font("Arial", Font.PLAIN, 15));
-	    return objetivosNumero;
-	}
-
-	private void agregarObjetivoAlPanel(JLabel objetivo, int x, int y, int width, int height) {
 	    GridBagConstraints c = new GridBagConstraints();
 	    c.insets = new Insets(0, 20, 0, 0);
 	    c.weightx = 0;
+	    c.gridwidth = gridwidth;
+	    c.gridheight = gridheight;
 
-	    agregarConGBCs(objetivo, panel_objetivos, c, x, y, width, height);
+	    return label;
+	}
+
+	private JLabel crearImagen(String ruta) {
+	    ImageIcon imgIcon = new ImageIcon(this.getClass().getResource(ruta));
+	    Image imgEscalada = imgIcon.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+	    Icon iconoEscalado = new ImageIcon(imgEscalada);
+
+	    JLabel label = new JLabel();
+	    label.setIcon(iconoEscalado);
+
+	    return label;
+	}
+
+	private void agregarConGBCs(Component comp, Container cont, int x, int y, int width, int height) {
+	    GridBagConstraints c = new GridBagConstraints();
+	    c.gridx = x;
+	    c.gridy = y;
+	    c.gridwidth = width;
+	    c.gridheight = height;
+	    cont.add(comp, c);
 	}
 	public void actualizarProgreso(int gemasRestantes, int tipoGema) {
-		for(int i=0; i<objetivosColores.length;i++) {
-			if(tipoGema == objetivosColores[i]) {
-				String aux = objetivosProgreso[i].getText();
-				String[] partes = aux.split("/");
-				Integer num = Integer.valueOf(partes[1]);
-				int gemasTotales = num.intValue();
-				int progreso = gemasTotales - gemasRestantes;
+		for(int i = 0; i < objetivosColores.length; i++) {
+	        if(tipoGema == objetivosColores[i] && objetivosProgreso[i] != null) {
+	            String aux = objetivosProgreso[i].getText();
+	            String[] partes = aux.split("/");
+	            Integer num = Integer.valueOf(partes[1]);
+	            int gemasTotales = num.intValue();
+	            int progreso = gemasTotales - gemasRestantes;
 
-				objetivosProgreso[i].setText(progreso+"/"+gemasTotales);
-			}
-		}
+	            objetivosProgreso[i].setText(progreso + "/" + gemasTotales);
+	            objetivosProgreso[i].repaint();
+	            
+	        }
+	    }
 	}
 
 	/*public void reiniciarProgreso() {
@@ -380,6 +375,7 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 	        objetivosProgreso[i].setText("0/" + gemasTotales);
 	    }
 	}
+	
 	public int getTiempoRestante() {
 		return tiempoRestante;
 	}
