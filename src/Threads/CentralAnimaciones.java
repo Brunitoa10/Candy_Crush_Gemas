@@ -64,7 +64,7 @@ public class CentralAnimaciones implements ManejadorAnimaciones{
 	    Animador animador = new AnimadorCambioEstado(this, c);
 
 	    synchronized (this) {
-	    	ventana.repaint();
+	    	//ventana.repaint();
 	        ventana.notificarse_animacion_en_progreso();
 
 	        if (tiene_animaciones_en_progreso(c)) {
@@ -107,7 +107,6 @@ public class CentralAnimaciones implements ManejadorAnimaciones{
 	            retorno = !mapeo_celda_animaciones.get(c).isEmpty();
 	        }
 	    }
-
 	    return retorno;
 	}
 

@@ -382,8 +382,7 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 		return tiempoRestante;
 	}
 
-	public void actualizarTiempo(int tiempo) {
-		
+	public void actualizarTiempo(int tiempo) {	
 	    SwingUtilities.invokeLater(() -> {
 	        timerLabel.setText("Tiempo restante: " + agregarPaddingTiempo(tiempo));
 	    });
