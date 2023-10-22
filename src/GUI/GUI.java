@@ -35,22 +35,24 @@ import Threads.CentralAnimaciones;
 
 
 public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
+	//Atributos
 	protected Logica milogica;
+	
 	protected int filas,columnas;
-	protected JPanel panel_principal, panel_objetivos, panelVidas,mainPanel;
-	protected JLabel timerLabel;
 	protected int tiempoRestante;
-	protected CentralAnimaciones mi_animador;
 	protected int animaciones_pendientes;
-	protected boolean bloquear_intercambios;
-	protected JLabel movimientosLabel;
-	protected JLabel[] objetivosProgreso;
 	protected int[] objetivosColores;
 	protected int movimientosRestantes;
 	private int size_label = 70;
-	private JLabel label_corazon1 = new JLabel();
-	private JLabel label_corazon2 = new JLabel();
-	private JLabel label_corazon3 = new JLabel();
+	
+	protected boolean bloquear_intercambios;
+	
+	protected CentralAnimaciones mi_animador;
+	
+	protected JPanel panel_principal, panel_objetivos, panelVidas,mainPanel;
+	protected JLabel timerLabel,movimientosLabel,label_corazon1,label_corazon2,label_corazon3;
+	protected JLabel[] objetivosProgreso;
+
 	private Imagenfondo fondo = new Imagenfondo();
 	
 	// Define un mapa para asociar los códigos de tecla con las acciones
@@ -97,10 +99,7 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 		setLayout(new BorderLayout());
 		setExtendedState(JFrame.MAXIMIZED_BOTH); 
 		setLocationRelativeTo(null);
-		//----------------------------------------------------
-		//Estaba true, le puse false para poder achicarlo y que aparezca la cruz
 		setUndecorated(false); 
-		//----------------------------------------------------
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -232,6 +231,9 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 	}
 
 	public void mostrarVidas() {
+		label_corazon1 = new JLabel();
+		label_corazon2 = new JLabel();
+		label_corazon3 = new JLabel();
 		panelVidas = new JPanel();
 		panelVidas.setLayout(new GridLayout(1,3,5,5));
 		panelVidas.setBackground(new Color(0,0,0,0));
