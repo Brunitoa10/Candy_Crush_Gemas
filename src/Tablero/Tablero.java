@@ -8,126 +8,9 @@ import java.util.function.BiFunction;
 
 import Entidades.*;
 import GUI.*;
-import Logica.EntidadLogica;
 import Logica.Logica;
 
 public class Tablero {
-
-	private int colorAleatorio(int cotaInferior, int cotaSuperior) {
-		return (int)(Math.random()*cotaSuperior+cotaInferior);
-	}
-
-	/*private boolean manejarColisiones(LinkedList<Celda> l,Celda c1, Celda c2, int dir) {
-		//RECORRER LA LISTA (los combos solo tienen 2 colores posibles, ambos diferentes)
-	    //A CADA ELEMENTO DE LA LISTA APLICARLE .DESTRUIR()
-		//SI HAY DOS COLORES IGUALES EN DIFERENTES SETS DE COMBOS GENERAR RAYADO EN CELDA 1
-		//SI HAY OTRO MAS EN CELDA 2, NO ES POSIBLE QUE HAYA UN TERCERO
-		//CUALQUIER PROBLEMA CON ESTO, CONSULTAR A VALEN
-
-		//consigna:
-		/* rayado 
-	 * formacion:
-	 * Exactamente 4 caramelos regulares seguidos. 
-	 * en la posici�n hacia donde se movi� el caramelo que gener� la
-	 * formaci�n del mismo.
-	 * Si el caramelo rayado es el resultado de un movimiento horizontal, las rayas ser�n
-	 * horizontales, si es el resultado de un movimiento vertical, ser�n verticales y el resultado
-	 * es aleatorio durante las cascadas m�s grandes
-	 * 
-	 * envuelto
-	 * Formaci�n: 5 o 6 caramelos regulares en forma de T, L o +.
-	 * Ubicaci�n de aparici�n: en la posici�n hacia donde se movi� el caramelo que gener� la
-	 * formaci�n del mismo.
-	 */
-
-	/*if(!l.isEmpty()) {
-			Iterator<Celda> it = l.iterator();
-			Celda c = null;
-			int cf = -1;
-			int cc = -1; // -1 para detectar out of bounds
-			Celda aux= null;
-			int color1 = -1;
-			int color2 = -2;
-			int colorT = -3;
-			int combo = 0;
-			int direccRay;
-			boolean posibleT = false;//marca si puede pasar que estemos en un combo t, se genera bomba(envuelta?)
-
-			while(it.hasNext()) {//[1],[1],[1],[1],null,[4][4][4][4],null,[1][1][1]
-
-				if(c == null) {//principio de combo
-					c = it.next();
-					cf = c.getEntidad().getFila();
-					cc = c.getEntidad().getColumna();
-					colorT = c.getEntidad().obtenerColor();
-					posibleT = false;
-					if(color1 == -1) {
-						color1 = c.getEntidad().obtenerColor();
-					}else 
-						if(color1 == c.getEntidad().obtenerColor()) {
-							posibleT = true;
-						}else 
-							if(color2 == -2) 
-								color2 = c.getEntidad().obtenerColor();
-							else if(color2 == c.getEntidad().obtenerColor()) {
-								    posibleT = true;}
-					destruirRocas(c.getEntidad());// destruiur rocas
-					c.getEntidad().romper(this);
-					combo = 1;
-					if(c == c1 || c ==c2) {
-						if(posibleT) {
-							System.out.println("generar bomba!!!!!");
-							c.setEntidad(new GemaEnvuelta(cf,cc,colorT));
-							//generar bomba en la celda c
-							}
-						else aux = c;
-					}
-
-				}//end if (c == null)
-				else {//medio del combo
-					c = it.next();
-
-					if(c != null) {
-
-						if(cf == c.getEntidad().getFila()) {
-							//se mueve a travez de las filas
-							direccRay = 1;}
-						else direccRay = 5;//se mueve a travez de las columnas
-
-						cf= c.getEntidad().getFila();
-						cc = c.getEntidad().getColumna();
-
-						destruirRocas(c.getEntidad());//destruir rocas
-						c.getEntidad().romper(this);
-						combo++;
-						if(c == c1 || c ==c2) {
-							if(posibleT) {
-								System.out.println("generar bomba!!!!!");
-								c.setEntidad(new GemaEnvuelta(cf,cc,colorT));
-								//generar bomba en la celda c
-							}
-							else aux = c;
-						}
-						if(combo>=4 && !posibleT) {
-							System.out.println("generar rayada!!!!!");
-							aux.setEntidad(new GemaRayada(cf,cc, colorT, direccRay));
-							//generar rayada en aux
-							while(c!= null) {
-								c = it.next();
-							}
-						}
-					}
-				}//end medio del combo	
-			}//end while		
-		    return true;	
-		}//end if lista vacia  
-		else return false;
-	}*/
-
-	private boolean en_rango(int nf, int nc){
-		return (((nf >= 0) && (nf < filas)) && ((nc >= 0) && (nc < columnas)));
-	}
-
 
 	protected Logica miLogica;
 	protected Entidad entidades[][];
@@ -196,14 +79,6 @@ public class Tablero {
 		}
 	}
 
-
-
-
-
-
-
-
-
 	public boolean intercambiar(int d) {
 		BiFunction<Integer, Integer, Boolean> operacion = operaciones.get(d);
 		boolean intercambioValido = false;
@@ -228,7 +103,7 @@ public class Tablero {
 		int af = fJugador;
 		int ac = cJugador;
 		boolean movimientoValido = false;
-		LinkedList<EntidadLogica> list = new LinkedList<>();
+		
 		if (en_rango(nf, nc)) {
 			if (entidades[af][ac].es_posible_intercambiar(entidades[nf][nc])) {
 
@@ -251,6 +126,7 @@ public class Tablero {
 
 		return movimientoValido;
 	}
+	
 	private void aplicar_intercambio(int af, int ac, int nf, int nc) {
 		Entidad entidad_aux = entidades[af][ac];
 
@@ -463,8 +339,11 @@ public class Tablero {
 	private boolean esPosicionValida(int fila, int columna) {
 		return (0 <= fila && fila < filas) && (0 <= columna && columna < columnas);
 	}
+	
+	private boolean en_rango(int nf, int nc){
+		return (((nf >= 0) && (nf < filas)) && ((nc >= 0) && (nc < columnas)));
+	}
 
-	//Metodo Agregado por bruno
 	public String obtenerTipoGema(int tipoGema) {
 		boolean encontre = false;
 		String nombreGema = " ";

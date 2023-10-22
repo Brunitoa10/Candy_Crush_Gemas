@@ -7,7 +7,6 @@ import java.util.TimerTask;
 
 import Entidades.Entidad;
 import GUI.GUI;
-import GUI.Celda;
 import GUI.EntidadGrafica;
 import Nivel.GeneradorNivel;
 import Nivel.Nivel;

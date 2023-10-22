@@ -1,8 +1,5 @@
 package Entidades;
 
-import Logica.Color;
-import Tablero.Tablero;
-
 public class GemaRayada extends Gema{
 	
 	//direccion en la que la gema explotara

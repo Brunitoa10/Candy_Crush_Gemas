@@ -5,7 +5,6 @@ import java.util.LinkedList;
 import java.util.Map;
 
 import Entidades.Entidad;
-import GUI.Celda;
 import Logica.EntidadLogica;
 import Logica.Logica;
 

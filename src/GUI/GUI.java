@@ -35,6 +35,7 @@ import Logica.Logica;
 import Threads.CentralAnimaciones;
 
 
+
 public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 	//Atributos
 	protected Logica milogica;
