@@ -118,14 +118,19 @@ public class Logica {
 		System.out.println("Logica :: Entre al reiniciar");
 		nivelActual = n;
 		miGUI.cambiarFondo(nivelActual);
+		miGUI.actualizarVidas();
+		
 	    miTablero.resetar_tablero(miTablero.getFila(), miTablero.getColumna());
+	   
 	    miGUI.limpiarGUI();
+	    
 	    //miTablero.limpiarTablero();
 	    miNivel = GeneradorNivel.cargar_nivel_y_tablero(miTablero, nivelActual, this); // Carga el nivel actual
-	    //miTablero.asignarGUI(miGUI);
+
 	    asociarEntidadesLogicasGraficas();
 	    miNivel.setMovimientos(miNivel.getTotalMovimientos());
 	    miGUI.actualizarMovimientos(miNivel.getMovimientos());
+	   
 	    miGUI.reiniciarProgreso();
 	    miNivel.setTiempo(miNivel.getTotalTiempo());
 	    miTablero.fijarJugador(miNivel.getFilaInicialJugador(), miNivel.getColumnaInicialJugador());

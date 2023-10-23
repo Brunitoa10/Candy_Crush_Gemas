@@ -54,7 +54,7 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 	protected CentralAnimaciones mi_animador;
 	
 	protected JPanel panel_principal, panel_objetivos, panelVidas,mainPanel;
-	protected JLabel timerLabel,movimientosLabel,label_corazon1,label_corazon2,label_corazon3;
+	protected JLabel timerLabel,movimientosLabel/*,label_corazon1,label_corazon2,label_corazon3*/;
 	protected JLabel[] objetivosProgreso;
 
 	private Imagenfondo fondo = new Imagenfondo();
@@ -233,8 +233,51 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 		panel_principal.add(celda);
 		return celda;
 	}
+	private JLabel label_corazon1 = new JLabel();
+	private JLabel label_corazon2 = new JLabel();
+	private JLabel label_corazon3 = new JLabel();
 
 	public void mostrarVidas() {
+		panelVidas = new JPanel();
+		panelVidas.setLayout(new GridLayout(1,3,5,5));
+		panelVidas.setBackground(new Color(0,0,0,0));
+		
+		
+		ImageIcon imgIconCorazon = new ImageIcon(this.getClass().getResource("/assets/nivel/corazon.png"));
+		Image imgEscaladaCorazon = imgIconCorazon.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+		Icon iconoEscaladoCorazon = new ImageIcon(imgEscaladaCorazon);
+		
+		label_corazon1.setIcon(iconoEscaladoCorazon);
+		label_corazon3.setIcon(iconoEscaladoCorazon);
+		label_corazon2.setIcon(iconoEscaladoCorazon);
+
+
+		panelVidas.add(label_corazon1);
+		panelVidas.add(label_corazon2);
+		panelVidas.add(label_corazon3);
+	}
+
+	public void actualizarVidas() {
+		ImageIcon imgIconCorazonVacio = new ImageIcon(this.getClass().getResource("/assets/nivel/corazonVacio.png"));
+		Image imgEscaladaCorazonVacio = imgIconCorazonVacio.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+		Icon iconoEscaladoCorazonVacio = new ImageIcon(imgEscaladaCorazonVacio);
+		
+
+		if(milogica.getVidas() == 2) {
+			label_corazon3.setIcon(iconoEscaladoCorazonVacio);
+		} else if(milogica.getVidas() == 1) {
+				System.out.println("QUEDA 1 VIDA");
+				label_corazon2.setIcon(iconoEscaladoCorazonVacio);
+				label_corazon3.setIcon(iconoEscaladoCorazonVacio);
+			}
+
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.weightx = 0;
+		gbc.weightx = 0;
+		gbc.insets = new Insets(0,0,0,10);
+		agregarConGBCs(panelVidas, mainPanel, gbc, 6, 6, 2, 1); 
+	}
+	/*public void mostrarVidas() {
 		label_corazon1 = new JLabel();
 		label_corazon2 = new JLabel();
 		label_corazon3 = new JLabel();
@@ -258,6 +301,7 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 	}
 	
 	public void actualizarVidas() {
+	
 	    ImageIcon imgIconCorazonVacio = new ImageIcon(this.getClass().getResource("/assets/nivel/corazonVacio.png"));
 	    Image imgEscaladaCorazonVacio = imgIconCorazonVacio.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
 	    Icon iconoEscaladoCorazonVacio = new ImageIcon(imgEscaladaCorazonVacio);
@@ -271,12 +315,13 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 	        label_corazon2.setIcon(iconoEscaladoCorazonVacio);
 	        label_corazon3.setIcon(iconoEscaladoCorazonVacio);
 	    }
-
+	    
 	    GridBagConstraints gbc = new GridBagConstraints();
 	    gbc.weightx = 0;
 	    gbc.insets = new Insets(0, 0, 0, 10);
+	    
 	    agregarConGBCs(panelVidas, mainPanel, gbc, 6, 6, 2, 1);
-	}
+	}*/
 	
 	public void mostrarObjetivos() {   
 	    JLabel tituloObjetivo = crearLabel("OBJETIVOS:", "Algerian", Font.PLAIN, 20, Color.WHITE, 2, 1);
@@ -685,6 +730,7 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 	}
 
 	private void agregarConGBCs(Component componenteAAgregar, JPanel panelBase, GridBagConstraints gbc, int gridx, int gridy, int gridwidth,int gridheight) {
+
 		gbc.gridx = gridx;
 		gbc.gridy = gridy;
 		gbc.gridwidth = gridwidth;
