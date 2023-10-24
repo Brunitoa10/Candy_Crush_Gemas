@@ -105,7 +105,6 @@ public abstract class Entidad implements EntidadLogica, Enfocable, Intercambiabl
 		imagenes[1] = ri + color +"-cursor.png";
 	}
 
-	public abstract boolean es_posible_intercambiar(Entidad e);
 
 	public abstract void explosionAdyacente();
 
