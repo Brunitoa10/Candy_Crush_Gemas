@@ -38,7 +38,7 @@ import Threads.CentralAnimaciones;
 
 public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 	//Atributos
-	protected Logica milogica;
+	protected Logica miLogica;
 	
 	protected int filas,columnas;
 	protected int tiempoRestante;
@@ -51,7 +51,7 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 	
 	protected CentralAnimaciones mi_animador;
 	
-	protected JPanel panel_principal, panel_objetivos, panelVidas,mainPanel;
+	protected JPanel panel_tablero, panel_objetivos, panel_vidas,panel_principal;
 	protected JLabel timerLabel,movimientosLabel/*,label_corazon1,label_corazon2,label_corazon3*/;
 	protected JLabel[] objetivosProgreso;
 
@@ -69,16 +69,16 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 	
 	
 	public GUI(Logica l, int f, int c) {
-		milogica = l;
+		miLogica = l;
 		filas = f;
 		mi_animador = new CentralAnimaciones(this);
 		columnas = c;
-		tiempoRestante = milogica.getTiempo();
-		movimientosRestantes = milogica.getMovimientos();
+		tiempoRestante = miLogica.getTiempo();
+		movimientosRestantes = miLogica.getMovimientos();
 		animaciones_pendientes = 0;
 		bloquear_intercambios = false;
-		objetivosColores = new int[milogica.getCantidadDeObjetivos()];
-		objetivosProgreso = new JLabel[milogica.getCantidadDeObjetivos()];
+		objetivosColores = new int[miLogica.getCantidadDeObjetivos()];
+		objetivosProgreso = new JLabel[miLogica.getCantidadDeObjetivos()];
 		
 		inicializarGUI();
 	}
@@ -90,13 +90,13 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 		ImageIcon logo = new ImageIcon(this.getClass().getResource("/assets/nivel/Icono.png"));
 		setIconImage(logo.getImage());
 
-		mainPanel = new JPanel();
-		mainPanel.setBackground(new Color(0,0,0,0));
+		panel_principal = new JPanel();
+		panel_principal.setBackground(new Color(0,0,0,0));
 		
 
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		setTitle("Proyecto Candy Crush - Comision-06");
-		mainPanel.setSize(screenSize);
+		panel_principal.setSize(screenSize);
 		setSize(screenSize);
 		setLayout(new BorderLayout());
 		setExtendedState(JFrame.MAXIMIZED_BOTH); 
@@ -105,7 +105,7 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
-		mainPanel.setLayout(new GridBagLayout());
+		panel_principal.setLayout(new GridBagLayout());
 
 		JPanel timerPanel = new JPanel();
 		timerLabel = new JLabel("Tiempo restante: "+ agregarPaddingTiempo(tiempoRestante));
@@ -121,11 +121,11 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 		movimientosLabel.setForeground(Color.WHITE);
 		movimientosLabel.setBackground(new Color(0,0,0,255));
 
-		panel_principal = new JPanel();
-		panel_principal.setSize(size_label * filas, size_label * columnas);
-		panel_principal.setLayout(new GridLayout(filas,columnas,0,0));
-		panel_principal.setOpaque(true);
-		panel_principal.setBackground(new Color(0,0,0,0));
+		panel_tablero = new JPanel();
+		panel_tablero.setSize(size_label * filas, size_label * columnas);
+		panel_tablero.setLayout(new GridLayout(filas,columnas,0,0));
+		panel_tablero.setOpaque(true);
+		panel_tablero.setBackground(new Color(0,0,0,0));
 
 
 		panel_objetivos = new JPanel();
@@ -142,78 +142,78 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 		//Constraints TIMER
 		GridBagConstraints c = new GridBagConstraints();
 		c.insets = new Insets(0,10,0,0);
-		agregarConGBCs(timerPanel, mainPanel, c, 0, 0, 3, 1);
+		agregarConGBCs(timerPanel, panel_principal, c, 0, 0, 3, 1);
 	
 		//Constraints PANEL OBJETIVOS
 		c.insets = new Insets(0, 10, 0, 0);   
-		agregarConGBCs(panel_objetivos, mainPanel, c, 0, 1, 2, 2);   
+		agregarConGBCs(panel_objetivos, panel_principal, c, 0, 1, 2, 2);   
 		
 		//Constraints TABLERO
 		c.insets = new Insets(0,0,0,0);
 		c.weightx = 1;
 		c.weighty = 1;
 		c.anchor = GridBagConstraints.CENTER;
-		agregarConGBCs(panel_principal, mainPanel, c, 2, 1, 4, 4); 
+		agregarConGBCs(panel_tablero, panel_principal, c, 2, 1, 4, 4); 
 		
 		//Constraints VIDAS
 		c.weightx = 0;
 		c.weightx = 0;
 		c.insets = new Insets(0,0,0,10);
-		agregarConGBCs(panelVidas, mainPanel, c, 6, 6, 2, 1); 
+		agregarConGBCs(panel_vidas, panel_principal, c, 6, 6, 2, 1); 
 		 
 		
 		//Constraints MOVIMIENTOS
 		c.weightx = 0;
 		c.weightx = 0;
 		c.insets = new Insets(0,0,0,10);
-		agregarConGBCs(movimientosLabel, mainPanel, c, 6, 0, 2, 1); 
+		agregarConGBCs(movimientosLabel, panel_principal, c, 6, 0, 2, 1); 
 		
-		panel_principal.setFocusable(true);
-		getContentPane().add(mainPanel);
+		panel_tablero.setFocusable(true);
+		getContentPane().add(panel_principal);
 	}
 
 	private void configurarAccionesTeclado() {
 		//Acciones del cursor
 		acciones.put(KeyEvent.VK_LEFT, () ->{
-			milogica.mover_jugador(IZQUIERDA);
+			miLogica.mover_jugador(IZQUIERDA);
 		});
 		acciones.put(KeyEvent.VK_RIGHT, () -> {
-			milogica.mover_jugador(DERECHA);
+			miLogica.mover_jugador(DERECHA);
 		});
 		acciones.put(KeyEvent.VK_UP, () -> {
-			milogica.mover_jugador(ARRIBA);
+			miLogica.mover_jugador(ARRIBA);
 		});
 		acciones.put(KeyEvent.VK_DOWN, () ->{
-			milogica.mover_jugador(ABAJO);
+			miLogica.mover_jugador(ABAJO);
 		});
 		
 		//Acciones de intercambio
 		acciones.put(KeyEvent.VK_W, () -> {
 		    if (!bloquear_intercambios) {
-		    	milogica.intercambiar(ARRIBA);
+		    	miLogica.intercambiar(ARRIBA);
 		    }
 		});
 		
 		acciones.put(KeyEvent.VK_S, () -> {
 		    if (!bloquear_intercambios){
-		    	milogica.intercambiar(ABAJO);
+		    	miLogica.intercambiar(ABAJO);
 		    }
 		});
 		
 		acciones.put(KeyEvent.VK_A, () -> {
 		    if (!bloquear_intercambios){
-		    	milogica.intercambiar(IZQUIERDA);
+		    	miLogica.intercambiar(IZQUIERDA);
 		    }
 		});
 		
 		acciones.put(KeyEvent.VK_D, () -> {
 		    if (!bloquear_intercambios){
-		    	milogica.intercambiar(DERECHA);
+		    	miLogica.intercambiar(DERECHA);
 		    }
 		});
 
 		// Agrega el KeyListener
-		panel_principal.addKeyListener(new KeyAdapter() {
+		panel_tablero.addKeyListener(new KeyAdapter() {
 		    @Override
 		    public void keyPressed(KeyEvent e) {
 		        // Verifica si la tecla presionada tiene una acción asociada
@@ -228,7 +228,7 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 
 	public EntidadGrafica agregar_entidad(EntidadLogica e) {
 		Celda celda = new Celda(this, e, size_label);
-		panel_principal.add(celda);
+		panel_tablero.add(celda);
 		return celda;
 	}
 	private JLabel label_corazon1 = new JLabel();
@@ -236,9 +236,9 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 	private JLabel label_corazon3 = new JLabel();
 
 	public void mostrarVidas() {
-		panelVidas = new JPanel();
-		panelVidas.setLayout(new GridLayout(1,3,5,5));
-		panelVidas.setBackground(new Color(0,0,0,0));
+		panel_vidas = new JPanel();
+		panel_vidas.setLayout(new GridLayout(1,3,5,5));
+		panel_vidas.setBackground(new Color(0,0,0,0));
 		
 		
 		ImageIcon imgIconCorazon = new ImageIcon(this.getClass().getResource("/assets/nivel/corazon.png"));
@@ -250,9 +250,9 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 		label_corazon2.setIcon(iconoEscaladoCorazon);
 
 
-		panelVidas.add(label_corazon1);
-		panelVidas.add(label_corazon2);
-		panelVidas.add(label_corazon3);
+		panel_vidas.add(label_corazon1);
+		panel_vidas.add(label_corazon2);
+		panel_vidas.add(label_corazon3);
 	}
 
 	public void actualizarVidas() {
@@ -261,9 +261,9 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 		Icon iconoEscaladoCorazonVacio = new ImageIcon(imgEscaladaCorazonVacio);
 		
 
-		if(milogica.getVidas() == 2) {
+		if(miLogica.getVidas() == 2) {
 			label_corazon3.setIcon(iconoEscaladoCorazonVacio);
-		} else if(milogica.getVidas() == 1) {
+		} else if(miLogica.getVidas() == 1) {
 				System.out.println("QUEDA 1 VIDA");
 				label_corazon2.setIcon(iconoEscaladoCorazonVacio);
 				label_corazon3.setIcon(iconoEscaladoCorazonVacio);
@@ -273,53 +273,8 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 		gbc.weightx = 0;
 		gbc.weightx = 0;
 		gbc.insets = new Insets(0,0,0,10);
-		agregarConGBCs(panelVidas, mainPanel, gbc, 6, 6, 2, 1); 
+		agregarConGBCs(panel_vidas, panel_principal, gbc, 6, 6, 2, 1); 
 	}
-	/*public void mostrarVidas() {
-		label_corazon1 = new JLabel();
-		label_corazon2 = new JLabel();
-		label_corazon3 = new JLabel();
-		panelVidas = new JPanel();
-		panelVidas.setLayout(new GridLayout(1,3,5,5));
-		panelVidas.setBackground(new Color(0,0,0,0));
-		
-		
-		ImageIcon imgIconCorazon = new ImageIcon(this.getClass().getResource("/assets/nivel/corazon.png"));
-		Image imgEscaladaCorazon = imgIconCorazon.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
-		Icon iconoEscaladoCorazon = new ImageIcon(imgEscaladaCorazon);
-		
-		label_corazon1.setIcon(iconoEscaladoCorazon);
-		label_corazon3.setIcon(iconoEscaladoCorazon);
-		label_corazon2.setIcon(iconoEscaladoCorazon);
-
-
-		panelVidas.add(label_corazon1);
-		panelVidas.add(label_corazon2);
-		panelVidas.add(label_corazon3);
-	}
-	
-	public void actualizarVidas() {
-	
-	    ImageIcon imgIconCorazonVacio = new ImageIcon(this.getClass().getResource("/assets/nivel/corazonVacio.png"));
-	    Image imgEscaladaCorazonVacio = imgIconCorazonVacio.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
-	    Icon iconoEscaladoCorazonVacio = new ImageIcon(imgEscaladaCorazonVacio);
-
-	    int vidas = milogica.getVidas();
-
-	    if (vidas == 2) {
-	        label_corazon3.setIcon(iconoEscaladoCorazonVacio);
-	    } else if (vidas == 1) {
-	        System.out.println("QUEDA 1 VIDA");
-	        label_corazon2.setIcon(iconoEscaladoCorazonVacio);
-	        label_corazon3.setIcon(iconoEscaladoCorazonVacio);
-	    }
-	    
-	    GridBagConstraints gbc = new GridBagConstraints();
-	    gbc.weightx = 0;
-	    gbc.insets = new Insets(0, 0, 0, 10);
-	    
-	    agregarConGBCs(panelVidas, mainPanel, gbc, 6, 6, 2, 1);
-	}*/
 	
 	public void mostrarObjetivos() {   
 	    JLabel tituloObjetivo = crearLabel("OBJETIVOS:", "Algerian", Font.PLAIN, 20, Color.WHITE, 2, 1);
@@ -332,13 +287,13 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 	    int coordenada_y = 1;
 	    int numeroDeObjetivo = 0;
 
-	    for(int i = 0; i < milogica.obtenerInfoObjetivos().length; i += 4) {
-	        int color = Integer.parseInt(milogica.obtenerInfoObjetivos()[i + 3]);
+	    for(int i = 0; i < miLogica.obtenerInfoObjetivos().length; i += 4) {
+	        int color = Integer.parseInt(miLogica.obtenerInfoObjetivos()[i + 3]);
 	        objetivosColores[numeroDeObjetivo] = color;
 
-	        JLabel objetivosTexto = crearLabel(milogica.obtenerInfoObjetivos()[i], "Algerian", Font.PLAIN, 15, Color.WHITE, 1, 1);
-	        JLabel objetivosImagen = crearImagen(milogica.obtenerInfoObjetivos()[i + 1]);
-	        JLabel objetivosNumero = crearLabel("0/" + milogica.obtenerInfoObjetivos()[i + 2], "Arial", Font.PLAIN, 15, Color.WHITE, 2, 1);
+	        JLabel objetivosTexto = crearLabel(miLogica.obtenerInfoObjetivos()[i], "Algerian", Font.PLAIN, 15, Color.WHITE, 1, 1);
+	        JLabel objetivosImagen = crearImagen(miLogica.obtenerInfoObjetivos()[i + 1]);
+	        JLabel objetivosNumero = crearLabel("0/" + miLogica.obtenerInfoObjetivos()[i + 2], "Arial", Font.PLAIN, 15, Color.WHITE, 2, 1);
 
 	        agregarConGBCs(objetivosTexto, panel_objetivos, 0, coordenada_y, 1, 1);
 	        agregarConGBCs(objetivosImagen, panel_objetivos, 1, coordenada_y, 1, 1);
@@ -400,18 +355,6 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 	        }
 	    }
 	}
-
-	/*public void reiniciarProgreso() {
-		for(int i=0; i<objetivosColores.length; i++) {
-			String aux = objetivosProgreso[i].getText();
-			String[] partes = aux.split("/");
-			Integer num = Integer.valueOf(partes[1]);
-			int gemasTotales = num.intValue();
-			int progreso = 0;
-
-			objetivosProgreso[i].setText(progreso+"/"+gemasTotales);
-		}
-	}*/
 	
 	public void reiniciarProgreso() {
 	    for(int i = 0; i < objetivosColores.length; i++) {
@@ -495,7 +438,7 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 
 	public void mostrarMensajeDerrotaPorMovimientos() {
 	    this.repaint();
-	    mainPanel.setVisible(false);
+	    panel_principal.setVisible(false);
 
 	    JPanel mensajePanel = crearMensajePanel();
 	    agregarComponentesAlMensajePanel(mensajePanel);
@@ -503,7 +446,7 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 	    getContentPane().add(mensajePanel);
 
 	    JButton botonReiniciar = crearBotonReintentar();
-	    agregarAccionBotonReiniciar(botonReiniciar, mainPanel, mensajePanel);
+	    agregarAccionBotonReiniciar(botonReiniciar, panel_principal, mensajePanel);
 
 	    mensajePanel.setVisible(true);
 	    mensajePanel.revalidate();
@@ -544,18 +487,18 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 	    return botonReiniciar;
 	}
 
-	private void agregarAccionBotonReiniciar(JButton boton, JPanel mainPanel, JPanel mensajePanel) {
+	private void agregarAccionBotonReiniciar(JButton boton, JPanel panel_principal, JPanel mensajePanel) {
 	    boton.addActionListener(new ActionListener() {
 	        @Override
 	        public void actionPerformed(ActionEvent e) {
-	            mainPanel.setVisible(true);
+	            panel_principal.setVisible(true);
 	            mensajePanel.setVisible(false);
 	        }
 	    });
 	}
 	
 	public void mostrarMensajeDerrotaPorVidas() {
-	    mainPanel.setVisible(false);
+	    panel_principal.setVisible(false);
 
 	    JPanel mensajePanel = crearMensajePanel();
 	    agregarComponentesAlMensajePanelPorVidas(mensajePanel);
@@ -563,7 +506,7 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 	    getContentPane().add(mensajePanel);
 
 	    JButton botonReiniciarJuego = crearBotonReintentar();
-	    agregarAccionBotonReiniciarPorVidas(botonReiniciarJuego, mainPanel, mensajePanel);
+	    agregarAccionBotonReiniciarPorVidas(botonReiniciarJuego, panel_principal, mensajePanel);
 
 	    mensajePanel.setVisible(true);
 	    mensajePanel.revalidate();
@@ -584,19 +527,19 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 	}
 
 
-	private void agregarAccionBotonReiniciarPorVidas(JButton boton, JPanel mainPanel, JPanel mensajePanel) {
+	private void agregarAccionBotonReiniciarPorVidas(JButton boton, JPanel panel_principal, JPanel mensajePanel) {
 	    boton.addActionListener(new ActionListener() {
 	        @Override
 	        public void actionPerformed(ActionEvent e) {
-	            mainPanel.setVisible(true);
+	            panel_principal.setVisible(true);
 	            mensajePanel.setVisible(false);
-	            milogica.notificarDerrotaPorVidas();
+	            miLogica.notificarDerrotaPorVidas();
 	        }
 	    });
 	}
 	
 	public void mostrarMensajeFinDelJuego() {
-	    mainPanel.setVisible(false);
+	    panel_principal.setVisible(false);
 
 	    JPanel mensajePanel = crearMensajePanel();
 	    agregarComponentesAlMensajePanelFinDelJuego(mensajePanel);
@@ -621,7 +564,7 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 	}
 
 	public void mostrarMensajeVictoriaPorObjetivos() {
-	    mainPanel.setVisible(false);
+	    panel_principal.setVisible(false);
 
 	    JPanel mensajePanel = crearMensajePanel();
 	    agregarComponentesAlMensajePanelVictoriaPorObjetivos(mensajePanel);
@@ -647,9 +590,9 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 	    botonSiguienteNivel.addActionListener(new ActionListener() {
 	        @Override
 	        public void actionPerformed(ActionEvent e) {
-	            mainPanel.setVisible(true);
+	            panel_principal.setVisible(true);
 	            p.setVisible(false);
-	            milogica.cambiarNivel();
+	            miLogica.cambiarNivel();
 	        }
 	    });
 	}
@@ -663,7 +606,7 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 
 	public void mostrarMensajeDerrotaPorTiempo() {
 	    repaint();
-	    mainPanel.setVisible(false);
+	    panel_principal.setVisible(false);
 
 	    JPanel mensajePanel = crearMensajePanel();
 	    agregarComponentesAlMensajePanelDerrotaPorTiempo(mensajePanel);
@@ -692,9 +635,9 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 	    botonReiniciar.addActionListener(new ActionListener() {
 	        @Override
 	        public void actionPerformed(ActionEvent e) {
-	            mainPanel.setVisible(true);
+	            panel_principal.setVisible(true);
 	            p.setVisible(false);
-	            milogica.notificarDerrotaPorTiempo();
+	            miLogica.notificarDerrotaPorTiempo();
 	        }
 	    });
 	}
@@ -705,8 +648,8 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 	}
 	
 	public void limpiarGUI() {
-	    tiempoRestante = milogica.getTiempo();
-	    movimientosRestantes = milogica.getMovimientos();
+	    tiempoRestante = miLogica.getTiempo();
+	    movimientosRestantes = miLogica.getMovimientos();
 	    animaciones_pendientes = 0;
 	    bloquear_intercambios = false;
 
@@ -718,9 +661,9 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 	}
 
 	private void limpiarMatrizGUI() {
-	    panel_principal.removeAll();
-	    panel_principal.revalidate();
-	    panel_principal.repaint();
+	    panel_tablero.removeAll();
+	    panel_tablero.revalidate();
+	    panel_tablero.repaint();
 	}
 	
 	public boolean getBloquear_intercambios() {

@@ -421,34 +421,7 @@ public class Tablero {
 		return (((nf >= 0) && (nf < filas)) && ((nc >= 0) && (nc < columnas)));
 	}
 
-	/*public boolean caida() {
-		//verificar que la fila 0 es la de arriba
-		EntidadGrafica egrafica;
-		boolean caido = false;
-		for (int i = 0; i<filas; i++) {
-			for (int j = 0; j<columnas; j++) {
-				if(t[i][j].getEntidad().obtenerColor() == 0) {
-					caido = true;
-					if(i == 0) {
-						egrafica = t[i][j];
-
-						t[i][j].setEntidad(new GemaNormal(i,j,colorAleatorio(1,6)));
-						t[i][j].getEntidad().setEntidadGrafica(egrafica);
-						t[i][j].notificarse_cambio_estado();
-					}
-					else
-						intercambiarCaida(i-1,j,i,j);//VERIFICAR
-				}
-			}
-		}
-		miLogica.actualizarTablero();
-
-		if(caido) {
-			caida();
-			return true;}
-
-		else return false;
-	}*/
+	
 
 	/*public void limpiarTablero() {
 		for (int i = 0; i < filas; i++) {
