@@ -90,7 +90,24 @@ public class Tablero {
 		return intercambioValido;
 	}
 
+	public String obtenerTipoGema(int tipoGema) {
+		boolean encontre = false;
+		String nombreGema = " ";
+		for(int i = 0; i<filas && !encontre; i++) {
+			for (int j = 0; j<columnas && !encontre; j++) {
+				if (entidades[i][j].get_color() == tipoGema) {
+					encontre = true; 
+					if(encontre) {
+						nombreGema = entidades[i][j].get_imagen_representativa();
+					}
+				}
+			}
+		}
+		return nombreGema;
+	}
 
+	//METODOS PRIVADOS
+	
 	private void mover_jugador_auxiliar(int nf, int nc) {
 		if ( en_rango(nf,nc) ) {
 			entidades[nf][nc].enfocar();
@@ -175,6 +192,7 @@ public class Tablero {
 	public Tablero obtenerTablero() {
         return this;
     }
+
 	private Entidad generarNuevaGema(int fila, int columna) {
 	    // Define un arreglo de tipos de gemas (pueden ser números, colores, etc.)
 	    int[] tiposDeGemas = {1, 2, 3, 4, 5,6,7,8}; // Ejemplo: 1=Rojo, 2=Verde, 3=Azul, etc.
@@ -185,6 +203,7 @@ public class Tablero {
 	    // Crea y retorna una nueva entidad de gema con el tipo aleatorio y la posición dada
 	    return new GemaNormal(tipoDeGemaAleatorio, fila, columna);
 	}
+
 	private LinkedList<Entidad> buscarCombosEnFila(int fila, int columna) {
 		LinkedList<Entidad> combosEnFila = new LinkedList<>();
 
@@ -374,22 +393,6 @@ public class Tablero {
 	
 	private boolean en_rango(int nf, int nc){
 		return (((nf >= 0) && (nf < filas)) && ((nc >= 0) && (nc < columnas)));
-	}
-
-	public String obtenerTipoGema(int tipoGema) {
-		boolean encontre = false;
-		String nombreGema = " ";
-		for(int i = 0; i<filas && !encontre; i++) {
-			for (int j = 0; j<columnas && !encontre; j++) {
-				if (entidades[i][j].get_color() == tipoGema) {
-					encontre = true; 
-					if(encontre) {
-						nombreGema = entidades[i][j].get_imagen_representativa();
-					}
-				}
-			}
-		}
-		return nombreGema;
 	}
 
 	/*public boolean caida() {
