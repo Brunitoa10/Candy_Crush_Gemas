@@ -9,7 +9,7 @@ public class Roca extends Obstaculo{
 		super(f, c, "/assets/obstaculo/", 7);
 	}
 
-	public void romper(Tablero t) {
+	public void detonar(Tablero t) {
 		    System.out.println("destruido "+ this.color + " en: "+fila+","+columna );
 	        color = Color.TRANSPARENTE;
 	        cargarImagenesRepresentativas(ruta);

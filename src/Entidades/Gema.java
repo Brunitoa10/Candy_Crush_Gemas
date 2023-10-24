@@ -47,7 +47,7 @@ public abstract class Gema extends Entidad{
 		return true;
 	}
 
-	public abstract void romper(Tablero t);
+	public abstract void detonar(Tablero t);
 
 	public abstract void explosionAdyacente();
   

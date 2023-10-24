@@ -88,7 +88,7 @@ public class Logica {
 			for (int c=0; c<miTablero.getColumna(); c++) {
 				e = miTablero.get_entidad(f, c);
 				eg = miGUI.agregar_entidad(e);
-				e.set_entidad_grafica(eg);
+				e.setEntidadGrafica(eg);
 			}
 		}
 		miGUI.setVisible(true);

@@ -363,7 +363,7 @@ public class Tablero {
 	        int columna = entidad.get_columna();
 
 	        // Aquí detonas la gema, realiza las acciones necesarias
-	         entidades[fila][columna].detonar();
+	         entidades[fila][columna].detonar(this);
 	    }
 	}
 

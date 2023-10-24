@@ -10,7 +10,7 @@ public class GemaNormal extends Gema{
 		}
 
 
-		public void romper(Tablero t) {
+		public void detonar(Tablero t) {
 			//System.out.println("destruido "+this.getClass().getName()+ " "+ this.color + " en: "+fila+","+columna );
 	   		color = Color.TRANSPARENTE;
 	   		cargarImagenesRepresentativas(ruta);

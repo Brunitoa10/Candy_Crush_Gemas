@@ -8,7 +8,7 @@ public abstract class Obstaculo extends Entidad{
 		super(f, c, ri,col);
 	}
 
-	public abstract void romper(Tablero t);
+	public abstract void detonar(Tablero t);
 
 	public boolean esPosibleIntercambiar(Entidad e) {
 		return false;

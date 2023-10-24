@@ -28,8 +28,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
-import Entidades.Entidad;
-
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import Logica.EntidadLogica;

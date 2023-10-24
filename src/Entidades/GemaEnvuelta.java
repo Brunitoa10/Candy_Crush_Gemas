@@ -11,7 +11,7 @@ public class GemaEnvuelta extends Gema{
 
 	
 	@Override
-	public void romper(Tablero miTablero) {
+	public void detonar(Tablero miTablero) {
 		int f=fila;
 		int c=columna;
 		int topeFila=miTablero.getFila();
@@ -50,7 +50,7 @@ public class GemaEnvuelta extends Gema{
 				{
 					if(miTablero.get_entidad(i, columna).get_color()!=0)
 					{
-						miTablero.get_entidad(i, j).romper(miTablero);
+						miTablero.get_entidad(i, j).detonar(miTablero);
 					}
 				}
 			}

@@ -21,7 +21,7 @@ public class GemaRayada extends Gema{
 	}
 
 	@Override
-	public void romper(Tablero miTablero) {
+	public void detonar(Tablero miTablero) {
 		System.out.println("direccion  " + d);
 		int f=fila;
 		int c=columna;
@@ -43,7 +43,7 @@ public class GemaRayada extends Gema{
 			{
 				if(miTablero.get_entidad(fila,i).get_color()!=0)
 				{
-					miTablero.get_entidad(fila, i).romper(miTablero);
+					miTablero.get_entidad(fila, i).detonar(miTablero);
 				}	
 			}
 		  }
@@ -64,7 +64,7 @@ public class GemaRayada extends Gema{
 			{
 				if(miTablero.get_entidad(i, columna).get_color()!=0)
 				{
-			  		miTablero.get_entidad(i, columna).romper(miTablero);	
+			  		miTablero.get_entidad(i, columna).detonar(miTablero);	
 			    }
 		    }
 		  }
@@ -79,7 +79,7 @@ public class GemaRayada extends Gema{
 	{
 		return e.match_con(this);
 	}
-	
+
 	public void explosionAdyacente()
 	{}
 }

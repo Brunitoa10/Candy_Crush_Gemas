@@ -6,7 +6,7 @@ import GUI.EntidadGrafica;
 import Logica.*;
 import Tablero.*;
 
-public abstract class Entidad implements EntidadLogica, Enfocable, Intercambiable, Matchable
+public abstract class Entidad implements EntidadLogica, Enfocable, Intercambiable, Matchable, Detonable
 {
 	protected int fila;
 	protected int columna;
@@ -107,7 +107,7 @@ public abstract class Entidad implements EntidadLogica, Enfocable, Intercambiabl
 
 	public abstract boolean es_posible_intercambiar(Entidad e);
 
-	public abstract void romper(Tablero t);
+	public abstract void detonar(Tablero t);
 
 	public abstract void explosionAdyacente();
 

@@ -9,7 +9,7 @@ public class Hielo extends Obstaculo {
 		super(f, c, "/assets/obstaculo/gema_normal/", col);
 	}
 	
-	public void romper(Tablero  t) {
+	public void detonar(Tablero  t) {
 		    System.out.println("destruido "+ this.color + " en: "+fila+","+columna );
 		    color = Color.TRANSPARENTE;
 		    cargarImagenesRepresentativas(ruta);
