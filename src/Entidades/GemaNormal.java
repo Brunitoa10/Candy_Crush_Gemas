@@ -10,15 +10,15 @@ public class GemaNormal extends Gema{
 		}
 
 
-		public void detonar(Tablero t) {
-			//System.out.println("destruido "+this.getClass().getName()+ " "+ this.color + " en: "+fila+","+columna );
-	   		color = Color.TRANSPARENTE;
-	   		cargarImagenesRepresentativas(ruta);
-	  		entidadG.notificarse_explosion();
+		@Override
+		public void detonar(Tablero tablero) {
+		    color = Color.TRANSPARENTE;
+		    cargarImagenesRepresentativas(ruta);
+		    entidadG.notificarse_explosion();
 		}
 
-		public boolean es_posible_intercambiar(Entidad e) {
-			return e.puede_recibir(this);
+		public boolean es_posible_intercambiar(Entidad entidad) {
+		    return entidad.puede_recibir(this);
 		}
 		
 		public boolean machea(Entidad e) 

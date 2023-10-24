@@ -1,7 +1,5 @@
 package Entidades;
 
-import Tablero.Tablero;
-
 public abstract class Gema extends Entidad{
 
 	public Gema(int f, int c, int col, String ri) {
@@ -47,7 +45,6 @@ public abstract class Gema extends Entidad{
 		return true;
 	}
 
-	public abstract void detonar(Tablero t);
 
 	public abstract void explosionAdyacente();
   

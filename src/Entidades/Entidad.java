@@ -107,8 +107,6 @@ public abstract class Entidad implements EntidadLogica, Enfocable, Intercambiabl
 
 	public abstract boolean es_posible_intercambiar(Entidad e);
 
-	public abstract void detonar(Tablero t);
-
 	public abstract void explosionAdyacente();
 
 }

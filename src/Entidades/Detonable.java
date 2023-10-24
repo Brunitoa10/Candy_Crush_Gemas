@@ -12,5 +12,5 @@ public interface Detonable {
 	 * Detona la entidad que recibe el mensaje.
  	 * Notifica a la entidad gráfica del cambio de estado.
 	 */
-	public void detonar(Tablero t);
+	public void detonar(Tablero miTablero);
 }
