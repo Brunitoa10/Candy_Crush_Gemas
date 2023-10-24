@@ -124,7 +124,6 @@ public class Logica {
 	   
 	    miGUI.limpiarGUI();
 	    
-	    //miTablero.limpiarTablero();
 	    miNivel = GeneradorNivel.cargar_nivel_y_tablero(miTablero, nivelActual, this); // Carga el nivel actual
 
 	    asociarEntidadesLogicasGraficas();

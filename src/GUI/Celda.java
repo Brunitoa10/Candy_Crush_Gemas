@@ -69,4 +69,10 @@ public class Celda extends JLabel implements EntidadGrafica {
 		Icon iconoEscalado = new ImageIcon(imgEscalada);
 		setIcon(iconoEscalado);
 	}
+
+	@Override
+	public void setImagen(String get_imagen_representativa) {
+		cambiar_imagen(get_imagen_representativa);
+		
+	}
 }

@@ -109,7 +109,7 @@ public class Tablero {
 	//METODOS PRIVADOS
 
 	private void mover_jugador_auxiliar(int nf, int nc) {
-		if ( en_rango(nf,nc) ) {
+		if (en_rango(nf,nc) ) {
 			entidades[nf][nc].enfocar();
 			entidades[fJugador][cJugador].desenfocar();
 			fJugador = nf;
@@ -183,7 +183,9 @@ public class Tablero {
 	        for (int columna = 0; columna < columnas; columna++) {
 	            if (entidades[fila][columna] == null || entidades[fila][columna].get_color() == 0) {
 	                // Si no hay una entidad en esta posición, genera una nueva gema
-	                entidades[fila][columna] = generarNuevaGema(fila, columna);
+	                entidades[fila][columna] =  new GemaNormal(fila, columna,new Random().nextInt(8));
+	                entidades[fila][columna].setImagenesRep(entidades[fila][columna].get_imagen_representativa());
+	               
 	            }
 	        }
 	    }
@@ -193,16 +195,6 @@ public class Tablero {
         return this;
     }
 
-	private Entidad generarNuevaGema(int fila, int columna) {
-	    // Define un arreglo de tipos de gemas (pueden ser números, colores, etc.)
-	    int[] tiposDeGemas = {1, 2, 3, 4, 5,6,7,8}; // Ejemplo: 1=Rojo, 2=Verde, 3=Azul, etc.
-
-	    // Selecciona un tipo de gema aleatorio
-	    int tipoDeGemaAleatorio = tiposDeGemas[new Random().nextInt(tiposDeGemas.length)];
-
-	    // Crea y retorna una nueva entidad de gema con el tipo aleatorio y la posición dada
-	    return new GemaNormal(tipoDeGemaAleatorio, fila, columna);
-	}
 
 	private LinkedList<Entidad> buscarCombosEnFila(int fila, int columna) {
 		LinkedList<Entidad> combosEnFila = new LinkedList<>();

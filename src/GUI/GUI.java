@@ -52,7 +52,7 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 	protected CentralAnimaciones mi_animador;
 	
 	protected JPanel panel_tablero, panel_objetivos, panel_vidas,panel_principal;
-	protected JLabel timerLabel,movimientosLabel/*,label_corazon1,label_corazon2,label_corazon3*/;
+	protected JLabel timerLabel,movimientosLabel;
 	protected JLabel[] objetivosProgreso;
 
 	private Imagenfondo fondo = new Imagenfondo();

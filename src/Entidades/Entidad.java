@@ -10,17 +10,18 @@ public abstract class Entidad implements EntidadLogica, Enfocable, Intercambiabl
 {
 	protected int fila;
 	protected int columna;
-	protected boolean enfocada;
+	protected boolean enfocada,detonada;
 	protected String[] imagenes;
 	protected EntidadGrafica entidadG;
 	protected int color;
 	protected String ruta;
 
    //crea una instancia de Entidad
-	protected  Entidad(int f, int c, String ri, int col)  {
+	public  Entidad(int f, int c, String ri, int col)  {
 		fila=f;
 		columna=c;
 		enfocada=false;
+		detonada = false;
 		color=col;
 		ruta = ri;
 		cargarImagenesRepresentativas(ri);
@@ -33,6 +34,14 @@ public abstract class Entidad implements EntidadLogica, Enfocable, Intercambiabl
 
 	public EntidadGrafica getEGrafica() {
 		return entidadG;
+	}
+	
+	@Override
+	public void detonar(Tablero tablero) {
+		detonada = true;
+		color = Color.TRANSPARENTE;
+	    cargarImagenesRepresentativas(ruta);
+	    entidadG.notificarse_explosion();
 	}
 	
 	//obtener la imagen dependiendo si esta enfocada o no dicha entidad
@@ -68,6 +77,11 @@ public abstract class Entidad implements EntidadLogica, Enfocable, Intercambiabl
 		return columna;
 	}
 
+	public boolean estaDetonada() {
+		return detonada;
+	}
+	
+	
 	//cambia la posicion de la entidad
 	public void cambiar_posicion(int nf, int nc) {
 		fila = nf;

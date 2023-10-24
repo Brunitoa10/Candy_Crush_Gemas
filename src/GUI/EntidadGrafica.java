@@ -20,4 +20,6 @@ public interface EntidadGrafica {
 	public void notificarse_cambio_posicion();
 	
 	public void notificarse_explosion();
+
+	public void setImagen(String get_imagen_representativa);
 }

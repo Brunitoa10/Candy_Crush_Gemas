@@ -1,6 +1,5 @@
 package Entidades;
 
-import Logica.Color;
 import Tablero.Tablero;
 
 public class GemaNormal extends Gema{
@@ -8,24 +7,29 @@ public class GemaNormal extends Gema{
 		public GemaNormal(int f, int c, int col) {
 			super(f, c, col, "/assets/gemas/gema_normal/");
 		}
-
-
-		@Override
+		
 		public void detonar(Tablero tablero) {
-		    color = Color.TRANSPARENTE;
-		    cargarImagenesRepresentativas(ruta);
-		    entidadG.notificarse_explosion();
+			super.detonar(tablero);
 		}
-
+		
 		public boolean es_posible_intercambiar(Entidad entidad) {
 		    return entidad.puede_recibir(this);
 		}
 		
-		public boolean machea(Entidad e) 
-		{
-		return e.match_con(this);
+		public boolean puede_recibir(GemaNormal c) {
+			return true;
 		}
-
+		
+		public boolean machea(Entidad e) {
+			System.out.println("Gema Normal matchea(Entidad) :: "+e.get_color()+","+get_color());
+			return e.match_con(this);
+		}
+		
+		@Override
+		public boolean match_con(GemaNormal c) {
+			return true;
+		}
+		
 		public void explosionAdyacente()
 		{}
 }
