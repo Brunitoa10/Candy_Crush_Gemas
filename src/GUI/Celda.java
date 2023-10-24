@@ -71,8 +71,7 @@ public class Celda extends JLabel implements EntidadGrafica {
 	}
 
 	@Override
-	public void setImagen(String get_imagen_representativa) {
-		cambiar_imagen(get_imagen_representativa);
-		
-	}
+	 public void setImagen(String rutaImagen) {
+		cambiar_imagen(rutaImagen);
+    }
 }

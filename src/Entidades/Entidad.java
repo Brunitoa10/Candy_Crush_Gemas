@@ -58,13 +58,7 @@ public abstract class Entidad implements EntidadLogica, Enfocable, Intercambiabl
 	
 	public void setFilaColumna(int f, int c) {
 		fila = f;
-		columna = c;}
-
-	//setear manualmente las imagenes
-	public void setImagenesRep(String g){
-		imagenes[0] = g + color +".png";
-		imagenes[1] = g + color +"-cursor.png";
-		entidadG.notificarse_cambio_estado();
+		columna = c;
 	}
 
     //obtener la fila
@@ -113,7 +107,7 @@ public abstract class Entidad implements EntidadLogica, Enfocable, Intercambiabl
 	}
 
 	//carga las imagenes de la entidad con el cursor y sin el cursor
-	protected void cargarImagenesRepresentativas(String ri) {
+	public void cargarImagenesRepresentativas(String ri) {
 		imagenes = new String [2];
 		imagenes[0] = ri + color +".png";
 		imagenes[1] = ri + color +"-cursor.png";

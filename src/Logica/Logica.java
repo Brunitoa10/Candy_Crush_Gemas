@@ -185,6 +185,7 @@ public class Logica {
 	public void actualizarObjetivos(LinkedList<Entidad> listaCombos) {
 		miNivel.actualizarObjetivos(listaCombos);
 	}
+	
 
 	public void cambiarNivel() {
 	    System.out.println("Logica :: cambiarNivel");

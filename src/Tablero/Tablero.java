@@ -133,15 +133,13 @@ public class Tablero {
 				if (entidades[af][ac].machea(entidades[nf][nc])) {
 					// Llamamos a buscarCombos después de un intercambio exitoso
 					buscarCombos(af, ac, nf, nc);
-					
-
 				} else {
 					aplicar_intercambio(nf, nc, af, ac);
 				}
 			}
 			movimientoValido = true;
 		}
-
+		
 		return movimientoValido;
 	}
 	
@@ -170,27 +168,14 @@ public class Tablero {
 
 			System.out.println("Tablero buscarCombos :: "+listaCombos.size());
 			detonarGemas(listaCombos);
-			generarNuevasGemasDespuesDeDetonar();
+			
 			return listaCombos;
 		} else {
 			throw new IllegalArgumentException("Posición inválida en buscarCombos");
 		}
 	}
 	
-	private void generarNuevasGemasDespuesDeDetonar() {
-	    // Recorre todas las filas desde abajo hacia arriba
-	    for (int fila = filas - 1; fila >= 0; fila--) {
-	        for (int columna = 0; columna < columnas; columna++) {
-	            if (entidades[fila][columna] == null || entidades[fila][columna].get_color() == 0) {
-	                // Si no hay una entidad en esta posición, genera una nueva gema
-	                entidades[fila][columna] =  new GemaNormal(fila, columna,new Random().nextInt(8));
-	                entidades[fila][columna].setImagenesRep(entidades[fila][columna].get_imagen_representativa());
-	               
-	            }
-	        }
-	    }
-	    
-	}
+
 	public Tablero obtenerTablero() {
         return this;
     }
@@ -318,7 +303,6 @@ public class Tablero {
 				System.out.println("Se genera una gema rayada vertical");
 			} else if (cantidad == 5 || cantidad == 6) {
 				if (verificarCombinacionesEspecialesEnColumna(fila, columna)) {
-					//entidad.marcarComoEnvuelta();
 					System.out.println("Se genera una gema Envuelta (Combinación especial en columna)");
 				}
 			} 
@@ -372,37 +356,41 @@ public class Tablero {
 	    for (Entidad entidad : gemasADetonar) {
 	        int fila = entidad.get_fila();
 	        int columna = entidad.get_columna();
+	        Entidad gema = entidades[fila][columna];
 
-	        // Aquí detonas la gema, realiza las acciones necesarias
-	         entidades[fila][columna].detonar(this);
+	        // Verificar si la entidad es válida y no es null
+	        if (gema != null) {
+	            gema.detonar(this);
+	            destruirRocas(gema);
+	        }
 	    }
 	}
 
+	
+	//Es tu misma idea santi, pero optimizada <-----
+	
      //Verifica si hay rocas para romper en la proximidad
-	private void destruirRocas(Entidad e)
-	{
-	  int fila=e.get_fila();
-	  int columna=e.get_columna();
-	  //si no esta en la primer fila manda mensaje
-	  if(fila!=0) 
-	  {
-		entidades[fila-1][columna].explosionAdyacente();
-	  }
-	  //si no esta en la primer columna manda mensaje
-	  if(columna!=0) 
-	  {
-		entidades[fila][columna-1].explosionAdyacente();
-	  }
-	  //si no esta en la ultima fila manda mensaje
-	  if(fila!=filas-1)
-	  {
-		entidades[fila+1][columna].explosionAdyacente();
-	  }
-	  //si no esta en la ultima columna manda mensaje
-	  if(columna!=columnas-1)
-	  {
-		entidades[fila][columna+1].explosionAdyacente();
-	  }
+	private void destruirRocas(Entidad e) {
+	    int fila = e.get_fila();
+	    int columna = e.get_columna();
+
+	    Entidad arriba = (fila > 0) ? entidades[fila - 1][columna] : null;
+	    Entidad abajo = (fila < filas - 1) ? entidades[fila + 1][columna] : null;
+	    Entidad izquierda = (columna > 0) ? entidades[fila][columna - 1] : null;
+	    Entidad derecha = (columna < columnas - 1) ? entidades[fila][columna + 1] : null;
+
+	    if (arriba != null) {
+	        arriba.explosionAdyacente();
+	    }
+	    if (abajo != null) {
+	        abajo.explosionAdyacente();
+	    }
+	    if (izquierda != null) {
+	        izquierda.explosionAdyacente();
+	    }
+	    if (derecha != null) {
+	        derecha.explosionAdyacente();
+	    }
 	}
 
 	private boolean esPosicionValida(int fila, int columna) {
