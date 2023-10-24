@@ -107,7 +107,7 @@ public class Tablero {
 	}
 
 	//METODOS PRIVADOS
-	
+
 	private void mover_jugador_auxiliar(int nf, int nc) {
 		if ( en_rango(nf,nc) ) {
 			entidades[nf][nc].enfocar();
@@ -386,6 +386,32 @@ public class Tablero {
 	    }
 	}
 
+     //Verifica si hay rocas para romper en la proximidad
+	private void destruirRocas(Entidad e)
+	{
+	  int fila=e.get_fila();
+	  int columna=e.get_columna();
+	  //si no esta en la primer fila manda mensaje
+	  if(fila!=0) 
+	  {
+		entidades[fila-1][columna].explosionAdyacente();
+	  }
+	  //si no esta en la primer columna manda mensaje
+	  if(columna!=0) 
+	  {
+		entidades[fila][columna-1].explosionAdyacente();
+	  }
+	  //si no esta en la ultima fila manda mensaje
+	  if(fila!=filas-1)
+	  {
+		entidades[fila+1][columna].explosionAdyacente();
+	  }
+	  //si no esta en la ultima columna manda mensaje
+	  if(columna!=columnas-1)
+	  {
+		entidades[fila][columna+1].explosionAdyacente();
+	  }
+	}
 
 	private boolean esPosicionValida(int fila, int columna) {
 		return (0 <= fila && fila < filas) && (0 <= columna && columna < columnas);
@@ -431,32 +457,5 @@ public class Tablero {
 	        }
 	    }
 	 }*/
-
-	//Verifica si hay rocas para romper en la proximidad
-	/*private void destruirRocas(Entidad e)
-	{
-	  int fila=e.getFila();
-	  int columna=e.getColumna();
-	  //si no esta en la primer fila manda mensaje
-	  if(fila!=0) 
-	  {
-		t[fila-1][columna].getEntidad().explosionAdyacente();
-	  }
-	  //si no esta en la primer columna manda mensaje
-	  if(columna!=0) 
-	  {
-		t[fila][columna-1].getEntidad().explosionAdyacente();
-	  }
-	  //si no esta en la ultima fila manda mensaje
-	  if(fila!=filas-1)
-	  {
-		t[fila+1][columna].getEntidad().explosionAdyacente();
-	  }
-	  //si no esta en la ultima columna manda mensaje
-	  if(columna!=columnas-1)
-	  {
-		t[fila][columna+1].getEntidad().explosionAdyacente();
-	  }
-	}*/
 
 }
