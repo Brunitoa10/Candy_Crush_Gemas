@@ -1,5 +1,8 @@
 package Entidades;
 
+import Logica.Color;
+import Tablero.Tablero;
+
 public class GemaRayada extends Gema{
 	
 	//direccion en la que la gema explotara
@@ -18,66 +21,7 @@ public class GemaRayada extends Gema{
 	}
 
 	@Override
-	public boolean es_posible_intercambiar(Entidad e) {
-		// TODO Auto-generated method stub
-		return e.puede_recibir(this);
-	}
-
-	@Override
-	public boolean puede_recibir(GemaNormal c) {
-		// TODO Auto-generated method stub
-		return true;
-	}
-
-	@Override
-	public boolean puede_recibir(Hielo g) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean puede_recibir(GemaRayada p) {
-		// TODO Auto-generated method stub
-		return true;
-	}
-
-	@Override
-	public boolean puede_recibir(GemaEnvuelta p) {
-		// TODO Auto-generated method stub
-		return true;
-	}
-
-	@Override
-	public boolean machea(Entidad e) {
-		// TODO Auto-generated method stub
-		return e.match_con(this);
-	}
-
-	@Override
-	public boolean match_con(GemaNormal c) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean match_con(GemaRayada p) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean match_con(GemaEnvuelta p) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean match_con(Hielo g) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-		/*public void romper(Tablero miTablero) {
+	public void romper(Tablero miTablero) {
 		System.out.println("direccion  " + d);
 		int f=fila;
 		int c=columna;
@@ -97,9 +41,9 @@ public class GemaRayada extends Gema{
 			}
 			else
 			{
-				if(miTablero.getEntidad(fila,i).obtenerColor()!=0)
+				if(miTablero.get_entidad(fila,i).get_color()!=0)
 				{
-					miTablero.getEntidad(fila, i).romper(miTablero);
+					miTablero.get_entidad(fila, i).romper(miTablero);
 				}	
 			}
 		  }
@@ -118,14 +62,24 @@ public class GemaRayada extends Gema{
 			}
 			else
 			{
-				if(miTablero.getEntidad(i, columna).obtenerColor()!=0)
+				if(miTablero.get_entidad(i, columna).get_color()!=0)
 				{
-			  		miTablero.getEntidad(i, columna).romper(miTablero);	
+			  		miTablero.get_entidad(i, columna).romper(miTablero);	
 			    }
 		    }
 		  }
 	   }
-	}*/
+	}
 
-
+	public boolean es_posible_intercambiar(Entidad e) {
+		return e.puede_recibir(this);
+	}
+	
+	public boolean machea(Entidad e) 
+	{
+		return e.match_con(this);
+	}
+	
+	public void explosionAdyacente()
+	{}
 }

@@ -28,6 +28,12 @@ public interface Matchable {
 	 * @return True, en caso de match; false, en caso contrario.
 	 */
 	public boolean match_con(GemaRayada p);
+	
+	/**
+	 * Indica si la entidad receptora pueda permite generar un match con un potenciador parametrizado.
+	 * @param p Potenciador con el que se analiza el match.
+	 * @return True, en caso de match; false, en caso contrario.
+	 */
 	public boolean match_con(GemaEnvuelta p);
 	
 	/**
@@ -35,6 +41,6 @@ public interface Matchable {
 	 * @param g Glaseado con el que se analiza el match.
 	 * @return True, en caso de match; false, en caso contrario.
 	 */
-	public boolean match_con(Hielo g);
+	public boolean match_con(Roca r);
 	
 }

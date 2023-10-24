@@ -20,12 +20,6 @@ public interface Intercambiable {
 	 */
 	public boolean puede_recibir(GemaNormal c);
 	/**
-	 * Indica si es posible que la entidad receptora pueda ser intercambiada de posición con el Glaseado parametrizado.
-	 * @param g Glaseado con el que se analiza el intercambio.
-	 * @return True si el intercambio es posible, false en caso contrario.
-	 */
-	public boolean puede_recibir(Hielo g);
-	/**
 	 * Indica si es posible que la entidad receptora pueda ser intercambiada de posición con el Potenciador parametrizado.
 	 * @param p Potenciador con el que se analiza el intercambio.
 	 * @return True si el intercambio es posible, false en caso contrario.
