@@ -51,7 +51,7 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 	
 	protected CentralAnimaciones mi_animador;
 	
-	protected JPanel panel_tablero, panel_objetivos, panel_vidas,panel_principal;
+	protected JPanel panel_tablero, panel_objetivos, panel_vidas,panel_principal, panel_movimientos, panel_timer;
 	protected JLabel timerLabel,movimientosLabel;
 	protected JLabel[] objetivosProgreso;
 
@@ -107,32 +107,35 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		panel_principal.setLayout(new GridBagLayout());
 
-		JPanel timerPanel = new JPanel();
+		panel_timer = new JPanel();
+		panel_timer.setBackground(new Color(0,0,0,200));
+
 		timerLabel = new JLabel("Tiempo restante: "+ agregarPaddingTiempo(tiempoRestante));
-		timerLabel.setOpaque(true);
-		timerLabel.setFont(new Font("Algerian", Font.PLAIN, 30));
+		timerLabel.setFont(new Font("Algerian", Font.PLAIN, 20));
 		timerLabel.setForeground(Color.WHITE);
-		timerLabel.setBackground(new Color(0,0,0,255));
-		timerPanel.add(timerLabel);
+
+		panel_timer.add(timerLabel);
+
+		panel_movimientos = new JPanel();
+		panel_movimientos.setBackground(new Color(0,0,0,200));
 
 		movimientosLabel = new JLabel ("Movimientos restantes: "+movimientosRestantes);
-		movimientosLabel.setOpaque(true);
 		movimientosLabel.setFont(new Font("Algerian", Font.PLAIN, 20));
 		movimientosLabel.setForeground(Color.WHITE);
-		movimientosLabel.setBackground(new Color(0,0,0,255));
+
+		panel_movimientos.add(movimientosLabel);
+		
 
 		panel_tablero = new JPanel();
 		panel_tablero.setSize(size_label * filas, size_label * columnas);
 		panel_tablero.setLayout(new GridLayout(filas,columnas,0,0));
-		panel_tablero.setOpaque(true);
-		panel_tablero.setBackground(new Color(0,0,0,0));
+		panel_tablero.setBackground(new Color(0,0,0,125));
 
 
 		panel_objetivos = new JPanel();
 		panel_objetivos.setSize(100,100);
 		panel_objetivos.setLayout(new GridBagLayout());
-		panel_objetivos.setOpaque(true);
-		panel_objetivos.setBackground(new Color(0,0,0,255));
+		panel_objetivos.setBackground(new Color(0,0,0,200));
 
 
 		configurarAccionesTeclado();
@@ -142,7 +145,7 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 		//Constraints TIMER
 		GridBagConstraints c = new GridBagConstraints();
 		c.insets = new Insets(0,10,0,0);
-		agregarConGBCs(timerPanel, panel_principal, c, 0, 0, 3, 1);
+		agregarConGBCs(panel_timer, panel_principal, c, 0, 0, 3, 1);
 	
 		//Constraints PANEL OBJETIVOS
 		c.insets = new Insets(0, 10, 0, 0);   
@@ -166,7 +169,7 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 		c.weightx = 0;
 		c.weightx = 0;
 		c.insets = new Insets(0,0,0,10);
-		agregarConGBCs(movimientosLabel, panel_principal, c, 6, 0, 2, 1); 
+		agregarConGBCs(panel_movimientos, panel_principal, c, 6, 0, 2, 1); 
 		
 		panel_tablero.setFocusable(true);
 		getContentPane().add(panel_principal);
@@ -264,7 +267,6 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 		if(miLogica.getVidas() == 2) {
 			label_corazon3.setIcon(iconoEscaladoCorazonVacio);
 		} else if(miLogica.getVidas() == 1) {
-				System.out.println("QUEDA 1 VIDA");
 				label_corazon2.setIcon(iconoEscaladoCorazonVacio);
 				label_corazon3.setIcon(iconoEscaladoCorazonVacio);
 			}
@@ -277,7 +279,7 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 	}
 	
 	public void mostrarObjetivos() {   
-	    JLabel tituloObjetivo = crearLabel("OBJETIVOS:", "Algerian", Font.PLAIN, 20, Color.WHITE, 2, 1);
+	    JLabel tituloObjetivo = crearLabel(" OBJETIVOS:", "Algerian", Font.PLAIN, 20, Color.WHITE, 2, 1);
 	    GridBagConstraints cTitulo = new GridBagConstraints();
 	    cTitulo.insets = new Insets(0, 0, 0, 0);      
 	    cTitulo.gridx = 0;                               
@@ -350,8 +352,7 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 	            int progreso = gemasTotales - gemasRestantes;
 
 	            objetivosProgreso[i].setText(progreso + "/" + gemasTotales);
-	            objetivosProgreso[i].repaint();
-	            
+	            panel_objetivos.repaint();
 	        }
 	    }
 	}
@@ -373,6 +374,8 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 	public void actualizarTiempo(int tiempo) {	
 	    SwingUtilities.invokeLater(() -> {
 	        timerLabel.setText("Tiempo restante: " + agregarPaddingTiempo(tiempo));
+			tiempoRestante = tiempo;
+			panel_timer.repaint();
 	    });
 	}
 	
