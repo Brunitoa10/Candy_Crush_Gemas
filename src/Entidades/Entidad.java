@@ -117,4 +117,8 @@ public abstract class Entidad implements EntidadLogica, Enfocable, Intercambiabl
 
 	public abstract void explosionAdyacente();
 
+	public boolean puede_recibir(GemaCruzada gemaCruzada) {
+		return false;
+	}
+
 }

@@ -22,6 +22,10 @@ public abstract class Gema extends Entidad{
 	  return c.get_color()==this.getColor();
 	}
 
+	public boolean match_con(GemaCruzada c) {
+	  return c.get_color()==this.getColor();
+	}
+
 	public boolean match_con(Roca r) {
 	  return false;
 	}
@@ -45,6 +49,9 @@ public abstract class Gema extends Entidad{
 		return true;
 	}
 
+	public boolean puede_recibir(GemaCruzada gc) {
+		return true;
+	}
 
 	public abstract void explosionAdyacente();
   

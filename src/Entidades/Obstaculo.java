@@ -35,6 +35,11 @@ public abstract class Obstaculo extends Entidad{
 	}
 
 	@Override
+	public boolean puede_recibir(GemaCruzada p) {
+		return false;
+	}
+
+	@Override
 	public boolean machea(Entidad e) {
 		return false;
 	}
@@ -51,6 +56,10 @@ public abstract class Obstaculo extends Entidad{
 		return false;
 	  }
   
+	   public boolean match_con(GemaCruzada c) {
+		return false;
+	  }
+
 	  public boolean match_con(Roca r) {
 		return false;
 	  }
