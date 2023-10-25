@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
+import java.util.Random;
 
 import Entidades.*;
 import GUI.*;
@@ -106,8 +107,25 @@ public class Tablero {
 		return nombreGema;
 	}
 
+	public void caida(Entidad e)
+	{
+		int puntero=e.get_fila();
+		int columna=e.get_columna();
+		for(int i=puntero;i>0;i--)
+		{
+		  entidades[i+1][columna].intercambiarCaida(i, columna);
+		}
+		entidades[0][columna]= generarGemaRandom(0, columna);
+	}
+	
 	//METODOS PRIVADOS
 
+	private Entidad generarGemaRandom(int fila, int columna)
+	{
+	   Random random = new Random();
+       int color_random= random.nextInt(6) + 1;
+	   return new GemaNormal(fila,columna,color_random);
+	}
 	private void mover_jugador_auxiliar(int nf, int nc) {
 		if (en_rango(nf,nc) ) {
 			entidades[nf][nc].enfocar();
