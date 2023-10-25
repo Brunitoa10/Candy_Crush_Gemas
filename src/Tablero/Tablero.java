@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.Random;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
-import java.util.Random;
 
 import Entidades.*;
 import GUI.*;
@@ -117,7 +116,6 @@ public class Tablero {
 		}
 		entidades[0][columna]= generarGemaRandom(0, columna);
 	}
-	
 	//METODOS PRIVADOS
 
 	private Entidad generarGemaRandom(int fila, int columna)
