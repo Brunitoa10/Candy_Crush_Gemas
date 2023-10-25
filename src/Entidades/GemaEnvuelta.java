@@ -11,11 +11,11 @@ public class GemaEnvuelta extends Gema{
 
 	
 	@Override
-	public void detonar(Tablero miTablero) {
+	public void detonar(Tablero tablero) {
 		int f=fila;
 		int c=columna;
-		int topeFila=miTablero.getFila();
-		int topeColumna=miTablero.getColumna();
+		int topeFila=tablero.getFila();
+		int topeColumna=tablero.getColumna();
 
 		if(f!=0)
 		{
@@ -45,12 +45,13 @@ public class GemaEnvuelta extends Gema{
 						color = Color.TRANSPARENTE;
 						cargarImagenesRepresentativas(ruta);
 						entidadG.notificarse_explosion();
+						tablero.caida(this);
 				}
 				else
 				{
-					if(miTablero.get_entidad(i, columna).get_color()!=0)
+					if(tablero.get_entidad(i, columna).get_color()!=0)
 					{
-						miTablero.get_entidad(i, j).detonar(miTablero);
+						tablero.get_entidad(i, j).detonar(tablero);
 					}
 				}
 			}

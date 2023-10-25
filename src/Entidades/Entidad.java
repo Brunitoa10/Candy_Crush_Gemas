@@ -42,6 +42,7 @@ public abstract class Entidad implements EntidadLogica, Enfocable, Intercambiabl
 		color = Color.TRANSPARENTE;
 	    cargarImagenesRepresentativas(ruta);
 	    entidadG.notificarse_explosion();
+		tablero.caida(this);
 	}
 	
 	//obtener la imagen dependiendo si esta enfocada o no dicha entidad

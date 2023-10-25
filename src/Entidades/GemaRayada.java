@@ -21,14 +21,14 @@ public class GemaRayada extends Gema{
 	}
 
 	@Override
-	public void detonar(Tablero miTablero) {
+	public void detonar(Tablero tablero) {
 		System.out.println("direccion  " + d);
 		int f=fila;
 		int c=columna;
         int tope=0;
        if(d==5) //es Horizontal
 	   {
-          tope=miTablero.getColumna();
+          tope=tablero.getColumna();
 		  for(int i=0;i<tope;i++)
 		  {
 			
@@ -38,19 +38,20 @@ public class GemaRayada extends Gema{
 	          color = Color.TRANSPARENTE;
 	          cargarImagenesRepresentativas(ruta);
 	          entidadG.notificarse_explosion();
+			  tablero.caida(this);
 			}
 			else
 			{
-				if(miTablero.get_entidad(fila,i).get_color()!=0)
+				if(tablero.get_entidad(fila,i).get_color()!=0)
 				{
-					miTablero.get_entidad(fila, i).detonar(miTablero);
+					tablero.get_entidad(fila, i).detonar(tablero);
 				}	
 			}
 		  }
 	   }
 	   else //es Vertical
 	   {
-          tope=miTablero.getFila();
+          tope=tablero.getFila();
 		  for(int i=0;i<tope;i++)
 		  {
             if(i==f)
@@ -58,13 +59,14 @@ public class GemaRayada extends Gema{
                  System.out.println("destruido gema rayada Vertical "+ this.color + " en: "+f+","+c );
 	             color = Color.TRANSPARENTE;
 				 cargarImagenesRepresentativas(ruta);
-	  			 entidadG.notificarse_explosion();;
+	  			 entidadG.notificarse_explosion();
+				   tablero.caida(this);
 			}
 			else
 			{
-				if(miTablero.get_entidad(i, columna).get_color()!=0)
+				if(tablero.get_entidad(i, columna).get_color()!=0)
 				{
-			  		miTablero.get_entidad(i, columna).detonar(miTablero);	
+					tablero.get_entidad(i, columna).detonar(tablero);	
 			    }
 		    }
 		  }
