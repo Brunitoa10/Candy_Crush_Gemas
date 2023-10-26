@@ -43,6 +43,11 @@ public class Celda extends JLabel implements EntidadGrafica {
 		mi_ventana.animar_explosion(this);
 	}
 	
+	@Override
+	public void notificarse_caida() {
+		mi_ventana.animar_caida(this);	
+	}
+	
 	/**
 	 * Obtiene la entidad lógica asociada a la entidad gráfica.
 	 * @return La entidad lógica asociada.
@@ -74,4 +79,6 @@ public class Celda extends JLabel implements EntidadGrafica {
 	 public void setImagen(String rutaImagen) {
 		cambiar_imagen(rutaImagen);
     }
+
+	
 }

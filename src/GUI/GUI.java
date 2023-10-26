@@ -28,6 +28,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import Entidades.Entidad;
+
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import Logica.EntidadLogica;
@@ -56,6 +58,8 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 	protected JLabel[] objetivosProgreso;
 
 	private Imagenfondo fondo = new Imagenfondo();
+	private static GUI instancia; 
+	
 	
 	// Define un mapa para asociar los códigos de tecla con las acciones
 	Map<Integer, Runnable> acciones = new HashMap<>();
@@ -68,7 +72,7 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 	public static final int DERECHA = 15003;
 	
 	
-	public GUI(Logica l, int f, int c) {
+	private GUI(Logica l, int f, int c) {
 		miLogica = l;
 		filas = f;
 		mi_animador = new CentralAnimaciones(this);
@@ -83,7 +87,13 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 		inicializarGUI();
 	}
 	
-	
+	 public static GUI getInstancia(Logica l, int f, int c) {
+	        if (instancia == null) {
+	            instancia = new GUI(l, f, c);
+	        }
+	        return instancia;
+	  }
+	 
 	private void inicializarGUI() {
 		this.setContentPane(fondo);
 		
@@ -234,6 +244,7 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 		panel_tablero.add(celda);
 		return celda;
 	}
+	
 	private JLabel label_corazon1 = new JLabel();
 	private JLabel label_corazon2 = new JLabel();
 	private JLabel label_corazon3 = new JLabel();
@@ -428,11 +439,11 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 	}
 	
 	
-	/*public void animar_caida(Celda c) {
+	public void animar_caida(Celda c) {
 		synchronized(c){
-		mi_animador.agregar_caida(c);
+			mi_animador.animar_caida(c);
 		}
-	}*/
+	}
 
 	public void actualizarMovimientos(int movimientos) {
 		movimientosLabel.setText("Movimientos restantes: "+movimientos);
@@ -711,5 +722,29 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 
     }
 
+	public void actualiarTableroGUI() {
+	    for (int i = 0; i < miLogica.getTablero().getFila(); i++) {
+	        for (int j = 0; j < miLogica.getTablero().getColumna(); j++) {
+	            Entidad entidad = miLogica.getEntidadDelTablero(i, j);
+
+	            // Obtén la entidad gráfica asociada a la entidad lógica
+	            EntidadGrafica entidadGrafica = entidad.getEGrafica();
+
+	            // Si la entidad gráfica no está en el panel, agrégala
+	            if (entidadGrafica != null ) {
+	                EntidadGrafica nuevaEntidadGrafica = agregar_entidad(entidad);
+	                entidad.setEntidadGrafica(nuevaEntidadGrafica); // Asegúrate de actualizar la referencia en la entidad lógica
+	            }
+
+	            // Actualiza la representación gráfica según la entidad lógica
+	            if (entidadGrafica != null) {
+	                entidadGrafica.setImagen(entidad.get_imagen_representativa());
+	                entidadGrafica.notificarse_cambio_estado();
+	            }
+	        }
+	    }
+	  
+	}
+	
 }
 

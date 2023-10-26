@@ -22,4 +22,7 @@ public interface EntidadGrafica {
 	public void notificarse_explosion();
 
 	public void setImagen(String get_imagen_representativa);
+
+	public void notificarse_caida();
+
 }
