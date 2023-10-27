@@ -35,7 +35,7 @@ public class GemaCruzada extends Gema {
 	             color = Color.TRANSPARENTE;
 				 cargarImagenesRepresentativas(ruta);
 	  			 entidadG.notificarse_explosion();
-				 tablero.caida(this);
+				// tablero.caida(this);
         }
 		
 		public boolean es_posible_intercambiar(Entidad entidad) {

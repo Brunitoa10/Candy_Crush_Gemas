@@ -26,7 +26,7 @@ public class GemaRayada extends Gema{
 		int f=fila;
 		int c=columna;
         int tope=0;
-       if(d==5) //es Horizontal
+       if(d==HORIZONTAL) //es Horizontal
 	   {
           tope=tablero.getColumna();
 		  for(int i=0;i<tope;i++)
@@ -38,7 +38,7 @@ public class GemaRayada extends Gema{
 	          color = Color.TRANSPARENTE;
 	          cargarImagenesRepresentativas(ruta);
 	          entidadG.notificarse_explosion();
-			  tablero.caida(this);
+			 // tablero.caida(this);
 			}
 			else
 			{
@@ -60,7 +60,7 @@ public class GemaRayada extends Gema{
 	             color = Color.TRANSPARENTE;
 				 cargarImagenesRepresentativas(ruta);
 	  			 entidadG.notificarse_explosion();
-				   tablero.caida(this);
+				  //tablero.caida(this);
 			}
 			else
 			{

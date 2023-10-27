@@ -10,7 +10,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.awt.Insets;
 import java.awt.Toolkit;
@@ -32,6 +34,7 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import Logica.EntidadLogica;
 import Logica.Logica;
+import Tablero.Tablero;
 import Threads.CentralAnimaciones;
 
 
@@ -428,11 +431,13 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 	}
 	
 	
-	/*public void animar_caida(Celda c) {
+	public void animar_caida(Celda c) {
 		synchronized(c){
-		mi_animador.agregar_caida(c);
+			System.out.println("GUI :: Caida");
+			repaint();
+			mi_animador.animar_estado_caida(c);
 		}
-	}*/
+	}
 
 	public void actualizarMovimientos(int movimientos) {
 		movimientosLabel.setText("Movimientos restantes: "+movimientos);
@@ -710,6 +715,46 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
         }
 
     }
+
+	/*public void actualizarTablero() {
+	    // Limpiar el panel_tablero
+	    panel_tablero.removeAll();
+	      
+	    // Iterar sobre el tablero y agregar las entidades gráficas al panel_tablero
+	    for (int i = 0; i < filas; i++) {
+	        for (int j = 0; j < columnas; j++) {
+	        	  agregar_entidad(miLogica.getTablero().get_entidad(i, j)); // Obtener el componente adecuado
+	        }
+	    }
+	    
+	    // Volver a validar el panel_tablero y repintar la GUI
+	    panel_tablero.revalidate();
+	    panel_tablero.repaint();
+	}*/
+	
+	/*public void actualizarTablero() {
+	    // Limpiar el panel_tablero
+	    panel_tablero.removeAll();
+
+	    // Lista para almacenar las entidades a agregar
+	    List<EntidadLogica> entidades = new ArrayList<>();
+
+	    // Iterar sobre el tablero y agregar las entidades a la lista
+	    for (int i = 0; i < filas; i++) {
+	        for (int j = 0; j < columnas; j++) {
+	            entidades.add(miLogica.getTablero().get_entidad(i, j));
+	        }
+	    }
+
+	    // Agregar todas las entidades al panel_tablero
+	    for (EntidadLogica entidad : entidades) {
+	        agregar_entidad(entidad);
+	    }
+
+	    // Validar y repintar el panel_tablero
+	    panel_tablero.revalidate();
+	    panel_tablero.repaint();
+	}*/
 
 }
 

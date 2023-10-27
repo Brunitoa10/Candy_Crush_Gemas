@@ -24,4 +24,6 @@ public interface VentanaAnimable {
 
 	public void animar_explosion(Celda celda);
 
+    public void animar_caida(Celda celda);
+
 }

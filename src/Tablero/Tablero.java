@@ -106,24 +106,33 @@ public class Tablero {
 		return nombreGema;
 	}
 
-	public void caida(Entidad e)
+
+	/**
+	 * @param e Entidad que fue detonada
+	*/
+
+	/*public void caida(Entidad e)
 	{
 		int puntero=e.get_fila();
 		int columna=e.get_columna();
 		for(int i=puntero;i>0;i--)
 		{
+		System.out.println("Tablero caida ::  Color: "+entidades[i+1][columna].get_color()+" puntero "+i+" columna "+columna);
 		  entidades[i+1][columna].intercambiarCaida(i, columna);
+		  agregar_entidad(generarGemaRandom(0, columna));
+		
 		}
-		entidades[0][columna]= generarGemaRandom(0, columna);
+		
 	}
 	//METODOS PRIVADOS
 
 	private Entidad generarGemaRandom(int fila, int columna)
 	{
 	   Random random = new Random();
-       int color_random= random.nextInt(6) + 1;
+       int color_random = random.nextInt(6) + 1;
 	   return new GemaNormal(fila,columna,color_random);
-	}
+	}*/
+
 	private void mover_jugador_auxiliar(int nf, int nc) {
 		if (en_rango(nf,nc) ) {
 			entidades[nf][nc].enfocar();
@@ -140,15 +149,13 @@ public class Tablero {
 		
 		if (en_rango(nf, nc)) {
 			if (entidades[af][ac].es_posible_intercambiar(entidades[nf][nc])) {
-
-				// Anima el posible intercambio de entidades
-				aplicar_intercambio(af, ac, nf, nc);
-
 				// Si el intercambio provoca un match de 2 o 3 entidades, chequea las combinaciones y detona lo necesario
 				// De lo contrario, retrotae el intercambio anterior que no fue válido
 				if (entidades[af][ac].machea(entidades[nf][nc])) {
 					// Llamamos a buscarCombos después de un intercambio exitoso
-					buscarCombos(af, ac, nf, nc);
+					//buscarCombos(af, ac, nf, nc);
+					// Anima el posible intercambio de entidades
+					aplicar_intercambio(af, ac, nf, nc);
 				} else {
 					aplicar_intercambio(nf, nc, af, ac);
 				}
@@ -229,13 +236,13 @@ public class Tablero {
 
 			if (cantidad == 4) {
 				//entidad.marcarComoRayadaHorizontal(); // Suponiendo que hay un método para marcar como gema rayada horizontal
-				System.out.println("Se genera una gema rayada horizontal");
+				System.out.println("Tablero :: Se genera una gema rayada horizontal");
 			} else {
 				if (cantidad == 5 || cantidad == 6) {
 					// Verificar combinaciones en forma de T, L o sigmoide
 					if (verificarCombinacionesEspecialesEnFila(fila, columna)) {
 						//entidad.marcarComoEnvuelta();
-						System.out.println("Se genera una gema Envuelta (Combinación especial en fila)");
+						System.out.println("Tablero :: Se genera una gema Envuelta (Combinación especial en fila)");
 					}
 				}
 			} 
@@ -257,7 +264,7 @@ public class Tablero {
 					entidades[fila][columna - 2].get_color() == tipoGema &&
 					entidades[fila][columna + 1].get_color() == tipoGema) {
 				verificaCombinacion = true;
-				System.out.println("T fila");
+				System.out.println("Tablero :: T fila");
 			}
 		}
 
@@ -267,7 +274,7 @@ public class Tablero {
 					entidades[fila][columna - 2].get_color() == tipoGema &&
 					entidades[fila + 1][columna - 2].get_color() == tipoGema) {
 				verificaCombinacion = true;
-				System.out.println("L fila");
+				System.out.println("Tablero :: L fila");
 			}
 		}
 
@@ -278,7 +285,7 @@ public class Tablero {
 					entidades[fila - 1][columna].get_color() == tipoGema &&
 					entidades[fila + 1][columna].get_color() == tipoGema) {
 				verificaCombinacion = true;
-				System.out.println("Sigmoide fila");
+				System.out.println("Tablero :: Sigmoide fila");
 			}
 		}
 
@@ -316,10 +323,10 @@ public class Tablero {
 
 			if (cantidad == 4) {
 				//entidad.marcarComoRayadaVertical(); // Suponiendo que hay un método para marcar como gema rayada vertical
-				System.out.println("Se genera una gema rayada vertical");
+				System.out.println("Tablero :: Se genera una gema rayada vertical");
 			} else if (cantidad == 5 || cantidad == 6) {
 				if (verificarCombinacionesEspecialesEnColumna(fila, columna)) {
-					System.out.println("Se genera una gema Envuelta (Combinación especial en columna)");
+					System.out.println("Tablero :: Se genera una gema Envuelta (Combinación especial en columna)");
 				}
 			} 
 		} else {
@@ -339,7 +346,7 @@ public class Tablero {
 					entidades[fila - 2][columna].get_color() == tipoGema &&
 					entidades[fila + 1][columna].get_color() == tipoGema) {
 				verificaCombinacion = true;
-				System.out.println("T columna");
+				System.out.println("Tablero :: T columna");
 			}
 		}
 
@@ -349,7 +356,7 @@ public class Tablero {
 					entidades[fila - 2][columna].get_color() == tipoGema &&
 					entidades[fila - 2][columna + 1].get_color() == tipoGema) {
 				verificaCombinacion = true;
-				System.out.println("L columna");
+				System.out.println("Tablero :: L columna");
 			}
 		}
 
@@ -360,7 +367,7 @@ public class Tablero {
 					entidades[fila][columna - 1].get_color() == tipoGema &&
 					entidades[fila][columna + 1].get_color() == tipoGema) {
 				verificaCombinacion = true;
-				System.out.println("Sigmoide columna");
+				System.out.println("Tablero :: Sigmoide columna");
 			}
 		}
 
@@ -368,8 +375,9 @@ public class Tablero {
 	}
 
 
-	private void detonarGemas(LinkedList<Entidad> gemasADetonar) {
-	    for (Entidad entidad : gemasADetonar) {
+	/*private void detonarGemas(LinkedList<Entidad> gemasADetonar) {
+	    
+		for (Entidad entidad : gemasADetonar) {
 	        int fila = entidad.get_fila();
 	        int columna = entidad.get_columna();
 	        Entidad gema = entidades[fila][columna];
@@ -378,11 +386,35 @@ public class Tablero {
 	        if (gema != null) {
 	            gema.detonar(this);
 	            destruirRocas(gema);
+	            System.out.println("Tablero :: detonar gemas llamada caida");
 	        }
 	    }
-	}
+	    
+	}*/
 
-	
+	private void detonarGemas(LinkedList<Entidad> gemasADetonar) {
+	    Thread explosionThread = new Thread(() -> {
+	        int fila = 0, columna = 0;
+	        Entidad gema = null;
+
+	        for (Entidad entidad : gemasADetonar) {
+	            fila = entidad.get_fila();
+	            columna = entidad.get_columna();
+	            gema = entidades[fila][columna];
+
+	            if (gema != null) {
+	               
+	                gema.detonar(this);
+	                destruirRocas(gema);
+	            }
+	        }
+
+	        // Después de la explosión, actualiza la GUI
+	       // miLogica.actualizarTablero();
+	    });
+
+	    explosionThread.start(); // Inicia el hilo de explosión
+	}
 	//Es tu misma idea santi, pero optimizada <-----
 	
      //Verifica si hay rocas para romper en la proximidad
@@ -397,15 +429,19 @@ public class Tablero {
 
 	    if (arriba != null) {
 	        arriba.explosionAdyacente();
+	       // caida(arriba);
 	    }
 	    if (abajo != null) {
 	        abajo.explosionAdyacente();
+	        //caida(abajo);
 	    }
 	    if (izquierda != null) {
 	        izquierda.explosionAdyacente();
+	       // caida(izquierda);
 	    }
 	    if (derecha != null) {
 	        derecha.explosionAdyacente();
+	       // caida(derecha);
 	    }
 	}
 

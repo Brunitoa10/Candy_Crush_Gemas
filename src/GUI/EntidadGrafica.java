@@ -1,5 +1,7 @@
 package GUI;
 
+import java.awt.Component;
+
 /**
  * Define los mensajes posibles de solicitar por sobre las entidades gráficas de la aplicación.
  * @author FJoaquin (federico.joaquin@cs.uns.edu.ar)
@@ -21,5 +23,10 @@ public interface EntidadGrafica {
 	
 	public void notificarse_explosion();
 
+	public void notificarse_caida();
+	
 	public void setImagen(String get_imagen_representativa);
+
+
+	
 }

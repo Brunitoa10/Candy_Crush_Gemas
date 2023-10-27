@@ -42,7 +42,6 @@ public abstract class Entidad implements EntidadLogica, Enfocable, Intercambiabl
 		color = Color.TRANSPARENTE;
 	    cargarImagenesRepresentativas(ruta);
 	    entidadG.notificarse_explosion();
-		tablero.caida(this);
 	}
 	
 	//obtener la imagen dependiendo si esta enfocada o no dicha entidad
@@ -87,7 +86,8 @@ public abstract class Entidad implements EntidadLogica, Enfocable, Intercambiabl
 	public void intercambiarCaida(int nf, int nc) {
 		fila = nf;
 		columna = nc;
-		entidadG.notificarse_cambio_posicion();;
+		System.out.println("Entidad intercambiarCaida");
+		entidadG.notificarse_caida();
 	}
 
 	//enfoca la entidad
