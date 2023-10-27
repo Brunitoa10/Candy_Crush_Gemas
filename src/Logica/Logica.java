@@ -26,8 +26,7 @@ public class Logica {
 		nivelActual = 1;
 		miTablero = new Tablero(this);
 		miNivel = GeneradorNivel.cargar_nivel_y_tablero(miTablero,nivelActual,this);
-		//miGUI = new GUI(this, miTablero.getFila(), miTablero.getColumna());
-		miGUI = GUI.getInstancia(this, miTablero.getFila(), miTablero.getColumna());
+		miGUI = new GUI(this, miTablero.getFila(), miTablero.getColumna());
 		asociarEntidadesLogicasGraficas();
 		miTablero.fijarJugador(miNivel.getFilaInicialJugador(), miNivel.getColumnaInicialJugador());
 		
@@ -196,8 +195,7 @@ public class Logica {
 	    	miGUI.dispose();;
 	    	miTablero = new Tablero(this);
 			miNivel = GeneradorNivel.cargar_nivel_y_tablero(miTablero,nivelActual,this);
-			//miGUI = new GUI(this, miTablero.getFila(), miTablero.getColumna());	
-			miGUI = GUI.getInstancia(this, miTablero.getFila(), miTablero.getColumna());
+			miGUI = new GUI(this, miTablero.getFila(), miTablero.getColumna());	
 			miGUI.cambiarFondo(nivelActual);
 			asociarEntidadesLogicasGraficas();
 		} else {

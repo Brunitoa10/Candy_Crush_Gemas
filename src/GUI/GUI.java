@@ -75,7 +75,7 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 	public static final int DERECHA = 15003;
 	
 	
-	private GUI(Logica l, int f, int c) {
+	public GUI(Logica l, int f, int c) {
 		miLogica = l;
 		filas = f;
 		mi_animador = new CentralAnimaciones(this);
@@ -90,12 +90,7 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 		inicializarGUI();
 	}
 	
-	 public static GUI getInstancia(Logica l, int f, int c) {
-	        if (instancia == null) {
-	            instancia = new GUI(l, f, c);
-	        }
-	        return instancia;
-	  }
+
 	 
 	private void inicializarGUI() {
 		this.setContentPane(fondo);
