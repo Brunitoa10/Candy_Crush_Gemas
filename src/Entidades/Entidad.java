@@ -43,7 +43,6 @@ public abstract class Entidad implements EntidadLogica, Enfocable, Intercambiabl
 	    cargarImagenesRepresentativas(ruta);
 	    entidadG.notificarse_explosion();
 	    entidadG.notificarse_cambio_estado();
-		//tablero.caida(this);
 	}
 	
 	//obtener la imagen dependiendo si esta enfocada o no dicha entidad

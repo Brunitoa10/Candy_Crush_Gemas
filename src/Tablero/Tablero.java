@@ -106,32 +106,22 @@ public class Tablero {
 		}
 		return nombreGema;
 	}
-
-	/*public void caida(Entidad e)
-	{
-		int puntero=e.get_fila();
-		int columna=e.get_columna();
-		for(int i=puntero;i>0;i--)
-		{
-		  entidades[i+1][columna].intercambiarCaida(i, columna);
-		}
-		entidades[0][columna]= generarGemaRandom(0, columna);
-	}*/
 	
-	public void caida(Entidad e) {
-	    int puntero = e.get_fila();
-	    int columna = e.get_columna();
-	    
-	    // Primero movemos todas las entidades hacia arriba, excepto las que son cero
-	    for (int i = puntero; i > 0; i--) {
-	        if (entidades[i-1][columna].get_color() != 0) {
-	            entidades[i][columna].intercambiarCaida(i, columna);
-	        }
-	    }
-	    
-	    // Luego, colocamos una nueva entidad aleatoria en la parte superior
-	    entidades[0][columna] = new GemaNormal(puntero,columna,new Random().nextInt(8));
+	public void caida(int puntero,int columna ) {
+		for (int i = puntero; i > 0; i--) {
+			if (entidades[i][columna].get_color() != 0) {
+				Entidad aux=entidades[i - 1][columna];
+				entidades[i][columna] = entidades[i - 1][columna];
+				entidades[i - 1][columna]=aux;
+			}
+		}
+		entidades[0][columna] = new GemaNormal(0,columna,new Random().nextInt(8));
 	}
+	
+	
+	
+
+
 	//METODOS PRIVADOS
 
 	
@@ -167,10 +157,10 @@ public class Tablero {
 			        for (int f = 0; f < filas; f++) {
 			            for (int c = 0; c < columnas; c++) {
 			                if (entidades[f][c].get_color() == 0) {
-			                    entidades[f][c] = new GemaNormal(f,c,new Random().nextInt(8));
+								caida(f,c);
 			                }
 			            }
-			        }
+			        } 
 			        
 					System.out.println("Intercambiar_auxiliar despues de generar nuevas gemas en caida");
 					imprimirTablero();
