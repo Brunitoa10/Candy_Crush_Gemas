@@ -105,26 +105,7 @@ public class Tablero {
 		}
 		return nombreGema;
 	}
-<<<<<<< HEAD
 
-
-	/**
-	 * @param e Entidad que fue detonada
-	*/
-
-	/*public void caida(Entidad e)
-	{
-		int puntero=e.get_fila();
-		int columna=e.get_columna();
-		for(int i=puntero;i>0;i--)
-		{
-		System.out.println("Tablero caida ::  Color: "+entidades[i+1][columna].get_color()+" puntero "+i+" columna "+columna);
-		  entidades[i+1][columna].intercambiarCaida(i, columna);
-		  agregar_entidad(generarGemaRandom(0, columna));
-		
-		}
-		
-=======
 	
 	public void caida(int puntero,int columna ) {
 		for (int i = puntero; i > 0; i--) {
@@ -135,26 +116,8 @@ public class Tablero {
 			}
 		}
 		entidades[0][columna] = new GemaNormal(0,columna,new Random().nextInt(8));
->>>>>>> e02cc1babbf0f14fd9db4e22b4078a6488bbb646
 	}
 	
-	
-	
-
-
-	//METODOS PRIVADOS
-
-<<<<<<< HEAD
-	private Entidad generarGemaRandom(int fila, int columna)
-	{
-	   Random random = new Random();
-       int color_random = random.nextInt(6) + 1;
-	   return new GemaNormal(fila,columna,color_random);
-	}*/
-
-=======
-	
->>>>>>> e02cc1babbf0f14fd9db4e22b4078a6488bbb646
 	private void mover_jugador_auxiliar(int nf, int nc) {
 		if (en_rango(nf,nc) ) {
 			entidades[nf][nc].enfocar();
@@ -175,11 +138,11 @@ public class Tablero {
 				// De lo contrario, retrotae el intercambio anterior que no fue válido
 				if (entidades[af][ac].machea(entidades[nf][nc])) {
 					// Llamamos a buscarCombos después de un intercambio exitoso
-<<<<<<< HEAD
+
 					//buscarCombos(af, ac, nf, nc);
 					// Anima el posible intercambio de entidades
 					aplicar_intercambio(af, ac, nf, nc);
-=======
+
 					buscarCombos(af, ac, nf, nc);
 					System.out.println("TABLERO despues de buscarCombos y detonar");
 					imprimirTablero();
@@ -188,7 +151,7 @@ public class Tablero {
 			        for (int f = 0; f < filas; f++) {
 			            for (int c = 0; c < columnas; c++) {
 			                if (entidades[f][c].get_color() == 0) {
-								caida(f,c);
+			                	entidades[f][c] = new GemaNormal(f,c,new Random().nextInt(8));
 			                }
 			            }
 			        } 
@@ -196,7 +159,6 @@ public class Tablero {
 					System.out.println("Intercambiar_auxiliar despues de generar nuevas gemas en caida");
 					imprimirTablero();
 					//miLogica.actualiarTableroGUI();
->>>>>>> e02cc1babbf0f14fd9db4e22b4078a6488bbb646
 				} else {
 					aplicar_intercambio(nf, nc, af, ac);
 				}
@@ -429,54 +391,42 @@ public class Tablero {
 	}
 
 
-	/*private void detonarGemas(LinkedList<Entidad> gemasADetonar) {
-	    
-		for (Entidad entidad : gemasADetonar) {
+	private void detonarGemas(LinkedList<Entidad> gemasADetonar) {
+	    // Crear el mapa para almacenar las filas y columnas de detonaciones
+	    HashMap<Integer, Integer> detonaciones = new HashMap<>();
+
+	    for (Entidad entidad : gemasADetonar) {
 	        int fila = entidad.get_fila();
 	        int columna = entidad.get_columna();
 	        Entidad gema = entidades[fila][columna];
 
-	        // Verificar si la entidad es válida y no es null
 	        if (gema != null) {
 	            gema.detonar(this);
 	            destruirRocas(gema);
-<<<<<<< HEAD
-	            System.out.println("Tablero :: detonar gemas llamada caida");
+
+	            // Almacenar la fila y columna de la detonación en el mapa
+	            detonaciones.put(fila, columna);
 	        }
 	    }
-	    
-	}*/
 
-	private void detonarGemas(LinkedList<Entidad> gemasADetonar) {
-	    Thread explosionThread = new Thread(() -> {
-	        int fila = 0, columna = 0;
-	        Entidad gema = null;
+	    // Iterar sobre el mapa de detonaciones
+	    for (Map.Entry<Integer, Integer> entry : detonaciones.entrySet()) {
+	        int fila = entry.getKey();
+	        int columna = entry.getValue();
 
-	        for (Entidad entidad : gemasADetonar) {
-	            fila = entidad.get_fila();
-	            columna = entidad.get_columna();
-	            gema = entidades[fila][columna];
-
-	            if (gema != null) {
-	               
-	                gema.detonar(this);
-	                destruirRocas(gema);
-	            }
+	        // Realizar los intercambios y ajustes necesarios
+	        for (int i = fila; i > 0; i--) {
+	            entidades[i][columna] = entidades[i-1][columna];
 	        }
 
-	        // Después de la explosión, actualiza la GUI
-	       // miLogica.actualizarTablero();
-	    });
-
-	    explosionThread.start(); // Inicia el hilo de explosión
-	}
-=======
-	        }  
+	        // Poner ceros en la fila superior
+	        entidades[0][columna].set_color(0);
 	    }
-	   
 	}
 
->>>>>>> e02cc1babbf0f14fd9db4e22b4078a6488bbb646
+
+
+
 	//Es tu misma idea santi, pero optimizada <-----
 	
      //Verifica si hay rocas para romper en la proximidad
@@ -491,19 +441,15 @@ public class Tablero {
 
 	    if (arriba != null) {
 	        arriba.explosionAdyacente();
-	       // caida(arriba);
 	    }
 	    if (abajo != null) {
 	        abajo.explosionAdyacente();
-	        //caida(abajo);
 	    }
 	    if (izquierda != null) {
 	        izquierda.explosionAdyacente();
-	       // caida(izquierda);
 	    }
 	    if (derecha != null) {
 	        derecha.explosionAdyacente();
-	       // caida(derecha);
 	    }
 	}
 

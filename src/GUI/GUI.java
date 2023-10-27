@@ -444,13 +444,9 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 	
 	public void animar_caida(Celda c) {
 		synchronized(c){
-<<<<<<< HEAD
 			System.out.println("GUI :: Caida");
 			repaint();
-			mi_animador.animar_estado_caida(c);
-=======
 			mi_animador.animar_caida(c);
->>>>>>> e02cc1babbf0f14fd9db4e22b4078a6488bbb646
 		}
 	}
 
@@ -731,48 +727,6 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 
     }
 
-<<<<<<< HEAD
-	/*public void actualizarTablero() {
-	    // Limpiar el panel_tablero
-	    panel_tablero.removeAll();
-	      
-	    // Iterar sobre el tablero y agregar las entidades gráficas al panel_tablero
-	    for (int i = 0; i < filas; i++) {
-	        for (int j = 0; j < columnas; j++) {
-	        	  agregar_entidad(miLogica.getTablero().get_entidad(i, j)); // Obtener el componente adecuado
-	        }
-	    }
-	    
-	    // Volver a validar el panel_tablero y repintar la GUI
-	    panel_tablero.revalidate();
-	    panel_tablero.repaint();
-	}*/
-	
-	/*public void actualizarTablero() {
-	    // Limpiar el panel_tablero
-	    panel_tablero.removeAll();
-
-	    // Lista para almacenar las entidades a agregar
-	    List<EntidadLogica> entidades = new ArrayList<>();
-
-	    // Iterar sobre el tablero y agregar las entidades a la lista
-	    for (int i = 0; i < filas; i++) {
-	        for (int j = 0; j < columnas; j++) {
-	            entidades.add(miLogica.getTablero().get_entidad(i, j));
-	        }
-	    }
-
-	    // Agregar todas las entidades al panel_tablero
-	    for (EntidadLogica entidad : entidades) {
-	        agregar_entidad(entidad);
-	    }
-
-	    // Validar y repintar el panel_tablero
-	    panel_tablero.revalidate();
-	    panel_tablero.repaint();
-	}*/
-
-=======
 	public void actualiarTableroGUI() {
 	    for (int i = 0; i < miLogica.getTablero().getFila(); i++) {
 	        for (int j = 0; j < miLogica.getTablero().getColumna(); j++) {
@@ -796,7 +750,6 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 	    }
 	  
 	}
-	
->>>>>>> e02cc1babbf0f14fd9db4e22b4078a6488bbb646
+
 }
 

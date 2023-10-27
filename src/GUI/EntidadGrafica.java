@@ -26,12 +26,4 @@ public interface EntidadGrafica {
 	public void notificarse_caida();
 	
 	public void setImagen(String get_imagen_representativa);
-
-<<<<<<< HEAD
-
-	
-=======
-	public void notificarse_caida();
-
->>>>>>> e02cc1babbf0f14fd9db4e22b4078a6488bbb646
 }

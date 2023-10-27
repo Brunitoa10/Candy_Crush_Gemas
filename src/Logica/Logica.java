@@ -207,25 +207,15 @@ public class Logica {
 		miTablero.fijarJugador(miNivel.getFilaInicialJugador(), miNivel.getColumnaInicialJugador());
 	}
 
-
-<<<<<<< HEAD
-	/*public void actualizarTablero() {
-		miGUI.actualizarTablero();
-	}*/
-
-
 	public Tablero getTablero() {
 		// TODO Auto-generated method stub
 		return miTablero.obtenerTablero();
-=======
+	}
+
 	public void actualiarTableroGUI() {
 		miGUI.actualiarTableroGUI();
 	}
 
 
-	public Tablero getTablero() {
-		return miTablero;
->>>>>>> e02cc1babbf0f14fd9db4e22b4078a6488bbb646
-	}
-
+	
 }
