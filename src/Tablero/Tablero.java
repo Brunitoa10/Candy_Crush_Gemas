@@ -105,6 +105,7 @@ public class Tablero {
 		}
 		return nombreGema;
 	}
+<<<<<<< HEAD
 
 
 	/**
@@ -123,9 +124,27 @@ public class Tablero {
 		
 		}
 		
+=======
+	
+	public void caida(int puntero,int columna ) {
+		for (int i = puntero; i > 0; i--) {
+			if (entidades[i][columna].get_color() != 0) {
+				Entidad aux=entidades[i - 1][columna];
+				entidades[i][columna] = entidades[i - 1][columna];
+				entidades[i - 1][columna]=aux;
+			}
+		}
+		entidades[0][columna] = new GemaNormal(0,columna,new Random().nextInt(8));
+>>>>>>> e02cc1babbf0f14fd9db4e22b4078a6488bbb646
 	}
+	
+	
+	
+
+
 	//METODOS PRIVADOS
 
+<<<<<<< HEAD
 	private Entidad generarGemaRandom(int fila, int columna)
 	{
 	   Random random = new Random();
@@ -133,6 +152,9 @@ public class Tablero {
 	   return new GemaNormal(fila,columna,color_random);
 	}*/
 
+=======
+	
+>>>>>>> e02cc1babbf0f14fd9db4e22b4078a6488bbb646
 	private void mover_jugador_auxiliar(int nf, int nc) {
 		if (en_rango(nf,nc) ) {
 			entidades[nf][nc].enfocar();
@@ -153,9 +175,28 @@ public class Tablero {
 				// De lo contrario, retrotae el intercambio anterior que no fue válido
 				if (entidades[af][ac].machea(entidades[nf][nc])) {
 					// Llamamos a buscarCombos después de un intercambio exitoso
+<<<<<<< HEAD
 					//buscarCombos(af, ac, nf, nc);
 					// Anima el posible intercambio de entidades
 					aplicar_intercambio(af, ac, nf, nc);
+=======
+					buscarCombos(af, ac, nf, nc);
+					System.out.println("TABLERO despues de buscarCombos y detonar");
+					imprimirTablero();
+					
+					 // Después de detonar los combos, buscar posiciones con valor cero y agregar una nueva gema
+			        for (int f = 0; f < filas; f++) {
+			            for (int c = 0; c < columnas; c++) {
+			                if (entidades[f][c].get_color() == 0) {
+								caida(f,c);
+			                }
+			            }
+			        } 
+			        
+					System.out.println("Intercambiar_auxiliar despues de generar nuevas gemas en caida");
+					imprimirTablero();
+					//miLogica.actualiarTableroGUI();
+>>>>>>> e02cc1babbf0f14fd9db4e22b4078a6488bbb646
 				} else {
 					aplicar_intercambio(nf, nc, af, ac);
 				}
@@ -178,6 +219,8 @@ public class Tablero {
 		fJugador = nf;
 		cJugador = nc;
 	}
+	
+	
 
 	private LinkedList<Entidad> buscarCombos(int f1, int c1, int f2, int c2) {
 		LinkedList<Entidad> listaCombos = new LinkedList<>();
@@ -188,17 +231,28 @@ public class Tablero {
 			listaCombos.addAll(buscarCombosEnFila(f2, c2));
 			listaCombos.addAll(buscarCombosEnColumna(f2, c2));
 			miLogica.actualizarObjetivos(listaCombos);
-
+			
+			System.out.println("TABLERO antes de DETONAR");
+			imprimirTablero();
 			System.out.println("Tablero buscarCombos :: "+listaCombos.size());
+			System.out.println("Lista combos antes de ser detonada");
+			imprimirLista(listaCombos);
+			
 			detonarGemas(listaCombos);
 			
+			
+	        imprimirTablero();
 			return listaCombos;
 		} else {
 			throw new IllegalArgumentException("Posición inválida en buscarCombos");
 		}
 	}
 	
-
+	public void imprimirLista(LinkedList<Entidad> listaCombos) {
+        for (Entidad elemento : listaCombos) {
+            System.out.print(elemento.get_color()+" - ");
+        }
+    }
 	public Tablero obtenerTablero() {
         return this;
     }
@@ -386,6 +440,7 @@ public class Tablero {
 	        if (gema != null) {
 	            gema.detonar(this);
 	            destruirRocas(gema);
+<<<<<<< HEAD
 	            System.out.println("Tablero :: detonar gemas llamada caida");
 	        }
 	    }
@@ -415,6 +470,13 @@ public class Tablero {
 
 	    explosionThread.start(); // Inicia el hilo de explosión
 	}
+=======
+	        }  
+	    }
+	   
+	}
+
+>>>>>>> e02cc1babbf0f14fd9db4e22b4078a6488bbb646
 	//Es tu misma idea santi, pero optimizada <-----
 	
      //Verifica si hay rocas para romper en la proximidad
@@ -455,12 +517,14 @@ public class Tablero {
 
 	
 
-	/*public void limpiarTablero() {
+	public void imprimirTablero() {
 		for (int i = 0; i < filas; i++) {
 	        for (int j = 0; j < columnas; j++) {
-	            t[i][j].setEntidad(new GemaNormal(i,j,0));
+	            System.out.print("[ "+entidades[i][j].get_color()+" ]");
 	        }
+	        System.out.println();
 	    }
-	 }*/
-
+	 }
+	
+	
 }

@@ -26,7 +26,8 @@ public class Logica {
 		nivelActual = 1;
 		miTablero = new Tablero(this);
 		miNivel = GeneradorNivel.cargar_nivel_y_tablero(miTablero,nivelActual,this);
-		miGUI = new GUI(this, miTablero.getFila(), miTablero.getColumna());
+		//miGUI = new GUI(this, miTablero.getFila(), miTablero.getColumna());
+		miGUI = GUI.getInstancia(this, miTablero.getFila(), miTablero.getColumna());
 		asociarEntidadesLogicasGraficas();
 		miTablero.fijarJugador(miNivel.getFilaInicialJugador(), miNivel.getColumnaInicialJugador());
 		
@@ -195,7 +196,8 @@ public class Logica {
 	    	miGUI.dispose();;
 	    	miTablero = new Tablero(this);
 			miNivel = GeneradorNivel.cargar_nivel_y_tablero(miTablero,nivelActual,this);
-			miGUI = new GUI(this, miTablero.getFila(), miTablero.getColumna());	
+			//miGUI = new GUI(this, miTablero.getFila(), miTablero.getColumna());	
+			miGUI = GUI.getInstancia(this, miTablero.getFila(), miTablero.getColumna());
 			miGUI.cambiarFondo(nivelActual);
 			asociarEntidadesLogicasGraficas();
 		} else {
@@ -206,6 +208,7 @@ public class Logica {
 	}
 
 
+<<<<<<< HEAD
 	/*public void actualizarTablero() {
 		miGUI.actualizarTablero();
 	}*/
@@ -214,6 +217,15 @@ public class Logica {
 	public Tablero getTablero() {
 		// TODO Auto-generated method stub
 		return miTablero.obtenerTablero();
+=======
+	public void actualiarTableroGUI() {
+		miGUI.actualiarTableroGUI();
+	}
+
+
+	public Tablero getTablero() {
+		return miTablero;
+>>>>>>> e02cc1babbf0f14fd9db4e22b4078a6488bbb646
 	}
 
 }

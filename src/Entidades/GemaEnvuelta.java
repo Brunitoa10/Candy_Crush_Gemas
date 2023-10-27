@@ -45,7 +45,10 @@ public class GemaEnvuelta extends Gema{
 						color = Color.TRANSPARENTE;
 						cargarImagenesRepresentativas(ruta);
 						entidadG.notificarse_explosion();
+<<<<<<< HEAD
 						//tablero.caida(this);
+=======
+>>>>>>> e02cc1babbf0f14fd9db4e22b4078a6488bbb646
 				}
 				else
 				{

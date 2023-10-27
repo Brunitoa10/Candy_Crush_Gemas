@@ -125,6 +125,7 @@ public class CentralAnimaciones implements ManejadorAnimaciones{
 	    }
 	}
 
+<<<<<<< HEAD
 	public void animar_estado_caida(Celda c) {
 		Animador animador = new AnimadorCaida(this, c);
 	
@@ -139,5 +140,22 @@ public class CentralAnimaciones implements ManejadorAnimaciones{
 				animador.comenzar_animacion();
 			}
 		}
+=======
+	public void animar_caida(Celda c) {
+		 Animador animador = new AnimadorCaida(this, size_label, size_label, c);
+
+		    synchronized (this) {
+		        ventana.notificarse_animacion_en_progreso();
+
+		        if (tiene_animaciones_en_progreso(c)) {
+		            mapeo_celda_animaciones.get(c).add(animador);
+		        } else {
+		            mapeo_celda_animaciones.put(c, new LinkedList<Animador>());
+		            mapeo_celda_animaciones.get(c).add(animador);
+		            animador.comenzar_animacion();
+		        }
+		    }
+		
+>>>>>>> e02cc1babbf0f14fd9db4e22b4078a6488bbb646
 	}
 }
