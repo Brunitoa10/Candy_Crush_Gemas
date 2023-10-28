@@ -151,7 +151,7 @@ public class Tablero {
 			        for (int f = 0; f < filas; f++) {
 			            for (int c = 0; c < columnas; c++) {
 			                if (entidades[f][c].get_color() == 0) {
-			                	entidades[f][c] = new GemaNormal(f,c,new Random().nextInt(8));
+			                	entidades[f][c] = new GemaNormal(f,c,new Random().nextInt(7)+1);
 			                }
 			            }
 			        } 
