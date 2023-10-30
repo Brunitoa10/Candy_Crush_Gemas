@@ -73,6 +73,6 @@ public class GemaEnvuelta extends Gema{
 
 	public int get_score()
 	{
-		return 50;
+		return 100;
 	}
 }
