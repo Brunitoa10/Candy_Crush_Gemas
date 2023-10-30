@@ -15,6 +15,7 @@ public abstract class Entidad implements EntidadLogica, Enfocable, Intercambiabl
 	protected EntidadGrafica entidadG;
 	protected int color;
 	protected String ruta;
+	protected int score;
 
    //crea una instancia de Entidad
 	public  Entidad(int f, int c, String ri, int col)  {
@@ -126,5 +127,5 @@ public abstract class Entidad implements EntidadLogica, Enfocable, Intercambiabl
 		color = i;
 	}
 
-
+    public abstract int get_score();
 }

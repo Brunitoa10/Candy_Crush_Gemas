@@ -22,4 +22,9 @@ public class Roca extends Obstaculo{
 	        cargarImagenesRepresentativas(ruta);
 	        entidadG.notificarse_explosion();
 	}
+
+	public int get_score()
+	{
+		return 25;
+	}
 }

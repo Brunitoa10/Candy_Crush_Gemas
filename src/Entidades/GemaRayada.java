@@ -7,26 +7,26 @@ public class GemaRayada extends Gema{
 	
 	//direccion en la que la gema explotara
 	//en caso de cambiar los valores de horizontal y vertical, adaptar el nombre de los assets en /assets/gema_rayada/
-	private int d;
+	private int direccion;
 	public static final int HORIZONTAL = 5; //MODIFICADO POR BRUNO
 	public static final int VERTICAL = 1;
 
 	public GemaRayada(int f, int c, int col, int direccion) {
 		super(f, c,col, "/assets/gemas/gema_rayada/" + direccion);
-		d = direccion;
+		this.direccion = direccion;
 	}
 	
 	public int getDireccion(){
-		return d;
+		return direccion;
 	}
 
 	@Override
 	public void detonar(Tablero tablero) {
-		System.out.println("direccion  " + d);
+		System.out.println("direccion  " + direccion);
 		int f=fila;
 		int c=columna;
         int tope=0;
-       if(d==HORIZONTAL) //es Horizontal
+       if(direccion==HORIZONTAL) //es Horizontal
 	   {
           tope=tablero.getColumna();
 		  for(int i=0;i<tope;i++)
@@ -38,10 +38,7 @@ public class GemaRayada extends Gema{
 	          color = Color.TRANSPARENTE;
 	          cargarImagenesRepresentativas(ruta);
 	          entidadG.notificarse_explosion();
-<<<<<<< HEAD
 			 // tablero.caida(this);
-=======
->>>>>>> e02cc1babbf0f14fd9db4e22b4078a6488bbb646
 			}
 			else
 			{
@@ -63,10 +60,6 @@ public class GemaRayada extends Gema{
 	             color = Color.TRANSPARENTE;
 				 cargarImagenesRepresentativas(ruta);
 	  			 entidadG.notificarse_explosion();
-<<<<<<< HEAD
-				  //tablero.caida(this);
-=======
->>>>>>> e02cc1babbf0f14fd9db4e22b4078a6488bbb646
 			}
 			else
 			{
@@ -90,4 +83,18 @@ public class GemaRayada extends Gema{
 
 	public void explosionAdyacente()
 	{}
+
+	public int get_score()
+	{
+		int score=0;
+		if(direccion==HORIZONTAL)
+		{
+          score=45;
+		}
+		else
+		{
+			score=35;
+		}
+		return score;
+	}
 }

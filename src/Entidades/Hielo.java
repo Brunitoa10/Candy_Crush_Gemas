@@ -18,4 +18,9 @@ public class Hielo extends Obstaculo {
 
 	public void explosionAdyacente()
 	{}
+
+	public int get_score()
+	{
+      return 10;
+	}
 }

@@ -206,7 +206,6 @@ public class Logica {
 	}
 
 	public Tablero getTablero() {
-		// TODO Auto-generated method stub
 		return miTablero.obtenerTablero();
 	}
 
