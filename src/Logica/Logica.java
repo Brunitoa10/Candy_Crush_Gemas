@@ -64,6 +64,7 @@ public class Logica {
 	
 	public void notificarDerrotaPorVidas() {
 		System.out.println("notificarDerrotaPorVidas");
+		//aca deberia ir el mensaje si se cumple,de agregar topScore. preguntar a bruno
 		nivelActual = 1;
 		reiniciarNivel(nivelActual);
 	}

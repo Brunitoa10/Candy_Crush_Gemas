@@ -1,16 +1,15 @@
 package Score;
 
 import java.io.*;
-import java.util.List;
-import java.util.ArrayList;
+import java.util.PriorityQueue;
 
 public class TopScore
  {
-    private List<Jugador> listadeJugadores;
+    private PriorityQueue<Jugador> listadeJugadores;
     private static final int MAX_ELEMENTOS = 5;
 
     public TopScore() {
-        listadeJugadores = new ArrayList<>();
+        listadeJugadores = new PriorityQueue<>(5,new ComparadorJugadores<Jugador>());
     }
 
     public void agregarJugador(String cadena, int numero) throws FullListException {
@@ -22,7 +21,7 @@ public class TopScore
         else throw new FullListException ("Ya hay 5 jugadores");
     }
 
-    public List<Jugador> obtenerListadeJugadores()
+    public PriorityQueue<Jugador> obtenerListadeJugadores()
     {
         return listadeJugadores;
     }
@@ -38,7 +37,7 @@ public class TopScore
     @SuppressWarnings("unchecked")
     public void cargarLista() {
         try (ObjectInputStream entrada = new ObjectInputStream(new FileInputStream("mejoresJugadores.dat"))) {
-            listadeJugadores = (List<Jugador>) entrada.readObject();
+            listadeJugadores = (PriorityQueue<Jugador>) entrada.readObject();
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }

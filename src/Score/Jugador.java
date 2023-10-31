@@ -23,7 +23,7 @@ public class Jugador implements Serializable
      this.score=score;
   }
 
-  public int get_score()
+  public Integer get_score()
   {
     return score;
   }
