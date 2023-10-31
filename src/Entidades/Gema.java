@@ -1,29 +1,30 @@
 package Entidades;
 
+import Logica.*;
 public abstract class Gema extends Entidad{
 
-	public Gema(int f, int c, int col, String ri) {
+	public Gema(int f, int c, Color col, String ri) {
 		super(f, c, ri,col);
 	}
 
 	public int getColor() {
-       return color;
+       return color.get_color();
 	}
 
 	public boolean match_con(GemaNormal c) {
-	  return c.get_color()==this.getColor();
+	  return c.get_color()==this.color.get_color();
 	}
 
 	public boolean match_con(GemaEnvuelta c) {
-	  return c.get_color()==this.getColor();
+	  return c.get_color()==this.color.get_color();
 	}
 
 	public boolean match_con(GemaRayada c) {
-	  return c.get_color()==this.getColor();
+	  return c.get_color()==this.color.get_color();
 	}
 
 	public boolean match_con(GemaCruzada c) {
-	  return c.get_color()==this.getColor();
+	  return c.get_color()==this.color.get_color();
 	}
 
 	public boolean match_con(Roca r) {

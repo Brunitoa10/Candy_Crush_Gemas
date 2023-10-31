@@ -5,7 +5,7 @@ import Tablero.Tablero;
 
 public class GemaEnvuelta extends Gema{
 
-	public GemaEnvuelta(int f, int c, int col) {
+	public GemaEnvuelta(int f, int c, Color col) {
 		super(f, c, col, "/assets/gemas/gema_envuelta/");
 	}
 
@@ -42,7 +42,7 @@ public class GemaEnvuelta extends Gema{
 				if(i==fila && j==columna)
 				{
 						System.out.println("destruido gema envuelta "+ this.color + " en: "+fila+","+columna );
-						color = Color.TRANSPARENTE;
+						color.set_color(Color.TRANSPARENTE);
 						cargarImagenesRepresentativas(ruta);
 						entidadG.notificarse_explosion();
 						//tablero.caida(this);

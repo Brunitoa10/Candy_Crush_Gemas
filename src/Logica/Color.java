@@ -11,4 +11,61 @@ public class Color {
 	public static final int PURPURA = 6;
 	public static final int ROCA = 7;
 	public static final int HIELO = 8;
+    protected int score;
+	protected int color;
+
+	public Color(Integer color)
+	{
+	  this.color=color;
+
+	}
+
+	public int get_color()
+	{
+		return color;
+	}
+
+	public int get_score()
+	{
+			int score=0;
+			if(color==TRANSPARENTE)
+			{
+				score=0;
+			}
+			if (color==ROJO)
+			{
+     	        score=5;
+			}
+			if(color==NARANJA)
+			{
+				score=15;
+			}
+			if(color==AMARILLO || color==AZUL)
+			{
+				score=20;
+			}
+			if(color==VERDE)
+			{
+				score=10;
+			}
+			if(color==PURPURA)
+			{
+				score=25;
+			}
+			if(color==ROCA)
+			{
+				score=25;
+			}
+			return score;
+	}
+
+	public void set_score(int score)
+	{
+		this.score=score;
+	}
+
+	public void set_color(int color)
+	{
+		this.color=color;
+	}
 }

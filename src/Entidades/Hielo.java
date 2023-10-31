@@ -5,13 +5,13 @@ import Tablero.Tablero;
 
 public class Hielo extends Obstaculo {
 
-	public Hielo(int f, int c, int col) {
+	public Hielo(int f, int c, Color col) {
 		super(f, c, "/assets/obstaculo/gema_normal/", col);
 	}
 	
 	public void detonar(Tablero  t) {
 		    System.out.println("destruido "+ this.color + " en: "+fila+","+columna );
-		    color = Color.TRANSPARENTE;
+		    color.set_color(Color.TRANSPARENTE);
 		    cargarImagenesRepresentativas(ruta);
 	        entidadG.notificarse_explosion();
 	}
@@ -21,6 +21,6 @@ public class Hielo extends Obstaculo {
 
 	public int get_score()
 	{
-      return 10;
+		return color.get_score();
 	}
 }

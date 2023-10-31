@@ -6,7 +6,7 @@ import Entidades.GemaEnvuelta;
 import Entidades.GemaNormal;
 import Entidades.GemaRayada;
 import Entidades.Roca;
-import Logica.Logica;
+import Logica.*;
 
 import java.util.*;
 
@@ -69,16 +69,16 @@ public class GeneradorNivel {
 		        for (int j = 0; j < columnas; j++) {
 		            String[] partes = valores[j].split(",");
 		            if (partes[0].equals("n")) {
-		                t.agregar_entidad(new GemaNormal(i, j, Integer.parseInt(partes[1].trim())));
+		                t.agregar_entidad(new GemaNormal(i, j, new Color(Integer.parseInt(partes[1].trim()))));
 		            }else {
 		            	if(partes[0].equals("r")) {
 		            		t.agregar_entidad(new Roca(i, j));
 		            	}else{
 		            		if(partes[0].equals("p")) {
-		            			t.agregar_entidad(new GemaRayada(i, j,Integer.parseInt(partes[1].trim())%10,Integer.parseInt(partes[1].trim())/10));
+		            			t.agregar_entidad(new GemaRayada(i, j,new Color(Integer.parseInt(partes[1].trim())%10),Integer.parseInt(partes[1].trim())/10));
 		            		}else{
 		            		if(partes[0].equals("e")) {
-		            			t.agregar_entidad(new GemaEnvuelta(i, j,Integer.parseInt(partes[1].trim())/10));
+		            			t.agregar_entidad(new GemaEnvuelta(i, j,new Color(Integer.parseInt(partes[1].trim())/10)));
 		            		}
 		            	}
 		            	}

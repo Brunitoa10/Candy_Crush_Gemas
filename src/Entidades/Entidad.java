@@ -13,12 +13,12 @@ public abstract class Entidad implements EntidadLogica, Enfocable, Intercambiabl
 	protected boolean enfocada,detonada;
 	protected String[] imagenes;
 	protected EntidadGrafica entidadG;
-	protected int color;
+	protected Color color;
 	protected String ruta;
 	protected int score;
 
    //crea una instancia de Entidad
-	public  Entidad(int f, int c, String ri, int col)  {
+	public  Entidad(int f, int c, String ri, Color col)  {
 		fila=f;
 		columna=c;
 		enfocada=false;
@@ -40,7 +40,7 @@ public abstract class Entidad implements EntidadLogica, Enfocable, Intercambiabl
 	@Override
 	public void detonar(Tablero tablero) {
 		detonada = true;
-		color = Color.TRANSPARENTE;
+		color.set_color(Color.TRANSPARENTE);
 	    cargarImagenesRepresentativas(ruta);
 	    entidadG.notificarse_explosion();
 	    entidadG.notificarse_cambio_estado();
@@ -55,7 +55,7 @@ public abstract class Entidad implements EntidadLogica, Enfocable, Intercambiabl
 
 	//obtener color de la entidad
 	public int get_color() {
-		return color;
+		return color.get_color();
 	}
 	
 	public void setFilaColumna(int f, int c) {
@@ -123,8 +123,8 @@ public abstract class Entidad implements EntidadLogica, Enfocable, Intercambiabl
 		return false;
 	}
 
-	public void set_color(int i) {
-		color = i;
+	public void set_color(int color) {
+		this.color.set_color(color);
 	}
 
     public abstract int get_score();

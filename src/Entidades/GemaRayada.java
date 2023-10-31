@@ -11,7 +11,7 @@ public class GemaRayada extends Gema{
 	public static final int HORIZONTAL = 5; //MODIFICADO POR BRUNO
 	public static final int VERTICAL = 1;
 
-	public GemaRayada(int f, int c, int col, int direccion) {
+	public GemaRayada(int f, int c, Color col, int direccion) {
 		super(f, c,col, "/assets/gemas/gema_rayada/" + direccion);
 		this.direccion = direccion;
 	}
@@ -35,7 +35,7 @@ public class GemaRayada extends Gema{
             if(i==c)
 			{
               System.out.println("destruido gema rayada Horizontal"+ this.color + " en: "+f+","+c );
-	          color = Color.TRANSPARENTE;
+	          color.set_color(Color.TRANSPARENTE);
 	          cargarImagenesRepresentativas(ruta);
 	          entidadG.notificarse_explosion();
 			 // tablero.caida(this);
@@ -57,7 +57,7 @@ public class GemaRayada extends Gema{
             if(i==f)
 			{
                  System.out.println("destruido gema rayada Vertical "+ this.color + " en: "+f+","+c );
-	             color = Color.TRANSPARENTE;
+	             color.set_color(Color.TRANSPARENTE);
 				 cargarImagenesRepresentativas(ruta);
 	  			 entidadG.notificarse_explosion();
 			}
