@@ -58,9 +58,7 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 	protected JLabel[] objetivosProgreso;
 
 	private Imagenfondo fondo = new Imagenfondo();
-	//private static GUI instancia; 
-	
-	
+
 	// Define un mapa para asociar los códigos de tecla con las acciones
 	Map<Integer, Runnable> acciones = new HashMap<>();
 	
@@ -273,9 +271,9 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 		if(miLogica.getVidas() == 2) {
 			label_corazon3.setIcon(iconoEscaladoCorazonVacio);
 		} else if(miLogica.getVidas() == 1) {
-				label_corazon2.setIcon(iconoEscaladoCorazonVacio);
-				label_corazon3.setIcon(iconoEscaladoCorazonVacio);
-			}
+			label_corazon2.setIcon(iconoEscaladoCorazonVacio);
+			label_corazon3.setIcon(iconoEscaladoCorazonVacio);
+		}
 
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.weightx = 0;

@@ -214,6 +214,4 @@ public class Logica {
 		miGUI.actualiarTableroGUI();
 	}
 
-
-	
 }

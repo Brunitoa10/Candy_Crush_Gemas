@@ -158,7 +158,6 @@ public class Tablero {
 			        
 					System.out.println("Intercambiar_auxiliar despues de generar nuevas gemas en caida");
 					imprimirTablero();
-					//miLogica.actualiarTableroGUI();
 				} else {
 					aplicar_intercambio(nf, nc, af, ac);
 				}
@@ -215,6 +214,7 @@ public class Tablero {
             System.out.print(elemento.get_color()+" - ");
         }
     }
+	
 	public Tablero obtenerTablero() {
         return this;
     }
@@ -253,15 +253,8 @@ public class Tablero {
 			if (cantidad == 4) {
 				//entidad.marcarComoRayadaHorizontal(); // Suponiendo que hay un método para marcar como gema rayada horizontal
 				System.out.println("Tablero :: Se genera una gema rayada horizontal");
-			} else {
-				if (cantidad == 5 || cantidad == 6) {
-					// Verificar combinaciones en forma de T, L o sigmoide
-					if (verificarCombinacionesEspecialesEnFila(fila, columna)) {
-						//entidad.marcarComoEnvuelta();
-						System.out.println("Tablero :: Se genera una gema Envuelta (Combinación especial en fila)");
-					}
-				}
 			} 
+			
 		} else {
 			combosEnFila.clear(); // No hay combos, limpiar la lista
 		}
@@ -269,44 +262,7 @@ public class Tablero {
 		return combosEnFila;
 	}
 
-	private boolean verificarCombinacionesEspecialesEnFila(int fila, int columna) {
-		// Obtener el tipo de gema en la posición (fila, columna)
-		int tipoGema = entidades[fila][columna].get_color();
-		boolean verificaCombinacion = false;
-
-		// Verificar combinación en forma de T
-		if (columna >= 2 && columna < columnas - 1) {
-			if (entidades[fila][columna - 1].get_color() == tipoGema &&
-					entidades[fila][columna - 2].get_color() == tipoGema &&
-					entidades[fila][columna + 1].get_color() == tipoGema) {
-				verificaCombinacion = true;
-				System.out.println("Tablero :: T fila");
-			}
-		}
-
-		// Verificar combinación en forma de L
-		if (columna >= 2 && fila < filas - 1) {
-			if (entidades[fila][columna - 1].get_color() == tipoGema &&
-					entidades[fila][columna - 2].get_color() == tipoGema &&
-					entidades[fila + 1][columna - 2].get_color() == tipoGema) {
-				verificaCombinacion = true;
-				System.out.println("Tablero :: L fila");
-			}
-		}
-
-		// Verificar combinación en forma de sigmoide (+)
-		if (columna >= 1 && columna < columnas - 1 && fila >= 1 && fila < filas - 1) {
-			if (entidades[fila][columna - 1].get_color() == tipoGema &&
-					entidades[fila][columna + 1].get_color() == tipoGema &&
-					entidades[fila - 1][columna].get_color() == tipoGema &&
-					entidades[fila + 1][columna].get_color() == tipoGema) {
-				verificaCombinacion = true;
-				System.out.println("Tablero :: Sigmoide fila");
-			}
-		}
-
-		return verificaCombinacion;
-	}
+	
 
 	private LinkedList<Entidad> buscarCombosEnColumna(int fila, int columna) {
 		LinkedList<Entidad> combosEnColumna = new LinkedList<>();
@@ -340,10 +296,6 @@ public class Tablero {
 			if (cantidad == 4) {
 				//entidad.marcarComoRayadaVertical(); // Suponiendo que hay un método para marcar como gema rayada vertical
 				System.out.println("Tablero :: Se genera una gema rayada vertical");
-			} else if (cantidad == 5 || cantidad == 6) {
-				if (verificarCombinacionesEspecialesEnColumna(fila, columna)) {
-					System.out.println("Tablero :: Se genera una gema Envuelta (Combinación especial en columna)");
-				}
 			} 
 		} else {
 			combosEnColumna.clear(); // No hay combos, limpiar la lista
@@ -352,43 +304,7 @@ public class Tablero {
 		return combosEnColumna;
 	}
 
-	private boolean verificarCombinacionesEspecialesEnColumna(int fila, int columna) {
-		// Obtener el tipo de gema en la posición (fila, columna)
-		int tipoGema = entidades[fila][columna].get_color();
-		boolean verificaCombinacion = false;
-		// Verificar combinación en forma de T
-		if (fila >= 2 && fila < filas - 1) {
-			if (entidades[fila - 1][columna].get_color() == tipoGema &&
-					entidades[fila - 2][columna].get_color() == tipoGema &&
-					entidades[fila + 1][columna].get_color() == tipoGema) {
-				verificaCombinacion = true;
-				System.out.println("Tablero :: T columna");
-			}
-		}
 
-		// Verificar combinación en forma de L
-		if (fila >= 2 && columna < columnas - 1) {
-			if (entidades[fila - 1][columna].get_color() == tipoGema &&
-					entidades[fila - 2][columna].get_color() == tipoGema &&
-					entidades[fila - 2][columna + 1].get_color() == tipoGema) {
-				verificaCombinacion = true;
-				System.out.println("Tablero :: L columna");
-			}
-		}
-
-		// Verificar combinación en forma de sigmoide (+)
-		if (fila >= 1 && fila < filas - 1 && columna >= 1 && columna < columnas - 1) {
-			if (entidades[fila - 1][columna].get_color() == tipoGema &&
-					entidades[fila + 1][columna].get_color() == tipoGema &&
-					entidades[fila][columna - 1].get_color() == tipoGema &&
-					entidades[fila][columna + 1].get_color() == tipoGema) {
-				verificaCombinacion = true;
-				System.out.println("Tablero :: Sigmoide columna");
-			}
-		}
-
-		return verificaCombinacion;
-	}
 
 
 	private void detonarGemas(LinkedList<Entidad> gemasADetonar) {
@@ -457,7 +373,8 @@ public class Tablero {
 		return (0 <= fila && fila < filas) && (0 <= columna && columna < columnas);
 	}
 	
-	private boolean en_rango(int nf, int nc){
+	
+	public boolean en_rango(int nf, int nc){
 		return (((nf >= 0) && (nf < filas)) && ((nc >= 0) && (nc < columnas)));
 	}
 
