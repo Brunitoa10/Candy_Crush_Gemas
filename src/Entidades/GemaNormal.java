@@ -1,6 +1,7 @@
 package Entidades;
 
 import Tablero.Tablero;
+import EstrategiaDetonaciones.EstrategiaDetonacionGemaNormal;
 import Logica.*;
 
 public class GemaNormal extends Gema{
@@ -10,7 +11,8 @@ public class GemaNormal extends Gema{
 		}
 		
 		public void detonar(Tablero tablero) {
-			super.detonar(tablero);
+			estrategiaDetonacion = new EstrategiaDetonacionGemaNormal();
+			estrategiaDetonacion.detonar(this,tablero);
 		}
 		
 		public boolean es_posible_intercambiar(Entidad entidad) {

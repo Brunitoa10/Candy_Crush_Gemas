@@ -247,14 +247,11 @@ public class Tablero {
 
 		// Si hay al menos 3 gemas iguales consecutivas, agregar la posición actual
 		if (cantidad >= 3) {
-
 			combosEnFila.add(entidad); // Agregar la posición actual a la lista de combos
 
 			if (cantidad == 4) {
-				//entidad.marcarComoRayadaHorizontal(); // Suponiendo que hay un método para marcar como gema rayada horizontal
 				System.out.println("Tablero :: Se genera una gema rayada horizontal");
 			} 
-			
 		} else {
 			combosEnFila.clear(); // No hay combos, limpiar la lista
 		}

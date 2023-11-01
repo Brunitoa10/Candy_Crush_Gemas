@@ -2,6 +2,7 @@
 package Entidades;
 
 
+import EstrategiaDetonaciones.EstategiaDetonacion;
 import GUI.EntidadGrafica;
 import Logica.*;
 import Tablero.*;
@@ -17,6 +18,8 @@ public abstract class Entidad implements EntidadLogica, Enfocable, Intercambiabl
 	protected String ruta;
 	protected int score;
 
+	 protected EstategiaDetonacion estrategiaDetonacion;
+	
    //crea una instancia de Entidad
 	public  Entidad(int f, int c, String ri, Color col)  {
 		fila=f;
@@ -37,14 +40,18 @@ public abstract class Entidad implements EntidadLogica, Enfocable, Intercambiabl
 		return entidadG;
 	}
 	
+	public void setEstrategiaDetonacion(EstategiaDetonacion estrategiaDetonacion) {
+		this.estrategiaDetonacion = estrategiaDetonacion;
+	}
+
 	@Override
-	public void detonar(Tablero tablero) {
+	/*public void detonar(Tablero tablero) {
 		detonada = true;
 		color.set_color(Color.TRANSPARENTE);
 	    cargarImagenesRepresentativas(ruta);
 	    entidadG.notificarse_explosion();
 	    entidadG.notificarse_cambio_estado();
-	}
+	}*/
 	
 	//obtener la imagen dependiendo si esta enfocada o no dicha entidad
 	public String get_imagen_representativa() {
@@ -128,4 +135,8 @@ public abstract class Entidad implements EntidadLogica, Enfocable, Intercambiabl
 	}
 
     public abstract int get_score();
+
+	public String get_ruta() {
+		return ruta;
+	}
 }

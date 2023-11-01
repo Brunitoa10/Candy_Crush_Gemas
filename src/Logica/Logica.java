@@ -33,7 +33,6 @@ public class Logica {
 		inicializarTiempo();
 	}
 
-	
 	public void mover_jugador(int direccion) {
 		miTablero.mover_jugador(direccion);
 	}
@@ -193,7 +192,7 @@ public class Logica {
 	    nivelActual++;
 	    
 		if(nivelActual<6) {
-	    	miGUI.dispose();;
+	    	miGUI.dispose();
 	    	miTablero = new Tablero(this);
 			miNivel = GeneradorNivel.cargar_nivel_y_tablero(miTablero,nivelActual,this);
 			miGUI = new GUI(this, miTablero.getFila(), miTablero.getColumna());	
@@ -213,5 +212,4 @@ public class Logica {
 	public void actualiarTableroGUI() {
 		miGUI.actualiarTableroGUI();
 	}
-
 }
