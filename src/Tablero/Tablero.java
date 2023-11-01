@@ -172,6 +172,7 @@ public class Tablero {
 	private void aplicar_intercambio(int af, int ac, int nf, int nc) {
 		Entidad entidad_aux = entidades[af][ac];
 
+		miLogica.notificarIntercambioGUI(entidades[af][ac].getEGrafica(),entidades[nf][nc].getEGrafica());
 		entidades[af][ac].cambiar_posicion(nf, nc);
 		entidades[nf][nc].cambiar_posicion(af, ac);
 

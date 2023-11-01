@@ -34,7 +34,7 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import Logica.EntidadLogica;
 import Logica.Logica;
-import Threads.CentralAnimaciones;
+import Threads.AnimadorMovimiento;
 
 
 
@@ -51,7 +51,7 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 	
 	protected boolean bloquear_intercambios;
 	
-	protected CentralAnimaciones mi_animador;
+	protected AnimadorMovimiento animadorMovimiento;
 	
 	protected JPanel panel_tablero, panel_objetivos, panel_vidas,panel_principal, panel_movimientos, panel_timer;
 	protected JLabel timerLabel,movimientosLabel;
@@ -75,7 +75,6 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 	public GUI(Logica l, int f, int c) {
 		miLogica = l;
 		filas = f;
-		mi_animador = new CentralAnimaciones(this);
 		columnas = c;
 		tiempoRestante = miLogica.getTiempo();
 		movimientosRestantes = miLogica.getMovimientos();
@@ -410,14 +409,16 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 		}
 	}
 	
-	@Override
-	public void animar_movimiento(Celda c) {
+	public void animar_movimiento(EntidadGrafica e1, EntidadGrafica e2) {
 		synchronized(this){
-			mi_animador.animar_cambio_posicion(c);
+			Celda c1 = (Celda) e1;
+			Celda c2 = (Celda) e2;
+			animadorMovimiento = new AnimadorMovimiento(70, 10 , 10, c1, c2);
+			animadorMovimiento.run();
 		}
 	}
 	
-	@Override
+	/*@Override
 	public void animar_cambio_estado(Celda c) {
 		synchronized(this){
 			mi_animador.animar_cambio_estado(c);
@@ -440,7 +441,7 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 			repaint();
 			mi_animador.animar_caida(c);
 		}
-	}
+	}*/
 
 	public void actualizarMovimientos(int movimientos) {
 		movimientosLabel.setText("Movimientos restantes: "+movimientos);
@@ -694,6 +695,10 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
         fondo.cambiarFondo(nivel);
         repaint(); // Vuelve a pintar la GUI para reflejar el cambio de fondo
     }
+
+	public void setBloquearAccionesJugador(boolean b) {
+		bloquear_intercambios = b;
+	}
 	//Clase auxiliar para poder hacer el fondo
 
 	private class Imagenfondo extends JPanel{

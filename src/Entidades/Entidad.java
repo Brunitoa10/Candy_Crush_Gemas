@@ -82,7 +82,6 @@ public abstract class Entidad implements EntidadLogica, Enfocable, Intercambiabl
 	public void cambiar_posicion(int nf, int nc) {
 		fila = nf;
 		columna = nc;
-		entidadG.notificarse_cambio_posicion();
 	}
 
 	public void intercambiarCaida(int nf, int nc) {

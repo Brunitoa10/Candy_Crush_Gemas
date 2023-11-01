@@ -153,6 +153,10 @@ public class Logica {
 		miGUI.actualizarProgreso(cant, tipoGema);
 	}
 
+	public void notificarIntercambioGUI(EntidadGrafica c1, EntidadGrafica c2) {
+		miGUI.animar_movimiento(c1,c2);
+	}
+
 	public int getVidas() {
 		return miNivel.getVidas();
 	}
