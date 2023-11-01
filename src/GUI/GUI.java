@@ -300,7 +300,7 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 	        objetivosColores[numeroDeObjetivo] = color;
 
 	        JLabel objetivosTexto = crearLabel(miLogica.obtenerInfoObjetivos()[i], "Algerian", Font.PLAIN, 15, Color.WHITE, 1, 1);
-	        JLabel objetivosImagen = crearImagen(miLogica.obtenerInfoObjetivos()[i + 1]);
+			JLabel objetivosImagen = crearImagen(miLogica.obtenerInfoObjetivos()[i + 1]);
 	        JLabel objetivosNumero = crearLabel("0/" + miLogica.obtenerInfoObjetivos()[i + 2], "Arial", Font.PLAIN, 15, Color.WHITE, 2, 1);
 
 	        agregarConGBCs(objetivosTexto, panel_objetivos, 0, coordenada_y, 1, 1);
