@@ -1,14 +1,11 @@
 package Entidades;
 
-import Logica.*;
+import Logica.Color;
+
 public abstract class Gema extends Entidad{
 
 	public Gema(int f, int c, Color col, String ri) {
 		super(f, c, ri,col);
-	}
-
-	public int getColor() {
-       return color.get_color();
 	}
 
 	public boolean match_con(GemaNormal c) {

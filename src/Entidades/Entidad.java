@@ -43,15 +43,6 @@ public abstract class Entidad implements EntidadLogica, Enfocable, Intercambiabl
 	public void setEstrategiaDetonacion(EstategiaDetonacion estrategiaDetonacion) {
 		this.estrategiaDetonacion = estrategiaDetonacion;
 	}
-
-	@Override
-	/*public void detonar(Tablero tablero) {
-		detonada = true;
-		color.set_color(Color.TRANSPARENTE);
-	    cargarImagenesRepresentativas(ruta);
-	    entidadG.notificarse_explosion();
-	    entidadG.notificarse_cambio_estado();
-	}*/
 	
 	//obtener la imagen dependiendo si esta enfocada o no dicha entidad
 	public String get_imagen_representativa() {
@@ -124,8 +115,7 @@ public abstract class Entidad implements EntidadLogica, Enfocable, Intercambiabl
 		imagenes[1] = ri + color.get_color() +"-cursor.png";
 	}
 
-	public abstract void explosionAdyacente();
-
+	
 	public boolean puede_recibir(GemaCruzada gemaCruzada) {
 		return false;
 	}
@@ -133,10 +123,13 @@ public abstract class Entidad implements EntidadLogica, Enfocable, Intercambiabl
 	public void set_color(int color) {
 		this.color.set_color(color);
 	}
-
-    public abstract int get_score();
-
+	
 	public String get_ruta() {
 		return ruta;
 	}
+	public abstract void explosionAdyacente();
+    
+	public abstract int get_score();
+
+	
 }

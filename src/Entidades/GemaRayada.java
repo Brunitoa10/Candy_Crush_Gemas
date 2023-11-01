@@ -1,5 +1,7 @@
 package Entidades;
 
+import EstrategiaDetonaciones.EstrategiaDetonacionGemaNormal;
+import EstrategiaDetonaciones.EstrategiaDetonacionGemaRayadaHorizontal;
 import Logica.Color;
 import Tablero.Tablero;
 
@@ -27,9 +29,12 @@ public class GemaRayada extends Gema{
 		int c=columna;
         int tope=0;
        if(direccion==HORIZONTAL) //es Horizontal
-	   {
-          tope=tablero.getColumna();
-		  for(int i=0;i<tope;i++)
+	   { 
+    	   System.out.println("Horizontaaaaaaaaallllllll");
+    	 estrategiaDetonacion = new EstrategiaDetonacionGemaRayadaHorizontal();
+   		 estrategiaDetonacion.detonar(this,tablero);
+         // tope=tablero.getColumna();
+		 /* for(int i=0;i<tope;i++)
 		  {
 			
             if(i==c)
@@ -68,7 +73,7 @@ public class GemaRayada extends Gema{
 					tablero.get_entidad(i, columna).detonar(tablero);	
 			    }
 		    }
-		  }
+		  }*/
 	   }
 	}
 
