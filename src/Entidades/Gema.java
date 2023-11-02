@@ -32,16 +32,13 @@ public abstract class Gema extends Entidad{
 		return true;
 	}
 
-
 	public boolean puede_recibir(Roca r) {
 		return false;
 	}
 
-
 	public boolean puede_recibir(GemaEnvuelta ge) {
 		return true;
 	}
-
 
 	public boolean puede_recibir(GemaRayada gr) {
 		return true;
@@ -50,8 +47,6 @@ public abstract class Gema extends Entidad{
 	public boolean puede_recibir(GemaCruzada gc) {
 		return true;
 	}
-
-	public abstract void explosionAdyacente();
-  
 	
+	public abstract void explosionAdyacente();
 }

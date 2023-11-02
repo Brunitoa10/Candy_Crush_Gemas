@@ -1,7 +1,7 @@
 package Entidades;
 
-import EstrategiaDetonaciones.EstrategiaDetonacionGemaNormal;
 import EstrategiaDetonaciones.EstrategiaDetonacionGemaRayadaHorizontal;
+import EstrategiaDetonaciones.EstrategiaDetonacionGemaRayadaVertical;
 import Logica.Color;
 import Tablero.Tablero;
 
@@ -16,6 +16,9 @@ public class GemaRayada extends Gema{
 	public GemaRayada(int f, int c, Color col, int direccion) {
 		super(f, c,col, "/assets/gemas/gema_rayada/" + direccion);
 		this.direccion = direccion;
+		
+		// Inicializamos la estrategia de detonación según la dirección
+       
 	}
 	
 	public int getDireccion(){
@@ -25,15 +28,18 @@ public class GemaRayada extends Gema{
 	@Override
 	public void detonar(Tablero tablero) {
 		System.out.println("direccion  " + direccion);
-		int f=fila;
+		/*int f=fila;
 		int c=columna;
-        int tope=0;
-       if(direccion==HORIZONTAL) //es Horizontal
-	   { 
-    	   System.out.println("Horizontaaaaaaaaallllllll");
+        int tope=0;*/
+       if(direccion==HORIZONTAL){ 
+    	 System.out.println("Horizontaaaaaaaaallllllll");
     	 estrategiaDetonacion = new EstrategiaDetonacionGemaRayadaHorizontal();
    		 estrategiaDetonacion.detonar(this,tablero);
-         // tope=tablero.getColumna();
+	   }else{
+		   System.out.println("Verticaaaaaaaaallllllll");
+		   estrategiaDetonacion = new EstrategiaDetonacionGemaRayadaVertical();
+		   estrategiaDetonacion.detonar(this, tablero);
+	   }// tope=tablero.getColumna();
 		 /* for(int i=0;i<tope;i++)
 		  {
 			
@@ -74,7 +80,7 @@ public class GemaRayada extends Gema{
 			    }
 		    }
 		  }*/
-	   }
+	  // }
 	}
 
 	public boolean es_posible_intercambiar(Entidad e) {
@@ -83,6 +89,7 @@ public class GemaRayada extends Gema{
 	
 	public boolean machea(Entidad e) 
 	{
+		System.out.println("Gema Rayada matchea(Entidad) :: "+e.get_color()+","+get_color());
 		return e.match_con(this);
 	}
 

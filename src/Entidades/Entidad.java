@@ -75,7 +75,6 @@ public abstract class Entidad implements EntidadLogica, Enfocable, Intercambiabl
 		return detonada;
 	}
 	
-	
 	//cambia la posicion de la entidad
 	public void cambiar_posicion(int nf, int nc) {
 		fila = nf;
@@ -114,7 +113,6 @@ public abstract class Entidad implements EntidadLogica, Enfocable, Intercambiabl
 		imagenes[0] = ri + color.get_color() +".png";
 		imagenes[1] = ri + color.get_color() +"-cursor.png";
 	}
-
 	
 	public boolean puede_recibir(GemaCruzada gemaCruzada) {
 		return false;
@@ -127,6 +125,7 @@ public abstract class Entidad implements EntidadLogica, Enfocable, Intercambiabl
 	public String get_ruta() {
 		return ruta;
 	}
+	
 	public abstract void explosionAdyacente();
     
 	public abstract int get_score();

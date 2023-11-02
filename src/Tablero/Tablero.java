@@ -56,7 +56,6 @@ public class Tablero {
 		entidades[e.get_fila()][e.get_columna()] = e;
 	}
 
-
 	public int getFila() {
 		return filas;
 	}
@@ -106,7 +105,6 @@ public class Tablero {
 		return nombreGema;
 	}
 
-	
 	public void caida(int puntero,int columna ) {
 		for (int i = puntero; i > 0; i--) {
 			if (entidades[i][columna].get_color() != 0) {
@@ -119,7 +117,7 @@ public class Tablero {
 	}
 	
 	private void mover_jugador_auxiliar(int nf, int nc) {
-		if (en_rango(nf,nc) ) {
+		if (en_rango(nf,nc)) {
 			entidades[nf][nc].enfocar();
 			entidades[fJugador][cJugador].desenfocar();
 			fJugador = nf;
@@ -137,13 +135,16 @@ public class Tablero {
 				// Si el intercambio provoca un match de 2 o 3 entidades, chequea las combinaciones y detona lo necesario
 				// De lo contrario, retrotae el intercambio anterior que no fue válido
 				if (entidades[af][ac].machea(entidades[nf][nc])) {
-					// Llamamos a buscarCombos después de un intercambio exitoso
-
-					//buscarCombos(af, ac, nf, nc);
+					
 					// Anima el posible intercambio de entidades
 					aplicar_intercambio(af, ac, nf, nc);
-
+					// Llamamos a buscarCombos después de un intercambio exitoso
 					buscarCombos(af, ac, nf, nc);
+					// Llamada a la estrategia de detonación de la primera entidad
+		            entidades[af][ac].detonar(this);
+
+		            // Llamada a la estrategia de detonación de la segunda entidad
+		            entidades[nf][nc].detonar(this);
 					System.out.println("TABLERO despues de buscarCombos y detonar");
 					imprimirTablero();
 					
@@ -180,8 +181,6 @@ public class Tablero {
 		fJugador = nf;
 		cJugador = nc;
 	}
-	
-	
 
 	private LinkedList<Entidad> buscarCombos(int f1, int c1, int f2, int c2) {
 		LinkedList<Entidad> listaCombos = new LinkedList<>();
@@ -201,7 +200,6 @@ public class Tablero {
 			
 			detonarGemas(listaCombos);
 			
-			
 	        imprimirTablero();
 			return listaCombos;
 		} else {
@@ -218,7 +216,6 @@ public class Tablero {
 	public Tablero obtenerTablero() {
         return this;
     }
-
 
 	private LinkedList<Entidad> buscarCombosEnFila(int fila, int columna) {
 		LinkedList<Entidad> combosEnFila = new LinkedList<>();
@@ -258,8 +255,6 @@ public class Tablero {
 
 		return combosEnFila;
 	}
-
-	
 
 	private LinkedList<Entidad> buscarCombosEnColumna(int fila, int columna) {
 		LinkedList<Entidad> combosEnColumna = new LinkedList<>();
@@ -301,9 +296,6 @@ public class Tablero {
 		return combosEnColumna;
 	}
 
-
-
-
 	private void detonarGemas(LinkedList<Entidad> gemasADetonar) {
 	    // Crear el mapa para almacenar las filas y columnas de detonaciones
 	    HashMap<Integer, Integer> detonaciones = new HashMap<>();
@@ -337,12 +329,7 @@ public class Tablero {
 	    }
 	}
 
-
-
-
-	//Es tu misma idea santi, pero optimizada <-----
-	
-     //Verifica si hay rocas para romper en la proximidad
+    //Verifica si hay rocas para romper en la proximidad
 	private void destruirRocas(Entidad e) {
 	    int fila = e.get_fila();
 	    int columna = e.get_columna();
@@ -374,8 +361,6 @@ public class Tablero {
 	public boolean en_rango(int nf, int nc){
 		return (((nf >= 0) && (nf < filas)) && ((nc >= 0) && (nc < columnas)));
 	}
-
-	
 
 	public void imprimirTablero() {
 		for (int i = 0; i < filas; i++) {
