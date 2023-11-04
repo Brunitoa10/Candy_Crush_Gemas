@@ -6,8 +6,8 @@ import Logica.*;
 
 public class GemaNormal extends Gema{
 		
-		public GemaNormal(int f, int c, Color col) {
-			super(f, c, col, "/assets/gemas/gema_normal/");
+		public GemaNormal(int f, int c, Color col, boolean visible) {
+			super(f, c, col, "/assets/gemas/gema_normal/", visible);
 		}
 		
 		public void detonar(Tablero tablero) {

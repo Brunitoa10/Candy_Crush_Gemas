@@ -5,7 +5,6 @@ package Entidades;
 import EstrategiaDetonaciones.EstategiaDetonacion;
 import GUI.EntidadGrafica;
 import Logica.*;
-import Tablero.*;
 
 public abstract class Entidad implements EntidadLogica, Enfocable, Intercambiable, Matchable, Detonable
 {
@@ -13,6 +12,7 @@ public abstract class Entidad implements EntidadLogica, Enfocable, Intercambiabl
 	protected int columna;
 	protected boolean enfocada,detonada;
 	protected String[] imagenes;
+	protected boolean visible;
 	protected EntidadGrafica entidadG;
 	protected Color color;
 	protected String ruta;
@@ -21,11 +21,12 @@ public abstract class Entidad implements EntidadLogica, Enfocable, Intercambiabl
 	 protected EstategiaDetonacion estrategiaDetonacion;
 	
    //crea una instancia de Entidad
-	public  Entidad(int f, int c, String ri, Color col)  {
+	public  Entidad(int f, int c, String ri, Color col, boolean visible)  {
 		fila=f;
 		columna=c;
 		enfocada=false;
 		detonada = false;
+		visible = visible;
 		color=col;
 		ruta = ri;
 		cargarImagenesRepresentativas(ri);
@@ -79,27 +80,25 @@ public abstract class Entidad implements EntidadLogica, Enfocable, Intercambiabl
 	public void cambiar_posicion(int nf, int nc) {
 		fila = nf;
 		columna = nc;
-		entidadG.notificarse_cambio_posicion();
+		entidadG.notificarse_intercambio();
 	}
 
 	public void intercambiarCaida(int nf, int nc) {
 		fila = nf;
 		columna = nc;
 		entidadG.notificarse_caida();
-		entidadG.notificarse_cambio_posicion();
-
 	}
 
 	//enfoca la entidad
 	public void enfocar() {
 		enfocada = true;
-		entidadG.notificarse_cambio_estado();
+		entidadG.notificarse_cambio_foco();
 	}
 
 	//desenfoca la entidad
 	public void desenfocar() {
 		enfocada = false;
-		entidadG.notificarse_cambio_estado();
+		entidadG.notificarse_cambio_foco();
 	}
 
     //verifica si puede recibir dicha entidad para el cambio
@@ -124,6 +123,10 @@ public abstract class Entidad implements EntidadLogica, Enfocable, Intercambiabl
 	
 	public String get_ruta() {
 		return ruta;
+	}
+
+	public boolean get_visibilidad() {
+		return visible;
 	}
 	
 	public abstract void explosionAdyacente();

@@ -69,16 +69,16 @@ public class GeneradorNivel {
 		        for (int j = 0; j < columnas; j++) {
 		            String[] partes = valores[j].split(",");
 		            if (partes[0].equals("n")) {
-		                t.agregar_entidad(new GemaNormal(i, j, new Color(Integer.parseInt(partes[1].trim()))));
+		                t.agregar_entidad(new GemaNormal(i, j, new Color(Integer.parseInt(partes[1].trim())), true));
 		            }else {
 		            	if(partes[0].equals("r")) {
-		            		t.agregar_entidad(new Roca(i, j));
+		            		t.agregar_entidad(new Roca(i, j, true));
 		            	}else{
 		            		if(partes[0].equals("p")) {
-		            			t.agregar_entidad(new GemaRayada(i, j,new Color(Integer.parseInt(partes[1].trim())%10),Integer.parseInt(partes[1].trim())/10));
+		            			t.agregar_entidad(new GemaRayada(i, j,new Color(Integer.parseInt(partes[1].trim())%10),Integer.parseInt(partes[1].trim())/10, true));
 		            		}else{
 		            		if(partes[0].equals("e")) {
-		            			t.agregar_entidad(new GemaEnvuelta(i, j,new Color(Integer.parseInt(partes[1].trim())/10)));
+		            			t.agregar_entidad(new GemaEnvuelta(i, j,new Color(Integer.parseInt(partes[1].trim())/10), true));
 		            		}
 		            	}
 		            	}

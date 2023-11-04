@@ -113,7 +113,7 @@ public class Tablero {
 				entidades[i - 1][columna]=aux;
 			}
 		}
-		entidades[0][columna] = new GemaNormal(0,columna,new Color(new Random().nextInt(8)));
+		entidades[0][columna] = new GemaNormal(0,columna,new Color(new Random().nextInt(8)),true);
 	}
 	
 	private void mover_jugador_auxiliar(int nf, int nc) {
@@ -152,7 +152,7 @@ public class Tablero {
 			        for (int f = 0; f < filas; f++) {
 			            for (int c = 0; c < columnas; c++) {
 			                if (entidades[f][c].get_color() == 0) {
-			                	entidades[f][c] = new GemaNormal(f,c,new Color(new Random().nextInt(7)+1));
+			                	entidades[f][c] = new GemaNormal(f,c,new Color(new Random().nextInt(7)+1), true);
 			                }
 			            }
 			        } 

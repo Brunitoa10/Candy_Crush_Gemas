@@ -208,8 +208,4 @@ public class Logica {
 	public Tablero getTablero() {
 		return miTablero.obtenerTablero();
 	}
-
-	public void actualiarTableroGUI() {
-		miGUI.actualiarTableroGUI();
-	}
 }

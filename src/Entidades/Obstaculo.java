@@ -5,8 +5,8 @@ import Logica.*;
 
 public abstract class Obstaculo extends Entidad{
 
-	public Obstaculo(int f, int c, String ri, Color col) {
-		super(f, c, ri,col);
+	public Obstaculo(int f, int c, String ri, Color col, boolean visible) {
+		super(f, c, ri,col, visible);
 	}
 
 	public abstract void detonar(Tablero t);

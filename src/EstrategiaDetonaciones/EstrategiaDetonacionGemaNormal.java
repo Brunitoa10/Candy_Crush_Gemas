@@ -12,8 +12,7 @@ public class EstrategiaDetonacionGemaNormal implements EstategiaDetonacion{
 	
 	    entidad.set_color(Color.TRANSPARENTE);
 	    entidad.cargarImagenesRepresentativas(entidad.get_ruta());
-	    entidad.getEGrafica().notificarse_explosion();
-	    entidad.getEGrafica().notificarse_cambio_estado();
+	    entidad.getEGrafica().notificarse_detonacion();
 	}
 
 }

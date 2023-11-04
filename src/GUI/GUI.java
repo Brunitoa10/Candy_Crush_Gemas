@@ -10,7 +10,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.awt.Insets;
 import java.awt.Toolkit;
@@ -34,6 +36,7 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import Logica.EntidadLogica;
 import Logica.Logica;
+import Tablero.Tablero;
 import Threads.CentralAnimaciones;
 
 
@@ -58,7 +61,9 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 	protected JLabel[] objetivosProgreso;
 
 	private Imagenfondo fondo = new Imagenfondo();
-
+	private static GUI instancia; 
+	
+	
 	// Define un mapa para asociar los códigos de tecla con las acciones
 	Map<Integer, Runnable> acciones = new HashMap<>();
 	
@@ -233,7 +238,7 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 
 
 	public EntidadGrafica agregar_entidad(EntidadLogica e) {
-		Celda celda = new Celda(this, e, size_label);
+		Celda celda = new Celda(this, e, size_label, true);
 		panel_tablero.add(celda);
 		return celda;
 	}
@@ -271,9 +276,9 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 		if(miLogica.getVidas() == 2) {
 			label_corazon3.setIcon(iconoEscaladoCorazonVacio);
 		} else if(miLogica.getVidas() == 1) {
-			label_corazon2.setIcon(iconoEscaladoCorazonVacio);
-			label_corazon3.setIcon(iconoEscaladoCorazonVacio);
-		}
+				label_corazon2.setIcon(iconoEscaladoCorazonVacio);
+				label_corazon3.setIcon(iconoEscaladoCorazonVacio);
+			}
 
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.weightx = 0;
@@ -298,7 +303,7 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 	        objetivosColores[numeroDeObjetivo] = color;
 
 	        JLabel objetivosTexto = crearLabel(miLogica.obtenerInfoObjetivos()[i], "Algerian", Font.PLAIN, 15, Color.WHITE, 1, 1);
-			JLabel objetivosImagen = crearImagen(miLogica.obtenerInfoObjetivos()[i + 1]);
+	        JLabel objetivosImagen = crearImagen(miLogica.obtenerInfoObjetivos()[i + 1]);
 	        JLabel objetivosNumero = crearLabel("0/" + miLogica.obtenerInfoObjetivos()[i + 2], "Arial", Font.PLAIN, 15, Color.WHITE, 2, 1);
 
 	        agregarConGBCs(objetivosTexto, panel_objetivos, 0, coordenada_y, 1, 1);
@@ -400,7 +405,6 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 		}
 	}
 	
-	@Override
 	public void notificarse_animacion_finalizada() {
 		synchronized(this){
 			animaciones_pendientes --;
@@ -408,36 +412,24 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 		}
 	}
 	
-	@Override
-	public void animar_movimiento(Celda c) {
-		synchronized(this){
-			mi_animador.animar_cambio_posicion(c);
-		}
+	public void animar_intercambio(Celda celda) {
+		mi_animador.animar_intercambio(celda);
 	}
 	
-	@Override
-	public void animar_cambio_estado(Celda c) {
-		synchronized(this){
-			mi_animador.animar_cambio_estado(c);
-		}
-		
-	}
-
-	public void animar_explosion(Celda c) {
-	    synchronized (this) {
-	    	System.out.println("GUI :: BOOOM");
-	    	repaint();
-	    	mi_animador.animar_estado_explosion(c);
-	    }
+	public void animar_cambio_foco(Celda celda) {
+		mi_animador.animar_cambio_foco(celda);
 	}
 	
+	public void animar_detonacion(Celda celda) {
+		mi_animador.animar_detonacion(celda);
+	}
 	
-	public void animar_caida(Celda c) {
-		synchronized(c){
-			System.out.println("GUI :: Caida");
-			repaint();
-			mi_animador.animar_caida(c);
-		}
+	public void animar_caida(Celda celda) {
+		mi_animador.animar_caida(celda);
+	}
+	
+	public void animar_cambio_visibilidad(Celda celda) {
+		mi_animador.animar_cambio_visibilidad(celda);
 	}
 
 	public void actualizarMovimientos(int movimientos) {
@@ -651,6 +643,11 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 	    });
 	}
 	
+	public void eliminar_celda(Celda celda) {
+		panel_principal.remove(celda);
+		panel_principal.repaint();
+	}
+
 	public void mostrarMensajeJuegoPerdido() {
 		System.out.println("GUI :: Perdiste");
 		
@@ -716,30 +713,5 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
         }
 
     }
-
-	public void actualiarTableroGUI() {
-	    for (int i = 0; i < miLogica.getTablero().getFila(); i++) {
-	        for (int j = 0; j < miLogica.getTablero().getColumna(); j++) {
-	            Entidad entidad = miLogica.getEntidadDelTablero(i, j);
-
-	            // Obtén la entidad gráfica asociada a la entidad lógica
-	            EntidadGrafica entidadGrafica = entidad.getEGrafica();
-
-	            // Si la entidad gráfica no está en el panel, agrégala
-	            if (entidadGrafica != null ) {
-	                EntidadGrafica nuevaEntidadGrafica = agregar_entidad(entidad);
-	                entidad.setEntidadGrafica(nuevaEntidadGrafica); // Asegúrate de actualizar la referencia en la entidad lógica
-	            }
-
-	            // Actualiza la representación gráfica según la entidad lógica
-	            if (entidadGrafica != null) {
-	                entidadGrafica.setImagen(entidad.get_imagen_representativa());
-	                entidadGrafica.notificarse_cambio_estado();
-	            }
-	        }
-	    }
-	  
-	}
-
 }
 

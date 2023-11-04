@@ -4,8 +4,8 @@ import Logica.Color;
 
 public abstract class Gema extends Entidad{
 
-	public Gema(int f, int c, Color col, String ri) {
-		super(f, c, ri,col);
+	public Gema(int f, int c, Color col, String ri, boolean visible) {
+		super(f, c, ri,col, visible);
 	}
 
 	public boolean match_con(GemaNormal c) {

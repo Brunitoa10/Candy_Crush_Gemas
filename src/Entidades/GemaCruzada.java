@@ -6,9 +6,9 @@ import Tablero.Tablero;
 
 public class GemaCruzada extends Gema {
 
-    public GemaCruzada(int f, int c, Color col)
+    public GemaCruzada(int f, int c, Color col, boolean visible)
      {
-			super(f, c, col, "/assets/gemas/gema_cruzada/");
+			super(f, c, col, "/assets/gemas/gema_cruzada/", visible);
 		}
 		
 		public void detonar(Tablero tablero)
@@ -34,7 +34,7 @@ public class GemaCruzada extends Gema {
                  System.out.println("destruido gema Cruzada "+ this.color + " en: " + fila + columna);
 	             color.set_color(Color.TRANSPARENTE);
 				 cargarImagenesRepresentativas(ruta);
-	  			 entidadG.notificarse_explosion();
+	  			 entidadG.notificarse_detonacion();
         }
 		
 		public boolean es_posible_intercambiar(Entidad entidad) {

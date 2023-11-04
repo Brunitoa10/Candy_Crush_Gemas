@@ -3,142 +3,156 @@ package Threads;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-
 import GUI.Celda;
 import GUI.GUI;
+import GUI.VentanaNotificable;
 
-
-/**
- * Modela el manager de animaciones requerido para efectivizar las mismas en función al orden en el que fueron solicitadas desde la ventana.
- * Ante cada nueva animación solicitada por ventana y que se debe realizar por sobre una celda, se encarga de efectivizar estas animaciones 
- * en el orden que corresponda a su arriba (FIFO).
- * Permite que dos o más animaciones por sobre una misma celda se realicen efectivamente en orden secuencial, sin solapamientos.
- * Las animaciones entre entidades diferentes se resolverán, recurrentemente, considerando que algunos animadores se efectivizarán mediante Threads.
- * @author FJoaquin (federico.joaquin@cs.uns.edu.ar)
- *
- */
 public class CentralAnimaciones implements ManejadorAnimaciones{
 	
-	protected GUI ventana;
-	protected HashMap<Celda, List<Animador>> mapeo_celda_animaciones;
-	protected int size_label;
+	protected VentanaNotificable ventana; 
+	protected List<Animador> animadores_pendientes;
+	protected HashMap<Celda, List<Animador>> mapeo_celda_animadores;
+	protected int prioridad_ultimo_animador_lanzado;
+	protected int cantidad_animadores_ultima_prioridad_lanzados;
 	
-	public CentralAnimaciones(GUI v) {
-		ventana = v;
-		mapeo_celda_animaciones = new HashMap<Celda, List<Animador>>();
-	}
 	
-	/**
-	 * Indica que la celda parametrizada debe ser animada a partir de un cambio de posición.
-	 * La animación será lanzada de inmediato, siempre que no existan animaciones en progreso sobre c.
-	 * La animación será encolada para efectivizarse en el futuro, a la espera de que las animaciones solicitadas previamente sobre c
-	 * se realicen primero.
-	 * @param c Celda que debe animarse, en relación a la posición que ubica la JLabel y la ubicación indicada por la entidad lógica
-	 * referenciada por c.
-	 */
-	public void animar_cambio_posicion(Celda c) {
-	    Animador animador = new AnimadorMovimiento(this, 10, 50, c);
-
-	    synchronized (this) {
-	    	ventana.repaint();
-	        ventana.notificarse_animacion_en_progreso();
-
-	        if (tiene_animaciones_en_progreso(c)) {
-	            mapeo_celda_animaciones.get(c).add(animador);
-	        } else {
-	            mapeo_celda_animaciones.put(c, new LinkedList<Animador>());
-	            mapeo_celda_animaciones.get(c).add(animador);
-	            animador.comenzar_animacion();
-	        }
-	    }
+	public CentralAnimaciones(GUI ventana) {
+		this.ventana = ventana;
+		animadores_pendientes = new LinkedList<Animador>();
+		mapeo_celda_animadores = new HashMap<Celda, List<Animador>>();
+		prioridad_ultimo_animador_lanzado = PrioridadAnimaciones.PRIORIDAD_SIN_PRIORIDAD;
+		cantidad_animadores_ultima_prioridad_lanzados = 0;
 	}
 	
-	/**
-	 * Indica que la celda parametrizada debe ser animada a partir de un cambio de estado.
-	 * La animación será lanzada de inmediato, siempre que no existan animaciones en progreso sobre c.
-	 * La animación será encolada para efectivizarse en el futuro, a la espera de que las animaciones solicitadas previamente sobre c
-	 * se realicen primero.
-	 * @param c Celda que debe animarse, en relación a la imagen actual que la representa.
-	 */
-	public void animar_cambio_estado(Celda c) {
-	    Animador animador = new AnimadorCambioEstado(this, c);
-
-	    synchronized (this) {
-	        ventana.notificarse_animacion_en_progreso();
-
-	        if (tiene_animaciones_en_progreso(c)) {
-	            mapeo_celda_animaciones.get(c).add(animador);
-	        } else {
-	            mapeo_celda_animaciones.put(c, new LinkedList<Animador>());
-	            mapeo_celda_animaciones.get(c).add(animador);
-	            animador.comenzar_animacion();
-	        }
-	    }
-	}
-
-	@Override
-	public void notificarse_finalizacion_animacion(Animador a) {
-	    synchronized (this) {
-	    	ventana.repaint();
-	        List<Animador> animaciones_para_celda = mapeo_celda_animaciones.get(a.get_celda_asociada());
-	        animaciones_para_celda.remove(a);
-
-	        ventana.notificarse_animacion_finalizada();
-
-	        if (!animaciones_para_celda.isEmpty()) {
-	            Animador animador = animaciones_para_celda.get(0);
-	            animador.comenzar_animacion();
-	        }
-	    }
+	public void animar_intercambio(Celda celda) {
+		Animador animador = new AnimadorMovimiento(this, 10, 50, celda);
+		agregar_animador_y_lanzar_pendientes(animador);
 	}
 	
-	/**
-	 * Estima si la celda parametrizada actualmente cuenta con animaciones en progreso. 
-	 * @param c Celda que se desea considerar para el chequeo de animaciones en progreso.
-	 * @return True si la celda tiene animaciones actualmente en progreso; false en caso contrario.
-	 */
-	private boolean tiene_animaciones_en_progreso(Celda c) {
-	    boolean retorno = false;
-
-	    synchronized (this) {
-	        ventana.repaint();
-	        if (mapeo_celda_animaciones.get(c) != null) {
-	            retorno = !mapeo_celda_animaciones.get(c).isEmpty();
-	        }
-	    }
-	    return retorno;
+	public void animar_cambio_foco(Celda celda) {
+		Animador animador = new AnimadorCambioFoco(this, celda);
+		agregar_animador_y_lanzar_pendientes(animador);
 	}
 
-	public void animar_estado_explosion(Celda c) {
-	    Animador animador = new AnimadorExplosion(this, c);
-
-	    synchronized (this) {
-	        ventana.notificarse_animacion_en_progreso();
-
-	        if (tiene_animaciones_en_progreso(c)) {
-	            mapeo_celda_animaciones.get(c).add(animador);
-	        } else {
-	            mapeo_celda_animaciones.put(c, new LinkedList<Animador>());
-	            mapeo_celda_animaciones.get(c).add(animador);
-	            animador.comenzar_animacion();
-	        }
-	    }
+	public void animar_detonacion(Celda celda) {
+		Animador animador = new AnimadorDetonacion(this, celda, 400);
+		agregar_animador_y_lanzar_pendientes(animador);
+	}
+	
+	public void animar_caida(Celda celda) {
+		Animador animador = new AnimadorCaida(this, 10, 50, celda);
+		agregar_animador_y_lanzar_pendientes(animador);
+	}
+	
+	public void animar_cambio_visibilidad(Celda celda) {
+		Animador animador = new AnimadorVisibilidad(this, celda, 750);
+		agregar_animador_y_lanzar_pendientes(animador);
+	}
+	
+	protected void agregar_animador_y_lanzar_pendientes(Animador animador) {
+		ventana.notificarse_animacion_en_progreso();
+		animadores_pendientes.add(animador);
+		lanzar_pendientes();
+	}
+	
+	protected void lanzar_pendientes() {
+		Animador animador;
+		int prioridad_animador;
+		
+		while(existen_pendientes() && existe_proxima_animacion_preparada()) {
+			animador = animadores_pendientes.remove(0);
+			prioridad_animador = animador.get_prioridad();
+			agregar_animador_en_progreso(animador);
+			incrementar_animadores_activos_y_actualizar_ultima_prioridad_lanzado(prioridad_animador);
+			animador.comenzar_animacion();
+		}
+	}
+	
+	protected void agregar_animador_en_progreso(Animador animador) {
+		Celda celda_animador = animador.get_celda_asociada();
+		List<Animador> animadores_celda = mapeo_celda_animadores.get(celda_animador);
+		if (animadores_celda != null) {
+			animadores_celda.add(animador);
+		}else {
+			animadores_celda = new LinkedList<Animador>();
+			animadores_celda.add(animador);
+			mapeo_celda_animadores.put(celda_animador, animadores_celda);
+		}
+	}
+	
+	protected void incrementar_animadores_activos_y_actualizar_ultima_prioridad_lanzado(int prioridad_ultimo) {
+		prioridad_ultimo_animador_lanzado = prioridad_ultimo;
+		cantidad_animadores_ultima_prioridad_lanzados ++;
+	}
+	
+	protected boolean existen_pendientes() {
+		return ! animadores_pendientes.isEmpty();
+	}
+	
+	protected boolean existe_proxima_animacion_preparada() {
+		boolean retorno = false;
+		
+		if (existen_animadores_activos()) {
+			retorno = existe_preparada_con_animadores_activos();
+		}else {
+			retorno = existe_preparada_sin_animadores_activos();
+		}
+		return retorno;
+	}
+	
+	protected boolean existen_animadores_activos() {
+		return cantidad_animadores_ultima_prioridad_lanzados != 0;
+	}
+	
+	protected boolean existe_preparada_con_animadores_activos() {
+		Animador animador_en_tope_espera;
+		Celda celda_animador;
+		int prioridad_animador;
+		boolean retorno = false;
+		
+		if (existen_pendientes()) {
+			animador_en_tope_espera = animadores_pendientes.get(0);
+			celda_animador = animador_en_tope_espera.get_celda_asociada();
+			retorno = ! tiene_animadores_en_progreso(celda_animador);
+			prioridad_animador = animador_en_tope_espera.get_prioridad();
+			retorno = retorno && tiene_igual_prioridad_que_ultimo_animador_lanzado(prioridad_animador);
+		}
+		return retorno;
+	}
+	
+	protected boolean existe_preparada_sin_animadores_activos() {
+		return existen_pendientes();
 	}
 
-
-	public void animar_caida(Celda c) {
-		 Animador animador = new AnimadorCaida(this, size_label, size_label, c);
-
-		    synchronized (this) {
-		        ventana.notificarse_animacion_en_progreso();
-
-		        if (tiene_animaciones_en_progreso(c)) {
-		            mapeo_celda_animaciones.get(c).add(animador);
-		        } else {
-		            mapeo_celda_animaciones.put(c, new LinkedList<Animador>());
-		            mapeo_celda_animaciones.get(c).add(animador);
-		            animador.comenzar_animacion();
-		        }
-		    }
+	protected boolean tiene_animadores_en_progreso(Celda celda) {
+		boolean retorno = false;
+		List<Animador> animadores_celda_pendientes = mapeo_celda_animadores.get(celda);
+		if (animadores_celda_pendientes != null) {
+			retorno = ! animadores_celda_pendientes.isEmpty();
+		}
+		return retorno;
+	}
+	
+	protected boolean tiene_igual_prioridad_que_ultimo_animador_lanzado(int prioridad) {
+		return prioridad == prioridad_ultimo_animador_lanzado;
+	}
+	
+	public void notificarse_finalizacion_animador(Animador animador) {
+		ventana.notificarse_animacion_finalizada();
+		quitar_animador_en_progreso(animador);
+		decrementar_animadores_activos_y_actualizar_ultima_prioridad_lanzado();
+		lanzar_pendientes();
+	}
+	
+	protected void quitar_animador_en_progreso(Animador animador) {
+		Celda celda_animador = animador.get_celda_asociada();
+		List<Animador> animadores_celda = mapeo_celda_animadores.get(celda_animador);
+		animadores_celda.remove(animador);
+	}
+	
+	protected void decrementar_animadores_activos_y_actualizar_ultima_prioridad_lanzado() {
+		cantidad_animadores_ultima_prioridad_lanzados --;
+		if (cantidad_animadores_ultima_prioridad_lanzados == 0)
+			prioridad_ultimo_animador_lanzado = PrioridadAnimaciones.PRIORIDAD_SIN_PRIORIDAD;
 	}
 }

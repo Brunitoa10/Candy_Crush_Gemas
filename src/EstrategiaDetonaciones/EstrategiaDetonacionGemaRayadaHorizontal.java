@@ -12,13 +12,11 @@ public class EstrategiaDetonacionGemaRayadaHorizontal implements EstategiaDetona
 		int fila = entidad.get_fila();
 		entidad.set_color(Color.TRANSPARENTE);
         entidad.cargarImagenesRepresentativas(entidad.get_ruta());
-        entidad.getEGrafica().notificarse_explosion();
-        entidad.getEGrafica().notificarse_cambio_estado();
+        entidad.getEGrafica().notificarse_detonacion();
 		for (int columna = 0; columna < tablero.getColumna(); columna++) {
             tablero.get_entidad(fila, columna).set_color(Color.TRANSPARENTE);
             tablero.get_entidad(fila, columna).cargarImagenesRepresentativas(tablero.get_entidad(fila, columna).get_ruta());
-            tablero.get_entidad(fila, columna).getEGrafica().notificarse_explosion();
-            tablero.get_entidad(fila, columna).getEGrafica().notificarse_cambio_estado();
+            tablero.get_entidad(fila, columna).getEGrafica().notificarse_detonacion();
         }
 	}
 

@@ -13,8 +13,8 @@ public class GemaRayada extends Gema{
 	public static final int HORIZONTAL = 5; //MODIFICADO POR BRUNO
 	public static final int VERTICAL = 1;
 
-	public GemaRayada(int f, int c, Color col, int direccion) {
-		super(f, c,col, "/assets/gemas/gema_rayada/" + direccion);
+	public GemaRayada(int f, int c, Color col, int direccion, boolean visible) {
+		super(f, c,col, "/assets/gemas/gema_rayada/" + direccion, visible);
 		this.direccion = direccion;
 		
 		// Inicializamos la estrategia de detonación según la dirección
