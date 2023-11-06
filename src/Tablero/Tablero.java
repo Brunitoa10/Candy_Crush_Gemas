@@ -187,12 +187,18 @@ public class Tablero {
 
 	private LinkedList<Entidad> buscarCombos(int f1, int c1, int f2, int c2) {
 		LinkedList<Entidad> listaCombos = new LinkedList<>();
-
+		EfectosDeTransicion listaEfectos = new EfectosDeTransicion();
+		
 		if (esPosicionValida(f1, c1) && esPosicionValida(f2, c2)) {
 			listaCombos.addAll(buscarCombosEnFila(f1, c1));
 			listaCombos.addAll(buscarCombosEnColumna(f1, c1));
 			listaCombos.addAll(buscarCombosEnFila(f2, c2));
 			listaCombos.addAll(buscarCombosEnColumna(f2, c2));
+			
+			for(int pos = 0; pos < listaCombos.size(); pos++) {
+				listaEfectos.agregar_entidad_a_detonar_y_reemplazar(listaCombos.get(pos));
+			}
+			
 			miLogica.actualizarObjetivos(listaCombos);
 			
 			System.out.println("TABLERO antes de DETONAR");
@@ -201,7 +207,7 @@ public class Tablero {
 			System.out.println("Lista combos antes de ser detonada");
 			imprimirLista(listaCombos);
 			
-			detonarGemas(listaCombos);
+			detonarGemas(listaEfectos);
 			
 	        imprimirTablero();
 			return listaCombos;
@@ -294,7 +300,6 @@ public class Tablero {
 			combosEnColumna.add(entidad); // Agregar la posición actual a la lista de combos
 
 			if (cantidad == 4) {
-				//entidad.marcarComoRayadaVertical(); // Suponiendo que hay un método para marcar como gema rayada vertical
 				System.out.println("Tablero :: Se genera una gema rayada vertical");
 			} 
 		} else {
@@ -304,11 +309,8 @@ public class Tablero {
 		return combosEnColumna;
 	}
 
-	private void detonarGemas(LinkedList<Entidad> gemasADetonar) {
-	    // Crear el mapa para almacenar las filas y columnas de detonaciones
-	    HashMap<Integer, Integer> detonaciones = new HashMap<>();
-
-	    for (Entidad entidad : gemasADetonar) {
+	private void detonarGemas(EfectosDeTransicion listaEfectos) {
+	    for (Entidad entidad : listaEfectos.entidades_a_detonar()) {
 	        int fila = entidad.get_fila();
 	        int columna = entidad.get_columna();
 	        Entidad gema = entidades[fila][columna];
@@ -316,30 +318,14 @@ public class Tablero {
 	        if (gema != null) {
 				administradordeScore.agregarScore(gema.get_score());
 	            gema.detonar(this);
-	            destruirRocas(gema);
-
-	            // Almacenar la fila y columna de la detonación en el mapa
-	            detonaciones.put(fila, columna);
+	            
+	           // destruirRocas(gema);
 	        }
-	    }
-
-	    // Iterar sobre el mapa de detonaciones
-	    for (Map.Entry<Integer, Integer> entry : detonaciones.entrySet()) {
-	        int fila = entry.getKey();
-	        int columna = entry.getValue();
-
-	        // Realizar los intercambios y ajustes necesarios
-	        for (int i = fila; i > 0; i--) {
-	            entidades[i][columna] = entidades[i-1][columna];
-	        }
-
-	        // Poner ceros en la fila superior
-	        entidades[0][columna].set_color(0);
 	    }
 	}
 
     //Verifica si hay rocas para romper en la proximidad
-	private void destruirRocas(Entidad e) {
+	/*private void destruirRocas(Entidad e) {
 	    int fila = e.get_fila();
 	    int columna = e.get_columna();
 
@@ -360,7 +346,7 @@ public class Tablero {
 	    if (derecha != null) {
 	        derecha.explosionAdyacente();
 	    }
-	}
+	}*/
 
 	private boolean esPosicionValida(int fila, int columna) {
 		return (0 <= fila && fila < filas) && (0 <= columna && columna < columnas);
