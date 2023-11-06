@@ -220,6 +220,11 @@ public class Tablero {
         return this;
     }
 
+	public AdministradordeScore obtenerAdministradordeScore()
+	{
+		return administradordeScore;
+	}
+
 	private LinkedList<Entidad> buscarCombosEnFila(int fila, int columna) {
 		LinkedList<Entidad> combosEnFila = new LinkedList<>();
 

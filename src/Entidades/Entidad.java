@@ -26,7 +26,7 @@ public abstract class Entidad implements EntidadLogica, Enfocable, Intercambiabl
 		columna=c;
 		enfocada=false;
 		detonada = false;
-		visible = visible;
+		this.visible = visible;
 		color=col;
 		ruta = ri;
 		cargarImagenesRepresentativas(ri);

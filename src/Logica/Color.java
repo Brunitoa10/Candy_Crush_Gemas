@@ -11,6 +11,7 @@ public class Color {
 	public static final int PURPURA = 6;
 	public static final int ROCA = 7;
 	public static final int HIELO = 8;
+	public static final int BOMBA=9;
     protected int score;
 	protected int color;
 
@@ -55,6 +56,10 @@ public class Color {
 			if(color==ROCA)
 			{
 				score=25;
+			}
+			if(color==BOMBA)
+			{
+				score=150;
 			}
 			return score;
 	}
