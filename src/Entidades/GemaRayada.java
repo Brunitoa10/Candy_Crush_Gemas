@@ -92,7 +92,19 @@ public class GemaRayada extends Gema{
 		System.out.println("Gema Rayada matchea(Entidad) :: "+e.get_color()+","+get_color());
 		return e.match_con(this);
 	}
-
+    
+	public boolean match_con(GemaEnvuelta c) {
+		return true;
+	  }
+  
+	  public boolean match_con(GemaRayada c) {
+		return true;
+	  }
+  
+	  public boolean match_con(GemaCruzada c) {
+		return true;
+	  }
+	  
 	public void explosionAdyacente()
 	{}
 

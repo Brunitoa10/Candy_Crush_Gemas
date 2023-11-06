@@ -9,19 +9,19 @@ public abstract class Gema extends Entidad{
 	}
 
 	public boolean match_con(GemaNormal c) {
-	  return c.get_color()==this.color.get_color();
+	  return false;
 	}
 
 	public boolean match_con(GemaEnvuelta c) {
-	  return c.get_color()==this.color.get_color();
+	  return false;
 	}
 
 	public boolean match_con(GemaRayada c) {
-	  return c.get_color()==this.color.get_color();
+	  return false;
 	}
 
 	public boolean match_con(GemaCruzada c) {
-	  return c.get_color()==this.color.get_color();
+	  return false;
 	}
 
 	public boolean match_con(Roca r) {

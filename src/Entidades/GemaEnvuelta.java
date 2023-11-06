@@ -71,6 +71,18 @@ public class GemaEnvuelta extends Gema{
 		return e.match_con(this);
 	}
 
+	public boolean match_con(GemaEnvuelta c) {
+		return true;
+	  }
+  
+	  public boolean match_con(GemaRayada c) {
+		return true;
+	  }
+  
+	  public boolean match_con(GemaCruzada c) {
+		return true;
+	  }
+
 	public int get_score()
 	{
 		return 100;

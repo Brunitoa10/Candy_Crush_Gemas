@@ -7,6 +7,7 @@ import java.util.Random;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 
+import Score.*;
 import Entidades.*;
 import GUI.*;
 import Logica.*;
@@ -19,6 +20,7 @@ public class Tablero {
 	protected int columnas;
 	protected int fJugador;
 	protected int cJugador;
+	protected AdministradordeScore administradordeScore;
 
 	// Define un mapa para asociar las direcciones de intercambio con las funciones correspondientes
 	private final Map<Integer, BiFunction<Integer, Integer, Boolean>> operaciones = new HashMap<>();
@@ -28,6 +30,7 @@ public class Tablero {
 
 	public Tablero(Logica l) {
 		miLogica = l;
+		administradordeScore=new AdministradordeScore();
 		//Intercambios
 		operaciones.put(GUI.ABAJO, (fila, columna) -> intercambiar_auxiliar(fila + 1, columna));
 		operaciones.put(GUI.ARRIBA, (fila, columna) -> intercambiar_auxiliar(fila - 1, columna));
@@ -306,6 +309,7 @@ public class Tablero {
 	        Entidad gema = entidades[fila][columna];
 
 	        if (gema != null) {
+				administradordeScore.agregarScore(gema.get_score());
 	            gema.detonar(this);
 	            destruirRocas(gema);
 
