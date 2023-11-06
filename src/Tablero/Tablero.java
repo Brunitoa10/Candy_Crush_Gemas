@@ -327,30 +327,6 @@ public class Tablero {
 	    estrategia.detonarRoca(entidades,e.get_fila(), e.get_columna());
 	}
 	
-    //Verifica si hay rocas para romper en la proximidad
-	/*private void destruirRocas(Entidad e) {
-	    int fila = e.get_fila();
-	    int columna = e.get_columna();
-
-	    Entidad arriba = (fila > 0) ? entidades[fila - 1][columna] : null;
-	    Entidad abajo = (fila < filas - 1) ? entidades[fila + 1][columna] : null;
-	    Entidad izquierda = (columna > 0) ? entidades[fila][columna - 1] : null;
-	    Entidad derecha = (columna < columnas - 1) ? entidades[fila][columna + 1] : null;
-
-	    if (arriba != null) {
-	        arriba.explosionAdyacente();
-	    }
-	    if (abajo != null) {
-	        abajo.explosionAdyacente();
-	    }
-	    if (izquierda != null) {
-	        izquierda.explosionAdyacente();
-	    }
-	    if (derecha != null) {
-	        derecha.explosionAdyacente();
-	    }
-	}*/
-
 	private boolean esPosicionValida(int fila, int columna) {
 		return (0 <= fila && fila < filas) && (0 <= columna && columna < columnas);
 	}
