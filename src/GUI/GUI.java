@@ -10,9 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.awt.Insets;
 import java.awt.Toolkit;
@@ -36,7 +34,7 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import Logica.EntidadLogica;
 import Logica.Logica;
-import Tablero.Tablero;
+import Threads.AnimadorMovimiento;
 import Threads.CentralAnimaciones;
 
 
@@ -61,7 +59,7 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 	protected JLabel[] objetivosProgreso;
 
 	private Imagenfondo fondo = new Imagenfondo();
-	private static GUI instancia; 
+	//private static GUI instancia; 
 	
 	
 	// Define un mapa para asociar los códigos de tecla con las acciones
@@ -78,12 +76,12 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 	public GUI(Logica l, int f, int c) {
 		miLogica = l;
 		filas = f;
-		mi_animador = new CentralAnimaciones(this);
 		columnas = c;
 		tiempoRestante = miLogica.getTiempo();
 		movimientosRestantes = miLogica.getMovimientos();
 		animaciones_pendientes = 0;
 		bloquear_intercambios = false;
+		mi_animador = new CentralAnimaciones(this);
 		objetivosColores = new int[miLogica.getCantidadDeObjetivos()];
 		objetivosProgreso = new JLabel[miLogica.getCantidadDeObjetivos()];
 		
@@ -713,5 +711,6 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
         }
 
     }
+
 }
 

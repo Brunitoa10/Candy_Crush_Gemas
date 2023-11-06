@@ -108,9 +108,11 @@ public abstract class Entidad implements EntidadLogica, Enfocable, Intercambiabl
 
 	//carga las imagenes de la entidad con el cursor y sin el cursor
 	public void cargarImagenesRepresentativas(String ri) {
-		imagenes = new String [2];
+		imagenes = new String [4];
 		imagenes[0] = ri + color.get_color() +".png";
 		imagenes[1] = ri + color.get_color() +"-cursor.png";
+		imagenes[2] = ri + "detonado.gif";
+		imagenes[3] = ri + "enfocado-detonado.gif";
 	}
 	
 	public boolean puede_recibir(GemaCruzada gemaCruzada) {
