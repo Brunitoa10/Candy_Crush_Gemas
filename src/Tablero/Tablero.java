@@ -9,6 +9,7 @@ import java.util.function.BiFunction;
 
 import Score.*;
 import Entidades.*;
+import EstrategiaDetonaciones.EstrategiaDetonacionRocas;
 import GUI.*;
 import Logica.*;
 
@@ -318,12 +319,14 @@ public class Tablero {
 	        if (gema != null) {
 				administradordeScore.agregarScore(gema.get_score());
 	            gema.detonar(this);
-	            
-	           // destruirRocas(gema);
+	            destruirRocas(gema,new EstrategiaDetonacionRocas());
 	        }
 	    }
 	}
-
+	private void destruirRocas(Entidad e, EstrategiaDetonacionRocas estrategia) {
+	    estrategia.detonarRoca(entidades,e.get_fila(), e.get_columna());
+	}
+	
     //Verifica si hay rocas para romper en la proximidad
 	/*private void destruirRocas(Entidad e) {
 	    int fila = e.get_fila();
