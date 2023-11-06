@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.HashMap;
 import java.util.Map;
 import java.awt.Insets;
@@ -34,7 +35,6 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import Logica.EntidadLogica;
 import Logica.Logica;
-import Threads.AnimadorMovimiento;
 import Threads.CentralAnimaciones;
 
 
@@ -221,6 +221,18 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 		    }
 		});
 
+		acciones.put(KeyEvent.VK_D, () -> {
+		    if (!bloquear_intercambios){
+		    	miLogica.intercambiar(DERECHA);
+		    }
+		});
+
+		acciones.put(KeyEvent.VK_R, () -> {
+		    if (!bloquear_intercambios){
+		    	mostrarPuntajes();
+		    }
+		});
+
 		// Agrega el KeyListener
 		panel_tablero.addKeyListener(new KeyAdapter() {
 		    @Override
@@ -240,7 +252,34 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 		panel_tablero.add(celda);
 		return celda;
 	}
-	
+
+	public void mostrarPuntajes() {
+		this.repaint();
+	    panel_principal.setVisible(false);
+
+	    JPanel panel_puntajes = crearMensajePanel();
+		panel_puntajes.setLayout(new GridBagLayout());
+	    
+		setearPanelPuntajes(panel_puntajes);
+	}
+
+	private void agregarAccionBotonVolver(JButton boton, JPanel panel_principal, JPanel panel_puntajes) {
+	    boton.addActionListener(new ActionListener() {
+	        @Override
+	        public void actionPerformed(ActionEvent e) {
+	            panel_puntajes.setVisible(false);
+				panel_principal.setVisible(true);
+				panel_tablero.setFocusable(true);
+				repaint();
+	        }
+	    });
+
+	    getContentPane().add(panel_puntajes);
+
+	    panel_puntajes.setVisible(true);
+	    panel_puntajes.revalidate();
+	}
+
 	private JLabel label_corazon1 = new JLabel();
 	private JLabel label_corazon2 = new JLabel();
 	private JLabel label_corazon3 = new JLabel();
@@ -683,6 +722,48 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 
 		panelBase.add(componenteAAgregar,gbc);
 	}
+
+	private void setearPanelPuntajes(JPanel panel_puntajes) {
+	JLabel titulo_puntajes = crearLabel("MEJORES PUNTAJES:", "Algerian", Font.PLAIN, 40, Color.WHITE, 2, 1);
+		agregarConGBCs(titulo_puntajes, panel_puntajes, 0, 0, 2, 1);
+
+		JLabel label_num1 = crearLabel("1 -", "Algerian", Font.PLAIN, 30, Color.YELLOW, 2, 1);
+		agregarConGBCs(label_num1, panel_puntajes, 0, 1, 1, 1);
+
+		JLabel label_puntaje1 = crearLabel("0000000", "Algerian", Font.PLAIN, 30, Color.WHITE, 2, 1);
+		agregarConGBCs(label_puntaje1, panel_puntajes, 1, 1, 1, 1);
+
+		JLabel label_num2 = crearLabel("2 -", "Algerian", Font.PLAIN, 30, Color.GRAY, 2, 1);
+		agregarConGBCs(label_num2, panel_puntajes, 0, 2, 1, 1);
+
+		JLabel label_puntaje2 = crearLabel("0000000", "Algerian", Font.PLAIN, 30, Color.WHITE, 2, 1);
+		agregarConGBCs(label_puntaje2, panel_puntajes, 1, 2, 1, 1);
+
+		JLabel label_num3 = crearLabel("3 -", "Algerian", Font.PLAIN, 30, Color.ORANGE, 2, 1);
+		agregarConGBCs(label_num3, panel_puntajes, 0, 3, 1, 1);
+
+		JLabel label_puntaje3 = crearLabel("0000000", "Algerian", Font.PLAIN, 30, Color.WHITE, 2, 1);
+		agregarConGBCs(label_puntaje3, panel_puntajes, 1, 3, 1, 1);
+
+		JLabel label_num4 = crearLabel("4 -", "Algerian", Font.PLAIN, 30, Color.WHITE, 2, 1);
+		agregarConGBCs(label_num4, panel_puntajes, 0, 4, 1, 1);
+
+		JLabel label_puntaje4 = crearLabel("0000000", "Algerian", Font.PLAIN, 30, Color.WHITE, 2, 1);
+		agregarConGBCs(label_puntaje4, panel_puntajes, 1, 4, 1, 1);
+
+		JLabel label_num5 = crearLabel("5 -", "Algerian", Font.PLAIN, 30, Color.WHITE, 2, 1);
+		agregarConGBCs(label_num5, panel_puntajes, 0, 5, 1, 1);
+
+		JLabel label_puntaje5 = crearLabel("0000000", "Algerian", Font.PLAIN, 30, Color.WHITE, 2, 1);
+		agregarConGBCs(label_puntaje5, panel_puntajes, 1, 5, 1, 1);
+
+		JButton button_volver = new JButton("Volver");
+		button_volver.setBackground(new Color(0, 0, 0, 200));
+	    button_volver.setForeground(Color.WHITE);
+		agregarAccionBotonVolver(button_volver, panel_principal, panel_puntajes);
+		agregarConGBCs(button_volver, panel_puntajes, 0, 6, 2, 1);
+	}
+
 	public void cambiarFondo(int nivel) {
         fondo.cambiarFondo(nivel);
         repaint(); // Vuelve a pintar la GUI para reflejar el cambio de fondo

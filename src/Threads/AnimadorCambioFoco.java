@@ -35,6 +35,7 @@ public class AnimadorCambioFoco implements Animador {
 		Image imagen_escalada = icono_imagen.getImage().getScaledInstance(size_label, size_label, Image.SCALE_REPLICATE);
 		Icon icono_escalado = new ImageIcon(imagen_escalada);
 		celda_animada.setIcon(icono_escalado);
+		celda_animada.repaint();
 		manager.notificarse_finalizacion_animador(this);
 	}
 }
