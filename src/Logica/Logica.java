@@ -63,13 +63,17 @@ public class Logica {
 	
 	public void notificarDerrotaPorVidas() {
 		System.out.println("notificarDerrotaPorVidas");
-		//aca deberia ir el mensaje si se cumple,de agregar topScore. preguntar a bruno
+		miTablero.obtenerAdministradordeScore().mejorJugador();
 		nivelActual = 1;
 		reiniciarNivel(nivelActual);
 	}
 	
 	public void notificarVictoriaPorObjetivos() {
 		miGUI.mostrarMensajeVictoriaPorObjetivos();
+		if(nivelActual==5)
+		{
+			miTablero.obtenerAdministradordeScore().mejorJugador();
+		}
 	}
 	
 	public String[] obtenerInfoObjetivos() {
