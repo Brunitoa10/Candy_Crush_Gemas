@@ -75,4 +75,10 @@ public class GemaCruzada extends Gema {
 		public void explosionAdyacente()
 		{}
 
+		@Override
+		public boolean esRoca() {
+			// TODO Auto-generated method stub
+			return false;
+		}
+
 }

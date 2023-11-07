@@ -3,6 +3,7 @@ package Entidades;
 
 
 import EstrategiaDetonaciones.EstategiaDetonacion;
+
 import GUI.EntidadGrafica;
 import Logica.*;
 
@@ -17,8 +18,7 @@ public abstract class Entidad implements EntidadLogica, Enfocable, Intercambiabl
 	protected Color color;
 	protected String ruta;
 	protected int score;
-
-	 protected EstategiaDetonacion estrategiaDetonacion;
+	protected EstategiaDetonacion estrategiaDetonacion;
 	
    //crea una instancia de Entidad
 	public  Entidad(int f, int c, String ri, Color col, boolean visible)  {
@@ -131,9 +131,8 @@ public abstract class Entidad implements EntidadLogica, Enfocable, Intercambiabl
 		return visible;
 	}
 	
-	public abstract void explosionAdyacente();
-    
 	public abstract int get_score();
-
 	
+	public abstract boolean esRoca();
+
 }

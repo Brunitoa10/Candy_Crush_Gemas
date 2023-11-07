@@ -29,5 +29,11 @@ public class Bomba extends Obstaculo {
     public int get_score() {
         return color.get_score();
     }
+
+	@Override
+	public boolean esRoca() {
+		// TODO Auto-generated method stub
+		return false;
+	}
     
 }

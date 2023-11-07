@@ -121,4 +121,10 @@ public class GemaRayada extends Gema{
 		}
 		return score;
 	}
+
+	@Override
+	public boolean esRoca() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

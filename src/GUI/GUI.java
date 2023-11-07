@@ -59,7 +59,7 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 	protected JLabel[] objetivosProgreso;
 
 	private Imagenfondo fondo = new Imagenfondo();
-	//private static GUI instancia; 
+
 	
 	
 	// Define un mapa para asociar los códigos de tecla con las acciones

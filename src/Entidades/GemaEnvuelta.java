@@ -87,4 +87,11 @@ public class GemaEnvuelta extends Gema{
 	{
 		return 100;
 	}
+
+
+	@Override
+	public boolean esRoca() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

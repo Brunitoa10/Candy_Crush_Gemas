@@ -319,12 +319,17 @@ public class Tablero {
 	        if (gema != null) {
 				administradordeScore.agregarScore(gema.get_score());
 	            gema.detonar(this);
-	            destruirRocas(gema,new EstrategiaDetonacionRocas());
 	        }
 	    }
 	}
-	private void destruirRocas(Entidad e, EstrategiaDetonacionRocas estrategia) {
-	    estrategia.detonarRoca(entidades,e.get_fila(), e.get_columna());
+	
+	public boolean hayRocaEn(int filaVecina, int columnaVecina) {
+		boolean esRoca = false;
+	   
+	    if (esPosicionValida(filaVecina, columnaVecina)) {
+	        esRoca = entidades[filaVecina][columnaVecina].esRoca();
+	    }
+	    return esRoca;
 	}
 	
 	private boolean esPosicionValida(int fila, int columna) {
@@ -344,6 +349,8 @@ public class Tablero {
 	        System.out.println();
 	    }
 	 }
+
+	
 	
 	
 }

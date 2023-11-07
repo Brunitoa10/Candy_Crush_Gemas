@@ -47,6 +47,4 @@ public abstract class Gema extends Entidad{
 	public boolean puede_recibir(GemaCruzada gc) {
 		return true;
 	}
-	
-	public abstract void explosionAdyacente();
 }

@@ -40,4 +40,10 @@ public class GemaNormal extends Gema{
 		{
 			return color.get_score();
 		}
+
+		@Override
+		public boolean esRoca() {
+			// TODO Auto-generated method stub
+			return false;
+		}
 }
