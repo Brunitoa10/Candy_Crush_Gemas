@@ -2,11 +2,12 @@ package Entidades;
 
 import Logica.Color;
 import Tablero.Tablero;
+import Tablero.TableroNotificable;
 
 public class GemaEnvuelta extends Gema{
 
-	public GemaEnvuelta(int f, int c, Color col, boolean visible) {
-		super(f, c, col, "/assets/gemas/gema_envuelta/", visible);
+	public GemaEnvuelta(TableroNotificable tablero,int f, int c, Color col, boolean visible) {
+		super(tablero,f, c, col, "/assets/gemas/gema_envuelta/", visible);
 	}
 
 	
@@ -59,27 +60,25 @@ public class GemaEnvuelta extends Gema{
 
 	}
 
-	public void explosionAdyacente()
-	{}
-
+	
 	public boolean es_posible_intercambiar(Entidad e) {
 		return e.puede_recibir(this);
 	}
 
 	public boolean machea(Entidad e) 
 	{
-		return e.match_con(this);
+		return e.aplica_match_con(this);
 	}
 
-	public boolean match_con(GemaEnvuelta c) {
+	public boolean aplica_match_con(GemaEnvuelta c) {
 		return true;
 	  }
   
-	  public boolean match_con(GemaRayada c) {
+	  public boolean aplica_match_con(GemaRayada c) {
 		return true;
 	  }
   
-	  public boolean match_con(GemaCruzada c) {
+	  public boolean aplica_match_con(GemaCruzada c) {
 		return true;
 	  }
 
@@ -93,5 +92,61 @@ public class GemaEnvuelta extends Gema{
 	public boolean esRoca() {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+
+	@Override
+	public boolean se_produce_match_con(Entidad e) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+	@Override
+	public void intercambiar(Entidad entidad) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void intercambiar_con(GemaNormal g) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void intercambiar_con(GemaRayada g) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void intercambiar_con(GemaEnvuelta g) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void intercambiar_con(GemaCruzada g) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void intercambiar_con(Roca r) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void intercambiar_con(Hielo h) {
+		// TODO Auto-generated method stub
+		
 	}
 }

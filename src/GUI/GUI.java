@@ -10,7 +10,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.HashMap;
 import java.util.Map;
 import java.awt.Insets;
@@ -29,7 +28,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
-import Entidades.Entidad;
 
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -39,7 +37,7 @@ import Threads.CentralAnimaciones;
 
 
 
-public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
+public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,VentanaJuego{
 	//Atributos
 	protected Logica miLogica;
 	
@@ -240,10 +238,12 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 		        // Verifica si la tecla presionada tiene una acción asociada
 		        Runnable accion = acciones.get(e.getKeyCode());
 		        if (accion != null) {
+		        	repaint();
 		        	accion.run();
 		        }
 		    }
 		});
+		
 	}
 
 
@@ -793,5 +793,24 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 
     }
 
+	@Override
+	public void ocultar() {
+		this.setVisible(false);
+	}
+
+	@Override
+	public void mostrar() {
+		this.setVisible(true);
+	}
+	
+	@Override
+	public void transicionar() {
+		// To DO. Podría servir para mostrar información o carteles.
+	}
+	
+	@Override
+	public void resetear(Logica logica, int filas, int columnas) {
+		// To DO.
+	}
 }
 

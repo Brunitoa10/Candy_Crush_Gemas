@@ -2,11 +2,12 @@ package Entidades;
 
 
 import Logica.*;
+import Tablero.TableroNotificable;
 
 public abstract class Obstaculo extends Entidad{
 
-	public Obstaculo(int f, int c, String ri, Color col, boolean visible) {
-		super(f, c, ri,col, visible);
+	public Obstaculo(TableroNotificable tablero,int f, int c, String ri, Color col, boolean visible) {
+		super(tablero,f, c, ri,col, visible);
 	}
 
 	public boolean esPosibleIntercambiar(Entidad e) {
@@ -39,27 +40,27 @@ public abstract class Obstaculo extends Entidad{
 	}
 
 	@Override
-	public boolean machea(Entidad e) {
+	public boolean se_produce_match_con(Entidad e) {
 		return false;
 	}
 
-	public boolean match_con(GemaNormal c) {
+	public boolean aplica_match_con(GemaNormal c) {
 		return false;
 	  }
   
-	  public boolean match_con(GemaEnvuelta c) {
+	  public boolean aplica_match_con(GemaEnvuelta c) {
 		return false;
 	  }
   
-	  public boolean match_con(GemaRayada c) {
+	  public boolean aplica_match_con(GemaRayada c) {
 		return false;
 	  }
   
-	   public boolean match_con(GemaCruzada c) {
+	   public boolean aplica_match_con(GemaCruzada c) {
 		return false;
 	  }
 
-	  public boolean match_con(Roca r) {
+	  public boolean aplica_match_con(Roca r) {
 		return false;
 	  }
 }

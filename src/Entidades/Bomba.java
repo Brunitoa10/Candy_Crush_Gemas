@@ -2,13 +2,14 @@ package Entidades;
 
 import Logica.Color;
 import Tablero.Tablero;
+import Tablero.TableroNotificable;
 
 public class Bomba extends Obstaculo {
    protected int tiempo;
 
-   public Bomba(int f, int c, String ri, Color col, boolean visible, int segundos)
+   public Bomba(TableroNotificable tablero,int f, int c, String ri, Color col, boolean visible, int segundos)
    {
-    super(f, c, ri, col, visible);
+    super(tablero,f, c, ri, col, visible);
     tiempo=segundos;
    }
 
@@ -34,6 +35,54 @@ public class Bomba extends Obstaculo {
 	public boolean esRoca() {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public boolean se_produce_match_con(Entidad e) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void intercambiar(Entidad entidad) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void intercambiar_con(GemaNormal g) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void intercambiar_con(GemaRayada g) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void intercambiar_con(GemaEnvuelta g) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void intercambiar_con(GemaCruzada g) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void intercambiar_con(Roca r) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void intercambiar_con(Hielo h) {
+		// TODO Auto-generated method stub
+		
 	}
     
 }

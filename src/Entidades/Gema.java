@@ -1,31 +1,46 @@
 package Entidades;
 
 import Logica.Color;
+import Tablero.TableroNotificable;
 
 public abstract class Gema extends Entidad{
 
-	public Gema(int f, int c, Color col, String ri, boolean visible) {
-		super(f, c, ri,col, visible);
+	public Gema(TableroNotificable tablero,int f, int c, Color col, String ri, boolean visible) {
+		super(tablero,f, c, ri,col, visible);
 	}
 
-	public boolean match_con(GemaNormal c) {
-	  return false;
+	@Override
+	public boolean aplica_match_con(GemaNormal c) {
+		// TODO Auto-generated method stub
+		return true;
 	}
 
-	public boolean match_con(GemaEnvuelta c) {
-	  return false;
+
+	@Override
+	public boolean aplica_match_con(GemaRayada p) {
+		// TODO Auto-generated method stub
+		return true;
 	}
 
-	public boolean match_con(GemaRayada c) {
-	  return false;
+
+	@Override
+	public boolean aplica_match_con(GemaEnvuelta p) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
-	public boolean match_con(GemaCruzada c) {
-	  return false;
+
+	@Override
+	public boolean aplica_match_con(GemaCruzada p) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
-	public boolean match_con(Roca r) {
-	  return false;
+
+	@Override
+	public boolean aplica_match_con(Roca r) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 	public boolean puede_recibir(GemaNormal gm) {

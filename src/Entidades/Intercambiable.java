@@ -12,7 +12,7 @@ public interface Intercambiable {
 	 * @param e Entidad con la que se analiza el intercambio.
 	 * @return True si el intercambio es posible, false en caso contrario.
 	 */
-	public boolean es_posible_intercambiar(Entidad e);
+	public boolean es_posible_intercambiar(Entidad entidad);
 	/**
 	 * Indica si es posible que la entidad receptora pueda ser intercambiada de posición con el Caramelo parametrizado.
 	 * @param c Caramelo con el que se analiza el intercambio.
@@ -34,4 +34,20 @@ public interface Intercambiable {
 	 * @param nc Nuevo columna de la entidad.
 	 */
 	public void cambiar_posicion(int nf, int nc);
+	
+//	public boolean puede_recibir(Potenciador potenciador);
+
+	
+	public void intercambiar(Entidad entidad);
+	
+	public void intercambiar_con(GemaNormal g);
+	public void intercambiar_con(GemaRayada g);
+	public void intercambiar_con(GemaEnvuelta g);
+	public void intercambiar_con(GemaCruzada g);
+	
+	public void intercambiar_con(Roca r);
+
+	//public void intercambiar_con(Potenciador potenciador);
+
+	public void intercambiar_con(Hielo h);
 }

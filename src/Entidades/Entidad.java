@@ -6,22 +6,27 @@ import EstrategiaDetonaciones.EstategiaDetonacion;
 
 import GUI.EntidadGrafica;
 import Logica.*;
+import Tablero.TableroNotificable;
 
-public abstract class Entidad implements EntidadLogica, Enfocable, Intercambiable, Matchable, Detonable
+public abstract class Entidad implements EntidadLogica, Enfocable, Intercambiable, Matchable, Detonable, Ocultable
 {
-	protected int fila;
-	protected int columna;
-	protected boolean enfocada,detonada;
-	protected String[] imagenes;
-	protected boolean visible;
+	protected int fila,columna;
+	protected int score;
+	
+	protected boolean enfocada,detonada,visible;
+	
 	protected EntidadGrafica entidadG;
 	protected Color color;
+	
 	protected String ruta;
-	protected int score;
+	protected String[] imagenes;
+	
 	protected EstategiaDetonacion estrategiaDetonacion;
+	protected TableroNotificable tablero;
 	
    //crea una instancia de Entidad
-	public  Entidad(int f, int c, String ri, Color col, boolean visible)  {
+	public  Entidad(TableroNotificable tablero,int f, int c, String ri, Color col, boolean visible)  {
+		this.tablero = tablero;
 		fila=f;
 		columna=c;
 		enfocada=false;
@@ -101,11 +106,6 @@ public abstract class Entidad implements EntidadLogica, Enfocable, Intercambiabl
 		entidadG.notificarse_cambio_foco();
 	}
 
-    //verifica si puede recibir dicha entidad para el cambio
-	public boolean puedeRecibir(Entidad entidad) {
-		return true;
-	}
-
 	//carga las imagenes de la entidad con el cursor y sin el cursor
 	public void cargarImagenesRepresentativas(String ri) {
 		imagenes = new String [4];
@@ -115,9 +115,6 @@ public abstract class Entidad implements EntidadLogica, Enfocable, Intercambiabl
 		imagenes[3] = ri + "enfocado-detonado.gif";
 	}
 	
-	public boolean puede_recibir(GemaCruzada gemaCruzada) {
-		return false;
-	}
 
 	public void set_color(int color) {
 		this.color.set_color(color);
@@ -130,6 +127,45 @@ public abstract class Entidad implements EntidadLogica, Enfocable, Intercambiabl
 	public boolean get_visibilidad() {
 		return visible;
 	}
+	
+	public void mostrar() {
+		visible = true;
+		entidadG.notificarse_cambio_visibilidad();
+	}
+	
+	public void ocultar() {
+		visible = false;
+		entidadG.notificarse_cambio_visibilidad();
+	}
+	
+	// TO DO: Completar con su correcta definición
+	// Hardcodeada para mostrar caida simple y sin ningun tipo de control.
+	public void caer() {
+		fila ++;
+		entidadG.notificarse_caida();
+	}
+	
+	protected void intercambiar_entidad_y_entidad(Entidad origen, Entidad destino) {
+		int nueva_fila_origen = destino.get_fila();
+		int nueva_columna_origen = destino.get_columna();
+		destino.cambiar_posicion(origen.get_fila(), origen.get_columna());
+		origen.cambiar_posicion(nueva_fila_origen, nueva_columna_origen);
+		tablero.reubicar(origen);
+		tablero.reubicar(destino);
+	}
+	
+	/*protected void intercambiar_caramelo_y_gelatina(Caramelo caramelo, Gelatina gelatina) {
+		Caramelo caramelo_interno_gelatina = gelatina.get_caramelo_interno();
+		int nueva_fila_caramelo = gelatina.get_fila();
+		int nueva_columna_caramelo = gelatina.get_columna();
+		int nueva_fila_caramelo_interno = caramelo.get_fila();
+		int nueva_columna_caramelo_interno = caramelo.get_columna();
+		
+		caramelo_interno_gelatina.cambiar_posicion(nueva_fila_caramelo_interno, nueva_columna_caramelo_interno);
+		caramelo.cambiar_posicion(nueva_fila_caramelo, nueva_columna_caramelo);
+		gelatina.set_caramelo_interno(caramelo);
+		tablero.reubicar(caramelo_interno_gelatina);
+	}*/
 	
 	public abstract int get_score();
 	

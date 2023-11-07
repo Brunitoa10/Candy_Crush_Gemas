@@ -11,10 +11,12 @@ import Logica.*;
 import java.util.*;
 
 import Tablero.Tablero;
+import Tablero.TableroJuego;
+
 import java.io.File;
 public class GeneradorNivel {
 	
-	public static Nivel cargar_nivel_y_tablero(Tablero t, int nivel,Logica l) {
+	public static Nivel cargar_nivel_y_tablero(TableroJuego t, int nivel,Logica l) {
 		Nivel miNivel = new Nivel(0,0,l);
 		try {
 			Scanner input = new Scanner(new File("src//Niveles//Nivel" + nivel + ".txt"));
@@ -69,16 +71,16 @@ public class GeneradorNivel {
 		        for (int j = 0; j < columnas; j++) {
 		            String[] partes = valores[j].split(",");
 		            if (partes[0].equals("n")) {
-		                t.agregar_entidad(new GemaNormal(i, j, new Color(Integer.parseInt(partes[1].trim())), true));
+		                t.agregar_entidad(new GemaNormal(t,i, j, new Color(Integer.parseInt(partes[1].trim())), true));
 		            }else {
 		            	if(partes[0].equals("r")) {
-		            		t.agregar_entidad(new Roca(i, j, true));
+		            		t.agregar_entidad(new Roca(t,i, j, true));
 		            	}else{
 		            		if(partes[0].equals("p")) {
-		            			t.agregar_entidad(new GemaRayada(i, j,new Color(Integer.parseInt(partes[1].trim())%10),Integer.parseInt(partes[1].trim())/10, true));
+		            			t.agregar_entidad(new GemaRayada(t,i, j,new Color(Integer.parseInt(partes[1].trim())%10),Integer.parseInt(partes[1].trim())/10, true));
 		            		}else{
 		            		if(partes[0].equals("e")) {
-		            			t.agregar_entidad(new GemaEnvuelta(i, j,new Color(Integer.parseInt(partes[1].trim())/10), true));
+		            			t.agregar_entidad(new GemaEnvuelta(t,i, j,new Color(Integer.parseInt(partes[1].trim())/10), true));
 		            		}
 		            	}
 		            	}
