@@ -13,8 +13,8 @@ public class EstrategiaDetonacionGemaNormal implements EstategiaDetonacion{
 	    int columna = entidad.get_columna();
 	    
 	    entidad.set_color(Color.TRANSPARENTE);
-	    entidad.cargarImagenesRepresentativas(entidad.get_ruta());
-	    entidad.getEGrafica().notificarse_detonacion();
+	    entidad.cargarImagenesRepresentativas(entidad.get_rutadeLaImagen());
+	    entidad.get_EntidadGrafica().notificarse_detonacion();
 	 
 	    // Verificar y detonar rocas
 	    EstrategiaDetonacionRocas estrategiaRocas = new EstrategiaDetonacionRocas();

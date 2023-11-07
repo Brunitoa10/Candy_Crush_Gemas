@@ -10,6 +10,7 @@ public abstract class Obstaculo extends Entidad{
 		super(tablero,f, c, ri,col, visible);
 	}
 
+	//Interfaz de intercambiable
 	public boolean esPosibleIntercambiar(Entidad e) {
 		return false;
 	}
@@ -39,7 +40,7 @@ public abstract class Obstaculo extends Entidad{
 		return false;
 	}
 
-	@Override
+	//interfaz de matcheable
 	public boolean se_produce_match_con(Entidad e) {
 		return false;
 	}
@@ -63,4 +64,51 @@ public abstract class Obstaculo extends Entidad{
 	  public boolean aplica_match_con(Roca r) {
 		return false;
 	  }
+
+	public void intercambiar(Entidad entidad) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void intercambiar_con(GemaNormal g) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void intercambiar_con(GemaRayada g) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void intercambiar_con(GemaEnvuelta g) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void intercambiar_con(GemaCruzada g) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void intercambiar_con(Roca r) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void intercambiar_con(Hielo h) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void cambiar_posicion(int nf, int nc) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'cambiar_posicion'");
+	}
 }

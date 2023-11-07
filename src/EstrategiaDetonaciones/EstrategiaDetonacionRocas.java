@@ -11,8 +11,8 @@ public class EstrategiaDetonacionRocas implements EstategiaDetonacion {
 
 	    // Detonar la entidad actual
 	    entidad.set_color(Color.TRANSPARENTE);
-	    entidad.cargarImagenesRepresentativas(entidad.get_ruta());
-	    entidad.getEGrafica().notificarse_detonacion();
+	    entidad.cargarImagenesRepresentativas(entidad.get_rutadeLaImagen());
+	    entidad.get_EntidadGrafica().notificarse_detonacion();
 	   
 	    // Realizar los intercambios y ajustes necesarios
 	    /*for (int i = fila; i > 0; i--) {

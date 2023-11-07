@@ -9,59 +9,88 @@ public abstract class Gema extends Entidad{
 		super(tablero,f, c, ri,col, visible);
 	}
 
-	@Override
+	//Metodos de la interfaz matcheable
+
 	public boolean aplica_match_con(GemaNormal c) {
-		// TODO Auto-generated method stub
-		return true;
+		return false;
 	}
 
-
-	@Override
 	public boolean aplica_match_con(GemaRayada p) {
-		// TODO Auto-generated method stub
-		return true;
+		return false;
 	}
 
-
-	@Override
 	public boolean aplica_match_con(GemaEnvuelta p) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
-
-	@Override
 	public boolean aplica_match_con(GemaCruzada p) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
-
-	@Override
 	public boolean aplica_match_con(Roca r) {
+		return false;
+	}
+
+	//Metodos de la interfaz Intercambiable
+
+	public boolean puede_recibir(GemaNormal gemaNormal) {
+		return true;
+	}
+
+	public boolean puede_recibir(GemaEnvuelta gemaEnvuelta) {
+		return true;
+	}
+
+	public boolean puede_recibir(GemaRayada gemaRayada) {
+		return true;
+	}
+
+	public boolean puede_recibir(GemaCruzada gemaCruzada) {
+		return true;
+	}
+
+	public boolean puede_recibir(Bomba bomba) {
+		return false;
+	}
+
+	public boolean puede_recibir(Roca roca) {
+		return false;
+	}
+
+	public void intercambiar(Entidad entidad) {
 		// TODO Auto-generated method stub
-		return false;
 	}
 
-	public boolean puede_recibir(GemaNormal gm) {
-		return true;
+	
+	public void intercambiar_con(GemaNormal g) {
+		// TODO Auto-generated method stub
 	}
 
-	public boolean puede_recibir(Roca r) {
-		return false;
+	public void intercambiar_con(GemaRayada g) {
+	// TODO Auto-generated method stub
 	}
 
-	public boolean puede_recibir(GemaEnvuelta ge) {
-		return true;
+	public void intercambiar_con(GemaEnvuelta g) {
+	// TODO Auto-generated method stub	
 	}
 
-	public boolean puede_recibir(GemaRayada gr) {
-		return true;
+	public void intercambiar_con(GemaCruzada g) {
+	// TODO Auto-generated method stub
 	}
 
-	public boolean puede_recibir(GemaCruzada gc) {
-		return true;
+	public void intercambiar_con(Roca r) {
+	// TODO Auto-generated method stub
 	}
+
+	public void intercambiar_con(Hielo h) {
+	// TODO Auto-generated method stub
+	}
+
+	public void cambiar_posicion(int nf, int nc) {
+	// TODO Auto-generated method stub
+	}
+
+	//Metodo particular
 
 	public boolean esAfectadaPorExplosionAdyacente()
 	{

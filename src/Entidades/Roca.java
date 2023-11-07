@@ -1,6 +1,6 @@
 package Entidades;
 
-import EstrategiaDetonaciones.EstrategiaDetonacionGemaNormal;
+import EstrategiaDetonaciones.*;
 import Logica.Color;
 import Tablero.Tablero;
 import Tablero.TableroNotificable;
@@ -12,7 +12,7 @@ public class Roca extends Obstaculo{
 	}
 
 	public void detonar(Tablero tablero) {
-		estrategiaDetonacion = new EstrategiaDetonacionGemaNormal();
+		EstategiaDetonacion estrategiaDetonacion = new EstrategiaDetonacionRocas();
 		estrategiaDetonacion.detonar(this,tablero);
 	}
 
@@ -21,50 +21,7 @@ public class Roca extends Obstaculo{
 		return color.get_score();
 	}
 
-	@Override
 	public boolean esAfectadaPorExplosionAdyacente() {
 		return true;
-	}
-
-	@Override
-	public void intercambiar(Entidad entidad) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void intercambiar_con(GemaNormal g) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void intercambiar_con(GemaRayada g) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void intercambiar_con(GemaEnvuelta g) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void intercambiar_con(GemaCruzada g) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void intercambiar_con(Roca r) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void intercambiar_con(Hielo h) {
-		// TODO Auto-generated method stub
-		
 	}
 }

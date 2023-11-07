@@ -97,7 +97,7 @@ public class Logica {
 	
 	public void asociar_entidad_logica_y_grafica(Entidad entidad_logica) {
 		EntidadGrafica entidad_grafica = miGUI.agregar_entidad(entidad_logica);
-		entidad_logica.setEntidadGrafica(entidad_grafica);
+		entidad_logica.set_EntidadGrafica(entidad_grafica);
 	}
 	
 	public int disminuirTiempo(Timer timer) {

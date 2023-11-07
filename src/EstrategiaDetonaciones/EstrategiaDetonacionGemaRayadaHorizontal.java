@@ -10,15 +10,15 @@ public class EstrategiaDetonacionGemaRayadaHorizontal implements EstategiaDetona
 		System.out.println("-------EstrategiaDetonacionGemaRayadaHorizontal----------");
 	    int fila = entidad.get_fila();
 	    entidad.set_color(Color.TRANSPARENTE);
-	    entidad.cargarImagenesRepresentativas(entidad.get_ruta());
-	    entidad.getEGrafica().notificarse_detonacion();
+	    entidad.cargarImagenesRepresentativas(entidad.get_rutadeLaImagen());
+	    entidad.get_EntidadGrafica().notificarse_detonacion();
 
 	    // Realizar los intercambios y ajustes necesarios en la fila indicada
 	    for (int columna = 0; columna < tablero.getColumna(); columna++) {
 	    	Entidad entidadActual = tablero.get_entidad(fila, columna);
 			entidadActual.set_color(Color.TRANSPARENTE);
-			entidadActual.cargarImagenesRepresentativas(entidadActual.get_ruta());
-			entidadActual.getEGrafica().notificarse_detonacion();
+			entidadActual.cargarImagenesRepresentativas(entidadActual.get_rutadeLaImagen());
+			entidadActual.get_EntidadGrafica().notificarse_detonacion();
 	    }
 	}
 }
