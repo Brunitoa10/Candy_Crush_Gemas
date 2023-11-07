@@ -57,7 +57,7 @@ public class GemaCruzada extends Gema {
 		
 		@Override
 		public boolean aplica_match_con(GemaNormal c) {
-			return true;
+			return c.get_color()==this.get_color();
 		}
 		
 		public boolean aplica_match_con(GemaEnvuelta c) {
@@ -82,8 +82,7 @@ public class GemaCruzada extends Gema {
 
 		@Override
 		public boolean se_produce_match_con(Entidad e) {
-			// TODO Auto-generated method stub
-			return false;
+			return e.aplica_match_con(this);
 		}
 
 		@Override
