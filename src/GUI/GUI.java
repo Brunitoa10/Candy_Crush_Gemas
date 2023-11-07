@@ -52,8 +52,8 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 	
 	protected CentralAnimaciones mi_animador;
 	
-	protected JPanel panel_tablero, panel_objetivos, panel_vidas,panel_principal, panel_movimientos, panel_timer;
-	protected JLabel timerLabel,movimientosLabel;
+	protected JPanel panel_tablero, panel_score, panel_objetivos, panel_vidas,panel_principal, panel_movimientos, panel_timer;
+	protected JLabel timerLabel,movimientosLabel, scoreLabel;
 	protected JLabel[] objetivosProgreso;
 
 	private Imagenfondo fondo = new Imagenfondo();
@@ -120,6 +120,14 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 
 		panel_timer.add(timerLabel);
 
+		panel_score = new JPanel();
+		panel_score.setBackground(new Color(0,0,0,200));
+
+		scoreLabel = new JLabel("SCORE: 0000");
+		scoreLabel.setFont(new Font("Algerian", Font.PLAIN, 40));
+		scoreLabel.setForeground(Color.WHITE);
+		panel_score.add(scoreLabel);
+
 		panel_movimientos = new JPanel();
 		panel_movimientos.setBackground(new Color(0,0,0,200));
 
@@ -155,6 +163,9 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 		c.insets = new Insets(0, 10, 0, 0);   
 		agregarConGBCs(panel_objetivos, panel_principal, c, 0, 1, 2, 2);   
 		
+		//Constraints PANEL SCORE
+		agregarConGBCs(panel_score, panel_principal, 2, 0, 4, 1);
+
 		//Constraints TABLERO
 		c.insets = new Insets(0,0,0,0);
 		c.weightx = 1;
@@ -720,6 +731,23 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 		gbc.gridheight = gridheight;
 
 		panelBase.add(componenteAAgregar,gbc);
+	}
+
+	public void cambiarScore(int score) {
+		scoreLabel.setText("SCORE: "+agregarPaddingScore(score) );
+	}
+
+	private String agregarPaddingScore(int score) {
+		String padding ="";
+		if(score <= 9) {
+			padding = "000";
+			} else if(score <= 99) {
+				padding = "00";
+			}	else if(score <= 999) {
+				padding = "0";
+			}
+
+		return padding + score;
 	}
 
 	private void setearPanelPuntajes(JPanel panel_puntajes) {
