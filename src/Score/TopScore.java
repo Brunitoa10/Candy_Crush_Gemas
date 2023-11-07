@@ -14,17 +14,12 @@ public class TopScore
 
     public void agregarJugador(String cadena, int numero) {
         cargarLista();
-        if(listadeJugadores.size()!=MAX_ELEMENTOS)
-        {
-        Jugador ganador = new Jugador(cadena, numero);
-        listadeJugadores.add(ganador);
-        }
-        else 
+        if(listadeJugadores.size()==MAX_ELEMENTOS)
         {
             listadeJugadores.remove();
+        }
             Jugador ganador = new Jugador(cadena, numero);
             listadeJugadores.add(ganador);
-        }
         guardarLista();
     }
 
