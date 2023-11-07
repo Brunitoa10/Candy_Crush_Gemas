@@ -20,12 +20,13 @@ public class AdministradordeScore {
         scoreActual=scoreActual+puntos;
     }
 
-    public void mejorJugador(String nombre-del-Jugador)
+    public boolean entro_en_el_top5()
     {
-        topScore.cargarLista();
-        if(topScore.obtenerListadeJugadores().peek().get_score()<=scoreActual)
-        {
+        return (topScore.obtenerListadeJugadores().size()<5 || topScore.obtenerListadeJugadores().peek().get_score()<=scoreActual);
+    }
+    
+    public void mejorJugador(String nombre_del_Jugador)
+    {
           topScore.agregarJugador(nombre_del_Jugador, scoreActual);
-        }
     }
 }
