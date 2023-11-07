@@ -8,7 +8,7 @@ import Tablero.TableroNotificable;
 public class GemaCruzada extends Gema {
 
     public GemaCruzada(TableroNotificable tablero,int f, int c, Color col, boolean visible){
-			super(tablero,f, c, col, "/assets/gemas/gema_cruzada/", visible);
+			super(tablero,f, c, col, "/assets/gemas/gema_cruzada/"+col, visible);
 		}
 		
 		public void detonar(Tablero tablero)
