@@ -12,7 +12,7 @@ public class TopScore
         listadeJugadores = new PriorityQueue<>(5,new ComparadorJugadores<Jugador>());
     }
 
-    public void agregarJugador(String cadena, int numero) throws FullListException {
+    public void agregarJugador(String cadena, int numero) {
         cargarLista();
         if(listadeJugadores.size()!=MAX_ELEMENTOS)
         {
