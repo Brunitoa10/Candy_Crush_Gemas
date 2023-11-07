@@ -33,7 +33,7 @@ public class GemaRayada extends Gema{
 		   System.out.println("Verticaaaaaaaaallllllll");
 		   estrategiaDetonacion = new EstrategiaDetonacionGemaRayadaVertical();
 		   estrategiaDetonacion.detonar(this, tablero);
-	   }
+	   } 
 	}
 
 	public boolean es_posible_intercambiar(Entidad e) {
@@ -53,11 +53,6 @@ public class GemaRayada extends Gema{
 			score=35;
 		}
 		return score;
-	}
-
-	@Override
-	public boolean esRoca() {
-		return false;
 	}
 
 	@Override

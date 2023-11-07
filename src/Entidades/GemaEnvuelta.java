@@ -89,13 +89,6 @@ public class GemaEnvuelta extends Gema{
 
 
 	@Override
-	public boolean esRoca() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-
-	@Override
 	public boolean se_produce_match_con(Entidad e) {
 		// TODO Auto-generated method stub
 		return false;

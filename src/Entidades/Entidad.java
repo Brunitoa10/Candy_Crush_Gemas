@@ -169,6 +169,6 @@ public abstract class Entidad implements EntidadLogica, Enfocable, Intercambiabl
 	
 	public abstract int get_score();
 	
-	public abstract boolean esRoca();
+	public abstract boolean esAfectadaPorExplosionAdyacente();
 
 }

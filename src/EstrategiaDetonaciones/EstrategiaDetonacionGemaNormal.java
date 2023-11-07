@@ -18,16 +18,16 @@ public class EstrategiaDetonacionGemaNormal implements EstategiaDetonacion{
 	 
 	    // Verificar y detonar rocas
 	    EstrategiaDetonacionRocas estrategiaRocas = new EstrategiaDetonacionRocas();
-	    if (tablero.hayRocaEn(fila - 1, columna)) {
+	    if (tablero.hayEfectoExplosionAdyacente(fila - 1, columna)) {
 	       estrategiaRocas.detonar(tablero.get_entidad(fila - 1, columna), tablero);
 	    }
-	    if (tablero.hayRocaEn(fila + 1, columna)) {
+	    if (tablero.hayEfectoExplosionAdyacente(fila + 1, columna)) {
 	    	estrategiaRocas.detonar(tablero.get_entidad(fila + 1, columna), tablero);
 	    }
-	    if (tablero.hayRocaEn(fila, columna - 1)) {
+	    if (tablero.hayEfectoExplosionAdyacente(fila, columna - 1)) {
 	    	estrategiaRocas.detonar(tablero.get_entidad(fila, columna - 1), tablero);
 	    }
-	    if (tablero.hayRocaEn(fila, columna + 1)) {
+	    if (tablero.hayEfectoExplosionAdyacente(fila, columna + 1)) {
 	    	estrategiaRocas.detonar(tablero.get_entidad(fila, columna + 1), tablero);
 	    }
 	}

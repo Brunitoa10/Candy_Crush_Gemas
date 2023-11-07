@@ -1,5 +1,6 @@
 package Entidades;
 
+import EstrategiaDetonaciones.EstrategiaDetonacionGemaCruz;
 import Logica.Color;
 import Tablero.Tablero;
 import Tablero.TableroNotificable;
@@ -13,7 +14,7 @@ public class GemaCruzada extends Gema {
 		
 		public void detonar(Tablero tablero)
         {
-            int topecolumna=tablero.getFila();
+            /* int topecolumna=tablero.getFila();
             int topefila=tablero.getColumna();
 
             for(int i=0;i<topefila;i++)
@@ -34,7 +35,11 @@ public class GemaCruzada extends Gema {
                  System.out.println("destruido gema Cruzada "+ this.color + " en: " + fila + columna);
 	             color.set_color(Color.TRANSPARENTE);
 				 cargarImagenesRepresentativas(ruta);
-	  			 entidadG.notificarse_detonacion();
+	  			 entidadG.notificarse_detonacion(); */
+
+		 System.out.println("Cruzadaaaaaaaaaaaaaaa");
+    	 estrategiaDetonacion = new EstrategiaDetonacionGemaCruz();
+   		 estrategiaDetonacion.detonar(this,tablero);
         }
 		
 		public boolean es_posible_intercambiar(Entidad entidad) {
@@ -74,12 +79,6 @@ public class GemaCruzada extends Gema {
 		
 		public void explosionAdyacente()
 		{}
-
-		@Override
-		public boolean esRoca() {
-			// TODO Auto-generated method stub
-			return false;
-		}
 
 		@Override
 		public boolean se_produce_match_con(Entidad e) {

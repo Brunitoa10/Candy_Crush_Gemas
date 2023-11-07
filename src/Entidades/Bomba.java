@@ -31,10 +31,9 @@ public class Bomba extends Obstaculo {
         return color.get_score();
     }
 
-	@Override
-	public boolean esRoca() {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean esAfectadaPorExplosionAdyacente()
+	{
+		return true;
 	}
 
 	@Override
@@ -84,5 +83,4 @@ public class Bomba extends Obstaculo {
 		// TODO Auto-generated method stub
 		
 	}
-    
 }

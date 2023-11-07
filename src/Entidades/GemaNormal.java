@@ -28,12 +28,6 @@ public class GemaNormal extends Gema{
 		}
 
 		@Override
-		public boolean esRoca() {
-			// TODO Auto-generated method stub
-			return false;
-		}
-
-		@Override
 		public boolean se_produce_match_con(Entidad e) {
 			return e.aplica_match_con(this);
 		}

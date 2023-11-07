@@ -29,8 +29,8 @@ public class Hielo extends Obstaculo {
 		return color.get_score();
 	}
 
-	@Override
-	public boolean esRoca() {
+	public boolean esAfectadaPorExplosionAdyacente()
+	{
 		return false;
 	}
 

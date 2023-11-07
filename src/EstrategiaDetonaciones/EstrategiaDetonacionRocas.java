@@ -7,7 +7,6 @@ import Tablero.Tablero;
 public class EstrategiaDetonacionRocas implements EstategiaDetonacion {
 	@Override
 	public void detonar(Entidad entidad, Tablero tablero) {
-	    int fila = entidad.get_fila();
 	    int columna = entidad.get_columna();
 
 	    // Detonar la entidad actual

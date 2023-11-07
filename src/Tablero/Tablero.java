@@ -245,13 +245,13 @@ public class Tablero implements TableroJuego{
 		return combosEnColumna;
 	}
 	
-	public boolean hayRocaEn(int filaVecina, int columnaVecina) {
-		boolean esRoca = false;
+	public boolean hayEfectoExplosionAdyacente(int filaVecina, int columnaVecina) {
+		boolean esAfectadaPorExplosionAdyacente = false;
 	   
 	    if (esPosicionValida(filaVecina, columnaVecina)) {
-	        esRoca = entidades[filaVecina][columnaVecina].esRoca();
+	        esAfectadaPorExplosionAdyacente = entidades[filaVecina][columnaVecina].esAfectadaPorExplosionAdyacente();
 	    }
-	    return esRoca;
+	    return esAfectadaPorExplosionAdyacente;
 	}
 	
 	private boolean esPosicionValida(int fila, int columna) {

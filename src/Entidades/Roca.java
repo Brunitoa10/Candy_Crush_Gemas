@@ -22,7 +22,7 @@ public class Roca extends Obstaculo{
 	}
 
 	@Override
-	public boolean esRoca() {
+	public boolean esAfectadaPorExplosionAdyacente() {
 		return true;
 	}
 

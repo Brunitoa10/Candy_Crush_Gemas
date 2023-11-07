@@ -10,7 +10,6 @@ import Logica.*;
 
 import java.util.*;
 
-import Tablero.Tablero;
 import Tablero.TableroJuego;
 
 import java.io.File;
