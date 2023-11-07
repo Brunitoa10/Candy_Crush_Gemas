@@ -47,7 +47,6 @@ public class Tablero implements TableroJuego{
 		return entidades[f][c];
 	}
 
-
 	public void resetar_tablero(int cant_filas, int cant_columnas) {
 		filas = cant_filas;
 		columnas = cant_columnas;

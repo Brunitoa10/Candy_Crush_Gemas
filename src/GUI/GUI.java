@@ -473,7 +473,6 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 		movimientosLabel.setText("Movimientos restantes: "+movimientos);
 	}
 
-
 	public void mostrarMensajeDerrotaPorMovimientos() {
 	    this.repaint();
 	    panel_principal.setVisible(false);
