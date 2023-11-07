@@ -64,17 +64,13 @@ public class Logica {
 	
 	public void notificarDerrotaPorVidas() {
 		System.out.println("notificarDerrotaPorVidas");
-		miTablero.obtenerAdministradordeScore().mejorJugador();
+		miTablero.obtenerAdministradordeScore().mejorJugador(String nombre_del_Jugador);
 		nivelActual = 1;
 		reiniciarNivel(nivelActual);
 	}
 	
 	public void notificarVictoriaPorObjetivos() {
 		miGUI.mostrarMensajeVictoriaPorObjetivos();
-		if(nivelActual==5)
-		{
-			miTablero.obtenerAdministradordeScore().mejorJugador();
-		}
 	}
 	
 	public String[] obtenerInfoObjetivos() {
@@ -209,7 +205,7 @@ public class Logica {
 			miGUI.cambiarFondo(nivelActual);
 			//asociarEntidadesLogicasGraficas();
 		} else {
-			miTablero.obtenerAdministradordeScore().mejorJugador();
+			miTablero.obtenerAdministradordeScore().mejorJugador(nombre_del_Jugador);
 			miGUI.mostrarMensajeFinDelJuego();
 		}
 		
