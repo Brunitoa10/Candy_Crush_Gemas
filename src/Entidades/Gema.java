@@ -1,52 +1,99 @@
 package Entidades;
 
 import Logica.Color;
+import Tablero.TableroNotificable;
 
 public abstract class Gema extends Entidad{
 
-	public Gema(int f, int c, Color col, String ri, boolean visible) {
-		super(f, c, ri,col, visible);
+	public Gema(TableroNotificable tablero,int f, int c, Color col, String ri, boolean visible) {
+		super(tablero,f, c, ri,col, visible);
 	}
 
-	public boolean match_con(GemaNormal c) {
-	  return false;
-	}
+	//Metodos de la interfaz matcheable
 
-	public boolean match_con(GemaEnvuelta c) {
-	  return false;
-	}
-
-	public boolean match_con(GemaRayada c) {
-	  return false;
-	}
-
-	public boolean match_con(GemaCruzada c) {
-	  return false;
-	}
-
-	public boolean match_con(Roca r) {
-	  return false;
-	}
-
-	public boolean puede_recibir(GemaNormal gm) {
-		return true;
-	}
-
-	public boolean puede_recibir(Roca r) {
+	public boolean aplica_match_con(GemaNormal c) {
 		return false;
 	}
 
-	public boolean puede_recibir(GemaEnvuelta ge) {
+	public boolean aplica_match_con(GemaRayada p) {
+		return false;
+	}
+
+	public boolean aplica_match_con(GemaEnvuelta p) {
+		return false;
+	}
+
+	public boolean aplica_match_con(GemaCruzada p) {
+		return false;
+	}
+
+	public boolean aplica_match_con(Roca r) {
+		return false;
+	}
+
+	//Metodos de la interfaz Intercambiable
+
+	public boolean puede_recibir(GemaNormal gemaNormal) {
 		return true;
 	}
 
-	public boolean puede_recibir(GemaRayada gr) {
+	public boolean puede_recibir(GemaEnvuelta gemaEnvuelta) {
 		return true;
 	}
 
-	public boolean puede_recibir(GemaCruzada gc) {
+	public boolean puede_recibir(GemaRayada gemaRayada) {
 		return true;
 	}
+
+	public boolean puede_recibir(GemaCruzada gemaCruzada) {
+		return true;
+	}
+
+	public boolean puede_recibir(Bomba bomba) {
+		return false;
+	}
+
+	public boolean puede_recibir(Roca roca) {
+		return false;
+	}
+
+	public void intercambiar(Entidad entidad) {
+		// TODO Auto-generated method stub
+	}
+
 	
-	public abstract void explosionAdyacente();
+	public void intercambiar_con(GemaNormal g) {
+		// TODO Auto-generated method stub
+	}
+
+	public void intercambiar_con(GemaRayada g) {
+	// TODO Auto-generated method stub
+	}
+
+	public void intercambiar_con(GemaEnvuelta g) {
+	// TODO Auto-generated method stub	
+	}
+
+	public void intercambiar_con(GemaCruzada g) {
+	// TODO Auto-generated method stub
+	}
+
+	public void intercambiar_con(Roca r) {
+	// TODO Auto-generated method stub
+	}
+
+	public void intercambiar_con(Hielo h) {
+	// TODO Auto-generated method stub
+	}
+
+	public void cambiar_posicion(int nf, int nc) {
+	// TODO Auto-generated method stub
+	}
+
+	//Metodo particular
+
+	public boolean esAfectadaPorExplosionAdyacente()
+	{
+		return false;
+	}
 }

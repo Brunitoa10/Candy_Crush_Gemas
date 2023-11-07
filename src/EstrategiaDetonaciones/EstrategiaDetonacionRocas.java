@@ -1,27 +1,37 @@
 package EstrategiaDetonaciones;
 
 import Entidades.Entidad;
+import Logica.Color;
+import Tablero.Tablero;
 
-public class EstrategiaDetonacionRocas implements EstrategiaDetonacionObstaculo {
-
+public class EstrategiaDetonacionRocas implements EstategiaDetonacion {
 	@Override
-	public void detonarRoca(Entidad[][] entidades, int fila, int columna) {
-		int filas = entidades.length;
-        int columnas = entidades[0].length;
+	public void detonar(Entidad entidad, Tablero tablero) {
+	    int columna = entidad.get_columna();
 
-        Entidad arriba = (fila > 0) ? entidades[fila - 1][columna] : null;
-        Entidad abajo = (fila < filas - 1) ? entidades[fila + 1][columna] : null;
-        Entidad izquierda = (columna > 0) ? entidades[fila][columna - 1] : null;
-        Entidad derecha = (columna < columnas - 1) ? entidades[fila][columna + 1] : null;
-
-        detonarEntidad(arriba);
-        detonarEntidad(abajo);
-        detonarEntidad(izquierda);
-        detonarEntidad(derecha);
+	    // Detonar la entidad actual
+	    entidad.set_color(Color.TRANSPARENTE);
+	    entidad.cargarImagenesRepresentativas(entidad.get_rutadeLaImagen());
+	    entidad.get_EntidadGrafica().notificarse_detonacion();
+	   
+	    // Realizar los intercambios y ajustes necesarios
+	    /*for (int i = fila; i > 0; i--) {
+	        swapEntidades(tablero, i, columna, i - 1, columna);
+	    }*/
+	    
+	    Entidad entidadTopeColumna = tablero.get_entidad(0, columna);
+	    entidadTopeColumna.set_color(Color.TRANSPARENTE);
+	    entidadTopeColumna.cargarImagenesRepresentativas(entidadTopeColumna.get_imagen_representativa());
+	    
 	}
-	private void detonarEntidad(Entidad entidad) {
-        if (entidad != null) {
-            entidad.explosionAdyacente();
-        }
-    }
+
+	/*private void swapEntidades(Tablero tablero, int f1, int c1, int f2, int c2) {
+	    Entidad entidad1 = tablero.get_entidad(f1, c1);
+	    Entidad entidad2 = tablero.get_entidad(f2, c2);
+	    
+	    entidad2.cambiar_posicion(f1, c1);
+	    entidad1.set_color(entidad2.get_color());
+	    entidad1.cargarImagenesRepresentativas(entidad2.get_ruta());
+	    
+	}*/
 }

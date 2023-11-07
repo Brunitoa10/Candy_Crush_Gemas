@@ -12,13 +12,15 @@ public class TopScore
         listadeJugadores = new PriorityQueue<>(5,new ComparadorJugadores<Jugador>());
     }
 
-    public void agregarJugador(String cadena, int numero) throws FullListException {
-        if(listadeJugadores.size()!=MAX_ELEMENTOS)
+    public void agregarJugador(String cadena, int numero) {
+        cargarLista();
+        if(listadeJugadores.size()==MAX_ELEMENTOS)
         {
-        Jugador ganador = new Jugador(cadena, numero);
-        listadeJugadores.add(ganador);
+            listadeJugadores.remove();
         }
-        else throw new FullListException ("Ya hay 5 jugadores");
+            Jugador ganador = new Jugador(cadena, numero);
+            listadeJugadores.add(ganador);
+        guardarLista();
     }
 
     public PriorityQueue<Jugador> obtenerListadeJugadores()
@@ -42,6 +44,4 @@ public class TopScore
             e.printStackTrace();
         }
     }
-
-    //SIEMPRE CARGEN ANTES DE AGREGAR Y GUARDEN DESPUES 
 }

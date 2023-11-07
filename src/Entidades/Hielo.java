@@ -2,25 +2,39 @@ package Entidades;
 
 import Logica.Color;
 import Tablero.Tablero;
+import Tablero.TableroNotificable;
 
 public class Hielo extends Obstaculo {
+   protected Entidad caramelo_interno;
 
-	public Hielo(int f, int c, Color col, boolean visible) {
-		super(f, c, "/assets/obstaculo/gema_normal/", col, visible);
+	public Hielo(TableroNotificable tablero,int f, int c, Color col, boolean visible, Entidad ent) {
+		super(tablero,f, c, "/assets/obstaculo/gema_normal/", col, visible);
+		caramelo_interno=ent;
 	}
 	
 	public void detonar(Tablero  t) {
 		    System.out.println("destruido "+ this.color + " en: "+fila+","+columna );
 		    color.set_color(Color.TRANSPARENTE);
-		    cargarImagenesRepresentativas(ruta);
-	        entidadG.notificarse_detonacion();
+		    cargarImagenesRepresentativas(rutadeLaImagen);
+	        entidadGrafica.notificarse_detonacion();
 	}
 
-	public void explosionAdyacente()
-	{}
+    public void set_caramelo_interno(Entidad e)
+	{
+    	caramelo_interno=e;
+	}
 
 	public int get_score()
 	{
-		return color.get_score();
+		return color.get_score() + caramelo_interno.get_score();
+	}
+
+	public boolean esAfectadaPorExplosionAdyacente()
+	{
+		return false;
+	}
+
+	public Entidad get_caramelo_interno() {
+		return caramelo_interno;
 	}
 }

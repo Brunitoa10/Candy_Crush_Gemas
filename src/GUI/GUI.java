@@ -10,7 +10,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.HashMap;
 import java.util.Map;
 import java.awt.Insets;
@@ -29,7 +28,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
-import Entidades.Entidad;
 
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -39,7 +37,7 @@ import Threads.CentralAnimaciones;
 
 
 
-public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
+public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,VentanaJuego{
 	//Atributos
 	protected Logica miLogica;
 	
@@ -54,12 +52,12 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 	
 	protected CentralAnimaciones mi_animador;
 	
-	protected JPanel panel_tablero, panel_objetivos, panel_vidas,panel_principal, panel_movimientos, panel_timer;
-	protected JLabel timerLabel,movimientosLabel;
+	protected JPanel panel_tablero, panel_score, panel_objetivos, panel_controles, panel_vidas,panel_principal, panel_movimientos, panel_timer;
+	protected JLabel timerLabel,movimientosLabel, scoreLabel;
 	protected JLabel[] objetivosProgreso;
 
 	private Imagenfondo fondo = new Imagenfondo();
-	//private static GUI instancia; 
+
 	
 	
 	// Define un mapa para asociar los códigos de tecla con las acciones
@@ -122,6 +120,16 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 
 		panel_timer.add(timerLabel);
 
+		inicializarPanelControles();
+
+		panel_score = new JPanel();
+		panel_score.setBackground(new Color(0,0,0,200));
+
+		scoreLabel = new JLabel("SCORE: 0000");
+		scoreLabel.setFont(new Font("Algerian", Font.PLAIN, 40));
+		scoreLabel.setForeground(Color.WHITE);
+		panel_score.add(scoreLabel);
+
 		panel_movimientos = new JPanel();
 		panel_movimientos.setBackground(new Color(0,0,0,200));
 
@@ -157,6 +165,9 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 		c.insets = new Insets(0, 10, 0, 0);   
 		agregarConGBCs(panel_objetivos, panel_principal, c, 0, 1, 2, 2);   
 		
+		//Constraints PANEL SCORE
+		agregarConGBCs(panel_score, panel_principal, 2, 0, 4, 1);
+
 		//Constraints TABLERO
 		c.insets = new Insets(0,0,0,0);
 		c.weightx = 1;
@@ -170,6 +181,8 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 		c.insets = new Insets(0,0,0,10);
 		agregarConGBCs(panel_vidas, panel_principal, c, 6, 6, 2, 1); 
 		 
+		//Contraints CONTROLES
+		agregarConGBCs(panel_controles, panel_principal, 0, 6, 5, 1);
 		
 		//Constraints MOVIMIENTOS
 		c.weightx = 0;
@@ -240,10 +253,12 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 		        // Verifica si la tecla presionada tiene una acción asociada
 		        Runnable accion = acciones.get(e.getKeyCode());
 		        if (accion != null) {
+		        	repaint();
 		        	accion.run();
 		        }
 		    }
 		});
+		
 	}
 
 
@@ -269,13 +284,13 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 	        public void actionPerformed(ActionEvent e) {
 	            panel_puntajes.setVisible(false);
 				panel_principal.setVisible(true);
+				panel_tablero.requestFocus();
 				panel_tablero.setFocusable(true);
 				repaint();
 	        }
 	    });
 
 	    getContentPane().add(panel_puntajes);
-
 	    panel_puntajes.setVisible(true);
 	    panel_puntajes.revalidate();
 	}
@@ -473,7 +488,6 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 		movimientosLabel.setText("Movimientos restantes: "+movimientos);
 	}
 
-
 	public void mostrarMensajeDerrotaPorMovimientos() {
 	    this.repaint();
 	    panel_principal.setVisible(false);
@@ -613,6 +627,51 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 	    mensajePanel.revalidate();
 	}
 
+	private void inicializarPanelControles() {
+		panel_controles = new JPanel();
+		panel_controles.setOpaque(false);
+		
+		ImageIcon icono_imagen = new ImageIcon(this.getClass().getResource("/assets/controles/arrow_keys.png"));
+		Image imagen_escalada = icono_imagen.getImage().getScaledInstance(120, 30, Image.SCALE_REPLICATE);
+		Icon icono_escalado = new ImageIcon(imagen_escalada);
+
+		JLabel label_flechas = new JLabel();
+
+		label_flechas.setIcon(icono_escalado);
+		panel_controles.add(label_flechas);
+		panel_controles.repaint();
+
+		JLabel textoMoverse = crearLabel("Mover", 25);
+		panel_controles.add(textoMoverse);
+		
+		icono_imagen = new ImageIcon(this.getClass().getResource("/assets/controles/WASD.png"));
+		imagen_escalada = icono_imagen.getImage().getScaledInstance(120, 30, Image.SCALE_REPLICATE);
+		icono_escalado = new ImageIcon(imagen_escalada);
+
+		JLabel label_WASD = new JLabel();
+
+		label_WASD.setIcon(icono_escalado);
+		panel_controles.add(label_WASD);
+		panel_controles.repaint();
+
+		JLabel textoIntercambiar =  crearLabel("Intercambiar", 25);
+		panel_controles.add(textoIntercambiar);
+
+		icono_imagen = new ImageIcon(this.getClass().getResource("/assets/controles/R.png"));
+		imagen_escalada = icono_imagen.getImage().getScaledInstance(30, 30, Image.SCALE_REPLICATE);
+		icono_escalado = new ImageIcon(imagen_escalada);
+
+		JLabel label_R = new JLabel();
+
+		label_R.setIcon(icono_escalado);
+		panel_controles.add(label_R);
+		panel_controles.repaint();
+
+		JLabel textoVerPuntajes = crearLabel("Ver mejores puntajes", 25);
+		panel_controles.add(textoVerPuntajes);
+
+	}
+
 	private void agregarComponentesAlMensajePanelVictoriaPorObjetivos(JPanel p) {
 	    GridBagConstraints gbc = new GridBagConstraints();
 
@@ -723,6 +782,23 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 		panelBase.add(componenteAAgregar,gbc);
 	}
 
+	public void cambiarScore(int score) {
+		scoreLabel.setText("SCORE: "+agregarPaddingScore(score) );
+	}
+
+	private String agregarPaddingScore(int score) {
+		String padding ="";
+		if(score <= 9) {
+			padding = "000";
+			} else if(score <= 99) {
+				padding = "00";
+			}	else if(score <= 999) {
+				padding = "0";
+			}
+
+		return padding + score;
+	}
+
 	private void setearPanelPuntajes(JPanel panel_puntajes) {
 	JLabel titulo_puntajes = crearLabel("MEJORES PUNTAJES:", "Algerian", Font.PLAIN, 40, Color.WHITE, 2, 1);
 		agregarConGBCs(titulo_puntajes, panel_puntajes, 0, 0, 2, 1);
@@ -793,5 +869,24 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable{
 
     }
 
+	@Override
+	public void ocultar() {
+		this.setVisible(false);
+	}
+
+	@Override
+	public void mostrar() {
+		this.setVisible(true);
+	}
+	
+	@Override
+	public void transicionar() {
+		// To DO. Podría servir para mostrar información o carteles.
+	}
+	
+	@Override
+	public void resetear(Logica logica, int filas, int columnas) {
+		// To DO.
+	}
 }
 

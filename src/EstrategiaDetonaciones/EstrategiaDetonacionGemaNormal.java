@@ -6,28 +6,31 @@ import Tablero.Tablero;
 
 public class EstrategiaDetonacionGemaNormal implements EstategiaDetonacion{
 
-	@Override
 	public void detonar(Entidad entidad, Tablero tablero) {
-		System.out.println("------EstrategiaDetonacionGemaNormal---------");
+	    System.out.println("------EstrategiaDetonacionGemaNormal---------");
 
 	    int fila = entidad.get_fila();
 	    int columna = entidad.get_columna();
-	    Entidad entidadActual = null;
-	    // Realizar los intercambios y ajustes necesarios
-	    for (int i = fila; i > 0; i--) {
-	    	entidadActual = tablero.get_entidad(i, columna); 
-	    	entidadActual.set_color(tablero.get_entidad(i-1, columna).get_color());
-	    	entidadActual.cargarImagenesRepresentativas(tablero.get_entidad(i-1, columna).get_ruta());
-	    	entidadActual.getEGrafica().notificarse_detonacion();
-	    	//entidadActual.getEGrafica().notificarse_cambio_estado();
-	    }
-
-	    // Poner ceros en la fila superior
-	    entidadActual = tablero.get_entidad(0, columna);
 	    
-	    entidadActual.set_color(Color.TRANSPARENTE);
-	    entidadActual.cargarImagenesRepresentativas(entidadActual.get_ruta());
-	    //entidadActual.getEGrafica().notificarse_cambio_estado();
+	    entidad.set_color(Color.TRANSPARENTE);
+	    entidad.cargarImagenesRepresentativas(entidad.get_rutadeLaImagen());
+	    entidad.get_EntidadGrafica().notificarse_detonacion();
+	 
+	    // Verificar y detonar rocas
+	    EstrategiaDetonacionRocas estrategiaRocas = new EstrategiaDetonacionRocas();
+	    if (tablero.hayEfectoExplosionAdyacente(fila - 1, columna)) {
+	       estrategiaRocas.detonar(tablero.get_entidad(fila - 1, columna), tablero);
+	    }
+	    if (tablero.hayEfectoExplosionAdyacente(fila + 1, columna)) {
+	    	estrategiaRocas.detonar(tablero.get_entidad(fila + 1, columna), tablero);
+	    }
+	    if (tablero.hayEfectoExplosionAdyacente(fila, columna - 1)) {
+	    	estrategiaRocas.detonar(tablero.get_entidad(fila, columna - 1), tablero);
+	    }
+	    if (tablero.hayEfectoExplosionAdyacente(fila, columna + 1)) {
+	    	estrategiaRocas.detonar(tablero.get_entidad(fila, columna + 1), tablero);
+	    }
 	}
 
 }
+	
