@@ -27,6 +27,9 @@ public interface Intercambiable {
 	public boolean puede_recibir(GemaRayada p);
 	public boolean puede_recibir(GemaEnvuelta p);
 	public boolean puede_recibir(GemaCruzada p);
+	public boolean puede_recibir(Hielo h);
+	public boolean puede_recibir(Roca r);
+	public boolean puede_recibir(Bomba b);
 	/**
 	 * Fija la nueva posición de la entidad receptora del mensaje.
 	 * Notifica a la entidad gráfica del cambio realizado.

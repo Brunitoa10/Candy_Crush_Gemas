@@ -24,4 +24,22 @@ public class Roca extends Obstaculo{
 	public boolean esAfectadaPorExplosionAdyacente() {
 		return true;
 	}
+
+	@Override
+	public boolean puede_recibir(Hielo h) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean puede_recibir(Roca r) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean puede_recibir(Bomba b) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

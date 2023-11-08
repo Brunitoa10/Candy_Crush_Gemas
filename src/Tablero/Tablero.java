@@ -337,13 +337,33 @@ public class Tablero implements TableroJuego{
 		cJugador = nueva_columna;
 	}
 	
-	protected EfectosDeTransicion calcular_efectos_por_intercambio(Entidad entidad_origen, Entidad entidad_destino){
+	/*protected EfectosDeTransicion calcular_efectos_por_intercambio(Entidad entidad_origen, Entidad entidad_destino){
 		EfectosDeTransicion efecto_transicion = new EfectosDeTransicion();
 		if (entidad_origen.se_produce_match_con(entidad_destino)) {
 	        efecto_transicion = buscarCombos(entidad_origen.get_fila(), entidad_origen.get_columna(), entidad_destino.get_fila(), entidad_destino.get_columna());
 		}else {
 			// To DO: incorporar lógica asociada a control de match, generador de potenciadores, etc. 
 			System.out.println("F");
+		}
+		return efecto_transicion;
+	}*/
+	
+	protected EfectosDeTransicion calcular_efectos_por_intercambio(Entidad entidad_origen, Entidad entidad_destino){
+		EfectosDeTransicion efecto_transicion = new EfectosDeTransicion();
+		if (entidad_origen.se_produce_match_con(entidad_destino)) {
+			// To DO :)
+			
+			// Ejemplo harcodeado de la lógica que podría aplicar
+			GemaNormal caramelo_1 = new GemaNormal(this, entidad_origen.get_fila(), entidad_origen.get_columna(), new Color(new Random().nextInt(7)+1), false);
+			GemaNormal caramelo_2 = new GemaNormal(this, entidad_destino.get_fila(), entidad_destino.get_columna(), new Color(new Random().nextInt(7)+1), false);
+			
+			efecto_transicion.agregar_entidad_a_detonar_y_reemplazar(entidad_origen);
+			efecto_transicion.agregar_entidad_a_detonar_y_reemplazar(entidad_destino);
+			efecto_transicion.agregar_entidad_de_reemplazo(caramelo_1);
+			efecto_transicion.agregar_entidad_de_reemplazo(caramelo_2);
+			
+		}else {
+			// To DO: incorporar logica asociada a control de match, generador de potenciadores, etc. 
 		}
 		return efecto_transicion;
 	}

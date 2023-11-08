@@ -166,4 +166,6 @@ public abstract class Entidad implements EntidadLogica, Enfocable, Intercambiabl
 		gelatina.set_caramelo_interno(caramelo);
 		tablero.reubicar(caramelo_interno_gelatina);
 	}*/
+	
+
 }

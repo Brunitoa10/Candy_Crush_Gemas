@@ -56,6 +56,10 @@ public abstract class Gema extends Entidad{
 	public boolean puede_recibir(Roca roca) {
 		return false;
 	}
+	
+	public boolean puede_recibir(Hielo hielo) {
+		return false;
+	}
 
 	public void intercambiar(Entidad entidad) {
 		// TODO Auto-generated method stub

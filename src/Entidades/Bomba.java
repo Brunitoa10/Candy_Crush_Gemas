@@ -40,4 +40,22 @@ public class Bomba extends Obstaculo {
 	public boolean se_produce_match_con(Entidad e) {
 	 return false;
 	}
+
+	@Override
+	public boolean puede_recibir(Hielo h) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean puede_recibir(Roca r) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean puede_recibir(Bomba b) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }
