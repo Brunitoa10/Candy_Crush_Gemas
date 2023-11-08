@@ -28,11 +28,12 @@ public class AdministradordeScore {
 
     public void mejorJugador(String nombre_del_Jugador)
     {
-        topScore.cargarLista();
-        if(topScore.obtenerListadeJugadores().peek().get_score()<=scoreActual)
-        {
+        return (topScore.obtenerListadeJugadores().size()<5 || topScore.obtenerListadeJugadores().peek().get_score()<=scoreActual);
+    }
+    
+    public void mejorJugador(String nombre_del_Jugador)
+    {
           topScore.agregarJugador(nombre_del_Jugador, scoreActual);
-        }
     }
    
 }
