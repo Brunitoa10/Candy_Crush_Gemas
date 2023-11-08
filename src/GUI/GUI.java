@@ -25,7 +25,9 @@ import java.awt.Graphics;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
 
@@ -246,6 +248,12 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 		    }
 		});
 
+		acciones.put(KeyEvent.VK_P, () -> {
+		    if (!bloquear_intercambios){
+		    	obtenerNombreJugador();
+		    }
+		});
+
 		// Agrega el KeyListener
 		panel_tablero.addKeyListener(new KeyAdapter() {
 		    @Override
@@ -259,6 +267,32 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 		    }
 		});
 		
+	}
+
+	public String obtenerNombreJugador() {
+		String nombre = abrirVentanaParaIngresarNombre();
+
+		while (nombre != null && nombre.length() != 3) {
+            JOptionPane.showMessageDialog(null, "El nombre tener 3 letras");
+            nombre = abrirVentanaParaIngresarNombre();
+        }
+
+		System.out.println(nombre);
+		return nombre;
+	}
+
+
+    public String abrirVentanaParaIngresarNombre() {
+        JPanel panelNombre = new JPanel();
+        JLabel labelNombre = new JLabel("Ingresa tu nombre (3 letras):");
+        JTextField textFieldNombre = new JTextField(5);
+
+        panelNombre.add(labelNombre);
+        panelNombre.add(textFieldNombre);
+
+        int result = JOptionPane.showConfirmDialog(null, panelNombre, "¡Top 5 alcanzado!", JOptionPane.OK_CANCEL_OPTION);
+
+        return textFieldNombre.getText();
 	}
 
 
@@ -801,37 +835,52 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 
 	private void setearPanelPuntajes(JPanel panel_puntajes) {
 	JLabel titulo_puntajes = crearLabel("MEJORES PUNTAJES:", "Algerian", Font.PLAIN, 40, Color.WHITE, 2, 1);
-		agregarConGBCs(titulo_puntajes, panel_puntajes, 0, 0, 2, 1);
+		agregarConGBCs(titulo_puntajes, panel_puntajes, 0, 0, 3, 1);
 
-		JLabel label_num1 = crearLabel("1 -", "Algerian", Font.PLAIN, 30, Color.YELLOW, 2, 1);
+		JLabel label_num1 = crearLabel("1 - ", "Algerian", Font.PLAIN, 30, Color.YELLOW, 2, 1);
 		agregarConGBCs(label_num1, panel_puntajes, 0, 1, 1, 1);
 
-		JLabel label_puntaje1 = crearLabel("0000000", "Algerian", Font.PLAIN, 30, Color.WHITE, 2, 1);
-		agregarConGBCs(label_puntaje1, panel_puntajes, 1, 1, 1, 1);
+		JLabel label_nombre1 = crearLabel("AAA", "Algerian", Font.PLAIN, 30, Color.YELLOW, 2, 1);
+		agregarConGBCs(label_nombre1, panel_puntajes, 1, 1, 1, 1);
 
-		JLabel label_num2 = crearLabel("2 -", "Algerian", Font.PLAIN, 30, Color.GRAY, 2, 1);
+		JLabel label_puntaje1 = crearLabel("0000000", "Algerian", Font.PLAIN, 30, Color.WHITE, 2, 1);
+		agregarConGBCs(label_puntaje1, panel_puntajes, 2, 1, 1, 1);
+
+		JLabel label_num2 = crearLabel("2 - ", "Algerian", Font.PLAIN, 30, Color.GRAY, 2, 1);
 		agregarConGBCs(label_num2, panel_puntajes, 0, 2, 1, 1);
 
-		JLabel label_puntaje2 = crearLabel("0000000", "Algerian", Font.PLAIN, 30, Color.WHITE, 2, 1);
-		agregarConGBCs(label_puntaje2, panel_puntajes, 1, 2, 1, 1);
+		JLabel label_nombre2 = crearLabel("AAA", "Algerian", Font.PLAIN, 30, Color.GRAY, 2, 1);
+		agregarConGBCs(label_nombre2, panel_puntajes, 1, 2, 1, 1);
 
-		JLabel label_num3 = crearLabel("3 -", "Algerian", Font.PLAIN, 30, Color.ORANGE, 2, 1);
+		JLabel label_puntaje2 = crearLabel("0000000", "Algerian", Font.PLAIN, 30, Color.WHITE, 2, 1);
+		agregarConGBCs(label_puntaje2, panel_puntajes, 2, 2, 1, 1);
+
+		JLabel label_num3 = crearLabel("3 - ", "Algerian", Font.PLAIN, 30, Color.ORANGE, 2, 1);
 		agregarConGBCs(label_num3, panel_puntajes, 0, 3, 1, 1);
 
-		JLabel label_puntaje3 = crearLabel("0000000", "Algerian", Font.PLAIN, 30, Color.WHITE, 2, 1);
-		agregarConGBCs(label_puntaje3, panel_puntajes, 1, 3, 1, 1);
+		JLabel label_nombre3 = crearLabel("AAA", "Algerian", Font.PLAIN, 30, Color.ORANGE, 2, 1);
+		agregarConGBCs(label_nombre3, panel_puntajes, 1, 3, 1, 1);
 
-		JLabel label_num4 = crearLabel("4 -", "Algerian", Font.PLAIN, 30, Color.WHITE, 2, 1);
+		JLabel label_puntaje3 = crearLabel("0000000", "Algerian", Font.PLAIN, 30, Color.WHITE, 2, 1);
+		agregarConGBCs(label_puntaje3, panel_puntajes, 2, 3, 1, 1);
+
+		JLabel label_num4 = crearLabel("4 - ", "Algerian", Font.PLAIN, 30, Color.WHITE, 2, 1);
 		agregarConGBCs(label_num4, panel_puntajes, 0, 4, 1, 1);
 
-		JLabel label_puntaje4 = crearLabel("0000000", "Algerian", Font.PLAIN, 30, Color.WHITE, 2, 1);
-		agregarConGBCs(label_puntaje4, panel_puntajes, 1, 4, 1, 1);
+		JLabel label_nombre4 = crearLabel("AAA", "Algerian", Font.PLAIN, 30, Color.white, 2, 1);
+		agregarConGBCs(label_nombre4, panel_puntajes, 1, 4, 1, 1);
 
-		JLabel label_num5 = crearLabel("5 -", "Algerian", Font.PLAIN, 30, Color.WHITE, 2, 1);
+		JLabel label_puntaje4 = crearLabel("0000000", "Algerian", Font.PLAIN, 30, Color.WHITE, 2, 1);
+		agregarConGBCs(label_puntaje4, panel_puntajes, 2, 4, 1, 1);
+
+		JLabel label_num5 = crearLabel("5 - ", "Algerian", Font.PLAIN, 30, Color.WHITE, 2, 1);
 		agregarConGBCs(label_num5, panel_puntajes, 0, 5, 1, 1);
 
+		JLabel label_nombre5 = crearLabel("AAA", "Algerian", Font.PLAIN, 30, Color.white, 2, 1);
+		agregarConGBCs(label_nombre5, panel_puntajes, 1, 5, 1, 1);
+
 		JLabel label_puntaje5 = crearLabel("0000000", "Algerian", Font.PLAIN, 30, Color.WHITE, 2, 1);
-		agregarConGBCs(label_puntaje5, panel_puntajes, 1, 5, 1, 1);
+		agregarConGBCs(label_puntaje5, panel_puntajes, 2, 5, 1, 1);
 
 		JButton button_volver = new JButton("Volver");
 		button_volver.setBackground(new Color(0, 0, 0, 200));

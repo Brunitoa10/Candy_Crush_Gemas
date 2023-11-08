@@ -25,6 +25,7 @@ public class TopScore
 
     public PriorityQueue<Jugador> obtenerListadeJugadores()
     {
+        cargarLista();
         return listadeJugadores;
     }
 

@@ -64,7 +64,9 @@ public class Logica {
 	
 	public void notificarDerrotaPorVidas() {
 		System.out.println("notificarDerrotaPorVidas");
-		miTablero.obtenerAdministradordeScore().mejorJugador(String nombre_del_Jugador);
+		if(miTablero.obtenerAdministradordeScore().entro_en_el_top5()){
+			String nombre_del_Jugador = miGUI.obtenerNombreJugador();
+			miTablero.obtenerAdministradordeScore().mejorJugador(nombre_del_Jugador);}
 		nivelActual = 1;
 		reiniciarNivel(nivelActual);
 	}
@@ -205,7 +207,10 @@ public class Logica {
 			miGUI.cambiarFondo(nivelActual);
 			//asociarEntidadesLogicasGraficas();
 		} else {
-			miTablero.obtenerAdministradordeScore().mejorJugador(nombre_del_Jugador);
+			if(miTablero.obtenerAdministradordeScore().entro_en_el_top5()){
+				String nombre_del_Jugador = miGUI.obtenerNombreJugador();
+				miTablero.obtenerAdministradordeScore().mejorJugador(nombre_del_Jugador);
+			}
 			miGUI.mostrarMensajeFinDelJuego();
 		}
 		
