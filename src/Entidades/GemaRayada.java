@@ -55,4 +55,16 @@ public class GemaRayada extends Gema{
 	public boolean se_produce_match_con(Entidad e) {
 		return e.aplica_match_con(this);
 	}
+
+	public boolean aplica_match_con(GemaEnvuelta c) {
+		return true;
+	   }
+	 
+	   public boolean aplica_match_con(GemaRayada c) {
+		return true;
+	   }
+	 
+	   public boolean aplica_match_con(GemaCruzada c) {
+		return true;
+	   }
 }

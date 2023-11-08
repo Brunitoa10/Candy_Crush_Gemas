@@ -40,6 +40,18 @@ public abstract class Obstaculo extends Entidad{
 		return false;
 	}
 
+	public boolean puede_recibir(Hielo p) {
+		return false;
+	}
+
+	public boolean puede_recibir(Bomba p) {
+		return false;
+	}
+	
+	public boolean puede_recibir(Roca p) {
+		return false;
+	}
+	
 	//interfaz de matcheable
 	public boolean se_produce_match_con(Entidad e) {
 		return false;
