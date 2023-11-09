@@ -57,41 +57,34 @@ public abstract class Gema extends Entidad{
 		return false;
 	}
 	
-	public boolean puede_recibir(Hielo hielo) {
-		return false;
+	public void intercambiar_con(GemaNormal gemaNormal) {
+		System.out.println("intercambio con una gema normal");
+	   intercambiar_entidad_y_entidad(this, gemaNormal);
+
 	}
 
-	public void intercambiar(Entidad entidad) {
-		// TODO Auto-generated method stub
+	public void intercambiar_con(GemaRayada gemaRayada) {
+	   intercambiar_entidad_y_entidad(this, gemaRayada);
 	}
 
+	public void intercambiar_con(GemaEnvuelta gemaEnvuelta) {
+	    intercambiar_entidad_y_entidad(this, gemaEnvuelta);	
+	}
+
+	public void intercambiar_con(GemaCruzada gemaCruzada) {
+	    intercambiar_entidad_y_entidad(this, gemaCruzada);
+	}
+
+	public void intercambiar_con(Roca roca) {
 	
-	public void intercambiar_con(GemaNormal g) {
-		// TODO Auto-generated method stub
 	}
 
-	public void intercambiar_con(GemaRayada g) {
-	// TODO Auto-generated method stub
+	public void intercambiar_con(Bomba bomba) {
+	
 	}
 
-	public void intercambiar_con(GemaEnvuelta g) {
-	// TODO Auto-generated method stub	
-	}
-
-	public void intercambiar_con(GemaCruzada g) {
-	// TODO Auto-generated method stub
-	}
-
-	public void intercambiar_con(Roca r) {
-	// TODO Auto-generated method stub
-	}
-
-	public void intercambiar_con(Hielo h) {
-	// TODO Auto-generated method stub
-	}
-
-	public void cambiar_posicion(int nf, int nc) {
-	// TODO Auto-generated method stub
+	public void intercambiar_con(Hielo hielo) {
+	   intercambiar_gema_y_hielo(this, hielo);
 	}
 
 	//Metodo particular

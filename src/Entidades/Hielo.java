@@ -19,7 +19,7 @@ public class Hielo extends Obstaculo {
 	        entidadGrafica.notificarse_detonacion();
 	}
 
-    public void set_caramelo_interno(Entidad e)
+    public void set_gema_interna(Entidad e)
 	{
     	caramelo_interno=e;
 	}
@@ -34,7 +34,11 @@ public class Hielo extends Obstaculo {
 		return false;
 	}
 
-	public Entidad get_caramelo_interno() {
+	public Entidad get_gema_interna() {
 		return caramelo_interno;
 	}
+
+	public void intercambiar_con(Hielo hielo) {
+		intercambiar_hielo_y_hielo(this, hielo);
+	 }
 }

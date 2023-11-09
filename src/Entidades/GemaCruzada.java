@@ -34,6 +34,13 @@ public class GemaCruzada extends Gema {
 	public void explosionAdyacente()
 	{}
 
+	public boolean puede_recibir(Hielo hielo) {
+		return hielo.get_gema_interna().puede_recibir(this);
+	}
+	
+	public void intercambiar(Entidad entidad) {
+		entidad.intercambiar_con(this);
+	}
 	//Metodos redefinidos de la interfaz matcheable
 	public boolean machea(Entidad e) 
 	{

@@ -49,8 +49,6 @@ public interface Intercambiable {
 	public void intercambiar_con(GemaCruzada g);
 	
 	public void intercambiar_con(Roca r);
-
-	//public void intercambiar_con(Potenciador potenciador);
-
+    public void intercambiar_con(Bomba r);
 	public void intercambiar_con(Hielo h);
 }

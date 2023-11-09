@@ -77,50 +77,39 @@ public abstract class Obstaculo extends Entidad{
 		return false;
 	  }
 
-	public void intercambiar(Entidad entidad) {
-		// TODO Auto-generated method stub
-		
+	  public void intercambiar(Entidad entidad) {
+		entidad.intercambiar(this);
 	}
 
-	@Override
-	public void intercambiar_con(GemaNormal g) {
-		// TODO Auto-generated method stub
-		
+	//Interfaz de intercambiable
+
+	public void intercambiar_con(GemaNormal gemaNormal) {
+	  
+
 	}
 
-	@Override
-	public void intercambiar_con(GemaRayada g) {
-		// TODO Auto-generated method stub
-		
+	public void intercambiar_con(GemaRayada gemaRayada) {
+	  
 	}
 
-	@Override
-	public void intercambiar_con(GemaEnvuelta g) {
-		// TODO Auto-generated method stub
-		
+	public void intercambiar_con(GemaEnvuelta gemaEnvuelta) {
+	    
 	}
 
-	@Override
-	public void intercambiar_con(GemaCruzada g) {
-		// TODO Auto-generated method stub
-		
+	public void intercambiar_con(GemaCruzada gemaCruzada) {
+	    
 	}
 
-	@Override
-	public void intercambiar_con(Roca r) {
-		// TODO Auto-generated method stub
-		
+	public void intercambiar_con(Roca roca) {
+	
 	}
 
-	@Override
-	public void intercambiar_con(Hielo h) {
-		// TODO Auto-generated method stub
-		
+	public void intercambiar_con(Bomba bomba) {
+	
 	}
 
-	@Override
-	public void cambiar_posicion(int nf, int nc) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'cambiar_posicion'");
+	public void intercambiar_con(Hielo hielo) {
+	  
 	}
+
 }

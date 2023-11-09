@@ -292,7 +292,7 @@ public class Tablero implements TableroJuego{
 	
 	public void agregar_entidad_y_asociada(Hielo g) {
 		entidades[g.get_fila()][g.get_columna()] = g;
-		entidades_asociadas.add(g.get_caramelo_interno());
+		entidades_asociadas.add(g.get_gema_interna());
 	}
 	
 	private boolean intercambiar_entidades_y_transicionar(int fila_destino, int columna_destino) {

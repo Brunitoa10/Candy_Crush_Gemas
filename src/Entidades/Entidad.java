@@ -109,6 +109,12 @@ public abstract class Entidad implements EntidadLogica, Enfocable, Intercambiabl
 
 	public abstract boolean esAfectadaPorExplosionAdyacente();
 
+	public void cambiar_posicion(int nueva_fila, int nueva_columna) {
+		fila = nueva_fila;
+		columna = nueva_columna;
+		entidadGrafica.notificarse_intercambio();
+	}
+
 	//Metodos visuales
 
 	public void intercambiar_Posicion(int nuevaFila, int nuevaColumna) {
@@ -143,6 +149,7 @@ public abstract class Entidad implements EntidadLogica, Enfocable, Intercambiabl
 		entidadGrafica.notificarse_cambio_visibilidad();
 	}
 	
+	
 	//Metodos protegidos
 
 	protected void intercambiar_entidad_y_entidad(Entidad origen, Entidad destino) {
@@ -154,18 +161,32 @@ public abstract class Entidad implements EntidadLogica, Enfocable, Intercambiabl
 		tablero.reubicar(destino);
 	}
 	
-	/*protected void intercambiar_caramelo_y_gelatina(Caramelo caramelo, Gelatina gelatina) {
-		Caramelo caramelo_interno_gelatina = gelatina.get_caramelo_interno();
-		int nueva_fila_caramelo = gelatina.get_fila();
-		int nueva_columna_caramelo = gelatina.get_columna();
-		int nueva_fila_caramelo_interno = caramelo.get_fila();
-		int nueva_columna_caramelo_interno = caramelo.get_columna();
+	protected void intercambiar_gema_y_hielo(Entidad gema, Hielo hielo) {
+		Entidad gema_interna_hielo = hielo.get_gema_interna();
+		int nueva_fila_gema = hielo.get_fila();
+		int nueva_columna_gema = hielo.get_columna();
+		int nueva_fila_gema_interna = gema.get_fila();
+		int nueva_columna_gema_interna = gema.get_columna();
 		
-		caramelo_interno_gelatina.cambiar_posicion(nueva_fila_caramelo_interno, nueva_columna_caramelo_interno);
-		caramelo.cambiar_posicion(nueva_fila_caramelo, nueva_columna_caramelo);
-		gelatina.set_caramelo_interno(caramelo);
-		tablero.reubicar(caramelo_interno_gelatina);
-	}*/
-	
+		gema_interna_hielo.cambiar_posicion(nueva_fila_gema_interna, nueva_columna_gema_interna);
+		gema.cambiar_posicion(nueva_fila_gema, nueva_columna_gema);
+		hielo.set_gema_interna(gema);
+		tablero.reubicar(gema_interna_hielo);
+	}
+
+	protected void intercambiar_hielo_y_hielo(Hielo hielo1, Hielo hielo2)
+	{
+        Entidad gema_interna_hielo1 = hielo1.get_gema_interna();
+		Entidad gema_interna_hielo2 = hielo2.get_gema_interna();
+		int nueva_fila_gema_interna1 = hielo2.get_fila();
+		int nueva_columna_gema_interna1 = hielo2.get_columna();
+		int nueva_fila_gema_interna2 = hielo1.get_fila();
+		int nueva_columna_gema_interna2 = hielo1.get_columna();
+
+		gema_interna_hielo1.cambiar_posicion(nueva_fila_gema_interna1, nueva_columna_gema_interna1);
+		gema_interna_hielo2.cambiar_posicion(nueva_fila_gema_interna2, nueva_columna_gema_interna2);
+		hielo1.set_gema_interna(gema_interna_hielo2);
+		hielo2.set_gema_interna(gema_interna_hielo1);
+	}
 
 }
