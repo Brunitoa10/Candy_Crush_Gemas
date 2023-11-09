@@ -1,5 +1,4 @@
 package Threads;
-
 import java.awt.Image;
 
 import javax.swing.Icon;
@@ -37,18 +36,27 @@ public class AnimadorDetonacion extends Thread implements Animador {
 	
 	public void run() {
 		int size_label = celda_animada.get_size_label();
-		ImageIcon imagen_icon = new ImageIcon(this.getClass().getResource(path_imagen_estado));
-		Image imagen_escalada = imagen_icon.getImage().getScaledInstance(size_label, size_label, Image.SCALE_REPLICATE);
-		Icon icono_escalado = new ImageIcon(imagen_escalada);
-		celda_animada.setIcon(icono_escalado);
-		
 		try {
-			sleep(delay);
-		} catch (InterruptedException e) {
+			ImageIcon imagen_icon = new ImageIcon(this.getClass().getResource("/assets/gemas/detonado.gif"));
+			Image imagen_escalada = imagen_icon.getImage().getScaledInstance(size_label, size_label, Image.SCALE_REPLICATE);
+			Icon icono_escalado = new ImageIcon(imagen_escalada);
+			celda_animada.setIcon(icono_escalado);
+			sleep(700);
+		}catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		
-		celda_animada.eliminar_de_ventana();
+
+		celda_animada.revalidate();
+		celda_animada.repaint();
+
+		ImageIcon iconoVacio = new ImageIcon(this.getClass().getResource("/assets/gemas/gema_normal/0.png"));
+		Image imgEscalada = iconoVacio.getImage().getScaledInstance(size_label, size_label, Image.SCALE_SMOOTH);
+		Icon iconoEscalado = new ImageIcon(imgEscalada);
+		celda_animada.setIcon(iconoEscalado);
+
+		celda_animada.revalidate();
+		celda_animada.repaint();
+		//celda_animada.eliminar_de_ventana(); DESCOMENTAR CUANDO SOLUCIONEMOS LO DE LA CAIDA, ACTUALMENTE SOLO ROMPE LA GUI
 		manager.notificarse_finalizacion_animador(this);
 	}
 

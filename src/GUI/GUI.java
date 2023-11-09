@@ -248,6 +248,15 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 		    }
 		});
 
+
+//------------------------- BOTONES PARA TESTING, BORRAR ANTES DE ENTREGA FINAL -------------------------
+		
+		acciones.put(KeyEvent.VK_O, () -> {
+		    if (!bloquear_intercambios){
+		    	animar_detonacion((Celda) panel_tablero.getComponent(1));
+		    }
+		});
+
 		acciones.put(KeyEvent.VK_P, () -> {
 		    if (!bloquear_intercambios){
 		    	obtenerNombreJugador();
@@ -467,11 +476,9 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 	}
 
 	public void actualizarTiempo(int tiempo) {	
-	    SwingUtilities.invokeLater(() -> {
-	        timerLabel.setText("Tiempo restante: " + agregarPaddingTiempo(tiempo));
-			tiempoRestante = tiempo;
-			panel_timer.repaint();
-	    });
+	    timerLabel.setText("Tiempo restante: " + agregarPaddingTiempo(tiempo));
+		tiempoRestante = tiempo;
+		panel_timer.repaint();
 	}
 	
 	private String agregarPaddingTiempo(int tiempo) {
@@ -886,7 +893,7 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 		button_volver.setBackground(new Color(0, 0, 0, 200));
 	    button_volver.setForeground(Color.WHITE);
 		agregarAccionBotonVolver(button_volver, panel_principal, panel_puntajes);
-		agregarConGBCs(button_volver, panel_puntajes, 0, 6, 2, 1);
+		agregarConGBCs(button_volver, panel_puntajes, 0, 6, 3, 1);
 	}
 
 	public void cambiarFondo(int nivel) {

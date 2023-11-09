@@ -59,6 +59,8 @@ public class AnimadorMovimiento extends Thread implements Animador {
 			pos_y_actual += paso_en_y * step;
 			
 			celda_animada.setBounds(pos_x_actual, pos_y_actual, size_label, size_label);
+			celda_animada.repaint();
+			celda_animada.paintImmediately(celda_animada.getBounds());
 			
 			try {
 				sleep(delay);
