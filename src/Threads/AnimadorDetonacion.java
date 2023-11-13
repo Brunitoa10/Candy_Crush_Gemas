@@ -37,7 +37,7 @@ public class AnimadorDetonacion extends Thread implements Animador {
 	public void run() {
 		int size_label = celda_animada.get_size_label();
 		try {
-			ImageIcon imagen_icon = new ImageIcon(this.getClass().getResource("/assets/gemas/detonado.gif"));
+			ImageIcon imagen_icon = new ImageIcon(this.getClass().getResource("/assets/gemas/original/detonado.gif"));
 			Image imagen_escalada = imagen_icon.getImage().getScaledInstance(size_label, size_label, Image.SCALE_REPLICATE);
 			Icon icono_escalado = new ImageIcon(imagen_escalada);
 			celda_animada.setIcon(icono_escalado);
@@ -49,7 +49,7 @@ public class AnimadorDetonacion extends Thread implements Animador {
 		celda_animada.revalidate();
 		celda_animada.repaint();
 
-		ImageIcon iconoVacio = new ImageIcon(this.getClass().getResource("/assets/gemas/gema_normal/0.png"));
+		ImageIcon iconoVacio = new ImageIcon(this.getClass().getResource("/assets/gemas/original/gema_normal/0.png"));
 		Image imgEscalada = iconoVacio.getImage().getScaledInstance(size_label, size_label, Image.SCALE_SMOOTH);
 		Icon iconoEscalado = new ImageIcon(imgEscalada);
 		celda_animada.setIcon(iconoEscalado);

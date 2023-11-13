@@ -8,7 +8,7 @@ import Tablero.TableroNotificable;
 public class GemaEnvuelta extends Gema{
 
 	public GemaEnvuelta(TableroNotificable tablero,int f, int c, Color col, boolean visible) {
-	 super(tablero,f, c, col, "/assets/gemas/gema_envuelta/", visible);
+	 super(tablero,f, c, col, "/assets/gemas/original/gema_envuelta/", visible);
 	}
 
 	//Metodos Particulares
