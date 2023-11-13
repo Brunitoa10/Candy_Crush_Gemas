@@ -32,6 +32,7 @@ public class NotificadorDeEntidadesConTiempo {
         Iterator<EntidadNotificable> it = listaDeSubscriptores.iterator();
         while(it.hasNext()){
             it.next().notificar();
+            System.out.println("notificar!!!!!!");
         }
     }
 
