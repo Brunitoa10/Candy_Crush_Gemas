@@ -9,10 +9,11 @@ public class Bomba extends Obstaculo implements EntidadNotificable {
    protected int tiempo;
    protected NotificadorDeEntidadesConTiempo notificador;
 
-   public Bomba(TableroNotificable tablero,int f, int c, String ri, Color col, boolean visible, int segundos, NotificadorDeEntidadesConTiempo n)
-   {
-    super(tablero,f, c, ri, col, visible);
-    tiempo=segundos;
+   public Bomba(TableroNotificable tablero,int f, int c, Color col, boolean visible, NotificadorDeEntidadesConTiempo n){
+    
+    super(tablero,f, c, "/assets/obstaculo/bomba/", col, visible); 
+    System.out.println(rutadeLaImagen);
+    tiempo=10;
     notificador = n;
     notificador.subscribirse(this);
    }
@@ -52,7 +53,9 @@ public class Bomba extends Obstaculo implements EntidadNotificable {
 	}
 
     public void notificar() {
+        System.out.println("NOTIFICAR!!!!!!!!!!!!!!!!");
         tiempo--;
+        rutadeLaImagen = "/assets/obstaculo/bomba/"+tiempo+".png";
         if(tiempo <= -1){//-1 por el efecto dramatico de que la bomba llegue a 0
             finalizarJuegoPorExplosionDeBomba();
         }

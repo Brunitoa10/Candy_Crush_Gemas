@@ -2,6 +2,7 @@ package Nivel;
 
 
 
+import Entidades.Bomba;
 import Entidades.GemaEnvuelta;
 import Entidades.GemaNormal;
 import Entidades.GemaRayada;
@@ -11,6 +12,7 @@ import Logica.*;
 import java.util.*;
 
 import Tablero.TableroJuego;
+import Tablero.TableroNotificable;
 
 import java.io.File;
 public class GeneradorNivel {
@@ -75,17 +77,22 @@ public class GeneradorNivel {
 		            	if(partes[0].equals("r")) {
 		            		t.agregar_entidad(new Roca(t,i, j, true));
 		            	}else{
-		            		if(partes[0].equals("p")) {
-		            			t.agregar_entidad(new GemaRayada(t,i, j,new Color(Integer.parseInt(partes[1].trim())%10),Integer.parseInt(partes[1].trim())/10, true));
-		            		}else{
-		            		if(partes[0].equals("e")) {
-		            			t.agregar_entidad(new GemaEnvuelta(t,i, j,new Color(Integer.parseInt(partes[1].trim())/10), true));
-		            		}
-		            	}
-		            	}
-		            }
-		        }
-		    }
+							if(partes[0].equals("b")){
+								t.agregar_entidad(new Bomba(t, i,j, new Color(Integer.parseInt(partes[1].trim())),true, t.obtenerObserver()));
+							}else{
+								if(partes[0].equals("p")) {
+									t.agregar_entidad(new GemaRayada(t,i, j,new Color(Integer.parseInt(partes[1].trim())%10),Integer.parseInt(partes[1].trim())/10, true));
+								}else{
+								if(partes[0].equals("e")) {
+									t.agregar_entidad(new GemaEnvuelta(t,i, j,new Color(Integer.parseInt(partes[1].trim())/10), true));
+								}
+								}	
+							}
+		            	}	
+		        	
+		    		}
+				}
+			}
 			
 		
 

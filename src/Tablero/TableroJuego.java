@@ -20,6 +20,8 @@ public interface TableroJuego extends TableroNotificable{
 	public void fijar_jugador(int fila_destino, int columna_destino);
 	
 	public void mover_jugador(int direccion);
+
+	public NotificadorDeEntidadesConTiempo obtenerObserver();
 	
 	//public void intercambiar_entidades(int direccion); segun fede
 	public boolean intercambiar_entidades(int direccion);

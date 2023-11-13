@@ -85,6 +85,7 @@ public class Tablero implements TableroJuego{
 		}
 	}
 
+
 	public boolean intercambiar_entidades(int d) {
 		BiFunction<Integer, Integer, Boolean> operacion = operaciones.get(d);
 		boolean intercambioValido = false;
@@ -394,6 +395,11 @@ public class Tablero implements TableroJuego{
 	
 	protected void aplicar_caida_y_reubicar(List<Entidad> entidades_a_reemplazar) {
 		// To DO.
+	}
+
+	@Override
+	public NotificadorDeEntidadesConTiempo obtenerObserver() {
+		return notificadorDeGemasConTemporizador;
 	}
 
 
