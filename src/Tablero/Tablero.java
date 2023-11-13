@@ -306,7 +306,6 @@ public class Tablero implements TableroJuego{
 		EfectosDeTransicion efecto_intercambio;
 		boolean movimientoValido = false;
 		
-		
 		if (en_rango(fila_destino, columna_destino)) {	
 			entidad_origen = entidades[fila_origen][columna_origen];
 			entidad_destino = entidades[fila_destino][columna_destino];
@@ -355,23 +354,42 @@ public class Tablero implements TableroJuego{
 	protected EfectosDeTransicion calcular_efectos_por_intercambio(Entidad entidad_origen, Entidad entidad_destino){
 		EfectosDeTransicion efecto_transicion = new EfectosDeTransicion();
 		if (entidad_origen.se_produce_match_con(entidad_destino)) {
-			// To DO :)
+			manejarMatch(efecto_transicion, entidad_origen);
+	        manejarMatch(efecto_transicion, entidad_destino);
 			
 			// Ejemplo harcodeado de la lógica que podría aplicar
-			GemaNormal caramelo_1 = new GemaNormal(this, entidad_origen.get_fila(), entidad_origen.get_columna(), new Color(new Random().nextInt(7)+1), false);
+			/*GemaNormal caramelo_1 = new GemaNormal(this, entidad_origen.get_fila(), entidad_origen.get_columna(), new Color(new Random().nextInt(7)+1), false);
 			GemaNormal caramelo_2 = new GemaNormal(this, entidad_destino.get_fila(), entidad_destino.get_columna(), new Color(new Random().nextInt(7)+1), false);
-			
+		
 			efecto_transicion.agregar_entidad_a_detonar_y_reemplazar(entidad_origen);
 			efecto_transicion.agregar_entidad_a_detonar_y_reemplazar(entidad_destino);
 			efecto_transicion.agregar_entidad_de_reemplazo(caramelo_1);
-			efecto_transicion.agregar_entidad_de_reemplazo(caramelo_2);
+			efecto_transicion.agregar_entidad_de_reemplazo(caramelo_2);*/
 			
 		}else {
 			// To DO: incorporar logica asociada a control de match, generador de potenciadores, etc. 
 		}
 		return efecto_transicion;
 	}
+	
+	private void manejarMatch(EfectosDeTransicion efecto_transicion, Entidad entidad) {
+	    // Lógica para el caso de match
+	    GemaNormal gema = crearGemaNormalRandom(entidad.get_fila(), entidad.get_columna());
+	    
+	    efecto_transicion.agregar_entidad_a_detonar_y_reemplazar(entidad);
+	    efecto_transicion.agregar_entidad_de_reemplazo(gema);
+	}
 
+	private GemaNormal crearGemaNormalRandom(int fila, int columna) {
+	    // Lógica para crear una GemaNormal con color aleatorio
+	    return new GemaNormal(this, fila, columna, generarColorAleatorio(), false);
+	}
+
+	private Color generarColorAleatorio() {
+	    // Lógica para generar un color aleatorio
+	    return new Color(new Random().nextInt(7) + 1);
+	}
+	
 	protected void transicionar_proximo_estado(EfectosDeTransicion efecto_transicion) {
 		detonar(efecto_transicion.entidades_a_detonar());
 		agregar_entidades_nuevas(efecto_transicion.entidades_a_incorporar());
@@ -401,8 +419,4 @@ public class Tablero implements TableroJuego{
 	public NotificadorDeEntidadesConTiempo obtenerObserver() {
 		return notificadorDeGemasConTemporizador;
 	}
-
-
-
-	
 }
