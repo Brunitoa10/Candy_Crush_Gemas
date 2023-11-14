@@ -15,7 +15,7 @@ public class Bomba extends Obstaculo implements EntidadNotificable {
     super(tablero,f, c, "/assets/obstaculo/bomba/", col, visible); 
     System.out.println("CREACION DE BOMBA");
     notificador = n;
-    notificador.subscribirse(this);
+   // notificador.subscribirse(this);
    }
 
     public void detonar(Tablero t) {

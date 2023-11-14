@@ -84,8 +84,7 @@ public class Tablero implements TableroJuego{
 			movimiento.accept(fJugador, cJugador);
 		}
 	}
-
-
+	
 	public boolean intercambiar_entidades(int d) {
 		BiFunction<Integer, Integer, Boolean> operacion = operaciones.get(d);
 		boolean intercambioValido = false;
@@ -95,6 +94,8 @@ public class Tablero implements TableroJuego{
 
 		return intercambioValido;
 	}
+	
+	
 
 	public String obtenerTipoGema(int tipoGema) {
 		boolean encontre = false;
@@ -303,7 +304,7 @@ public class Tablero implements TableroJuego{
 		int fila_origen = fJugador;
 		int columna_origen = cJugador;
 		Entidad entidad_origen, entidad_destino;
-		EfectosDeTransicion efecto_intercambio;
+		EfectosDeTransicion efecto_intercambio = null;
 		boolean movimientoValido = false;
 		
 		if (en_rango(fila_destino, columna_destino)) {	
@@ -318,10 +319,7 @@ public class Tablero implements TableroJuego{
 				if (efecto_intercambio.existen_entidades_a_detonar()) {
 					transicionar_proximo_estado(efecto_intercambio);
 				}else{
-					entidad_origen = entidades[fila_origen][columna_origen];
-					entidad_destino = entidades[fila_destino][columna_destino];
-					cambiar_posicion_jugador(fila_origen, columna_origen);
-					entidad_origen.intercambiar(entidad_destino);
+					deshacer_intercambio(entidad_origen, entidad_destino, fila_origen, columna_origen);
 				}
 			}
 			movimientoValido = true;
@@ -329,6 +327,11 @@ public class Tablero implements TableroJuego{
 		return movimientoValido;
 	}
 	
+	private void deshacer_intercambio(Entidad entidad_origen, Entidad entidad_destino, int fila_origen,int columna_origen) {
+		 cambiar_posicion_jugador(fila_origen, columna_origen);
+		 entidad_origen.intercambiar(entidad_destino);
+	}
+
 	public boolean en_rango(int fila, int columna){
 		boolean en_rango_fila = (0 <= fila) && (fila < filas);
 		boolean en_rango_columna = (0 <= columna) && (columna < columnas);
@@ -340,23 +343,11 @@ public class Tablero implements TableroJuego{
 		cJugador = nueva_columna;
 	}
 	
-	/*protected EfectosDeTransicion calcular_efectos_por_intercambio(Entidad entidad_origen, Entidad entidad_destino){
-		EfectosDeTransicion efecto_transicion = new EfectosDeTransicion();
-		if (entidad_origen.se_produce_match_con(entidad_destino)) {
-	        efecto_transicion = buscarCombos(entidad_origen.get_fila(), entidad_origen.get_columna(), entidad_destino.get_fila(), entidad_destino.get_columna());
-		}else {
-			// To DO: incorporar lógica asociada a control de match, generador de potenciadores, etc. 
-			System.out.println("F");
-		}
-		return efecto_transicion;
-	}*/
-	
 	protected EfectosDeTransicion calcular_efectos_por_intercambio(Entidad entidad_origen, Entidad entidad_destino){
 		EfectosDeTransicion efecto_transicion = new EfectosDeTransicion();
 		if (entidad_origen.se_produce_match_con(entidad_destino)) {
 			manejarMatch(efecto_transicion, entidad_origen);
 	        manejarMatch(efecto_transicion, entidad_destino);
-			
 			// Ejemplo harcodeado de la lógica que podría aplicar
 			/*GemaNormal caramelo_1 = new GemaNormal(this, entidad_origen.get_fila(), entidad_origen.get_columna(), new Color(new Random().nextInt(7)+1), false);
 			GemaNormal caramelo_2 = new GemaNormal(this, entidad_destino.get_fila(), entidad_destino.get_columna(), new Color(new Random().nextInt(7)+1), false);
@@ -365,7 +356,6 @@ public class Tablero implements TableroJuego{
 			efecto_transicion.agregar_entidad_a_detonar_y_reemplazar(entidad_destino);
 			efecto_transicion.agregar_entidad_de_reemplazo(caramelo_1);
 			efecto_transicion.agregar_entidad_de_reemplazo(caramelo_2);*/
-			
 		}else {
 			// To DO: incorporar logica asociada a control de match, generador de potenciadores, etc. 
 		}

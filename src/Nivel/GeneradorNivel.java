@@ -3,6 +3,7 @@ package Nivel;
 
 
 import Entidades.Bomba;
+import Entidades.GemaCruzada;
 import Entidades.GemaEnvuelta;
 import Entidades.GemaNormal;
 import Entidades.GemaRayada;
@@ -12,7 +13,6 @@ import Logica.*;
 import java.util.*;
 
 import Tablero.TableroJuego;
-import Tablero.TableroNotificable;
 
 import java.io.File;
 public class GeneradorNivel {
@@ -66,6 +66,7 @@ public class GeneradorNivel {
 
 			t.resetar_tablero(filas, columnas);
 
+			//Lo voy a optimizar es insostenible en el tiempo (Bruno)
 			
 			for (int i = 0; i < filas; i++) {
 		        String[] valores = input.nextLine().split(" ");
@@ -83,9 +84,13 @@ public class GeneradorNivel {
 								if(partes[0].equals("p")) {
 									t.agregar_entidad(new GemaRayada(t,i, j,new Color(Integer.parseInt(partes[1].trim())%10),Integer.parseInt(partes[1].trim())/10, true));
 								}else{
-								if(partes[0].equals("e")) {
-									t.agregar_entidad(new GemaEnvuelta(t,i, j,new Color(Integer.parseInt(partes[1].trim())/10), true));
-								}
+									if(partes[0].equals("e")) {
+										t.agregar_entidad(new GemaEnvuelta(t,i, j,new Color(Integer.parseInt(partes[1].trim())/10), true));
+									}else {
+										if(partes[0].equals("c")) {
+											 t.agregar_entidad(new GemaCruzada(t,i, j, new Color(Integer.parseInt(partes[1].trim())), true));
+										}
+									}
 								}	
 							}
 		            	}	
