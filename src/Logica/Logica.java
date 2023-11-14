@@ -83,20 +83,6 @@ public class Logica {
 		return miNivel.getCantidadDeObjetivos();
 	}
 	
-	/*private void asociarEntidadesLogicasGraficas() {
-		Entidad e;
-		EntidadGrafica eg;
-		
-		for (int f=0; f<miTablero.getFila(); f++) {
-			for (int c=0; c<miTablero.getColumna(); c++) {
-				e = miTablero.get_entidad(f, c);
-				eg = miGUI.agregar_entidad(e);
-				e.setEntidadGrafica(eg);
-			}
-		}
-		miGUI.setVisible(true);
-	}*/
-	
 	public void asociar_entidad_logica_y_grafica(Entidad entidad_logica) {
 		EntidadGrafica entidad_grafica = miGUI.agregar_entidad(entidad_logica);
 		entidad_logica.set_EntidadGrafica(entidad_grafica);

@@ -21,15 +21,13 @@ public class GemaRayada extends Gema{
 	public void detonar(Tablero tablero) {
 	  	EstategiaDetonacion estrategiaDetonacion;
 		 if(direccion==HORIZONTAL){ 
-  		 System.out.println("Horizontaaaaaaaaallllllll");
- 	  	 estrategiaDetonacion = new EstrategiaDetonacionGemaRayadaHorizontal();
-   		 estrategiaDetonacion.detonar(this,tablero);
-		 }
-		 else
-		 {
-  	     System.out.println("Verticaaaaaaaaallllllll");
-		   estrategiaDetonacion = new EstrategiaDetonacionGemaRayadaVertical();
-		   estrategiaDetonacion.detonar(this, tablero);
+	  		 System.out.println("Horizontaaaaaaaaallllllll");
+	 	  	 estrategiaDetonacion = new EstrategiaDetonacionGemaRayadaHorizontal();
+	   		 estrategiaDetonacion.detonar(this,tablero);
+		 }else{
+	  	      System.out.println("Verticaaaaaaaaallllllll");
+			  estrategiaDetonacion = new EstrategiaDetonacionGemaRayadaVertical();
+			  estrategiaDetonacion.detonar(this, tablero);
     	 } 
 	}
 
@@ -65,13 +63,13 @@ public class GemaRayada extends Gema{
 
 	public boolean aplica_match_con(GemaEnvuelta c) {
 		return true;
-	   }
+	}
 	 
-	   public boolean aplica_match_con(GemaRayada c) {
+	public boolean aplica_match_con(GemaRayada c) {
 		return true;
-	   }
+	}
 	 
-	   public boolean aplica_match_con(GemaCruzada c) {
+	public boolean aplica_match_con(GemaCruzada c) {
 		return true;
-	   }
+	}
 }

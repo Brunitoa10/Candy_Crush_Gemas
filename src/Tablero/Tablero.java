@@ -348,14 +348,6 @@ public class Tablero implements TableroJuego{
 		if (entidad_origen.se_produce_match_con(entidad_destino)) {
 			manejarMatch(efecto_transicion, entidad_origen);
 	        manejarMatch(efecto_transicion, entidad_destino);
-			// Ejemplo harcodeado de la lógica que podría aplicar
-			/*GemaNormal caramelo_1 = new GemaNormal(this, entidad_origen.get_fila(), entidad_origen.get_columna(), new Color(new Random().nextInt(7)+1), false);
-			GemaNormal caramelo_2 = new GemaNormal(this, entidad_destino.get_fila(), entidad_destino.get_columna(), new Color(new Random().nextInt(7)+1), false);
-		
-			efecto_transicion.agregar_entidad_a_detonar_y_reemplazar(entidad_origen);
-			efecto_transicion.agregar_entidad_a_detonar_y_reemplazar(entidad_destino);
-			efecto_transicion.agregar_entidad_de_reemplazo(caramelo_1);
-			efecto_transicion.agregar_entidad_de_reemplazo(caramelo_2);*/
 		}else {
 			// To DO: incorporar logica asociada a control de match, generador de potenciadores, etc. 
 		}

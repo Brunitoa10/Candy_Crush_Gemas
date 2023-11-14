@@ -34,4 +34,8 @@ public class GemaNormal extends Gema{
 	public boolean se_produce_match_con(Entidad e) {
 	 return e.aplica_match_con(this);
 	}	
+	
+	public boolean aplica_match_con(GemaCruzada c) {
+		return c.get_color() == this.get_color();
+	}
 }
