@@ -30,6 +30,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
+import org.w3c.dom.events.MouseEvent;
 
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -54,7 +55,7 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 	
 	protected CentralAnimaciones mi_animador;
 	
-	protected JPanel panel_tablero, panel_score, panel_objetivos, panel_controles, panel_vidas,panel_principal, panel_movimientos, panel_timer;
+	protected JPanel panel_tablero, panel_seleccion, panel_score, panel_objetivos, panel_controles, panel_vidas,panel_principal, panel_movimientos, panel_timer;
 	protected JLabel timerLabel,movimientosLabel, scoreLabel;
 	protected JLabel[] objetivosProgreso;
 
@@ -88,7 +89,19 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 		inicializarGUI();
 	}
 	
+	private void inicializarSeleccionModoJuego() {
+		this.repaint();
 
+	    JPanel panelSeleccion = crearMensajePanel();
+
+	    getContentPane().add(panelSeleccion);
+
+	    JButton botonSeleccionOriginal = crearBotonReintentar();
+		JButton botonSeleccionHalloween = crearBotonReintentar();
+
+	    panelSeleccion.setVisible(true);
+	    panelSeleccion.revalidate();
+	}
 	 
 	private void inicializarGUI() {
 		this.setContentPane(fondo);
@@ -263,6 +276,12 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 		    }
 		});
 
+		acciones.put(KeyEvent.VK_I, () -> {
+		    if (!bloquear_intercambios){
+		    	mostrarModosDeJuego();
+		    }
+		});
+
 		// Agrega el KeyListener
 		panel_tablero.addKeyListener(new KeyAdapter() {
 		    @Override
@@ -276,6 +295,61 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 		    }
 		});
 		
+	}
+
+	private void mostrarModosDeJuego() {
+		this.repaint();
+	    panel_principal.setVisible(false);
+
+	    JPanel panel_seleccion = crearMensajePanel();
+		panel_seleccion.setLayout(new GridBagLayout());
+	    
+		setearPanelModosDeJuegos(panel_seleccion);
+	}
+
+	private JButton createImageButton(String imagePath) {
+        // Load the image and create an ImageIcon
+        ImageIcon icono_imagen = new ImageIcon(this.getClass().getResource(imagePath));
+		Image imagen_escalada = icono_imagen.getImage().getScaledInstance(500, 500, Image.SCALE_SMOOTH);
+		Icon icono_imagen_escalado = new ImageIcon(imagen_escalada);
+
+        // Create a JButton with the ImageIcon
+        JButton button = new JButton(icono_imagen_escalado);
+
+        // Set the size of the button based on the size of the image
+        button.setSize(icono_imagen_escalado.getIconWidth(), icono_imagen_escalado.getIconHeight());
+		button.setOpaque(false);
+		button.setContentAreaFilled(false);
+		button.setFocusable(false);
+		button.setBorderPainted(false);
+		button.setRolloverEnabled(false);
+		button.setBackground(new Color(0,0,0,0));
+
+        // Add an ActionListener if needed
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Handle button click
+            }
+        });
+
+        return button;
+    }
+
+
+	private void setearPanelModosDeJuegos(JPanel panelModosDeJuegos) {
+		JLabel label_num2 = crearLabel("Seleccionar modo de juego", "Algerian", Font.PLAIN, 30, Color.WHITE, 2, 1);
+		agregarConGBCs(label_num2, panelModosDeJuegos, 0, 0, 3, 1);
+
+		
+
+		JButton imageButton = createImageButton("/assets/modosDeJuego/original.png");
+		agregarConGBCs(imageButton, panelModosDeJuegos, 0, 1, 1, 1);
+
+		JButton imageButton2 = createImageButton("/assets/modosDeJuego/halloween.png");
+		agregarConGBCs(imageButton2, panelModosDeJuegos, 2, 1, 1, 1);
+		getContentPane().add(panelModosDeJuegos);
+		panelModosDeJuegos.setVisible(true);
 	}
 
 	public String obtenerNombreJugador() {
@@ -841,7 +915,7 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 	}
 
 	private void setearPanelPuntajes(JPanel panel_puntajes) {
-	JLabel titulo_puntajes = crearLabel("MEJORES PUNTAJES:", "Algerian", Font.PLAIN, 40, Color.WHITE, 2, 1);
+		JLabel titulo_puntajes = crearLabel("MEJORES PUNTAJES:", "Algerian", Font.PLAIN, 40, Color.WHITE, 2, 1);
 		agregarConGBCs(titulo_puntajes, panel_puntajes, 0, 0, 3, 1);
 
 		JLabel label_num1 = crearLabel("1 - ", "Algerian", Font.PLAIN, 30, Color.YELLOW, 2, 1);
