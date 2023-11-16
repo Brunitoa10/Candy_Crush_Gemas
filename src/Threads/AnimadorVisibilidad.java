@@ -22,7 +22,8 @@ public class AnimadorVisibilidad extends Thread implements Animador {
 		this.celda_animada = celda;
 		this.delay = delay;
 		this.debe_aparecer = celda.get_entidad_logica().get_visibilidad();
-		path_imagen_destello = "/imagenes/destello/destello.gif";
+		//path_imagen_destello = "/imagenes/destello/destello.gif";
+		path_imagen_destello = "/assets/gemas/detonado.gif";
 		path_imagen_estado = celda.get_entidad_logica().get_imagen_representativa();
 	}
 	

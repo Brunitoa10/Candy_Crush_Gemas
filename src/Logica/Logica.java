@@ -191,7 +191,6 @@ public class Logica {
 			miNivel = GeneradorNivel.cargar_nivel_y_tablero(miTablero,nivelActual,this);
 			miGUI = new GUI(this, miTablero.getFila(), miTablero.getColumna());	
 			miGUI.cambiarFondo(nivelActual);
-			//asociarEntidadesLogicasGraficas();
 		} else {
 			if(miTablero.obtenerAdministradordeScore().entro_en_el_top5()){
 				String nombre_del_Jugador = miGUI.obtenerNombreJugador();

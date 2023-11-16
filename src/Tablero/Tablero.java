@@ -133,29 +133,7 @@ public class Tablero implements TableroJuego{
 		}
 	}
 
-	private EfectosDeTransicion buscarCombos(int f1, int c1, int f2, int c2) {
-		LinkedList<Entidad> listaCombos = new LinkedList<>();
-		EfectosDeTransicion listaEfectos = new EfectosDeTransicion();
-		
-		if (esPosicionValida(f1, c1) && esPosicionValida(f2, c2)) {
-			listaCombos.addAll(buscarCombosEnFila(f1, c1));
-			listaCombos.addAll(buscarCombosEnColumna(f1, c1));
-			listaCombos.addAll(buscarCombosEnFila(f2, c2));
-			listaCombos.addAll(buscarCombosEnColumna(f2, c2));
-			
-			for(int pos = 0; pos < listaCombos.size(); pos++) {
-				listaEfectos.agregar_entidad_a_detonar_y_reemplazar(listaCombos.get(pos));
-			}
-			
-			miLogica.actualizarObjetivos(listaCombos);
-			
-			System.out.println("TABLERO antes de DETONAR");
-			imprimirTablero();
-			return listaEfectos;
-		} else {
-			throw new IllegalArgumentException("Posición inválida en buscarCombos");
-		}
-	}
+	
 	
 	public void imprimirLista(LinkedList<Entidad> listaCombos) {
         for (Entidad elemento : listaCombos) {
@@ -199,10 +177,6 @@ public class Tablero implements TableroJuego{
 		// Si hay al menos 3 gemas iguales consecutivas, agregar la posición actual
 		if (cantidad >= 3) {
 			combosEnFila.add(entidad); // Agregar la posición actual a la lista de combos
-
-			if (cantidad == 4) {
-				System.out.println("Tablero :: Se genera una gema rayada horizontal");
-			} 
 		} else {
 			combosEnFila.clear(); // No hay combos, limpiar la lista
 		}
@@ -237,12 +211,7 @@ public class Tablero implements TableroJuego{
 
 		// Si hay al menos 3 gemas iguales consecutivas, agregar la posición actual
 		if (cantidad >= 3) {
-			
 			combosEnColumna.add(entidad); // Agregar la posición actual a la lista de combos
-
-			if (cantidad == 4) {
-				System.out.println("Tablero :: Se genera una gema rayada vertical");
-			} 
 		} else {
 			combosEnColumna.clear(); // No hay combos, limpiar la lista
 		}
@@ -322,6 +291,8 @@ public class Tablero implements TableroJuego{
 					deshacer_intercambio(entidad_origen, entidad_destino, fila_origen, columna_origen);
 				}
 			}
+			System.out.println("TABLERO despues de DETONAR y reemplazar");
+			imprimirTablero();
 			movimientoValido = true;
 		}
 		return movimientoValido;
@@ -349,40 +320,62 @@ public class Tablero implements TableroJuego{
 			manejarMatch(efecto_transicion, entidad_origen);
 	        manejarMatch(efecto_transicion, entidad_destino);
 		}else {
+			
 			// To DO: incorporar logica asociada a control de match, generador de potenciadores, etc. 
+			LinkedList<Entidad> listaEntidadesEnCombo = buscarCombos(entidad_origen.get_fila(),entidad_origen.get_columna(),entidad_destino.get_fila(),entidad_destino.get_columna());
+			for(int pos = 0; pos < listaEntidadesEnCombo.size(); pos ++) {
+				manejarMatch(efecto_transicion,listaEntidadesEnCombo.get(pos));
+			}
+			
 		}
+		
 		return efecto_transicion;
 	}
 	
+	private LinkedList<Entidad> buscarCombos(int f1, int c1, int f2, int c2) {
+		LinkedList<Entidad> listaCombos = new LinkedList<>();
+		
+		if (esPosicionValida(f1, c1) && esPosicionValida(f2, c2)) {
+			listaCombos.addAll(buscarCombosEnFila(f1, c1));
+			listaCombos.addAll(buscarCombosEnColumna(f1, c1));
+			listaCombos.addAll(buscarCombosEnFila(f2, c2));
+			listaCombos.addAll(buscarCombosEnColumna(f2, c2));
+			
+			//miLogica.actualizarObjetivos(listaCombos);
+			
+			return listaCombos;
+		} else {
+			throw new IllegalArgumentException("Posición inválida en buscarCombos");
+		}
+	}
+	
 	private void manejarMatch(EfectosDeTransicion efecto_transicion, Entidad entidad) {
-	    // Lógica para el caso de match
-	    GemaNormal gema = crearGemaNormalRandom(entidad.get_fila(), entidad.get_columna());
-	    
 	    efecto_transicion.agregar_entidad_a_detonar_y_reemplazar(entidad);
-	    efecto_transicion.agregar_entidad_de_reemplazo(gema);
+	    efecto_transicion.agregar_entidad_de_reemplazo(crearGemaNormalRandom(entidad.get_fila(), entidad.get_columna()));
 	}
 
 	private GemaNormal crearGemaNormalRandom(int fila, int columna) {
 	    // Lógica para crear una GemaNormal con color aleatorio
-	    return new GemaNormal(this, fila, columna, generarColorAleatorio(), false);
+	    return new GemaNormal(this, fila, columna,new Color(new Random().nextInt(7) + 1), false);
 	}
 
-	private Color generarColorAleatorio() {
-	    // Lógica para generar un color aleatorio
-	    return new Color(new Random().nextInt(7) + 1);
-	}
+	
 	
 	protected void transicionar_proximo_estado(EfectosDeTransicion efecto_transicion) {
 		detonar(efecto_transicion.entidades_a_detonar());
 		agregar_entidades_nuevas(efecto_transicion.entidades_a_incorporar());
-		aplicar_caida_y_reubicar(efecto_transicion.entidades_a_reemplazar());
+		//aplicar_caida_y_reubicar(efecto_transicion.entidades_a_reemplazar());
 	}
 	
 	protected void detonar(List<Entidad> entidades_a_detonar) {
+		System.out.println("TABLERO antes de DETONAR");
+		imprimirTablero();
 		for(Entidad e: entidades_a_detonar) {
 			administradordeScore.agregarScore(e.get_score());
 			e.detonar(this); //Segun fede e.detonar();
 		}
+		System.out.println("TABLERO despues de DETONAR");
+		imprimirTablero();
 	}
 	
 	protected void agregar_entidades_nuevas(List<Entidad> entidades_a_incorporar) {
