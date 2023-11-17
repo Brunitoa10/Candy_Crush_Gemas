@@ -28,14 +28,11 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
-
-import org.w3c.dom.events.MouseEvent;
-
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import Logica.EntidadLogica;
 import Logica.Logica;
+import Pantallas.CentralPantallas;
 import Threads.CentralAnimaciones;
 
 
@@ -50,7 +47,7 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 	protected int[] objetivosColores;
 	protected int movimientosRestantes;
 	private int size_label = 70;
-	
+	private CentralPantallas mi_central_pantallas;
 	protected boolean bloquear_intercambios;
 	
 	protected CentralAnimaciones mi_animador;
@@ -111,6 +108,9 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 
 		panel_principal = new JPanel();
 		panel_principal.setBackground(new Color(0,0,0,0));
+
+		
+		mi_central_pantallas = new CentralPantallas(panel_principal, this, miLogica);
 		
 
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -264,9 +264,23 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 
 //------------------------- BOTONES PARA TESTING, BORRAR ANTES DE ENTREGA FINAL -------------------------
 		
+		acciones.put(KeyEvent.VK_Y, () -> {
+		    mostrarMensajeDerrotaPorMovimientos();
+		});
+
+		acciones.put(KeyEvent.VK_U, () -> {
+		    mostrarMensajeDerrotaPorMovimientos();
+		});
+
 		acciones.put(KeyEvent.VK_O, () -> {
 		    if (!bloquear_intercambios){
 		    	animar_detonacion((Celda) panel_tablero.getComponent(1));
+		    }
+		});
+
+		acciones.put(KeyEvent.VK_L, () -> {
+		    if (!bloquear_intercambios){
+		    	mostrarMensajeVictoriaPorObjetivos();
 		    }
 		});
 
@@ -604,41 +618,11 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 	}
 
 	public void mostrarMensajeDerrotaPorMovimientos() {
-	    this.repaint();
-	    panel_principal.setVisible(false);
-
-	    JPanel mensajePanel = crearMensajePanel();
-	    agregarComponentesAlMensajePanel(mensajePanel);
-
-	    getContentPane().add(mensajePanel);
-
-	    JButton botonReiniciar = crearBotonReintentar();
-	    agregarAccionBotonReiniciar(botonReiniciar, panel_principal, mensajePanel);
-
-	    mensajePanel.setVisible(true);
-	    mensajePanel.revalidate();
+	    mi_central_pantallas.mostrarMensajeDerrotaPorMovimientos();
 	}
 
-	private JPanel crearMensajePanel() {
-	    JPanel p = new JPanel();
-	    p.setLayout(new GridBagLayout());
-	    p.setSize(new Dimension(MAXIMIZED_HORIZ, MAXIMIZED_HORIZ));
-	    p.setBackground(new Color(0, 0, 0, 120));
-	    return p;
-	}
 
-	private void agregarComponentesAlMensajePanel(JPanel p) {
-	    GridBagConstraints gbc = new GridBagConstraints();
-
-	    JLabel labelPerdiste1 = crearLabel("PERDISTE", 50);
-	    agregarConGBCs(labelPerdiste1, p, gbc, 0, 0, 1, 1);
-
-	    JLabel labelPerdiste2 = crearLabel("Te quedaste sin movimientos", 30);
-	    agregarConGBCs(labelPerdiste2, p, gbc, 0, 1, 1, 1);
-
-	    JLabel labelPerdiste3 = crearLabel("Pierdes una vida", 30);
-	    agregarConGBCs(labelPerdiste3, p, gbc, 0, 2, 1, 1);
-	}
+	
 
 	private JLabel crearLabel(String texto, int tamañoFuente) {
 	    JLabel label = new JLabel(texto);
@@ -652,16 +636,6 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 	    botonReiniciar.setBackground(new Color(0, 0, 0, 200));
 	    botonReiniciar.setForeground(Color.WHITE);
 	    return botonReiniciar;
-	}
-
-	private void agregarAccionBotonReiniciar(JButton boton, JPanel panel_principal, JPanel mensajePanel) {
-	    boton.addActionListener(new ActionListener() {
-	        @Override
-	        public void actionPerformed(ActionEvent e) {
-	            panel_principal.setVisible(true);
-	            mensajePanel.setVisible(false);
-	        }
-	    });
 	}
 	
 	public void mostrarMensajeDerrotaPorVidas() {
@@ -731,15 +705,7 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 	}
 
 	public void mostrarMensajeVictoriaPorObjetivos() {
-	    panel_principal.setVisible(false);
-
-	    JPanel mensajePanel = crearMensajePanel();
-	    agregarComponentesAlMensajePanelVictoriaPorObjetivos(mensajePanel);
-
-	    getContentPane().add(mensajePanel);
-
-	    mensajePanel.setVisible(true);
-	    mensajePanel.revalidate();
+	    mi_central_pantallas.mostrarMensajeVictoriaPorObjetivos();
 	}
 
 	private void inicializarPanelControles() {
@@ -817,41 +783,7 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 	}
 
 	public void mostrarMensajeDerrotaPorTiempo() {
-	    repaint();
-	    panel_principal.setVisible(false);
-
-	    JPanel mensajePanel = crearMensajePanel();
-	    agregarComponentesAlMensajePanelDerrotaPorTiempo(mensajePanel);
-
-	    getContentPane().add(mensajePanel);
-
-	    mensajePanel.setVisible(true);
-	    mensajePanel.revalidate();
-	}
-
-	private void agregarComponentesAlMensajePanelDerrotaPorTiempo(JPanel p) {
-	    GridBagConstraints gbc = new GridBagConstraints();
-
-	    JLabel labelPerdiste1 = crearLabel("PERDISTE", 50);
-	    agregarConGBCs(labelPerdiste1, p, gbc, 0, 0, 1, 1);
-
-	    JLabel labelPerdiste2 = crearLabel("Te quedaste sin tiempo", 30);
-	    agregarConGBCs(labelPerdiste2, p, gbc, 0, 1, 1, 1);
-
-	    JLabel labelPerdiste3 = crearLabel("Pierdes una vida", 30);
-	    agregarConGBCs(labelPerdiste3, p, gbc, 0, 2, 1, 1);
-
-	    JButton botonReiniciar = crearBoton("Reintentar");
-	    agregarConGBCs(botonReiniciar, p, gbc, 0, 3, 1, 1);
-
-	    botonReiniciar.addActionListener(new ActionListener() {
-	        @Override
-	        public void actionPerformed(ActionEvent e) {
-	            panel_principal.setVisible(true);
-	            p.setVisible(false);
-	            miLogica.notificarDerrotaPorTiempo();
-	        }
-	    });
+	    mi_central_pantallas.mostrarMensajeDerrotaPorTiempo();
 	}
 	
 	public void eliminar_celda(Celda celda) {
