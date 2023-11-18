@@ -11,10 +11,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Frame;
 import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
+import java.awt.Insets;
 
 
 
@@ -33,7 +33,7 @@ public class CentralPantallas {
 	    panelPrincipal.setVisible(false);
 
 	    PantallaDerrotaPorMovimientos mensajePanel = new PantallaDerrotaPorMovimientos(this);
-	    mensajePanel.crearPantalla(miGUI.MAXIMIZED_HORIZ, miGUI.MAXIMIZED_HORIZ);
+	    mensajePanel.crearPantalla(Frame.MAXIMIZED_HORIZ, Frame.MAXIMIZED_HORIZ);
 		mensajePanel.agregarComponentes();
 
 	    miGUI.getContentPane().add(mensajePanel);
@@ -46,7 +46,33 @@ public class CentralPantallas {
 	    panelPrincipal.setVisible(false);
 
 	    PantallaDerrotaPorTiempo mensajePanel = new PantallaDerrotaPorTiempo(this);
-	    mensajePanel.crearPantalla(miGUI.MAXIMIZED_HORIZ, miGUI.MAXIMIZED_HORIZ);
+	    mensajePanel.crearPantalla(Frame.MAXIMIZED_HORIZ, Frame.MAXIMIZED_HORIZ);
+		mensajePanel.agregarComponentes();
+
+	    miGUI.getContentPane().add(mensajePanel);
+
+	    mensajePanel.setVisibilidad(true);
+	    mensajePanel.revalidate();
+	}
+
+	public void mostrarMensajeFinDelJuego() {
+	    panelPrincipal.setVisible(false);
+
+	    PantallaFinDelJuego mensajePanel = new PantallaFinDelJuego(this);
+	    mensajePanel.crearPantalla(Frame.MAXIMIZED_HORIZ, Frame.MAXIMIZED_HORIZ);
+		mensajePanel.agregarComponentes();
+
+	    miGUI.getContentPane().add(mensajePanel);
+
+	    mensajePanel.setVisibilidad(true);
+	    mensajePanel.revalidate();
+	}
+
+	public void mostrarMensajeDerrotaPorVidas() {
+	    panelPrincipal.setVisible(false);
+
+	    PantallaDerrotaPorVidas mensajePanel = new PantallaDerrotaPorVidas(this);
+	    mensajePanel.crearPantalla(Frame.MAXIMIZED_HORIZ, Frame.MAXIMIZED_HORIZ);
 		mensajePanel.agregarComponentes();
 
 	    miGUI.getContentPane().add(mensajePanel);
@@ -59,7 +85,7 @@ public class CentralPantallas {
 	    panelPrincipal.setVisible(false);
 
 	    PantallaVictoriaPorObjetivos mensajePanel = new PantallaVictoriaPorObjetivos(this);
-	    mensajePanel.crearPantalla(miGUI.MAXIMIZED_HORIZ, miGUI.MAXIMIZED_HORIZ);
+	    mensajePanel.crearPantalla(Frame.MAXIMIZED_HORIZ, Frame.MAXIMIZED_HORIZ);
 		mensajePanel.agregarComponentes();
 
 	    miGUI.getContentPane().add(mensajePanel);
@@ -68,6 +94,31 @@ public class CentralPantallas {
 	    mensajePanel.revalidate();
 	}
 
+	public void mostrarModosDeJuego() {
+	    panelPrincipal.setVisible(false);
+
+	    PantallaModosDeJuegos mensajePanel = new PantallaModosDeJuegos(this);
+	    mensajePanel.crearPantalla(Frame.MAXIMIZED_HORIZ, Frame.MAXIMIZED_HORIZ);
+		mensajePanel.agregarComponentes();
+
+	    miGUI.getContentPane().add(mensajePanel);
+
+	    mensajePanel.setVisibilidad(true);
+	    mensajePanel.revalidate();
+	}
+
+	public void mostrarPuntajes() {
+	    panelPrincipal.setVisible(false);
+
+	    PantallaPuntajes mensajePanel = new PantallaPuntajes(this);
+	    mensajePanel.crearPantalla(Frame.MAXIMIZED_HORIZ, Frame.MAXIMIZED_HORIZ);
+		mensajePanel.agregarComponentes();
+
+	    miGUI.getContentPane().add(mensajePanel);
+
+	    mensajePanel.setVisibilidad(true);
+	    mensajePanel.revalidate();
+	}
 
     public void agregarConGBCs(Component componenteAAgregar, JPanel panelBase, GridBagConstraints gbc, int gridx, int gridy, int gridwidth,int gridheight) {
 		gbc.gridx = gridx;
@@ -82,6 +133,20 @@ public class CentralPantallas {
 	    JLabel label = new JLabel(texto);
 	    label.setFont(new Font("Algerian", Font.PLAIN, tamañoFuente));
 	    label.setForeground(Color.WHITE);
+	    return label;
+	}
+
+	public JLabel crearLabelConColor(String texto, String fuente, int estilo, int tamano, Color color, int gridwidth, int gridheight) {
+	    JLabel label = new JLabel(texto);
+	    label.setFont(new Font(fuente, estilo, tamano));
+	    label.setForeground(color);
+
+	    GridBagConstraints c = new GridBagConstraints();
+	    c.insets = new Insets(0, 20, 0, 0);
+	    c.weightx = 0;
+	    c.gridwidth = gridwidth;
+	    c.gridheight = gridheight;
+
 	    return label;
 	}
 
@@ -110,6 +175,27 @@ public class CentralPantallas {
 					panelPrincipal.setVisible(true);
 					p.setVisibilidad(false);
 					miLogica.cambiarNivel();
+				}
+			});
+	}
+
+	public void agregarFuncionalidadBotonVolver(Pantalla p, JButton botonVolver) {
+		botonVolver.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					panelPrincipal.setVisible(true);
+					p.setVisibilidad(false);
+				}
+			});
+	}
+
+	public void agregarFuncionalidadBotonReiniciarDeCero(Pantalla p, JButton botonVolver) {
+		botonVolver.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+	            	panelPrincipal.setVisible(true);
+	            	p.setVisibilidad(false);
+	            	miLogica.notificarDerrotaPorVidas();
 				}
 			});
 	}

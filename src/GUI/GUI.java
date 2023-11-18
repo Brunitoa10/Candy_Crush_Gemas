@@ -6,8 +6,6 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.GridBagConstraints;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.HashMap;
@@ -17,8 +15,6 @@ import java.awt.Toolkit;
 import java.awt.Image;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
-
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -84,20 +80,6 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 		objetivosProgreso = new JLabel[miLogica.getCantidadDeObjetivos()];
 		
 		inicializarGUI();
-	}
-	
-	private void inicializarSeleccionModoJuego() {
-		this.repaint();
-
-	    JPanel panelSeleccion = crearMensajePanel();
-
-	    getContentPane().add(panelSeleccion);
-
-	    JButton botonSeleccionOriginal = crearBotonReintentar();
-		JButton botonSeleccionHalloween = crearBotonReintentar();
-
-	    panelSeleccion.setVisible(true);
-	    panelSeleccion.revalidate();
 	}
 	 
 	private void inicializarGUI() {
@@ -264,6 +246,10 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 
 //------------------------- BOTONES PARA TESTING, BORRAR ANTES DE ENTREGA FINAL -------------------------
 		
+		acciones.put(KeyEvent.VK_M, () -> {
+		    mostrarMensajeFinDelJuego();
+		});
+
 		acciones.put(KeyEvent.VK_Y, () -> {
 		    mostrarMensajeDerrotaPorMovimientos();
 		});
@@ -296,6 +282,13 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 		    }
 		});
 
+		acciones.put(KeyEvent.VK_K, () -> {
+		    if (!bloquear_intercambios){
+		    mostrarMensajeDerrotaPorVidas();
+		    }
+		});
+
+
 		// Agrega el KeyListener
 		panel_tablero.addKeyListener(new KeyAdapter() {
 		    @Override
@@ -311,61 +304,6 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 		
 	}
 
-	private void mostrarModosDeJuego() {
-		this.repaint();
-	    panel_principal.setVisible(false);
-
-	    JPanel panel_seleccion = crearMensajePanel();
-		panel_seleccion.setLayout(new GridBagLayout());
-	    
-		setearPanelModosDeJuegos(panel_seleccion);
-	}
-
-	private JButton createImageButton(String imagePath) {
-        // Load the image and create an ImageIcon
-        ImageIcon icono_imagen = new ImageIcon(this.getClass().getResource(imagePath));
-		Image imagen_escalada = icono_imagen.getImage().getScaledInstance(500, 500, Image.SCALE_SMOOTH);
-		Icon icono_imagen_escalado = new ImageIcon(imagen_escalada);
-
-        // Create a JButton with the ImageIcon
-        JButton button = new JButton(icono_imagen_escalado);
-
-        // Set the size of the button based on the size of the image
-        button.setSize(icono_imagen_escalado.getIconWidth(), icono_imagen_escalado.getIconHeight());
-		button.setOpaque(false);
-		button.setContentAreaFilled(false);
-		button.setFocusable(false);
-		button.setBorderPainted(false);
-		button.setRolloverEnabled(false);
-		button.setBackground(new Color(0,0,0,0));
-
-        // Add an ActionListener if needed
-        button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Handle button click
-            }
-        });
-
-        return button;
-    }
-
-
-	private void setearPanelModosDeJuegos(JPanel panelModosDeJuegos) {
-		JLabel label_num2 = crearLabel("Seleccionar modo de juego", "Algerian", Font.PLAIN, 30, Color.WHITE, 2, 1);
-		agregarConGBCs(label_num2, panelModosDeJuegos, 0, 0, 3, 1);
-
-		
-
-		JButton imageButton = createImageButton("/assets/modosDeJuego/original.png");
-		agregarConGBCs(imageButton, panelModosDeJuegos, 0, 1, 1, 1);
-
-		JButton imageButton2 = createImageButton("/assets/modosDeJuego/halloween.png");
-		agregarConGBCs(imageButton2, panelModosDeJuegos, 2, 1, 1, 1);
-		getContentPane().add(panelModosDeJuegos);
-		panelModosDeJuegos.setVisible(true);
-	}
-
 	public String obtenerNombreJugador() {
 		String nombre = abrirVentanaParaIngresarNombre();
 
@@ -378,7 +316,6 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 		return nombre;
 	}
 
-
     public String abrirVentanaParaIngresarNombre() {
         JPanel panelNombre = new JPanel();
         JLabel labelNombre = new JLabel("Ingresa tu nombre (3 letras):");
@@ -387,7 +324,8 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
         panelNombre.add(labelNombre);
         panelNombre.add(textFieldNombre);
 
-        int result = JOptionPane.showConfirmDialog(null, panelNombre, "¡Top 5 alcanzado!", JOptionPane.OK_CANCEL_OPTION);
+		
+        JOptionPane.showConfirmDialog(null, panelNombre, "¡Top 5 alcanzado!", JOptionPane.OK_CANCEL_OPTION);
 
         return textFieldNombre.getText();
 	}
@@ -397,33 +335,6 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 		Celda celda = new Celda(this, e, size_label, true);
 		panel_tablero.add(celda);
 		return celda;
-	}
-
-	public void mostrarPuntajes() {
-		this.repaint();
-	    panel_principal.setVisible(false);
-
-	    JPanel panel_puntajes = crearMensajePanel();
-		panel_puntajes.setLayout(new GridBagLayout());
-	    
-		setearPanelPuntajes(panel_puntajes);
-	}
-
-	private void agregarAccionBotonVolver(JButton boton, JPanel panel_principal, JPanel panel_puntajes) {
-	    boton.addActionListener(new ActionListener() {
-	        @Override
-	        public void actionPerformed(ActionEvent e) {
-	            panel_puntajes.setVisible(false);
-				panel_principal.setVisible(true);
-				panel_tablero.requestFocus();
-				panel_tablero.setFocusable(true);
-				repaint();
-	        }
-	    });
-
-	    getContentPane().add(panel_puntajes);
-	    panel_puntajes.setVisible(true);
-	    panel_puntajes.revalidate();
 	}
 
 	private JLabel label_corazon1 = new JLabel();
@@ -500,19 +411,7 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 	    }
 	}
 
-	private JLabel crearLabel(String texto, String fuente, int estilo, int tamano, Color color, int gridwidth, int gridheight) {
-	    JLabel label = new JLabel(texto);
-	    label.setFont(new Font(fuente, estilo, tamano));
-	    label.setForeground(color);
-
-	    GridBagConstraints c = new GridBagConstraints();
-	    c.insets = new Insets(0, 20, 0, 0);
-	    c.weightx = 0;
-	    c.gridwidth = gridwidth;
-	    c.gridheight = gridheight;
-
-	    return label;
-	}
+	
 
 	private JLabel crearImagen(String ruta) {
 	    ImageIcon imgIcon = new ImageIcon(this.getClass().getResource(ruta));
@@ -621,87 +520,13 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 	    mi_central_pantallas.mostrarMensajeDerrotaPorMovimientos();
 	}
 
-
-	
-
-	private JLabel crearLabel(String texto, int tamañoFuente) {
-	    JLabel label = new JLabel(texto);
-	    label.setFont(new Font("Algerian", Font.PLAIN, tamañoFuente));
-	    label.setForeground(Color.WHITE);
-	    return label;
-	}
-
-	private JButton crearBotonReintentar() {
-	    JButton botonReiniciar = new JButton("Reintentar");
-	    botonReiniciar.setBackground(new Color(0, 0, 0, 200));
-	    botonReiniciar.setForeground(Color.WHITE);
-	    return botonReiniciar;
-	}
 	
 	public void mostrarMensajeDerrotaPorVidas() {
-	    panel_principal.setVisible(false);
-
-	    JPanel mensajePanel = crearMensajePanel();
-	    agregarComponentesAlMensajePanelPorVidas(mensajePanel);
-
-	    getContentPane().add(mensajePanel);
-
-	    JButton botonReiniciarJuego = crearBotonReintentar();
-	    agregarAccionBotonReiniciarPorVidas(botonReiniciarJuego, panel_principal, mensajePanel);
-
-	    mensajePanel.setVisible(true);
-	    mensajePanel.revalidate();
-	}
-
-
-	private void agregarComponentesAlMensajePanelPorVidas(JPanel p) {
-	    GridBagConstraints gbc = new GridBagConstraints();
-
-	    JLabel labelPerdiste1 = crearLabel("PERDISTE", 50);
-	    agregarConGBCs(labelPerdiste1, p, gbc, 0, 0, 1, 1);
-
-	    JLabel labelPerdiste2 = crearLabel("Ya no te quedan más vidas", 30);
-	    agregarConGBCs(labelPerdiste2, p, gbc, 0, 1, 1, 1);
-
-	    JLabel labelPerdiste3 = crearLabel("Empieza de nuevo desde el nivel 1", 30);
-	    agregarConGBCs(labelPerdiste3, p, gbc, 0, 2, 1, 1);
-	}
-
-
-	private void agregarAccionBotonReiniciarPorVidas(JButton boton, JPanel panel_principal, JPanel mensajePanel) {
-	    boton.addActionListener(new ActionListener() {
-	        @Override
-	        public void actionPerformed(ActionEvent e) {
-	            panel_principal.setVisible(true);
-	            mensajePanel.setVisible(false);
-	            miLogica.notificarDerrotaPorVidas();
-	        }
-	    });
+	    mi_central_pantallas.mostrarMensajeDerrotaPorVidas();
 	}
 	
 	public void mostrarMensajeFinDelJuego() {
-	    panel_principal.setVisible(false);
-
-	    JPanel mensajePanel = crearMensajePanel();
-	    agregarComponentesAlMensajePanelFinDelJuego(mensajePanel);
-
-	    getContentPane().add(mensajePanel);
-
-	    mensajePanel.setVisible(true);
-	    mensajePanel.revalidate();
-	}
-
-	private void agregarComponentesAlMensajePanelFinDelJuego(JPanel p) {
-	    GridBagConstraints gbc = new GridBagConstraints();
-
-	    JLabel labelGanaste1 = crearLabel("GANASTE", 50);
-	    agregarConGBCs(labelGanaste1, p, gbc, 0, 0, 1, 1);
-
-	    JLabel labelGanaste2 = crearLabel("Felicidades! Llegaste al final del juego", 30);
-	    agregarConGBCs(labelGanaste2, p, gbc, 0, 1, 1, 1);
-
-	    JLabel labelGanaste3 = crearLabel("Gracias por jugar", 30);
-	    agregarConGBCs(labelGanaste3, p, gbc, 0, 2, 1, 1);
+	    mi_central_pantallas.mostrarMensajeFinDelJuego();
 	}
 
 	public void mostrarMensajeVictoriaPorObjetivos() {
@@ -753,37 +578,37 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 
 	}
 
-	private void agregarComponentesAlMensajePanelVictoriaPorObjetivos(JPanel p) {
-	    GridBagConstraints gbc = new GridBagConstraints();
-
-	    JLabel labelGanaste1 = crearLabel("GANASTE", 50);
-	    agregarConGBCs(labelGanaste1, p, gbc, 0, 0, 1, 1);
-
-	    JLabel labelGanaste2 = crearLabel("Felicidades! Avanza al siguiente nivel", 30);
-	    agregarConGBCs(labelGanaste2, p, gbc, 0, 1, 1, 1);
-
-	    JButton botonSiguienteNivel = crearBoton("Siguiente Nivel");
-	    agregarConGBCs(botonSiguienteNivel, p, gbc, 0, 3, 1, 1);
-
-	    botonSiguienteNivel.addActionListener(new ActionListener() {
-	        @Override
-	        public void actionPerformed(ActionEvent e) {
-	            panel_principal.setVisible(true);
-	            p.setVisible(false);
-	            miLogica.cambiarNivel();
-	        }
-	    });
+	public void mostrarPuntajes() {
+		mi_central_pantallas.mostrarPuntajes();
 	}
 
-	private JButton crearBoton(String texto) {
-	    JButton boton = new JButton(texto);
-	    boton.setBackground(new Color(0, 0, 0, 200));
-	    boton.setForeground(Color.WHITE);
-	    return boton;
+	private void mostrarModosDeJuego() {
+		mi_central_pantallas.mostrarModosDeJuego();
 	}
 
 	public void mostrarMensajeDerrotaPorTiempo() {
 	    mi_central_pantallas.mostrarMensajeDerrotaPorTiempo();
+	}
+
+	public JLabel crearLabel(String texto, int tamañoFuente) {
+	    JLabel label = new JLabel(texto);
+	    label.setFont(new Font("Algerian", Font.PLAIN, tamañoFuente));
+	    label.setForeground(Color.WHITE);
+	    return label;
+	}
+
+	public JLabel crearLabel(String texto, String fuente, int estilo, int tamano, Color color, int gridwidth, int gridheight) {
+	    JLabel label = new JLabel(texto);
+	    label.setFont(new Font(fuente, estilo, tamano));
+	    label.setForeground(color);
+
+	    GridBagConstraints c = new GridBagConstraints();
+	    c.insets = new Insets(0, 20, 0, 0);
+	    c.weightx = 0;
+	    c.gridwidth = gridwidth;
+	    c.gridheight = gridheight;
+
+	    return label;
 	}
 	
 	public void eliminar_celda(Celda celda) {
@@ -846,61 +671,6 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 		return padding + score;
 	}
 
-	private void setearPanelPuntajes(JPanel panel_puntajes) {
-		JLabel titulo_puntajes = crearLabel("MEJORES PUNTAJES:", "Algerian", Font.PLAIN, 40, Color.WHITE, 2, 1);
-		agregarConGBCs(titulo_puntajes, panel_puntajes, 0, 0, 3, 1);
-
-		JLabel label_num1 = crearLabel("1 - ", "Algerian", Font.PLAIN, 30, Color.YELLOW, 2, 1);
-		agregarConGBCs(label_num1, panel_puntajes, 0, 1, 1, 1);
-
-		JLabel label_nombre1 = crearLabel("AAA", "Algerian", Font.PLAIN, 30, Color.YELLOW, 2, 1);
-		agregarConGBCs(label_nombre1, panel_puntajes, 1, 1, 1, 1);
-
-		JLabel label_puntaje1 = crearLabel("0000000", "Algerian", Font.PLAIN, 30, Color.WHITE, 2, 1);
-		agregarConGBCs(label_puntaje1, panel_puntajes, 2, 1, 1, 1);
-
-		JLabel label_num2 = crearLabel("2 - ", "Algerian", Font.PLAIN, 30, Color.GRAY, 2, 1);
-		agregarConGBCs(label_num2, panel_puntajes, 0, 2, 1, 1);
-
-		JLabel label_nombre2 = crearLabel("AAA", "Algerian", Font.PLAIN, 30, Color.GRAY, 2, 1);
-		agregarConGBCs(label_nombre2, panel_puntajes, 1, 2, 1, 1);
-
-		JLabel label_puntaje2 = crearLabel("0000000", "Algerian", Font.PLAIN, 30, Color.WHITE, 2, 1);
-		agregarConGBCs(label_puntaje2, panel_puntajes, 2, 2, 1, 1);
-
-		JLabel label_num3 = crearLabel("3 - ", "Algerian", Font.PLAIN, 30, Color.ORANGE, 2, 1);
-		agregarConGBCs(label_num3, panel_puntajes, 0, 3, 1, 1);
-
-		JLabel label_nombre3 = crearLabel("AAA", "Algerian", Font.PLAIN, 30, Color.ORANGE, 2, 1);
-		agregarConGBCs(label_nombre3, panel_puntajes, 1, 3, 1, 1);
-
-		JLabel label_puntaje3 = crearLabel("0000000", "Algerian", Font.PLAIN, 30, Color.WHITE, 2, 1);
-		agregarConGBCs(label_puntaje3, panel_puntajes, 2, 3, 1, 1);
-
-		JLabel label_num4 = crearLabel("4 - ", "Algerian", Font.PLAIN, 30, Color.WHITE, 2, 1);
-		agregarConGBCs(label_num4, panel_puntajes, 0, 4, 1, 1);
-
-		JLabel label_nombre4 = crearLabel("AAA", "Algerian", Font.PLAIN, 30, Color.white, 2, 1);
-		agregarConGBCs(label_nombre4, panel_puntajes, 1, 4, 1, 1);
-
-		JLabel label_puntaje4 = crearLabel("0000000", "Algerian", Font.PLAIN, 30, Color.WHITE, 2, 1);
-		agregarConGBCs(label_puntaje4, panel_puntajes, 2, 4, 1, 1);
-
-		JLabel label_num5 = crearLabel("5 - ", "Algerian", Font.PLAIN, 30, Color.WHITE, 2, 1);
-		agregarConGBCs(label_num5, panel_puntajes, 0, 5, 1, 1);
-
-		JLabel label_nombre5 = crearLabel("AAA", "Algerian", Font.PLAIN, 30, Color.white, 2, 1);
-		agregarConGBCs(label_nombre5, panel_puntajes, 1, 5, 1, 1);
-
-		JLabel label_puntaje5 = crearLabel("0000000", "Algerian", Font.PLAIN, 30, Color.WHITE, 2, 1);
-		agregarConGBCs(label_puntaje5, panel_puntajes, 2, 5, 1, 1);
-
-		JButton button_volver = new JButton("Volver");
-		button_volver.setBackground(new Color(0, 0, 0, 200));
-	    button_volver.setForeground(Color.WHITE);
-		agregarAccionBotonVolver(button_volver, panel_principal, panel_puntajes);
-		agregarConGBCs(button_volver, panel_puntajes, 0, 6, 3, 1);
-	}
 
 	public void cambiarFondo(int nivel) {
         fondo.cambiarFondo(nivel);
