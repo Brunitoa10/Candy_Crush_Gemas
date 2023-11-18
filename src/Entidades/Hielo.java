@@ -10,6 +10,7 @@ public class Hielo extends Obstaculo {
 	public Hielo(TableroNotificable tablero,int f, int c, Color col, boolean visible, Entidad ent) {
 		super(tablero,f, c, "/assets/obstaculo/gema_normal/", col, visible);
 		caramelo_interno=ent;
+		cargarImagenesRepresentativas(rutadeLaImagen);
 	}
 	
 	public void detonar(Tablero  t) {

@@ -12,6 +12,7 @@ public class GemaCruzada extends Gema {
 	public GemaCruzada(TableroNotificable tablero,int f, int c, Color col, boolean visible)
 	{
 		super(tablero,f, c, col, "/assets/gemas/original/gema_cruz/", visible);
+		cargarImagenesRepresentativas(rutadeLaImagen);
 	}
 
 	//Metodos Particulares

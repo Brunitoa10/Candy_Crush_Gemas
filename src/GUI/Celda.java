@@ -75,5 +75,5 @@ public class Celda extends JLabel implements EntidadGrafica {
 		Icon icono_imagen_escalado = new ImageIcon(imagen_escalada);
 		setIcon(icono_imagen_escalado);
 	}
-	
+
 }

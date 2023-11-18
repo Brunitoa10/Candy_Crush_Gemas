@@ -33,7 +33,7 @@ public abstract class Entidad implements EntidadLogica, Enfocable, Intercambiabl
 		this.visible = visible;
 		this.color=color;
 		this.rutadeLaImagen = rutadeLaImagen;
-		cargarImagenesRepresentativas(rutadeLaImagen);
+		
 	}
 
 	//Setters
@@ -100,6 +100,7 @@ public abstract class Entidad implements EntidadLogica, Enfocable, Intercambiabl
 	}
 
 	public void cargarImagenesRepresentativas(String ri) {
+		System.out.println(ri);
 		imagenes = new String [4];
 		imagenes[0] = ri + color.get_color() +".png";
 		imagenes[1] = ri + color.get_color() +"-cursor.png";

@@ -9,6 +9,7 @@ public class GemaNormal extends Gema{
 		
 	public GemaNormal(TableroNotificable tablero,int f, int c, Color col, boolean visible) {
 	 super(tablero,f, c, col, "/assets/gemas/original/gema_normal/", visible);
+	 cargarImagenesRepresentativas(rutadeLaImagen);
 	}
 	
 	//Metodos particulares

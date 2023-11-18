@@ -9,6 +9,7 @@ public class Roca extends Obstaculo{
 
 	public Roca(TableroNotificable tablero,int f, int c, boolean visible) {
 		super(tablero,f, c, "/assets/obstaculo/", new Color(Color.ROCA), visible);
+		cargarImagenesRepresentativas(rutadeLaImagen);
 	}
 
 	public void detonar(Tablero tablero) {

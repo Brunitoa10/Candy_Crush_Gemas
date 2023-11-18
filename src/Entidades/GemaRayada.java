@@ -16,6 +16,7 @@ public class GemaRayada extends Gema{
 	public GemaRayada(TableroNotificable tablero,int f, int c, Color col, int direccion, boolean visible) {
 		super(tablero,f, c,col, "/assets/gemas/original/gema_rayada/" + direccion, visible);
 		this.direccion = direccion;
+		cargarImagenesRepresentativas(rutadeLaImagen);
 	}
 
 	public void detonar(Tablero tablero) {

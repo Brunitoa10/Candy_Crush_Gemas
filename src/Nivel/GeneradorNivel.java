@@ -79,7 +79,7 @@ public class GeneradorNivel {
 		            		t.agregar_entidad(new Roca(t,i, j, true));
 		            	}else{
 							if(partes[0].equals("b")){
-								t.agregar_entidad(new Bomba(t, i,j, new Color(Integer.parseInt(partes[1].trim())),true, t.obtenerObserver()));
+								t.agregar_entidad(new Bomba(t, i,j, new Color(Integer.parseInt(partes[1].trim())),true, t.obtenerObserver(),l));
 							}else{
 								if(partes[0].equals("p")) {
 									t.agregar_entidad(new GemaRayada(t,i, j,new Color(Integer.parseInt(partes[1].trim())%10),Integer.parseInt(partes[1].trim())/10, true));

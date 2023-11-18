@@ -523,7 +523,6 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 	    mi_central_pantallas.mostrarMensajeDerrotaPorMovimientos();
 	}
 
-	
 	public void mostrarMensajeDerrotaPorVidas() {
 	    mi_central_pantallas.mostrarMensajeDerrotaPorVidas();
 	}

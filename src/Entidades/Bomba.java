@@ -1,21 +1,26 @@
 package Entidades;
 
 import Logica.Color;
+import Logica.Logica;
 import Tablero.NotificadorDeEntidadesConTiempo;
 import Tablero.Tablero;
 import Tablero.TableroNotificable;
 
 public class Bomba extends Obstaculo implements EntidadNotificable {
-   protected int tiempo;
+   protected int tiempo= tiempoInicial;
    protected NotificadorDeEntidadesConTiempo notificador;
    protected static final int tiempoInicial = 10;
+   protected Logica logica;
 
-   public Bomba(TableroNotificable tablero,int f, int c, Color col, boolean visible, NotificadorDeEntidadesConTiempo n){
-    
+
+   public Bomba(TableroNotificable tablero,int f, int c, Color col, boolean visible, NotificadorDeEntidadesConTiempo n,Logica l){
     super(tablero,f, c, "/assets/obstaculo/bomba/", col, visible); 
+    cargarImagenesRepresentativas(rutadeLaImagen);
     System.out.println("CREACION DE BOMBA");
     notificador = n;
-   // notificador.subscribirse(this);
+    notificador.subscribirse(this);
+    logica = l;
+    
    }
 
     public void detonar(Tablero t) {
@@ -34,7 +39,7 @@ public class Bomba extends Obstaculo implements EntidadNotificable {
     }
 
     public void finalizarJuegoPorExplosionDeBomba(){
-
+        logica.notificarDerrotaPorVidas();
     }
 
     public int get_score() {
@@ -51,32 +56,32 @@ public class Bomba extends Obstaculo implements EntidadNotificable {
 	 return false;
 	}
 
-    private void actualizarImagenRep(){
-        System.out.println("actualizar imagen rep");
-        System.out.println(rutadeLaImagen);
-        System.out.println(tiempo);
-        imagenes[0] = rutadeLaImagen + tiempo +".png";
-        imagenes[1] = rutadeLaImagen +tiempo +"-cursor.png";
-    
-
-    }
-
-    public void cargarImagenesRepresentativas(String ri){
+    public void cargarImagenesRepresentativas(String ri){//"/assets/obstaculo/bomba/"
         imagenes = new String [4];
-        System.out.println("CARGAR IMAGENES REPRESENTATIVAS "+ri + tiempo+".png");
-		imagenes[0] = ri + tiempoInicial+".png";
-		imagenes[1] = ri + tiempoInicial +"-cursor.png";
+        System.out.println("CARGAR IMAGENES REPRESENTATIVAS "+ ri +tiempo +"/"+tiempo+".png");
+		imagenes[0] = ri +tiempo +"/"+tiempo+".png";
+		imagenes[1] = ri +tiempo +"/"+tiempo+"-cursor.png";
 		imagenes[2] = ri + "detonado.gif";
 		imagenes[3] = ri + "enfocado-detonado.gif";
+        
     }
 
     public void notificar() {
+        System.out.println(tiempo);
         tiempo--;
-        actualizarImagenRep();
-        rutadeLaImagen = "/assets/obstaculo/bomba/"+tiempo+".png";
+        cargarImagenesRepresentativas(rutadeLaImagen);
+        System.out.println(enfocada);
+        if(enfocada){
+            System.out.println("enfocada, enfocar");
+            enfocar();}
+        else {
+            System.out.println("desenfocada");
+            desenfocar(); // para que se actualice con el sprite adecuado
+            }
         if(tiempo <= 0){
             finalizarJuegoPorExplosionDeBomba();
         }
     }
+
 
 }

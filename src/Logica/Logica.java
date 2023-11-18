@@ -61,7 +61,6 @@ public class Logica {
 			miGUI.mostrarMensajeDerrotaPorVidas();
 		}
 	}
-	
 	public void notificarDerrotaPorVidas() {
 		System.out.println("notificarDerrotaPorVidas");
 		if(miTablero.obtenerAdministradordeScore().entro_en_el_top5()){
