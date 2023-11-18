@@ -139,7 +139,7 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 
 		panel_tablero = new JPanel();
 		panel_tablero.setSize(size_label * filas, size_label * columnas);
-		panel_tablero.setLayout(new GridLayout(filas,columnas,0,0));
+		panel_tablero.setLayout(new GridBagLayout());
 		panel_tablero.setBackground(new Color(0,0,0,125));
 
 
@@ -333,7 +333,10 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 
 	public EntidadGrafica agregar_entidad(EntidadLogica e) {
 		Celda celda = new Celda(this, e, size_label, true);
-		panel_tablero.add(celda);
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.gridx = e.get_columna();
+		gbc.gridy = e.get_fila();
+		panel_tablero.add(celda, gbc);
 		return celda;
 	}
 
