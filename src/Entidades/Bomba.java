@@ -39,6 +39,7 @@ public class Bomba extends Obstaculo implements EntidadNotificable {
     }
 
     public void finalizarJuegoPorExplosionDeBomba(){
+        notificador.desubscribirse(this);
         logica.notificarDerrotaPorVidas();
     }
 
