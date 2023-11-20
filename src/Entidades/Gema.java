@@ -93,4 +93,9 @@ public abstract class Gema extends Entidad{
 	{
 		return false;
 	}
+
+	public Entidad get_gema_interna()
+	{ 
+		return this;
+	}
 }

@@ -112,4 +112,8 @@ public abstract class Obstaculo extends Entidad{
 	  
 	}
 
+	public Entidad get_gema_interna()
+	{ 
+		return this;
+	}
 }

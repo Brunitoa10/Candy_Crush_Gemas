@@ -1,10 +1,8 @@
 package Entidades;
 
-import Logica.Color;
-import Logica.Logica;
-import Tablero.NotificadorDeEntidadesConTiempo;
-import Tablero.Tablero;
-import Tablero.TableroNotificable;
+import Logica.*;
+import Tablero.*;
+import EstrategiaDetonaciones.*;
 
 public class Bomba extends Obstaculo implements EntidadNotificable {
    protected int tiempo= tiempoInicial;
@@ -24,18 +22,9 @@ public class Bomba extends Obstaculo implements EntidadNotificable {
    }
 
     public void detonar(Tablero t) {
-        System.out.println("destruido "+ this.color + " en: "+fila+","+columna );
-		    color.set_color(Color.TRANSPARENTE);
-	        cargarImagenesRepresentativas(rutadeLaImagen);
-	        entidadGrafica.notificarse_detonacion();
-    }
-
-    public void explosionAdyacente() { 
         notificador.desubscribirse(this);
-		color.set_color(Color.TRANSPARENTE);
-	        cargarImagenesRepresentativas(rutadeLaImagen);
-	        entidadGrafica.notificarse_detonacion();
-        
+        EstategiaDetonacion estrategiadeDetonacion= new EstrategiaDetonacionBomba();
+        estrategiadeDetonacion.detonar(this, t);
     }
 
     public void finalizarJuegoPorExplosionDeBomba(){

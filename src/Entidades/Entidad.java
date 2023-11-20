@@ -93,6 +93,7 @@ public abstract class Entidad implements EntidadLogica, Enfocable, Intercambiabl
         return color.get_score();
 	}
 
+	public abstract Entidad get_gema_interna();
 	//Metodos particulares
 
 	public boolean estaDetonada() {
