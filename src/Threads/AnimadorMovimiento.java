@@ -68,7 +68,6 @@ public class AnimadorMovimiento extends Thread implements Animador {
 				e.printStackTrace();
 			}
 		}
-		
 		manager.notificarse_finalizacion_animador(this);
 	}
 }

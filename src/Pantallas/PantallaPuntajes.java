@@ -5,9 +5,13 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.util.PriorityQueue;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import Score.Jugador;
 
 
 public class PantallaPuntajes extends JPanel implements Pantalla {
@@ -30,13 +34,35 @@ public class PantallaPuntajes extends JPanel implements Pantalla {
         JLabel titulo_puntajes = miCentral.crearLabelConColor("MEJORES PUNTAJES:", "Algerian", Font.PLAIN, 40, Color.WHITE, 2, 1);
 		miCentral.agregarConGBCs(titulo_puntajes, this, gbc, 0, 0, 3, 1);
 
-		JLabel label_num1 = miCentral.crearLabelConColor("1 - ", "Algerian", Font.PLAIN, 30, Color.YELLOW, 2, 1);
-		miCentral.agregarConGBCs(label_num1, this, gbc, 0, 1, 1, 1);
+		for(int i=0; i < obtenerListadeJugadores().size();i++) {
+			JLabel label_num = miCentral.crearLabelConColor((i+1) +" - ", "Algerian", Font.PLAIN, 30, Color.WHITE, 2, 1);
+			miCentral.agregarConGBCs(label_num, this, gbc, 0, i+1, 1, 1);
 
-		JLabel label_nombre1 = miCentral.crearLabelConColor("AAA", "Algerian", Font.PLAIN, 30, Color.YELLOW, 2, 1);
-		miCentral.agregarConGBCs(label_nombre1, this, gbc, 1, 1, 1, 1);
+			JLabel label_nombre = miCentral.crearLabelConColor("AAA", "Algerian", Font.PLAIN, 30, Color.WHITE, 2, 1);
+			miCentral.agregarConGBCs(label_nombre, this, gbc, 1, i+1, 1, 1);
 
-		JLabel label_puntaje1 = miCentral.crearLabel("0000000", 30);
+			JLabel label_puntaje1 = miCentral.crearLabel("0000000", 30);
+			miCentral.agregarConGBCs(label_puntaje1, this, gbc, 2, i+1, 1, 1);
+
+			if(i==0) {
+				label_num.setForeground(Color.YELLOW);
+				label_nombre.setForeground(Color.YELLOW);
+			} else  if (i==1) {
+						label_num.setForeground(Color.GRAY);
+						label_nombre.setForeground(Color.GRAY);
+					} else  if (i==2) {
+						label_num.setForeground(Color.ORANGE);
+						label_nombre.setForeground(Color.ORANGE);
+					}
+
+			
+			
+		}
+
+
+		
+
+		/*JLabel label_puntaje1 = miCentral.crearLabel("0000000", 30);
 		miCentral.agregarConGBCs(label_puntaje1, this, gbc, 2, 1, 1, 1);
 
 		JLabel label_num2 = miCentral.crearLabelConColor("2 - ", "Algerian", Font.PLAIN, 30, Color.GRAY, 2, 1);
@@ -73,13 +99,17 @@ public class PantallaPuntajes extends JPanel implements Pantalla {
 		miCentral.agregarConGBCs(label_nombre5, this, gbc, 1, 5, 1, 1);
 
 		JLabel label_puntaje5 = miCentral.crearLabel("0000000", 30);
-		miCentral.agregarConGBCs(label_puntaje5, this, gbc, 2, 5, 1, 1);
+		miCentral.agregarConGBCs(label_puntaje5, this, gbc, 2, 5, 1, 1);*/
 
 		JButton button_volver = new JButton("Volver");
 		button_volver.setBackground(new Color(0, 0, 0, 200));
 	    button_volver.setForeground(Color.WHITE);
 		miCentral.agregarFuncionalidadBotonVolver(this, button_volver);
 		miCentral.agregarConGBCs(button_volver, this, gbc, 0, 6, 3, 1);
+	}
+
+	public PriorityQueue<Jugador> obtenerListadeJugadores() {
+		return miCentral.obtenerListadeJugadores();
 	}
 
     public void setVisibilidad(boolean vis) {

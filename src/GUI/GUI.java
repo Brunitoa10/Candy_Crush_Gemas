@@ -10,6 +10,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.PriorityQueue;
 import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.Image;
@@ -29,6 +30,7 @@ import java.awt.GridLayout;
 import Logica.EntidadLogica;
 import Logica.Logica;
 import Pantallas.CentralPantallas;
+import Score.Jugador;
 import Threads.CentralAnimaciones;
 
 
@@ -621,6 +623,10 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 	public void mostrarMensajeJuegoPerdido() {
 		System.out.println("GUI :: Perdiste");
 		
+	}
+
+	public PriorityQueue<Jugador> obtenerListadeJugadores() {
+		return miLogica.obtenerListadeJugadores();
 	}
 	
 	public void limpiarGUI() {

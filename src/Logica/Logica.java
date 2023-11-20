@@ -2,6 +2,7 @@ package Logica;
 
 import java.awt.EventQueue;
 import java.util.LinkedList;
+import java.util.PriorityQueue;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -10,6 +11,7 @@ import GUI.GUI;
 import GUI.EntidadGrafica;
 import Nivel.GeneradorNivel;
 import Nivel.Nivel;
+import Score.Jugador;
 import Tablero.Tablero;
 
 
@@ -76,6 +78,10 @@ public class Logica {
 	
 	public String[] obtenerInfoObjetivos() {
 	    return miNivel.obtenerInfoObjetivos();
+	}
+
+	public PriorityQueue<Jugador> obtenerListadeJugadores() {
+		return miTablero.obtenerListadeJugadores();
 	}
 	
 	public int getCantidadDeObjetivos() {

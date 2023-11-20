@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.PriorityQueue;
 import java.util.Random;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
@@ -267,6 +268,10 @@ public class Tablero implements TableroJuego{
 	public void agregar_entidad_y_asociada(Hielo g) {
 		entidades[g.get_fila()][g.get_columna()] = g;
 		entidades_asociadas.add(g.get_gema_interna());
+	}
+
+	public PriorityQueue<Jugador> obtenerListadeJugadores() {
+		return administradordeScore.obtenerListadeJugadores();
 	}
 	
 	private boolean intercambiar_entidades_y_transicionar(int fila_destino, int columna_destino) {

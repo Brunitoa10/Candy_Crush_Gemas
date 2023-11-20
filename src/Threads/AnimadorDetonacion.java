@@ -56,7 +56,7 @@ public class AnimadorDetonacion extends Thread implements Animador {
 
 		celda_animada.revalidate();
 		celda_animada.repaint();
-		//celda_animada.eliminar_de_ventana(); DESCOMENTAR CUANDO SOLUCIONEMOS LO DE LA CAIDA, ACTUALMENTE SOLO ROMPE LA GUI
+		celda_animada.eliminar_de_ventana();
 		manager.notificarse_finalizacion_animador(this);
 	}
 

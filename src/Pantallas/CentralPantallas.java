@@ -6,9 +6,11 @@ import javax.swing.JPanel;
 
 import GUI.GUI;
 import Logica.Logica;
+import Score.Jugador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.PriorityQueue;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
@@ -155,6 +157,10 @@ public class CentralPantallas {
 	    boton.setBackground(new Color(0, 0, 0, 200));
 	    boton.setForeground(Color.WHITE);
 	    return boton;
+	}
+
+	public PriorityQueue<Jugador> obtenerListadeJugadores() {
+		return miGUI.obtenerListadeJugadores();
 	}
 
 	public void agregarFuncionalidadBotonReiniciar(Pantalla p, JButton botonReiniciar) {
