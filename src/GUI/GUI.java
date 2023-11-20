@@ -29,6 +29,7 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import Logica.EntidadLogica;
 import Logica.Logica;
+import Paneles.CentralPaneles;
 import Pantallas.CentralPantallas;
 import Score.Jugador;
 import Threads.CentralAnimaciones;
@@ -42,15 +43,14 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 	protected int filas,columnas;
 	protected int tiempoRestante;
 	protected int animaciones_pendientes;
-	protected int[] objetivosColores;
 	protected int movimientosRestantes;
 	private int size_label = 70;
 	private CentralPantallas mi_central_pantallas;
 	protected boolean bloquear_intercambios;
-	
+	protected CentralPaneles mi_central_paneles;
 	protected CentralAnimaciones mi_animador;
 	
-	protected JPanel panel_tablero, panel_seleccion, panel_score, panel_objetivos, panel_controles, panel_vidas,panel_principal, panel_movimientos, panel_timer;
+	protected JPanel panel_tablero, panel_controles, panel_vidas,panel_principal, panel_movimientos, panel_timer;
 	protected JLabel timerLabel,movimientosLabel, scoreLabel;
 	protected JLabel[] objetivosProgreso;
 
@@ -78,8 +78,6 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 		animaciones_pendientes = 0;
 		bloquear_intercambios = false;
 		mi_animador = new CentralAnimaciones(this);
-		objetivosColores = new int[miLogica.getCantidadDeObjetivos()];
-		objetivosProgreso = new JLabel[miLogica.getCantidadDeObjetivos()];
 		
 		inicializarGUI();
 	}
@@ -95,7 +93,7 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 
 		
 		mi_central_pantallas = new CentralPantallas(panel_principal, this, miLogica);
-		
+		mi_central_paneles = new CentralPaneles(panel_principal, this);
 
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		setTitle("Proyecto Candy Crush - Comision-06");
@@ -121,13 +119,8 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 
 		inicializarPanelControles();
 
-		panel_score = new JPanel();
-		panel_score.setBackground(new Color(0,0,0,200));
-
-		scoreLabel = new JLabel("SCORE: 0000");
-		scoreLabel.setFont(new Font("Algerian", Font.PLAIN, 40));
-		scoreLabel.setForeground(Color.WHITE);
-		panel_score.add(scoreLabel);
+		mi_central_paneles.mostrarPanelScore();
+		mi_central_paneles.mostrarPanelObjetivo();
 
 		panel_movimientos = new JPanel();
 		panel_movimientos.setBackground(new Color(0,0,0,200));
@@ -145,27 +138,16 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 		panel_tablero.setBackground(new Color(0,0,0,125));
 
 
-		panel_objetivos = new JPanel();
-		panel_objetivos.setSize(100,100);
-		panel_objetivos.setLayout(new GridBagLayout());
-		panel_objetivos.setBackground(new Color(0,0,0,200));
 
 
 		configurarAccionesTeclado();
-		mostrarObjetivos();
 		mostrarVidas();
 
 		//Constraints TIMER
 		GridBagConstraints c = new GridBagConstraints();
 		c.insets = new Insets(0,10,0,0);
 		agregarConGBCs(panel_timer, panel_principal, c, 0, 0, 3, 1);
-	
-		//Constraints PANEL OBJETIVOS
-		c.insets = new Insets(0, 10, 0, 0);   
-		agregarConGBCs(panel_objetivos, panel_principal, c, 0, 1, 2, 2);   
 		
-		//Constraints PANEL SCORE
-		agregarConGBCs(panel_score, panel_principal, 2, 0, 4, 1);
 
 		//Constraints TABLERO
 		c.insets = new Insets(0,0,0,0);
@@ -385,49 +367,6 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 		gbc.insets = new Insets(0,0,0,10);
 		agregarConGBCs(panel_vidas, panel_principal, gbc, 6, 6, 2, 1); 
 	}
-	
-	public void mostrarObjetivos() {   
-	    JLabel tituloObjetivo = crearLabel(" OBJETIVOS:", "Algerian", Font.PLAIN, 20, Color.WHITE, 2, 1);
-	    GridBagConstraints cTitulo = new GridBagConstraints();
-	    cTitulo.insets = new Insets(0, 0, 0, 0);      
-	    cTitulo.gridx = 0;                               
-	    cTitulo.gridy = 0;
-	    panel_objetivos.add(tituloObjetivo, cTitulo);
-
-	    int coordenada_y = 1;
-	    int numeroDeObjetivo = 0;
-
-	    for(int i = 0; i < miLogica.obtenerInfoObjetivos().length; i += 4) {
-	        int color = Integer.parseInt(miLogica.obtenerInfoObjetivos()[i + 3]);
-	        objetivosColores[numeroDeObjetivo] = color;
-
-	        JLabel objetivosTexto = crearLabel(miLogica.obtenerInfoObjetivos()[i], "Algerian", Font.PLAIN, 15, Color.WHITE, 1, 1);
-	        JLabel objetivosImagen = crearImagen(miLogica.obtenerInfoObjetivos()[i + 1]);
-	        JLabel objetivosNumero = crearLabel("0/" + miLogica.obtenerInfoObjetivos()[i + 2], "Arial", Font.PLAIN, 15, Color.WHITE, 2, 1);
-
-	        agregarConGBCs(objetivosTexto, panel_objetivos, 0, coordenada_y, 1, 1);
-	        agregarConGBCs(objetivosImagen, panel_objetivos, 1, coordenada_y, 1, 1);
-	        agregarConGBCs(objetivosNumero, panel_objetivos, 0, coordenada_y + 1, 2, 1);
-
-	        objetivosProgreso[numeroDeObjetivo] = objetivosNumero;
-
-	        coordenada_y += 2;
-	        numeroDeObjetivo++;
-	    }
-	}
-
-	
-
-	private JLabel crearImagen(String ruta) {
-	    ImageIcon imgIcon = new ImageIcon(this.getClass().getResource(ruta));
-	    Image imgEscalada = imgIcon.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
-	    Icon iconoEscalado = new ImageIcon(imgEscalada);
-
-	    JLabel label = new JLabel();
-	    label.setIcon(iconoEscalado);
-
-	    return label;
-	}
 
 	private void agregarConGBCs(Component comp, Container cont, int x, int y, int width, int height) {
 	    GridBagConstraints c = new GridBagConstraints();
@@ -438,30 +377,8 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 	    cont.add(comp, c);
 	}
 	
-	public void actualizarProgreso(int gemasRestantes, int tipoGema) {
-		for(int i = 0; i < objetivosColores.length; i++) {
-	        if(tipoGema == objetivosColores[i] && objetivosProgreso[i] != null) {
-	            String aux = objetivosProgreso[i].getText();
-	            String[] partes = aux.split("/");
-	            Integer num = Integer.valueOf(partes[1]);
-	            int gemasTotales = num.intValue();
-	            int progreso = gemasTotales - gemasRestantes;
-
-	            objetivosProgreso[i].setText(progreso + "/" + gemasTotales);
-	            panel_objetivos.repaint();
-	        }
-	    }
-	}
 	
-	public void reiniciarProgreso() {
-	    for(int i = 0; i < objetivosColores.length; i++) {
-	        String aux = objetivosProgreso[i].getText();
-	        String[] partes = aux.split("/");
-	        int gemasTotales = Integer.parseInt(partes[1]);
-
-	        objetivosProgreso[i].setText("0/" + gemasTotales);
-	    }
-	}
+	
 	
 	public int getTiempoRestante() {
 		return tiempoRestante;
@@ -582,8 +499,20 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 
 	}
 
+	public int getCantidadDeObjetivos() {
+		return miLogica.getCantidadDeObjetivos();
+	}
+
 	public void mostrarPuntajes() {
 		mi_central_pantallas.mostrarPuntajes();
+	}
+
+	public void actualizarProgreso(int gemasRestantes, int tipoGema) {
+		mi_central_paneles.actualizarProgreso(gemasRestantes, tipoGema);
+	}
+
+	public void reiniciarProgreso() {
+		mi_central_paneles.reiniciarProgresoObjetivos();
 	}
 
 	private void mostrarModosDeJuego() {
@@ -592,6 +521,10 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 
 	public void mostrarMensajeDerrotaPorTiempo() {
 	    mi_central_pantallas.mostrarMensajeDerrotaPorTiempo();
+	}
+
+	public String[] obtenerInfoObjetivos() {
+	    return miLogica.obtenerInfoObjetivos();
 	}
 
 	public JLabel crearLabel(String texto, int tamañoFuente) {
