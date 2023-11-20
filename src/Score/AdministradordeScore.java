@@ -24,9 +24,8 @@ public class AdministradordeScore {
 
     public boolean entro_en_el_top5()
     {
-        return (topScore.obtenerListadeJugadores().size()<5 || topScore.obtenerListadeJugadores().peek().get_score()<=scoreActual);
+        return (scoreActual>0 || topScore.obtenerListadeJugadores().size()<5 || topScore.obtenerListadeJugadores().peek().get_score()<=scoreActual);
     }
-
 
     public PriorityQueue<Jugador> obtenerListadeJugadores()
     {
@@ -35,7 +34,7 @@ public class AdministradordeScore {
     
     public void mejorJugador(String nombre_del_Jugador)
     {
-          topScore.agregarJugador(nombre_del_Jugador, scoreActual);
+      topScore.agregarJugador(nombre_del_Jugador, scoreActual);
     }
    
 }
