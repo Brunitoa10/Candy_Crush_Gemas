@@ -1,5 +1,7 @@
 package Score;
 
+import java.util.PriorityQueue;
+
 public class AdministradordeScore {
     protected TopScore topScore;
     protected int scoreActual;
@@ -25,6 +27,11 @@ public class AdministradordeScore {
         return (topScore.obtenerListadeJugadores().size()<5 || topScore.obtenerListadeJugadores().peek().get_score()<=scoreActual);
     }
 
+
+    public PriorityQueue<Jugador> obtenerListadeJugadores()
+    {
+      return topScore.obtenerListadeJugadores();
+    }
 
     /*public void mejorJugador(String nombre_del_Jugador)
     {
