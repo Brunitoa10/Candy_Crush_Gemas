@@ -3,12 +3,7 @@ package Paneles;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
-import java.awt.GridLayout;
-import java.awt.Image;
 import java.awt.Insets;
-
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 

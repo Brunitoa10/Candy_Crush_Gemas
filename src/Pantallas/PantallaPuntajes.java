@@ -54,9 +54,6 @@ public class PantallaPuntajes extends JPanel implements Pantalla {
 						label_num.setForeground(Color.ORANGE);
 						label_nombre.setForeground(Color.ORANGE);
 					}
-
-			
-			
 		}
 
 		JButton button_volver = new JButton("Volver");

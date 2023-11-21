@@ -21,11 +21,19 @@ public class CentralPaneles {
     protected PanelObjetivo miPanelObjetivo;
 	protected PanelVidas miPanelVidas;
 	protected PanelMovimiento miPanelMovimiento;
+	protected PanelReglas miPanelReglas;
+
 
     public CentralPaneles(JPanel p_principal, GUI mi_GUI) {
         panelPrincipal = p_principal;
         miGUI = mi_GUI;
     }
+
+	public void mostrarPanelReglas() {
+		miPanelReglas = new PanelReglas(this);
+		miPanelReglas.crearPanel();
+        miPanelReglas.agregarAPanelPrincipal();
+	}
 
     public void mostrarPanelScore() {
         miPanelScore = new PanelScore(this);
