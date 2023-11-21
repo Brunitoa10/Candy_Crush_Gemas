@@ -18,7 +18,7 @@ public class Nivel {
 	protected int columna_inicial_jugador;
 	protected int tiempo;
 	protected int vidas;
-	protected Logica miLogica;
+	protected static Logica miLogica;
 
 	//Constructor
 	public Nivel(int posX, int posY,Logica l) {
@@ -37,8 +37,7 @@ public class Nivel {
 	public int getColumnaInicialJugador() {
 		return columna_inicial_jugador;
 	}
-
-
+	
 	public void setMovimientos(int movimientos) {
 		this.movimientos = movimientos;
 	}
@@ -160,5 +159,9 @@ public class Nivel {
 	        mapeo.clear();
 	        miLogica.notificarVictoriaPorObjetivos();
 	    }
+	}
+
+	public static Logica getLogica() {
+		return miLogica;
 	}
 }

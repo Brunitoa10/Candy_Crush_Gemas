@@ -86,18 +86,11 @@ public class Tablero implements TableroJuego{
 		}
 	}
 	
-	public boolean intercambiar_entidades(int d) {
-		BiFunction<Integer, Integer, Boolean> operacion = operaciones.get(d);
-		boolean intercambioValido = false;
-		if (operacion != null) {
-			intercambioValido = operacion.apply(fJugador, cJugador);
-		}
-
-		return intercambioValido;
-	}
+	 public boolean intercambiar_entidades(int d) {
+		 BiFunction<Integer, Integer, Boolean> operacion = operaciones.get(d);
+	     return operacion != null && operacion.apply(fJugador, cJugador);
+	 }
 	
-	
-
 	public String obtenerTipoGema(int tipoGema) {
 		boolean encontre = false;
 		String nombreGema = " ";
@@ -150,6 +143,198 @@ public class Tablero implements TableroJuego{
 		return administradordeScore;
 	}
 
+	
+	public boolean hayEfectoExplosionAdyacente(int filaVecina, int columnaVecina) {
+		boolean esAfectadaPorExplosionAdyacente = false;
+	   
+	    if (esPosicionValida(filaVecina, columnaVecina)) {
+	        esAfectadaPorExplosionAdyacente = entidades[filaVecina][columnaVecina].esAfectadaPorExplosionAdyacente();
+	    }
+	    return esAfectadaPorExplosionAdyacente;
+	}
+	
+	private boolean esPosicionValida(int fila, int columna) {
+		return (0 <= fila && fila < filas) && (0 <= columna && columna < columnas);
+	}
+	
+
+	public void imprimirTablero() {
+		for (int i = 0; i < filas; i++) {
+	        for (int j = 0; j < columnas; j++) {
+	            System.out.print("[ "+entidades[i][j].get_color()+" ]");
+	        }
+	        System.out.println();
+	    }
+	 }
+	
+	//---------------LO NUEVO-----------------
+	public void asociar_entidades_logicas_y_graficas() {
+		Entidad entidad;
+			
+		for (int f=0; f<filas; f++) {
+			for (int c=0; c<columnas; c++) {
+				entidad = entidades[f][c];
+				miLogica.asociar_entidad_logica_y_grafica(entidad);
+			}
+		}
+		
+		for(Entidad entidad_a: entidades_asociadas) {
+			miLogica.asociar_entidad_logica_y_grafica(entidad_a);
+		}
+	}
+	
+	public void reubicar(Entidad e) {
+		int nueva_fila = e.get_fila();
+		int nueva_columna = e.get_columna();
+		entidades[nueva_fila][nueva_columna] = e;
+	}
+	
+	public void agregar_entidad_y_asociada(Hielo g) {
+		entidades[g.get_fila()][g.get_columna()] = g;
+		entidades_asociadas.add(g.get_gema_interna());
+	}
+
+	public PriorityQueue<Jugador> obtenerListadeJugadores() {
+		return administradordeScore.obtenerListadeJugadores();
+	}
+	
+/*	private boolean intercambiar_entidades_y_transicionar(int fila_destino, int columna_destino) {
+		int fila_origen = fJugador;
+		int columna_origen = cJugador;
+		Entidad entidad_origen, entidad_destino;
+		EfectosDeTransicion efecto_intercambio = null;
+		boolean movimientoValido = false;
+		
+		if (en_rango(fila_destino, columna_destino)) {	
+			entidad_origen = entidades[fila_origen][columna_origen];
+			entidad_destino = entidades[fila_destino][columna_destino];
+			
+			if (entidad_origen.es_posible_intercambiar(entidad_destino)) {
+				cambiar_posicion_jugador(fila_destino, columna_destino);
+				entidad_origen.intercambiar(entidad_destino);
+				efecto_intercambio = calcular_efectos_por_intercambio(entidad_origen, entidad_destino);
+				
+				if (efecto_intercambio.existen_entidades_a_detonar()) {
+					transicionar_proximo_estado(efecto_intercambio);
+				}else{
+					deshacer_intercambio(entidad_origen, entidad_destino, fila_origen, columna_origen);
+				}
+			}
+			System.out.println("TABLERO despues de DETONAR y reemplazar");
+			imprimirTablero();
+			movimientoValido = true;
+		}
+		return movimientoValido;
+	}*/
+	
+	private boolean intercambiar_entidades_y_transicionar(int filaDestino, int columnaDestino) {
+	    int filaOrigen = fJugador;
+	    int columnaOrigen = cJugador;
+	    boolean movientosValido = true;
+	    
+	    if (!en_rango(filaDestino, columnaDestino)) {
+	    	movientosValido = false;
+	    }
+
+	    Entidad entidadOrigen = movientosValido ? entidades[filaOrigen][columnaOrigen] : null;
+	    Entidad entidadDestino = movientosValido ? entidades[filaDestino][columnaDestino] : null;
+
+	    if (movientosValido && !entidadOrigen.es_posible_intercambiar(entidadDestino)) {
+	    	movientosValido = false;
+	    }
+
+	    if(movientosValido) {
+	    	realizarIntercambioYTransicion(entidadOrigen, entidadDestino, filaOrigen, columnaOrigen);
+	    }
+
+	    imprimirTablero();
+	    return movientosValido;
+	}
+
+	private void realizarIntercambioYTransicion(Entidad entidadOrigen, Entidad entidadDestino, int filaOrigen, int columnaOrigen) {
+		cambiar_posicion_jugador(entidadDestino.get_fila(),entidadDestino.get_columna());
+	    entidadOrigen.intercambiar(entidadDestino);
+
+	    EfectosDeTransicion efectoIntercambio = calcularEfectosPorIntercambio(entidadOrigen, entidadDestino);
+
+	    if (efectoIntercambio.existen_entidades_a_detonar()) {
+	        transicionar_proximo_estado(efectoIntercambio);
+	    } else {
+	        deshacerIntercambio(entidadOrigen, entidadDestino, filaOrigen, columnaOrigen);
+	    }
+	}
+
+	private void deshacerIntercambio(Entidad entidadOrigen, Entidad entidadDestino, int filaOrigen, int columnaOrigen) {
+		cambiar_posicion_jugador(filaOrigen, columnaOrigen);
+	    entidadOrigen.intercambiar(entidadDestino);
+	}
+
+	private EfectosDeTransicion calcularEfectosPorIntercambio(Entidad entidadOrigen, Entidad entidadDestino) {
+	    EfectosDeTransicion efectoIntercambio = new EfectosDeTransicion();
+
+	    if (entidadOrigen.se_produce_match_con(entidadDestino)) {
+	        manejarMatch(efectoIntercambio, entidadOrigen);
+	        manejarMatch(efectoIntercambio, entidadDestino);
+	    } else {
+	        manejarCombos(efectoIntercambio, entidadOrigen, entidadDestino);
+	    }
+
+	    return efectoIntercambio;
+	}
+
+	private void manejarCombos(EfectosDeTransicion efectoIntercambio, Entidad entidadOrigen, Entidad entidadDestino) {
+	    LinkedList<Entidad> listaEntidadesEnCombo = buscarCombos(
+	        entidadOrigen.get_fila(), entidadOrigen.get_columna(),
+	        entidadDestino.get_fila(), entidadDestino.get_columna()
+	    );
+
+	    listaEntidadesEnCombo.forEach(e -> manejarMatch(efectoIntercambio, e));
+	}
+
+	public boolean en_rango(int fila, int columna){
+		boolean en_rango_fila = (0 <= fila) && (fila < filas);
+		boolean en_rango_columna = (0 <= columna) && (columna < columnas);
+		return (en_rango_fila && en_rango_columna);
+	}
+	
+	protected void cambiar_posicion_jugador(int nueva_fila, int nueva_columna) {
+		fJugador = nueva_fila;
+		cJugador = nueva_columna;
+	}
+	
+	protected EfectosDeTransicion calcular_efectos_por_intercambio(Entidad entidad_origen, Entidad entidad_destino){
+		EfectosDeTransicion efecto_transicion = new EfectosDeTransicion();
+		if (entidad_origen.se_produce_match_con(entidad_destino)) {
+			manejarMatch(efecto_transicion, entidad_origen);
+	        manejarMatch(efecto_transicion, entidad_destino);
+		}else {
+			
+			// To DO: incorporar logica asociada a control de match, generador de potenciadores, etc. 
+			LinkedList<Entidad> listaEntidadesEnCombo = buscarCombos(entidad_origen.get_fila(),entidad_origen.get_columna(),entidad_destino.get_fila(),entidad_destino.get_columna());
+			for(int pos = 0; pos < listaEntidadesEnCombo.size(); pos ++) {
+				manejarMatch(efecto_transicion,listaEntidadesEnCombo.get(pos));
+			}
+		}
+		
+		return efecto_transicion;
+	}
+	
+	private LinkedList<Entidad> buscarCombos(int f1, int c1, int f2, int c2) {
+		LinkedList<Entidad> listaCombos = new LinkedList<>();
+		
+		if (esPosicionValida(f1, c1) && esPosicionValida(f2, c2)) {
+			listaCombos.addAll(buscarCombosEnFila(f1, c1));
+			listaCombos.addAll(buscarCombosEnColumna(f1, c1));
+			listaCombos.addAll(buscarCombosEnFila(f2, c2));
+			listaCombos.addAll(buscarCombosEnColumna(f2, c2));
+			
+			miLogica.actualizarObjetivos(listaCombos);
+			
+			return listaCombos;
+		} else {
+			throw new IllegalArgumentException("Posición inválida en buscarCombos");
+		}
+	}
 	private LinkedList<Entidad> buscarCombosEnFila(int fila, int columna) {
 		LinkedList<Entidad> combosEnFila = new LinkedList<>();
 
@@ -218,140 +403,6 @@ public class Tablero implements TableroJuego{
 		}
 
 		return combosEnColumna;
-	}
-	
-	public boolean hayEfectoExplosionAdyacente(int filaVecina, int columnaVecina) {
-		boolean esAfectadaPorExplosionAdyacente = false;
-	   
-	    if (esPosicionValida(filaVecina, columnaVecina)) {
-	        esAfectadaPorExplosionAdyacente = entidades[filaVecina][columnaVecina].esAfectadaPorExplosionAdyacente();
-	    }
-	    return esAfectadaPorExplosionAdyacente;
-	}
-	
-	private boolean esPosicionValida(int fila, int columna) {
-		return (0 <= fila && fila < filas) && (0 <= columna && columna < columnas);
-	}
-	
-
-	public void imprimirTablero() {
-		for (int i = 0; i < filas; i++) {
-	        for (int j = 0; j < columnas; j++) {
-	            System.out.print("[ "+entidades[i][j].get_color()+" ]");
-	        }
-	        System.out.println();
-	    }
-	 }
-	
-	//---------------LO NUEVO-----------------
-	public void asociar_entidades_logicas_y_graficas() {
-		Entidad entidad;
-			
-		for (int f=0; f<filas; f++) {
-			for (int c=0; c<columnas; c++) {
-				entidad = entidades[f][c];
-				miLogica.asociar_entidad_logica_y_grafica(entidad);
-			}
-		}
-		
-		for(Entidad entidad_a: entidades_asociadas) {
-			miLogica.asociar_entidad_logica_y_grafica(entidad_a);
-		}
-	}
-	
-	public void reubicar(Entidad e) {
-		int nueva_fila = e.get_fila();
-		int nueva_columna = e.get_columna();
-		entidades[nueva_fila][nueva_columna] = e;
-	}
-	
-	public void agregar_entidad_y_asociada(Hielo g) {
-		entidades[g.get_fila()][g.get_columna()] = g;
-		entidades_asociadas.add(g.get_gema_interna());
-	}
-
-	public PriorityQueue<Jugador> obtenerListadeJugadores() {
-		return administradordeScore.obtenerListadeJugadores();
-	}
-	
-	private boolean intercambiar_entidades_y_transicionar(int fila_destino, int columna_destino) {
-		int fila_origen = fJugador;
-		int columna_origen = cJugador;
-		Entidad entidad_origen, entidad_destino;
-		EfectosDeTransicion efecto_intercambio = null;
-		boolean movimientoValido = false;
-		
-		if (en_rango(fila_destino, columna_destino)) {	
-			entidad_origen = entidades[fila_origen][columna_origen];
-			entidad_destino = entidades[fila_destino][columna_destino];
-			
-			if (entidad_origen.es_posible_intercambiar(entidad_destino)) {
-				cambiar_posicion_jugador(fila_destino, columna_destino);
-				entidad_origen.intercambiar(entidad_destino);
-				efecto_intercambio = calcular_efectos_por_intercambio(entidad_origen, entidad_destino);
-				
-				if (efecto_intercambio.existen_entidades_a_detonar()) {
-					transicionar_proximo_estado(efecto_intercambio);
-				}else{
-					deshacer_intercambio(entidad_origen, entidad_destino, fila_origen, columna_origen);
-				}
-			}
-			System.out.println("TABLERO despues de DETONAR y reemplazar");
-			imprimirTablero();
-			movimientoValido = true;
-		}
-		return movimientoValido;
-	}
-	
-	private void deshacer_intercambio(Entidad entidad_origen, Entidad entidad_destino, int fila_origen,int columna_origen) {
-		 cambiar_posicion_jugador(fila_origen, columna_origen);
-		 entidad_origen.intercambiar(entidad_destino);
-	}
-
-	public boolean en_rango(int fila, int columna){
-		boolean en_rango_fila = (0 <= fila) && (fila < filas);
-		boolean en_rango_columna = (0 <= columna) && (columna < columnas);
-		return (en_rango_fila && en_rango_columna);
-	}
-	
-	protected void cambiar_posicion_jugador(int nueva_fila, int nueva_columna) {
-		fJugador = nueva_fila;
-		cJugador = nueva_columna;
-	}
-	
-	protected EfectosDeTransicion calcular_efectos_por_intercambio(Entidad entidad_origen, Entidad entidad_destino){
-		EfectosDeTransicion efecto_transicion = new EfectosDeTransicion();
-		if (entidad_origen.se_produce_match_con(entidad_destino)) {
-			manejarMatch(efecto_transicion, entidad_origen);
-	        manejarMatch(efecto_transicion, entidad_destino);
-		}else {
-			
-			// To DO: incorporar logica asociada a control de match, generador de potenciadores, etc. 
-			LinkedList<Entidad> listaEntidadesEnCombo = buscarCombos(entidad_origen.get_fila(),entidad_origen.get_columna(),entidad_destino.get_fila(),entidad_destino.get_columna());
-			for(int pos = 0; pos < listaEntidadesEnCombo.size(); pos ++) {
-				manejarMatch(efecto_transicion,listaEntidadesEnCombo.get(pos));
-			}
-			
-		}
-		
-		return efecto_transicion;
-	}
-	
-	private LinkedList<Entidad> buscarCombos(int f1, int c1, int f2, int c2) {
-		LinkedList<Entidad> listaCombos = new LinkedList<>();
-		
-		if (esPosicionValida(f1, c1) && esPosicionValida(f2, c2)) {
-			listaCombos.addAll(buscarCombosEnFila(f1, c1));
-			listaCombos.addAll(buscarCombosEnColumna(f1, c1));
-			listaCombos.addAll(buscarCombosEnFila(f2, c2));
-			listaCombos.addAll(buscarCombosEnColumna(f2, c2));
-			
-			//miLogica.actualizarObjetivos(listaCombos);
-			
-			return listaCombos;
-		} else {
-			throw new IllegalArgumentException("Posición inválida en buscarCombos");
-		}
 	}
 	
 	private void manejarMatch(EfectosDeTransicion efecto_transicion, Entidad entidad) {

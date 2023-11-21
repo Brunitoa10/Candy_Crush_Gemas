@@ -1,13 +1,8 @@
 package Nivel;
 
 
+import GeneradorEntidades.*;
 
-import Entidades.Bomba;
-import Entidades.GemaCruzada;
-import Entidades.GemaEnvuelta;
-import Entidades.GemaNormal;
-import Entidades.GemaRayada;
-import Entidades.Roca;
 import Logica.*;
 
 import java.util.*;
@@ -15,98 +10,84 @@ import java.util.*;
 import Tablero.TableroJuego;
 
 import java.io.File;
+
 public class GeneradorNivel {
-	
+	private static final Map<String, EntidadFactory> entidadFactories = new HashMap<>();
+
+    static {
+        entidadFactories.put("n", new GemaNormalFactory());
+        entidadFactories.put("r", new RocaFactory());
+        entidadFactories.put("b", new BombaFactory());
+        entidadFactories.put("p", new GemaRayadaFactory());
+        entidadFactories.put("e", new GemaEnvueltaFactory());
+        entidadFactories.put("c", new GemaCruzadaFactory());
+    }
+    
 	public static Nivel cargar_nivel_y_tablero(TableroJuego t, int nivel,Logica l) {
-		Nivel miNivel = new Nivel(0,0,l);
-		try {
-			Scanner input = new Scanner(new File("src//Niveles//Nivel" + nivel + ".txt"));
+		Nivel miNivel = new Nivel(0, 0, l);
+        try {
+            Scanner input = new Scanner(new File("src//Niveles//Nivel" + nivel + ".txt"));
 
-			// Leer tamaño del tablero
-			int filas = Integer.parseInt(input.nextLine().trim());
-			int columnas = filas;
+            // Leer tamaño del tablero
+            int filas = Integer.parseInt(input.nextLine().trim());
+            int columnas = filas;
 
-			// Leer posición inicial
-			String[] posicionInicial = input.nextLine().split(",");
+            // Leer posición inicial
+            String[] posicionInicial = input.nextLine().split(",");
+            miNivel.setPosicionJugador(Integer.parseInt(posicionInicial[0].trim()), Integer.parseInt(posicionInicial[1].trim()));
 
-			miNivel.setPosicionJugador(Integer.parseInt(posicionInicial[0].trim()), Integer.parseInt(posicionInicial[1].trim()));
-			
-			//Leo cantidad de movimientos del nivel
-			miNivel.setMovimientos(Integer.parseInt(input.nextLine().trim()));
-			miNivel.setTotalMovimientos(miNivel.getMovimientos());
-			//Leo tiempo del nivel
-			miNivel.setTiempo(Integer.parseInt(input.nextLine().trim()));
-			
-			//Leo vidas
-			miNivel.setVidas(Integer.parseInt(input.nextLine().trim()));
-			
-			// Leer terminador
-			String terminador = input.nextLine();
-			if (!terminador.equals("t")) {
-				throw new Exception("Formato de archivo inválido. Se esperaba un terminador 't'.");
-			}
+            // Leer cantidad de movimientos del nivel
+            miNivel.setMovimientos(Integer.parseInt(input.nextLine().trim()));
+            miNivel.setTotalMovimientos(miNivel.getMovimientos());
 
-			// Leer tipo y cantidad de gemas a destruir
+            // Leer tiempo del nivel
+            miNivel.setTiempo(Integer.parseInt(input.nextLine().trim()));
 
-			//Mejorar
-			
-			// Leer objetivos hasta encontrar la marca 'f'
-			int id = 0;
-			while (input.hasNextLine()) {
-				String line = input.nextLine();
-				if (line.equals("f")) {
-					break;
-				}
-				String[] gemaData = line.split(",");
-				Objetivos objetivo = new Objetivos(Integer.parseInt(gemaData[0].trim()), Integer.parseInt(gemaData[1].trim()));
-				miNivel.agregarObjetivo(id,objetivo);
-				id++;
-			}
+            // Leer vidas
+            miNivel.setVidas(Integer.parseInt(input.nextLine().trim()));
 
+            // Leer terminador
+            String terminador = input.nextLine();
+            if (!terminador.equals("t")) {
+                throw new Exception("Formato de archivo inválido. Se esperaba un terminador 't'.");
+            }
 
-			t.resetar_tablero(filas, columnas);
+            // Leer objetivos hasta encontrar la marca 'f'
+            int id = 0;
+            boolean continuar = true;
 
-			//Lo voy a optimizar es insostenible en el tiempo (Bruno)
-			
-			for (int i = 0; i < filas; i++) {
-		        String[] valores = input.nextLine().split(" ");
-		        for (int j = 0; j < columnas; j++) {
-		            String[] partes = valores[j].split(",");
-		            if (partes[0].equals("n")) {
-		                t.agregar_entidad(new GemaNormal(t,i, j, new Color(Integer.parseInt(partes[1].trim())), true));
-		            }else {
-		            	if(partes[0].equals("r")) {
-		            		t.agregar_entidad(new Roca(t,i, j, true));
-		            	}else{
-							if(partes[0].equals("b")){
-								t.agregar_entidad(new Bomba(t, i,j, new Color(Integer.parseInt(partes[1].trim())),true, t.obtenerObserver(),l));
-							}else{
-								if(partes[0].equals("p")) {
-									t.agregar_entidad(new GemaRayada(t,i, j,new Color(Integer.parseInt(partes[1].trim())%10),Integer.parseInt(partes[1].trim())/10, true));
-								}else{
-									if(partes[0].equals("e")) {
-										t.agregar_entidad(new GemaEnvuelta(t,i, j,new Color(Integer.parseInt(partes[1].trim())/10), true));
-									}else {
-										if(partes[0].equals("c")) {
-											 t.agregar_entidad(new GemaCruzada(t,i, j, new Color(Integer.parseInt(partes[1].trim())), true));
-										}
-									}
-								}	
-							}
-		            	}	
-		        	
-		    		}
-				}
-			}
-			
-		
+            while (input.hasNextLine() && continuar) {
+                String line = input.nextLine();
+                
+                if (line.equals("f")) {
+                    continuar = false;
+                } else {
+                    String[] gemaData = line.split(",");
+                    Objetivos objetivo = new Objetivos(Integer.parseInt(gemaData[0].trim()), Integer.parseInt(gemaData[1].trim()));
+                    miNivel.agregarObjetivo(id, objetivo);
+                    id++;
+                }
+            }
 
-			input.close();
+            t.resetar_tablero(filas, columnas);
 
-		} catch (Exception ex) {
-			System.out.println("GenerarNivelDefinitivo :: ME ROMPI");
-			ex.getStackTrace();
-		}
-		return miNivel;
+            for (int i = 0; i < filas; i++) {
+                String[] valores = input.nextLine().split(" ");
+                for (int j = 0; j < columnas; j++) {
+                    String[] partes = valores[j].split(",");
+                    EntidadFactory entidadFactory = entidadFactories.get(partes[0]);
+                    if (entidadFactory != null) {
+                        t.agregar_entidad(entidadFactory.crear(t, i, j, partes));
+                    }
+                }
+            }
+
+            input.close();
+
+        } catch (Exception ex) {
+            System.out.println("GenerarNivelDefinitivo :: ME ROMPI");
+            ex.printStackTrace();
+        }
+        return miNivel;
 	}	    
 }
