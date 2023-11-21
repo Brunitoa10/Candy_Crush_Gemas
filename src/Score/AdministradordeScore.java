@@ -2,14 +2,18 @@ package Score;
 
 import java.util.PriorityQueue;
 
+import Paneles.*;
+
 public class AdministradordeScore {
     protected TopScore topScore;
     protected int scoreActual;
+    protected CentralPaneles centralPaneles;
 
-    public AdministradordeScore()
+    public AdministradordeScore(CentralPaneles centralPaneles)
     {
         topScore=new TopScore();
         scoreActual=0;
+        this.centralPaneles=centralPaneles;
     }
 
     public int getScore()
@@ -20,6 +24,7 @@ public class AdministradordeScore {
     public void agregarScore(int puntos)
     {
         scoreActual=scoreActual+puntos;
+        centralPaneles.actualizarScore(scoreActual);
     }
 
     public boolean entro_en_el_top5()

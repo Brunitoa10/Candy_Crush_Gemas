@@ -549,22 +549,12 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 		panelBase.add(componenteAAgregar,gbc);
 	}
 
-	public void cambiarScore(int score) {
-		scoreLabel.setText("SCORE: "+agregarPaddingScore(score) );
+    public CentralPaneles obtenerCentralPaneles()
+	{
+		return mi_central_paneles;
 	}
 
-	private String agregarPaddingScore(int score) {
-		String padding ="";
-		if(score <= 9) {
-			padding = "000";
-			} else if(score <= 99) {
-				padding = "00";
-			}	else if(score <= 999) {
-				padding = "0";
-			}
-
-		return padding + score;
-	}
+	
 
 
 	public void cambiarFondo(int nivel) {

@@ -11,8 +11,10 @@ import GUI.GUI;
 import GUI.EntidadGrafica;
 import Nivel.GeneradorNivel;
 import Nivel.Nivel;
+import Score.AdministradordeScore;
 import Score.Jugador;
 import Tablero.Tablero;
+import Score.*;
 
 
 public class Logica {
@@ -22,6 +24,7 @@ public class Logica {
 	protected Nivel miNivel;
 	protected Thread contadorTiempo;
 	private int nivelActual;
+	protected AdministradordeScore administradordeScore;
 	
 	//Constructor
 	public Logica(){
@@ -32,7 +35,8 @@ public class Logica {
 		miTablero.asociar_entidades_logicas_y_graficas();
 		miTablero.fijar_jugador(miNivel.getFilaInicialJugador(), miNivel.getColumnaInicialJugador());
 		miGUI.mostrar();
-		
+		administradordeScore=new AdministradordeScore(miGUI.obtenerCentralPaneles());
+
 		inicializarTiempo();
 	}
 
@@ -76,6 +80,10 @@ public class Logica {
 		miGUI.mostrarMensajeVictoriaPorObjetivos();
 	}
 	
+	public void agregarScore(int score)
+	{
+		administradordeScore.agregarScore(score);
+	}
 	public String[] obtenerInfoObjetivos() {
 	    return miNivel.obtenerInfoObjetivos();
 	}
@@ -103,6 +111,7 @@ public class Logica {
         }
         return tiempo;
 	}
+
 
 
 	public int getTiempo() {

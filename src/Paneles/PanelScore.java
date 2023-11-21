@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 public class PanelScore extends JPanel implements Paneles {
 
     private CentralPaneles miCentral;
+    private JLabel scoreLabel;
 
     public PanelScore(CentralPaneles mi_central) {
         miCentral = mi_central;
@@ -21,7 +22,7 @@ public class PanelScore extends JPanel implements Paneles {
     public void crearPanel() {
         setBackground(new Color(0,0,0,200));
 
-		JLabel scoreLabel = new JLabel("SCORE: 0000");
+		scoreLabel = new JLabel("SCORE: 0000");
 		scoreLabel.setFont(new Font("Algerian", Font.PLAIN, 40));
 		scoreLabel.setForeground(Color.WHITE);
 		add(scoreLabel);
@@ -33,5 +34,21 @@ public class PanelScore extends JPanel implements Paneles {
         miCentral.agregarConGBCs((Component)this, gbc, 2, 0, 4, 1);
     }
     
-    
+    public void actualizarScore(int score)
+    {
+        scoreLabel.setText("SCORE: "+ agregarPadding(score));
+    }
+
+    private String agregarPadding(int score) {
+		String padding ="";
+		if(score <= 9) {
+			padding = "000";
+			} else if(score <= 99) {
+				padding = "00";
+			}	else if(score <= 999) {
+				padding = "0";
+			}
+
+		return padding + score;
+	}
 }

@@ -32,7 +32,7 @@ public class CentralPaneles {
     }
 
 	public void actualizarScore(int score) {
-		miPanelScore.actualizarScore(int score);
+		miPanelScore.actualizarScore(score);
 	}
 
 	public void mostrarPanelControles() {

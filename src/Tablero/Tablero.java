@@ -32,7 +32,6 @@ public class Tablero implements TableroJuego{
 
 	public Tablero(Logica l) {
 		miLogica = l;
-		administradordeScore=new AdministradordeScore();
 		notificadorDeGemasConTemporizador = new NotificadorDeEntidadesConTiempo();
 		notificadorDeGemasConTemporizador.empezarContador();
 		//Intercambios
@@ -427,7 +426,7 @@ public class Tablero implements TableroJuego{
 		System.out.println("TABLERO antes de DETONAR");
 		imprimirTablero();
 		for(Entidad e: entidades_a_detonar) {
-			administradordeScore.agregarScore(e.get_score());
+			miLogica.agregarScore(e.get_score());
 			e.detonar(this); //Segun fede e.detonar();
 		}
 		System.out.println("TABLERO despues de DETONAR");
