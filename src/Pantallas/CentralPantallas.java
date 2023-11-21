@@ -180,7 +180,7 @@ public class CentralPantallas {
 				public void actionPerformed(ActionEvent e) {
 					panelPrincipal.setVisible(true);
 					p.setVisibilidad(false);
-					miLogica.cambiarNivel();
+					miLogica.iniciarSiguienteNivel();
 				}
 			});
 	}

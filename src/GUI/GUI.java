@@ -661,5 +661,7 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 	public void resetear(Logica logica, int filas, int columnas) {
 		// To DO.
 	}
+
+	
 }
 

@@ -187,12 +187,12 @@ public class Logica {
 	
 
 	/*public void cambiarNivel() {
-		System.out.println("Logica :: cambiarNivel");
-		nivelActual++;
-
+	    System.out.println("Logica :: cambiarNivel");
+	    nivelActual++;
+	    
 		if(nivelActual<6) {
-			miGUI.dispose();
-			miTablero = new Tablero(this);
+	    	miGUI.dispose();
+	    	miTablero = new Tablero(this);
 			miNivel = GeneradorNivel.cargar_nivel_y_tablero(miTablero,nivelActual,this);
 			miGUI = new GUI(this, miTablero.getFila(), miTablero.getColumna());	
 			miGUI.cambiarFondo(nivelActual);
@@ -203,42 +203,40 @@ public class Logica {
 			}
 			miGUI.mostrarMensajeFinDelJuego();
 		}
-
+		
 		miTablero.fijar_jugador(miNivel.getFilaInicialJugador(), miNivel.getColumnaInicialJugador());
 	}*/
-	public void cambiarNivel() {
-	    System.out.println("Logica :: cambiarNivel");
+	private static final int MAX_NIVEL = 6;
 
-	    if (nivelActual < 6) {
-	        avanzarNivel();
+	public void iniciarSiguienteNivel() {
+	    System.out.println("Logica :: iniciarSiguienteNivel");
+	    nivelActual++;
+
+	    if (nivelActual < MAX_NIVEL) {
+	        cargarSiguienteNivel();
 	    } else {
 	        finalizarJuego();
 	    }
+
+	    miTablero.fijar_jugador(miNivel.getFilaInicialJugador(), miNivel.getColumnaInicialJugador());
 	}
-
-	private void avanzarNivel() {
-	    nivelActual++;
-
-	    
+	
+	private void cargarSiguienteNivel() {
+	    miGUI.dispose();
 	    miTablero = new Tablero(this);
 	    miNivel = GeneradorNivel.cargar_nivel_y_tablero(miTablero, nivelActual, this);
-	    
+	    miGUI = new GUI(this, miTablero.getFila(), miTablero.getColumna());
 	    miGUI.cambiarFondo(nivelActual);
-	    fijarJugadorEnPosicionInicial();
-	}
-
-	private void fijarJugadorEnPosicionInicial() {
-	    miTablero.fijar_jugador(miNivel.getFilaInicialJugador(), miNivel.getColumnaInicialJugador());
 	}
 
 	private void finalizarJuego() {
 	    if (miTablero.obtenerAdministradordeScore().entro_en_el_top5()) {
-	        String nombreJugador = miGUI.obtenerNombreJugador();
-	        miTablero.obtenerAdministradordeScore().mejorJugador(nombreJugador);
+	        String nombreDelJugador = miGUI.obtenerNombreJugador();
+	        miTablero.obtenerAdministradordeScore().mejorJugador(nombreDelJugador);
 	    }
-	    
 	    miGUI.mostrarMensajeFinDelJuego();
 	}
+	
 	public Tablero getTablero() {
 		return miTablero.obtenerTablero();
 	}
