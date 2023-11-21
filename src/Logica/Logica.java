@@ -16,26 +16,26 @@ import Score.Jugador;
 import Tablero.Tablero;
 import Score.*;
 
-
 public class Logica {
-	//Atributos
+	// Atributos
 	protected Tablero miTablero;
 	protected GUI miGUI;
 	protected Nivel miNivel;
 	protected Thread contadorTiempo;
 	private int nivelActual;
+	private static final int MAX_NIVEL = 6;
 	protected AdministradordeScore administradordeScore;
-	
-	//Constructor
-	public Logica(){
+
+	// Constructor
+	public Logica() {
 		nivelActual = 1;
 		miTablero = new Tablero(this);
-		miNivel = GeneradorNivel.cargar_nivel_y_tablero(miTablero,nivelActual,this);
+		miNivel = GeneradorNivel.cargar_nivel_y_tablero(miTablero, nivelActual, this);
 		miGUI = new GUI(this, miTablero.getFila(), miTablero.getColumna());
 		miTablero.asociar_entidades_logicas_y_graficas();
 		miTablero.fijar_jugador(miNivel.getFilaInicialJugador(), miNivel.getColumnaInicialJugador());
 		miGUI.mostrar();
-		administradordeScore=new AdministradordeScore(miGUI.obtenerCentralPaneles());
+		administradordeScore = new AdministradordeScore(miGUI.obtenerCentralPaneles());
 
 		inicializarTiempo();
 	}
@@ -45,74 +45,74 @@ public class Logica {
 	}
 
 	public void intercambiar(int direccion) {
-		if(miTablero.intercambiar_entidades(direccion)) {
-			 miNivel.restarMovimientos();
-			 miGUI.actualizarMovimientos(miNivel.getMovimientos());
+		if (miTablero.intercambiar_entidades(direccion)) {
+			miNivel.restarMovimientos();
+			miGUI.actualizarMovimientos(miNivel.getMovimientos());
 		}
-		
+
 	}
-	
+
 	public void notificarDerrotaPorMovimientos() {
 		miGUI.mostrarMensajeDerrotaPorMovimientos();
 	}
-	
+
 	public void notificarDerrotaPorTiempo() {
 		miNivel.restarVidas();
-		if(miNivel.getVidas() >= 1) {
-        	int tmpVidas = miNivel.getVidas();
-        	reiniciarNivel(nivelActual);
-        	miNivel.setVidas(tmpVidas);
+		if (miNivel.getVidas() >= 1) {
+			int tmpVidas = miNivel.getVidas();
+			reiniciarNivel(nivelActual);
+			miNivel.setVidas(tmpVidas);
 			miGUI.actualizarVidas();
-		}else {
+		} else {
 			miGUI.mostrarMensajeDerrotaPorVidas();
 		}
 	}
+
 	public void notificarDerrotaPorVidas() {
 		System.out.println("notificarDerrotaPorVidas");
-		if(miTablero.obtenerAdministradordeScore().entro_en_el_top5()){
+		if (miTablero.obtenerAdministradordeScore().entro_en_el_top5()) {
 			String nombre_del_Jugador = miGUI.obtenerNombreJugador();
-			miTablero.obtenerAdministradordeScore().mejorJugador(nombre_del_Jugador);}
+			miTablero.obtenerAdministradordeScore().mejorJugador(nombre_del_Jugador);
+		}
 		nivelActual = 1;
 		reiniciarNivel(nivelActual);
 	}
-	
+
 	public void notificarVictoriaPorObjetivos() {
 		miGUI.mostrarMensajeVictoriaPorObjetivos();
 	}
-	
-	public void agregarScore(int score)
-	{
+
+	public void agregarScore(int score) {
 		administradordeScore.agregarScore(score);
 	}
+
 	public String[] obtenerInfoObjetivos() {
-	    return miNivel.obtenerInfoObjetivos();
+		return miNivel.obtenerInfoObjetivos();
 	}
 
 	public PriorityQueue<Jugador> obtenerListadeJugadores() {
 		return miTablero.obtenerListadeJugadores();
 	}
-	
+
 	public int getCantidadDeObjetivos() {
 		return miNivel.getCantidadDeObjetivos();
 	}
-	
+
 	public void asociar_entidad_logica_y_grafica(Entidad entidad_logica) {
 		EntidadGrafica entidad_grafica = miGUI.agregar_entidad(entidad_logica);
 		entidad_logica.set_EntidadGrafica(entidad_grafica);
 	}
-	
+
 	public int disminuirTiempo(Timer timer) {
-		int tiempo = miNivel.getTiempo()-1;
-        if (tiempo == 0) {
+		int tiempo = miNivel.getTiempo() - 1;
+		if (tiempo == 0) {
 			timer.cancel();
 			miGUI.mostrarMensajeDerrotaPorTiempo();
-        }else {
-        	miNivel.setTiempo(tiempo);
-        }
-        return tiempo;
+		} else {
+			miNivel.setTiempo(tiempo);
+		}
+		return tiempo;
 	}
-
-
 
 	public int getTiempo() {
 		return miNivel.getTiempo();
@@ -127,33 +127,32 @@ public class Logica {
 		nivelActual = n;
 		miGUI.cambiarFondo(nivelActual);
 		miGUI.actualizarVidas();
-		
-	    miTablero.resetar_tablero(miTablero.getFila(), miTablero.getColumna());
-	   
-	    miGUI.limpiarGUI();
-	    
-	    miNivel = GeneradorNivel.cargar_nivel_y_tablero(miTablero, nivelActual, this); // Carga el nivel actual
 
-	    //asociarEntidadesLogicasGraficas();
-	    miNivel.setMovimientos(miNivel.getTotalMovimientos());
-	    miGUI.actualizarMovimientos(miNivel.getMovimientos());
-	   
-	    miGUI.reiniciarProgreso();
-	    miNivel.setTiempo(miNivel.getTotalTiempo());
-	    miTablero.fijar_jugador(miNivel.getFilaInicialJugador(), miNivel.getColumnaInicialJugador());
-	    inicializarTiempo();
+		miTablero.resetar_tablero(miTablero.getFila(), miTablero.getColumna());
+
+		miGUI.limpiarGUI();
+
+		miNivel = GeneradorNivel.cargar_nivel_y_tablero(miTablero, nivelActual, this); // Carga el nivel actual
+
+		// asociarEntidadesLogicasGraficas();
+		miNivel.setMovimientos(miNivel.getTotalMovimientos());
+		miGUI.actualizarMovimientos(miNivel.getMovimientos());
+
+		miGUI.reiniciarProgreso();
+		miNivel.setTiempo(miNivel.getTotalTiempo());
+		miTablero.fijar_jugador(miNivel.getFilaInicialJugador(), miNivel.getColumnaInicialJugador());
+		inicializarTiempo();
 	}
 
-	
 	private void inicializarTiempo() {
 		Timer timer = new Timer();
-        timer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-            	disminuirTiempo(timer);
-                miGUI.actualizarTiempo(getTiempo());
-            }
-        }, 1000, 1000); // Inicia el temporizador después de 1 segundo y se ejecuta cada 1 segundo
+		timer.scheduleAtFixedRate(new TimerTask() {
+			@Override
+			public void run() {
+				disminuirTiempo(timer);
+				miGUI.actualizarTiempo(getTiempo());
+			}
+		}, 1000, 1000); // Inicia el temporizador después de 1 segundo y se ejecuta cada 1 segundo
 	}
 
 	public void notificar_actualizacion_objetivos(int cant, int tipoGema) {
@@ -171,7 +170,7 @@ public class Logica {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String [] args) {
+	public static void main(String[] args) {
 		try {
 			EventQueue.invokeLater(new Runnable() {
 				public void run() {
@@ -184,68 +183,46 @@ public class Logica {
 		}
 	}
 
-
 	public String obtenerTipoDeGema(int tipoGema) {
 		return miTablero.obtenerTipoGema(tipoGema);
 	}
 
-
 	public void actualizarObjetivos(LinkedList<Entidad> listaCombos) {
 		miNivel.actualizarObjetivos(listaCombos);
 	}
-	
-
-	/*public void cambiarNivel() {
-	    System.out.println("Logica :: cambiarNivel");
-	    nivelActual++;
-	    
-		if(nivelActual<6) {
-	    	miGUI.dispose();
-	    	miTablero = new Tablero(this);
-			miNivel = GeneradorNivel.cargar_nivel_y_tablero(miTablero,nivelActual,this);
-			miGUI = new GUI(this, miTablero.getFila(), miTablero.getColumna());	
-			miGUI.cambiarFondo(nivelActual);
-		} else {
-			if(miTablero.obtenerAdministradordeScore().entro_en_el_top5()){
-				String nombre_del_Jugador = miGUI.obtenerNombreJugador();
-				miTablero.obtenerAdministradordeScore().mejorJugador(nombre_del_Jugador);
-			}
-			miGUI.mostrarMensajeFinDelJuego();
-		}
-		
-		miTablero.fijar_jugador(miNivel.getFilaInicialJugador(), miNivel.getColumnaInicialJugador());
-	}*/
-	private static final int MAX_NIVEL = 6;
 
 	public void iniciarSiguienteNivel() {
-	    System.out.println("Logica :: iniciarSiguienteNivel");
-	    nivelActual++;
+		System.out.println("Logica :: iniciarSiguienteNivel");
+		nivelActual++;
 
-	    if (nivelActual < MAX_NIVEL) {
-	        cargarSiguienteNivel();
-	    } else {
-	        finalizarJuego();
-	    }
+		if (nivelActual < MAX_NIVEL) {
+			cargarSiguienteNivel();
+		} else {
+			finalizarJuego();
+		}
 
-	    miTablero.fijar_jugador(miNivel.getFilaInicialJugador(), miNivel.getColumnaInicialJugador());
+		
 	}
-	
+
 	private void cargarSiguienteNivel() {
-	    miGUI.dispose();
-	    miTablero = new Tablero(this);
-	    miNivel = GeneradorNivel.cargar_nivel_y_tablero(miTablero, nivelActual, this);
-	    miGUI = new GUI(this, miTablero.getFila(), miTablero.getColumna());
-	    miGUI.cambiarFondo(nivelActual);
+		miGUI.dispose();
+		miTablero = new Tablero(this);
+		miNivel = GeneradorNivel.cargar_nivel_y_tablero(miTablero, nivelActual, this);
+		miGUI = new GUI(this, miTablero.getFila(), miTablero.getColumna());
+		
+		miGUI.cambiarFondo(nivelActual);
+		miTablero.asociar_entidades_logicas_y_graficas();
+		miTablero.fijar_jugador(miNivel.getFilaInicialJugador(), miNivel.getColumnaInicialJugador());
 	}
 
 	private void finalizarJuego() {
-	    if (miTablero.obtenerAdministradordeScore().entro_en_el_top5()) {
-	        String nombreDelJugador = miGUI.obtenerNombreJugador();
-	        miTablero.obtenerAdministradordeScore().mejorJugador(nombreDelJugador);
-	    }
-	    miGUI.mostrarMensajeFinDelJuego();
+		if (miTablero.obtenerAdministradordeScore().entro_en_el_top5()) {
+			String nombreDelJugador = miGUI.obtenerNombreJugador();
+			miTablero.obtenerAdministradordeScore().mejorJugador(nombreDelJugador);
+		}
+		miGUI.mostrarMensajeFinDelJuego();
 	}
-	
+
 	public Tablero getTablero() {
 		return miTablero.obtenerTablero();
 	}
