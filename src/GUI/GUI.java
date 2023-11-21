@@ -95,16 +95,9 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 		mi_central_paneles = new CentralPaneles(panel_principal, this);
 
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		setTitle("Proyecto Candy Crush - Comision-06");
+		setearJFrame(screenSize);
 		panel_principal.setSize(screenSize);
-		setSize(screenSize);
-		setLayout(new BorderLayout());
-		setExtendedState(JFrame.MAXIMIZED_BOTH); 
-		setLocationRelativeTo(null);
-		setUndecorated(false); 
-		setVisible(true);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setExtendedState(JFrame.MAXIMIZED_BOTH);
+		
 		panel_principal.setLayout(new GridBagLayout());
 
 		panel_timer = new JPanel();
@@ -133,7 +126,7 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 		panel_tablero = new JPanel();
 		panel_tablero.setSize(size_label * filas, size_label * columnas);
 		panel_tablero.setLayout(new GridBagLayout());
-		panel_tablero.setBackground(new Color(0,0,0,125));
+		panel_tablero.setBackground(new Color(0,0,0,255));
 
 
 
@@ -170,6 +163,18 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 		
 		panel_tablero.setFocusable(true);
 		getContentPane().add(panel_principal);
+	}
+
+	private void setearJFrame(Dimension screenSize) {
+		setTitle("Proyecto Candy Crush - Comision-06");
+		setSize(screenSize);
+		setLayout(new BorderLayout());
+		setExtendedState(JFrame.MAXIMIZED_BOTH); 
+		setLocationRelativeTo(null);
+		setUndecorated(false); 
+		setVisible(true);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
 	}
 
 	private void configurarAccionesTeclado() {
@@ -365,18 +370,23 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 		agregarConGBCs(panel_vidas, panel_principal, gbc, 6, 6, 2, 1); 
 	}
 
-	private void agregarConGBCs(Component comp, Container cont, int x, int y, int width, int height) {
-	    GridBagConstraints c = new GridBagConstraints();
-	    c.gridx = x;
-	    c.gridy = y;
-	    c.gridwidth = width;
-	    c.gridheight = height;
-	    cont.add(comp, c);
-	}
-	
-	
-	
-	
+
+	private static void moveComponent(Container container, Component component, int gridx, int gridy) {
+        GridBagConstraints constraints = new GridBagConstraints();
+        constraints.gridx = gridx;
+        constraints.gridy = gridy;
+
+        // Remove the component from its current position
+        container.remove(component);
+
+        // Add the component with updated constraints
+        container.add(component, constraints);
+
+        // Repaint the container
+        container.revalidate();
+        container.repaint();
+    }
+
 	public int getTiempoRestante() {
 		return tiempoRestante;
 	}
@@ -413,6 +423,7 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 	
 	public void animar_intercambio(Celda celda) {
 		mi_animador.animar_intercambio(celda);
+		moveComponent(panel_tablero, celda, celda.get_entidad_logica().get_columna(), celda.get_entidad_logica().get_fila());
 	}
 	
 	public void animar_cambio_foco(Celda celda) {
@@ -603,7 +614,18 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 	
 	@Override
 	public void resetear(Logica logica, int filas, int columnas) {
-		// To DO.
+		panel_principal = new JPanel();
+	    animaciones_pendientes = 0;
+	    bloquear_intercambios = false;
+
+	    limpiarMatrizGUI();
+	    mostrarVidas();
+		mi_central_paneles.mostrarPanelScore();
+		mi_central_paneles.mostrarPanelObjetivo();
+		mi_central_paneles.mostrarPanelControles();
+
+	    timerLabel.setText("Tiempo restante: " + tiempoRestante);
+	    movimientosLabel.setText("Movimientos restantes: " + movimientosRestantes);
 	}
 
 	
