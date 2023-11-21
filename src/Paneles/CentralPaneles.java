@@ -31,6 +31,16 @@ public class CentralPaneles {
         miPanelScore.agregarAPanelPrincipal();
     }
 
+	public void actualizarScore(int score) {
+		miPanelScore.actualizarScore(int score);
+	}
+
+	public void mostrarPanelControles() {
+        PanelControles miPanelControles = new PanelControles(this);
+		miPanelControles.crearPanel();
+        miPanelControles.agregarAPanelPrincipal();
+    }
+
     public void mostrarPanelObjetivo() {
         miPanelObjetivo = new PanelObjetivo(this);
 		miPanelObjetivo.crearPanel();

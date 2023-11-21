@@ -19,7 +19,6 @@ import javax.swing.ImageIcon;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
-
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -50,7 +49,7 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 	protected CentralPaneles mi_central_paneles;
 	protected CentralAnimaciones mi_animador;
 	
-	protected JPanel panel_tablero, panel_controles, panel_vidas,panel_principal, panel_movimientos, panel_timer;
+	protected JPanel panel_tablero, panel_vidas,panel_principal, panel_movimientos, panel_timer;
 	protected JLabel timerLabel,movimientosLabel, scoreLabel;
 	protected JLabel[] objetivosProgreso;
 
@@ -117,10 +116,9 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 
 		panel_timer.add(timerLabel);
 
-		inicializarPanelControles();
-
 		mi_central_paneles.mostrarPanelScore();
 		mi_central_paneles.mostrarPanelObjetivo();
+		mi_central_paneles.mostrarPanelControles();
 
 		panel_movimientos = new JPanel();
 		panel_movimientos.setBackground(new Color(0,0,0,200));
@@ -162,8 +160,7 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 		c.insets = new Insets(0,0,0,10);
 		agregarConGBCs(panel_vidas, panel_principal, c, 6, 6, 2, 1); 
 		 
-		//Contraints CONTROLES
-		agregarConGBCs(panel_controles, panel_principal, 0, 6, 5, 1);
+		
 		
 		//Constraints MOVIMIENTOS
 		c.weightx = 0;
@@ -454,50 +451,7 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 	    mi_central_pantallas.mostrarMensajeVictoriaPorObjetivos();
 	}
 
-	private void inicializarPanelControles() {
-		panel_controles = new JPanel();
-		panel_controles.setOpaque(false);
-		
-		ImageIcon icono_imagen = new ImageIcon(this.getClass().getResource("/assets/controles/arrow_keys.png"));
-		Image imagen_escalada = icono_imagen.getImage().getScaledInstance(120, 30, Image.SCALE_REPLICATE);
-		Icon icono_escalado = new ImageIcon(imagen_escalada);
-
-		JLabel label_flechas = new JLabel();
-
-		label_flechas.setIcon(icono_escalado);
-		panel_controles.add(label_flechas);
-		panel_controles.repaint();
-
-		JLabel textoMoverse = crearLabel("Mover", 25);
-		panel_controles.add(textoMoverse);
-		
-		icono_imagen = new ImageIcon(this.getClass().getResource("/assets/controles/WASD.png"));
-		imagen_escalada = icono_imagen.getImage().getScaledInstance(120, 30, Image.SCALE_REPLICATE);
-		icono_escalado = new ImageIcon(imagen_escalada);
-
-		JLabel label_WASD = new JLabel();
-
-		label_WASD.setIcon(icono_escalado);
-		panel_controles.add(label_WASD);
-		panel_controles.repaint();
-
-		JLabel textoIntercambiar =  crearLabel("Intercambiar", 25);
-		panel_controles.add(textoIntercambiar);
-
-		icono_imagen = new ImageIcon(this.getClass().getResource("/assets/controles/R.png"));
-		imagen_escalada = icono_imagen.getImage().getScaledInstance(30, 30, Image.SCALE_REPLICATE);
-		icono_escalado = new ImageIcon(imagen_escalada);
-
-		JLabel label_R = new JLabel();
-
-		label_R.setIcon(icono_escalado);
-		panel_controles.add(label_R);
-		panel_controles.repaint();
-
-		JLabel textoVerPuntajes = crearLabel("Ver mejores puntajes", 25);
-		panel_controles.add(textoVerPuntajes);
-
-	}
+	
 
 	public int getCantidadDeObjetivos() {
 		return miLogica.getCantidadDeObjetivos();
