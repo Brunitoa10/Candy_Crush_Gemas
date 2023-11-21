@@ -14,7 +14,6 @@ import java.util.PriorityQueue;
 import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.Image;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -25,7 +24,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import Logica.EntidadLogica;
 import Logica.Logica;
 import Paneles.CentralPaneles;
@@ -49,7 +47,7 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 	protected CentralPaneles mi_central_paneles;
 	protected CentralAnimaciones mi_animador;
 	
-	protected JPanel panel_tablero, panel_vidas,panel_principal, panel_movimientos, panel_timer;
+	protected JPanel panel_tablero,panel_principal, panel_movimientos, panel_timer;
 	protected JLabel timerLabel,movimientosLabel, scoreLabel;
 	protected JLabel[] objetivosProgreso;
 
@@ -61,7 +59,6 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 	Map<Integer, Runnable> acciones = new HashMap<>();
 	
 	
-	//Movimientos
 	public static final int ARRIBA = 15000;
 	public static final int ABAJO = 15001;
 	public static final int IZQUIERDA = 15002;
@@ -112,27 +109,15 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 		mi_central_paneles.mostrarPanelScore();
 		mi_central_paneles.mostrarPanelObjetivo();
 		mi_central_paneles.mostrarPanelControles();
-
-		panel_movimientos = new JPanel();
-		panel_movimientos.setBackground(new Color(0,0,0,200));
-
-		movimientosLabel = new JLabel ("Movimientos restantes: "+movimientosRestantes);
-		movimientosLabel.setFont(new Font("Algerian", Font.PLAIN, 20));
-		movimientosLabel.setForeground(Color.WHITE);
-
-		panel_movimientos.add(movimientosLabel);
-		
+		mi_central_paneles.mostrarPanelVidas();
+		mi_central_paneles.mostrarPanelMovimiento();
 
 		panel_tablero = new JPanel();
 		panel_tablero.setSize(size_label * filas, size_label * columnas);
 		panel_tablero.setLayout(new GridBagLayout());
 		panel_tablero.setBackground(new Color(0,0,0,255));
 
-
-
-
 		configurarAccionesTeclado();
-		mostrarVidas();
 
 		//Constraints TIMER
 		GridBagConstraints c = new GridBagConstraints();
@@ -146,22 +131,11 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 		c.weighty = 1;
 		c.anchor = GridBagConstraints.CENTER;
 		agregarConGBCs(panel_tablero, panel_principal, c, 2, 1, 4, 4); 
+		 	
 		
-		//Constraints VIDAS
-		c.weightx = 0;
-		c.weightx = 0;
-		c.insets = new Insets(0,0,0,10);
-		agregarConGBCs(panel_vidas, panel_principal, c, 6, 6, 2, 1); 
-		 
-		
-		
-		//Constraints MOVIMIENTOS
-		c.weightx = 0;
-		c.weightx = 0;
-		c.insets = new Insets(0,0,0,10);
-		agregarConGBCs(panel_movimientos, panel_principal, c, 6, 0, 2, 1); 
 		
 		panel_tablero.setFocusable(true);
+
 		getContentPane().add(panel_principal);
 	}
 
@@ -326,50 +300,9 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 		return celda;
 	}
 
-	private JLabel label_corazon1 = new JLabel();
-	private JLabel label_corazon2 = new JLabel();
-	private JLabel label_corazon3 = new JLabel();
-
-	public void mostrarVidas() {
-		panel_vidas = new JPanel();
-		panel_vidas.setLayout(new GridLayout(1,3,5,5));
-		panel_vidas.setBackground(new Color(0,0,0,0));
-		
-		
-		ImageIcon imgIconCorazon = new ImageIcon(this.getClass().getResource("/assets/nivel/corazon.png"));
-		Image imgEscaladaCorazon = imgIconCorazon.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
-		Icon iconoEscaladoCorazon = new ImageIcon(imgEscaladaCorazon);
-		
-		label_corazon1.setIcon(iconoEscaladoCorazon);
-		label_corazon3.setIcon(iconoEscaladoCorazon);
-		label_corazon2.setIcon(iconoEscaladoCorazon);
-
-
-		panel_vidas.add(label_corazon1);
-		panel_vidas.add(label_corazon2);
-		panel_vidas.add(label_corazon3);
+	public int getVidas() {
+		return miLogica.getVidas();
 	}
-
-	public void actualizarVidas() {
-		ImageIcon imgIconCorazonVacio = new ImageIcon(this.getClass().getResource("/assets/nivel/corazonVacio.png"));
-		Image imgEscaladaCorazonVacio = imgIconCorazonVacio.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
-		Icon iconoEscaladoCorazonVacio = new ImageIcon(imgEscaladaCorazonVacio);
-		
-
-		if(miLogica.getVidas() == 2) {
-			label_corazon3.setIcon(iconoEscaladoCorazonVacio);
-		} else if(miLogica.getVidas() == 1) {
-				label_corazon2.setIcon(iconoEscaladoCorazonVacio);
-				label_corazon3.setIcon(iconoEscaladoCorazonVacio);
-			}
-
-		GridBagConstraints gbc = new GridBagConstraints();
-		gbc.weightx = 0;
-		gbc.weightx = 0;
-		gbc.insets = new Insets(0,0,0,10);
-		agregarConGBCs(panel_vidas, panel_principal, gbc, 6, 6, 2, 1); 
-	}
-
 
 	private static void moveComponent(Container container, Component component, int gridx, int gridy) {
         GridBagConstraints constraints = new GridBagConstraints();
@@ -443,7 +376,7 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 	}
 
 	public void actualizarMovimientos(int movimientos) {
-		movimientosLabel.setText("Movimientos restantes: "+movimientos);
+		mi_central_paneles.actualizarMovimientos(movimientos);
 	}
 
 	public void mostrarMensajeDerrotaPorMovimientos() {
@@ -492,6 +425,10 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 	    return miLogica.obtenerInfoObjetivos();
 	}
 
+	public void actualizarVidas() {
+		mi_central_paneles.actualizarVidas();
+	}
+
 	public JLabel crearLabel(String texto, int tamañoFuente) {
 	    JLabel label = new JLabel(texto);
 	    label.setFont(new Font("Algerian", Font.PLAIN, tamañoFuente));
@@ -526,15 +463,19 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 	public PriorityQueue<Jugador> obtenerListadeJugadores() {
 		return miLogica.obtenerListadeJugadores();
 	}
+
+	public int getMovimientos() {
+		return miLogica.getMovimientos();
+	}
 	
 	public void limpiarGUI() {
 	    tiempoRestante = miLogica.getTiempo();
-	    movimientosRestantes = miLogica.getMovimientos();
+	    movimientosRestantes = getMovimientos();
 	    animaciones_pendientes = 0;
 	    bloquear_intercambios = false;
 
 	    limpiarMatrizGUI();
-	    mostrarVidas();
+	    mi_central_paneles.actualizarVidas();
 
 	    timerLabel.setText("Tiempo restante: " + tiempoRestante);
 	    movimientosLabel.setText("Movimientos restantes: " + movimientosRestantes);
@@ -619,7 +560,7 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 	    bloquear_intercambios = false;
 
 	    limpiarMatrizGUI();
-	    mostrarVidas();
+	    mi_central_paneles.mostrarPanelVidas();
 		mi_central_paneles.mostrarPanelScore();
 		mi_central_paneles.mostrarPanelObjetivo();
 		mi_central_paneles.mostrarPanelControles();
@@ -630,4 +571,3 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 
 	
 }
-

@@ -19,6 +19,8 @@ public class CentralPaneles {
     protected GUI miGUI;
     protected PanelScore miPanelScore;
     protected PanelObjetivo miPanelObjetivo;
+	protected PanelVidas miPanelVidas;
+	protected PanelMovimiento miPanelMovimiento;
 
     public CentralPaneles(JPanel p_principal, GUI mi_GUI) {
         panelPrincipal = p_principal;
@@ -40,6 +42,34 @@ public class CentralPaneles {
 		miPanelControles.crearPanel();
         miPanelControles.agregarAPanelPrincipal();
     }
+
+	public void mostrarPanelVidas() {
+        miPanelVidas = new PanelVidas(this);
+		miPanelVidas.crearPanel();
+        miPanelVidas.agregarAPanelPrincipal();
+    }
+
+	public int getVidas() {
+		return miGUI.getVidas();
+	}
+
+	public void actualizarVidas() {
+		miPanelVidas.actualizarVidas();
+	}
+
+	public void mostrarPanelMovimiento() {
+		miPanelMovimiento = new PanelMovimiento(this);
+		miPanelMovimiento.crearPanel();
+        miPanelMovimiento.agregarAPanelPrincipal();	
+	}
+
+	public void actualizarMovimientos(int movimientosRestantes) {
+		miPanelMovimiento.actualizarMovimientos(movimientosRestantes);
+	}
+
+	public int getCantidadDeMovimientos() {
+		return miGUI.getMovimientos();
+	}
 
     public void mostrarPanelObjetivo() {
         miPanelObjetivo = new PanelObjetivo(this);
