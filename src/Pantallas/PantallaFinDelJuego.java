@@ -22,6 +22,11 @@ public class PantallaFinDelJuego extends JPanel implements Pantalla {
 	    setBackground(new Color(0, 0, 0, 120));
 	}
 
+    public void refrescar() {
+        this.repaint();
+        this.revalidate();
+    }
+
     public void agregarComponentes() {
 	    GridBagConstraints gbc = new GridBagConstraints();
 

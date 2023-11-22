@@ -72,6 +72,11 @@ public class PantallaPuntajes extends JPanel implements Pantalla {
         setVisible(vis);
     }
 
+	public void refrescar() {
+        this.repaint();
+        this.revalidate();
+    }
+
 	private String agregarPadding(int score) {
 		String padding ="";
 		if(score <= 9) {

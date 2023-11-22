@@ -41,6 +41,11 @@ public class PantallaDerrotaPorMovimientos extends JPanel implements Pantalla {
         miCentral.agregarFuncionalidadBotonReiniciar(this, botonReiniciar);
 	}
 
+	public void refrescar() {
+        this.repaint();
+        this.revalidate();
+    }
+
     public void setVisibilidad(boolean vis) {
         setVisible(vis);
     }

@@ -63,12 +63,10 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 		bloquear_intercambios = false;
 		mi_animador = new CentralAnimaciones(this);
 		inicializarGUI();
-		
-		
 	}
 
 	private void inicializarGUI() {
-		this.setContentPane(fondo);
+		setContentPane(fondo);
 		
 		ImageIcon logo = new ImageIcon(this.getClass().getResource("/assets/nivel/Icono.png"));
 		setIconImage(logo.getImage());
@@ -82,15 +80,19 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		setearJFrame(screenSize);
 		panel_principal.setSize(screenSize);
-		
 		panel_principal.setLayout(new GridBagLayout());
-		getContentPane().add(panel_principal);
+		
+		
 		mostrarModosDeJuego();
 	}
 	 
 	public void inicializarJuego() {
+		eliminarPantallaModosDeJuego();
+		setContentPane(fondo);
 		repaint();
 		revalidate();
+		panel_principal.repaint();
+		panel_principal.revalidate();
 		inicializarPanels();
 
 		panel_tablero = new JPanel();
@@ -108,20 +110,9 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 		c.anchor = GridBagConstraints.CENTER;
 		agregarConGBCs(panel_tablero, panel_principal, c, 2, 1, 4, 4); 
 		
+		panel_principal.setFocusable(true);
 		panel_tablero.setFocusable(true);
-		
-	}
-
-	private void setearJFrame(Dimension screenSize) {
-		setTitle("Proyecto Candy Crush - Comision-06");
-		setSize(screenSize);
-		setLayout(new BorderLayout());
-		setExtendedState(JFrame.MAXIMIZED_BOTH); 
-		setLocationRelativeTo(null);
-		setUndecorated(false); 
-		setVisible(true);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setExtendedState(JFrame.MAXIMIZED_BOTH);
+		getContentPane().add(panel_principal);
 	}
 
 	private void configurarAccionesTeclado() {
@@ -163,13 +154,7 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 		    	miLogica.intercambiar(DERECHA);
 		    }
 		});
-
-		acciones.put(KeyEvent.VK_D, () -> {
-		    if (!bloquear_intercambios){
-		    	miLogica.intercambiar(DERECHA);
-		    }
-		});
-
+		
 		acciones.put(KeyEvent.VK_R, () -> {
 		    if (!bloquear_intercambios){
 		    	mostrarPuntajes();
@@ -191,6 +176,18 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 		
 	}
 
+	private void setearJFrame(Dimension screenSize) {
+		setTitle("Proyecto Candy Crush - Comision-06");
+		setSize(screenSize);
+		setLayout(new BorderLayout());
+		setExtendedState(JFrame.MAXIMIZED_BOTH); 
+		setLocationRelativeTo(null);
+		setUndecorated(false); 
+		setVisible(true);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
+	}
+	
 	public String obtenerNombreJugador() {
 		String nombre = abrirVentanaParaIngresarNombre();
 
@@ -239,6 +236,10 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 
 	public int getVidas() {
 		return miLogica.getVidas();
+	}
+
+	private void eliminarPantallaModosDeJuego() {
+		mi_central_pantallas.eliminarPantallaModosDeJuego();
 	}
 
 	private static void moverComponentes(Container container, Component component, int gridx, int gridy) {

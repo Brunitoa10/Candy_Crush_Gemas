@@ -5,8 +5,6 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -44,6 +42,11 @@ public class PantallaModosDeJuegos extends JPanel implements Pantalla {
 
     public void setVisibilidad(boolean vis) {
         setVisible(vis);
+    }
+
+    public void refrescar() {
+        this.repaint();
+        this.revalidate();
     }
     
     private JButton crearBotonConImagen(String imagePath) {

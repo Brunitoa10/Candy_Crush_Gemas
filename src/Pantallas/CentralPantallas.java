@@ -24,6 +24,7 @@ public class CentralPantallas {
     protected JPanel panelPrincipal;
     protected GUI miGUI;
     protected Logica miLogica;
+	protected PantallaModosDeJuegos miModosDeJuegos;
 
     public CentralPantallas(JPanel p_principal, GUI mi_GUI, Logica mi_logica) {
         panelPrincipal = p_principal;
@@ -102,14 +103,18 @@ public class CentralPantallas {
 	public void mostrarModosDeJuego() {
 	    panelPrincipal.setVisible(false);
 		miLogica.pausarTiempo();
-	    PantallaModosDeJuegos mensajePanel = new PantallaModosDeJuegos(this);
-	    mensajePanel.crearPantalla(Frame.MAXIMIZED_HORIZ, Frame.MAXIMIZED_HORIZ);
-		mensajePanel.agregarComponentes();
+	    miModosDeJuegos = new PantallaModosDeJuegos(this);
+	    miModosDeJuegos.crearPantalla(Frame.MAXIMIZED_HORIZ, Frame.MAXIMIZED_HORIZ);
+		miModosDeJuegos.agregarComponentes();
 
-	    miGUI.getContentPane().add(mensajePanel);
+	    miGUI.getContentPane().add(miModosDeJuegos);
 
-	    mensajePanel.setVisibilidad(true);
-	    mensajePanel.revalidate();
+	    miModosDeJuegos.setVisibilidad(true);
+	    miModosDeJuegos.refrescar();
+	}
+
+	public void eliminarPantallaModosDeJuego() {
+		miGUI.getContentPane().remove(miModosDeJuegos);
 	}
 
 	public void mostrarPuntajes() {
@@ -186,9 +191,10 @@ public class CentralPantallas {
 	        @Override
 	        public void actionPerformed(ActionEvent e) {
 				miLogica.set_skin("halloween");
+	            miLogica.inicializarJuego();
 				panelPrincipal.setVisible(true);
 				p.setVisibilidad(false);
-	            miLogica.inicializarJuego();
+				p.refrescar();
 	        }
 	    });
 	}

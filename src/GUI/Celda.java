@@ -70,7 +70,6 @@ public class Celda extends JLabel implements EntidadGrafica {
 	// Operaciones locales a celda
 	
 	protected void fijar_imagen_escalada_para_celda(String path_imagen) {
-		System.out.println("La ruta en cuestion: " + path_imagen);
 		ImageIcon icono_imagen = new ImageIcon(this.getClass().getResource(path_imagen));
 		Image imagen_escalada = icono_imagen.getImage().getScaledInstance(size_label, size_label, Image.SCALE_SMOOTH);
 		Icon icono_imagen_escalado = new ImageIcon(imagen_escalada);

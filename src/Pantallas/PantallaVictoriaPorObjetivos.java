@@ -43,4 +43,8 @@ public class PantallaVictoriaPorObjetivos extends JPanel implements Pantalla {
         setVisible(vis);
     }
     
+	public void refrescar() {
+        this.repaint();
+        this.revalidate();
+    }
 }

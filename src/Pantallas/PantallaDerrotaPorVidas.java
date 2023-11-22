@@ -38,5 +38,10 @@ public class PantallaDerrotaPorVidas extends JPanel implements Pantalla {
     public void setVisibilidad(boolean vis) {
         setVisible(vis);
     }
+
+	public void refrescar() {
+        this.repaint();
+        this.revalidate();
+    }
     
 }

@@ -7,4 +7,6 @@ public interface Pantalla {
     public void agregarComponentes();
 
     public void setVisibilidad(boolean vis);
+
+    public void refrescar();
 }

@@ -48,7 +48,6 @@ public class Bomba extends Obstaculo implements EntidadNotificable {
 
     public void cargarImagenesRepresentativas(String ri){//"/assets/obstaculo/bomba/"
         imagenes = new String [4];
-        System.out.println("CARGAR IMAGENES REPRESENTATIVAS "+ ri +tiempo +"/"+tiempo+".png");
 		imagenes[0] = ri +tiempo +"/"+tiempo+".png";
 		imagenes[1] = ri +tiempo +"/"+tiempo+"-cursor.png";
 		imagenes[2] = ri + "detonado.gif";
