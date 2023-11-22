@@ -8,10 +8,10 @@ public class TopScore
  {
     private PriorityQueue<Jugador> listadeJugadores;
     private static final int MAX_ELEMENTOS = 5;
-    private static final String Archivo_de_guardado = "TOP5.csv";
+    private static final String Archivo_de_guardado = "p2-comision-06\\src\\Score\\TOP5.csv";
     
     public TopScore() {
-        listadeJugadores = new PriorityQueue<>(5,new ComparadorJugadores<Jugador>());
+        listadeJugadores = new PriorityQueue<>(5,new ComparadorJugadores());
     }
 
     public void agregarJugador(String cadena, int numero) {
