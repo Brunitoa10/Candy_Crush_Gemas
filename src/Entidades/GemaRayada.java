@@ -13,8 +13,8 @@ public class GemaRayada extends Gema{
 	public static final int HORIZONTAL = 5;
 	public static final int VERTICAL = 1;
 
-	public GemaRayada(TableroNotificable tablero,int f, int c, Color col, int direccion, boolean visible) {
-		super(tablero,f, c,col, "/assets/gemas/original/gema_rayada/" + direccion, visible);
+	public GemaRayada(TableroNotificable tablero,int f, int c, Color col, int direccion, boolean visible,String skin) {
+		super(tablero,f, c,col, "/assets/gemas/"+skin+"/gema_cruz/" + direccion, visible);
 		this.direccion = direccion;
 		cargarImagenesRepresentativas(rutadeLaImagen);
 	}

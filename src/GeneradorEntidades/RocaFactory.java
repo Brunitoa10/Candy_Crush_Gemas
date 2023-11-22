@@ -7,7 +7,7 @@ import Tablero.TableroJuego;
 public class RocaFactory implements EntidadFactory{
 
 	@Override
-	public Entidad crear(TableroJuego tablero, int i, int j, String[] partes) {
+	public Entidad crear(TableroJuego tablero, int i, int j, String[] partes, String skin) {
 		return new Roca(tablero, i, j, true);
 	}
 

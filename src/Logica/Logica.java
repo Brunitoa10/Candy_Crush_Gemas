@@ -3,8 +3,6 @@ package Logica;
 import java.awt.EventQueue;
 import java.util.LinkedList;
 import java.util.PriorityQueue;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
@@ -18,7 +16,6 @@ import Nivel.Nivel;
 import Score.AdministradordeScore;
 import Score.Jugador;
 import Tablero.Tablero;
-import Score.*;
 
 public class Logica {
 	// Atributos
@@ -31,19 +28,29 @@ public class Logica {
 	protected AdministradordeScore administradordeScore;
 	private ScheduledExecutorService executorService;
     private ScheduledFuture<?> future;
+	protected String skin;
 
 	// Constructor
 	public Logica() {
+		miGUI = new GUI(this, miTablero.getFila(), miTablero.getColumna());
+		miGUI.mostrar();
+		miGUI.mostrarModosDeJuego();
+	}
+
+	public void inicializarJuego()
+	{
 		nivelActual = 1;
 		miTablero = new Tablero(this);
-		miNivel = GeneradorNivel.cargar_nivel_y_tablero(miTablero, nivelActual, this);
-		miGUI = new GUI(this, miTablero.getFila(), miTablero.getColumna());
+		miNivel = GeneradorNivel.cargar_nivel_y_tablero(miTablero, nivelActual, this, skin);
 		miTablero.asociar_entidades_logicas_y_graficas();
 		miTablero.fijar_jugador(miNivel.getFilaInicialJugador(), miNivel.getColumnaInicialJugador());
-		miGUI.mostrar();
 		administradordeScore = new AdministradordeScore(miGUI.obtenerCentralPaneles());
-
 		inicializarTiempo();
+	}
+
+	public void set_skin(String skin)
+	{
+		this.skin=skin;
 	}
 
 	public void mover_jugador(int direccion) {
@@ -134,7 +141,7 @@ public class Logica {
         miTablero = new Tablero(this);
 
         // Cargar el nuevo nivel en el tablero
-        miNivel = GeneradorNivel.cargar_nivel_y_tablero(miTablero, nuevoNivel, this);
+        miNivel = GeneradorNivel.cargar_nivel_y_tablero(miTablero, nuevoNivel, this, skin);
 
 	
         // Crear una nueva GUI con el nuevo tablero
@@ -226,7 +233,7 @@ public class Logica {
 	private void cargarSiguienteNivel() {
 		miGUI.dispose();
 		miTablero = new Tablero(this);
-		miNivel = GeneradorNivel.cargar_nivel_y_tablero(miTablero, nivelActual, this);
+		miNivel = GeneradorNivel.cargar_nivel_y_tablero(miTablero, nivelActual, this, skin);
 		miGUI = new GUI(this, miTablero.getFila(), miTablero.getColumna());
 		
 		miGUI.cambiarFondo(nivelActual);

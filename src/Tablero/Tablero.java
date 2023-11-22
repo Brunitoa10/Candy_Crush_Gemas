@@ -4,12 +4,10 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.PriorityQueue;
 import java.util.Random;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 
-import Score.*;
 import Entidades.*;
 import GUI.*;
 import Logica.*;
@@ -21,6 +19,7 @@ public class Tablero implements TableroJuego{
 	protected int filas,columnas;
 	protected int fJugador,cJugador;
 	protected List<Entidad> entidades_asociadas;
+	protected String skin;
 	public NotificadorDeEntidadesConTiempo notificadorDeGemasConTemporizador;
 
 	// Define un mapa para asociar las direcciones de intercambio con las funciones correspondientes
@@ -59,6 +58,11 @@ public class Tablero implements TableroJuego{
 	
 	public void agregar_entidad(Entidad e) {
 		entidades[e.get_fila()][e.get_columna()] = e;
+	}
+
+	public void set_Skin(String skin)
+	{
+		this.skin=skin;
 	}
 
 	public int getFila() {
@@ -113,7 +117,7 @@ public class Tablero implements TableroJuego{
 				entidades[i - 1][columna]=aux;
 			}
 		}
-		entidades[0][columna] = new GemaNormal(this,0,columna,new Color(new Random().nextInt(8)),true);
+		entidades[0][columna] = new GemaNormal(this,0,columna,new Color(new Random().nextInt(8)),true,skin);
 	}
 	
 	private void mover_jugador_auxiliar(int nf, int nc) {
@@ -401,7 +405,7 @@ public class Tablero implements TableroJuego{
 
 	private GemaNormal crearGemaNormalRandom(int fila, int columna) {
 	    // Lógica para crear una GemaNormal con color aleatorio
-	    return new GemaNormal(this, fila, columna,new Color(new Random().nextInt(7) + 1), false);
+	    return new GemaNormal(this, fila, columna,new Color(new Random().nextInt(7) + 1), false,skin);
 	}
 
 	

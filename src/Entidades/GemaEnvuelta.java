@@ -7,8 +7,8 @@ import Tablero.TableroNotificable;
 
 public class GemaEnvuelta extends Gema{
 
-	public GemaEnvuelta(TableroNotificable tablero,int f, int c, Color col, boolean visible) {
-	 super(tablero,f, c, col, "/assets/gemas/original/gema_envuelta/", visible);
+	public GemaEnvuelta(TableroNotificable tablero,int f, int c, Color col, boolean visible, String skin) {
+	 super(tablero,f, c, col, "/assets/gemas/"+skin+"/gema_cruz/", visible);
 	 cargarImagenesRepresentativas(rutadeLaImagen);
 	}
 

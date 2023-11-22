@@ -7,8 +7,8 @@ import Logica.*;
 
 public class GemaNormal extends Gema{
 		
-	public GemaNormal(TableroNotificable tablero,int f, int c, Color col, boolean visible) {
-	 super(tablero,f, c, col, "/assets/gemas/original/gema_normal/", visible);
+	public GemaNormal(TableroNotificable tablero,int f, int c, Color col, boolean visible,String skin) {
+	 super(tablero,f, c, col, "/assets/gemas/"+skin+"/gema_cruz/", visible);
 	 cargarImagenesRepresentativas(rutadeLaImagen);
 	}
 	

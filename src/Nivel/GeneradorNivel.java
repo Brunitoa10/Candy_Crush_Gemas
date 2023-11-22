@@ -23,7 +23,7 @@ public class GeneradorNivel {
         entidadFactories.put("c", new GemaCruzadaFactory());
     }
     
-	public static Nivel cargar_nivel_y_tablero(TableroJuego t, int nivel,Logica l) {
+	public static Nivel cargar_nivel_y_tablero(TableroJuego t, int nivel,Logica l, String skin) {
 		Nivel miNivel = new Nivel(0, 0, l);
         try {
             Scanner input = new Scanner(new File("src//Niveles//Nivel" + nivel + ".txt"));
@@ -77,7 +77,7 @@ public class GeneradorNivel {
                     String[] partes = valores[j].split(",");
                     EntidadFactory entidadFactory = entidadFactories.get(partes[0]);
                     if (entidadFactory != null) {
-                        t.agregar_entidad(entidadFactory.crear(t, i, j, partes));
+                        t.agregar_entidad(entidadFactory.crear(t, i, j, partes,skin));
                     }
                 }
             }

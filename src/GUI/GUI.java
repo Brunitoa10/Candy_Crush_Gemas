@@ -327,7 +327,7 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 		mi_central_paneles.reiniciarProgresoObjetivos();
 	}
 
-	private void mostrarModosDeJuego() {
+	public void mostrarModosDeJuego() {
 		mi_central_pantallas.mostrarModosDeJuego();
 	}
 
