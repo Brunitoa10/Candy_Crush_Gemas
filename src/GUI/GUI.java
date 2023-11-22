@@ -1,6 +1,5 @@
 package GUI;
 
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -16,7 +15,6 @@ import java.awt.Toolkit;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.Graphics;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -36,7 +34,7 @@ import Threads.CentralAnimaciones;
 public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,VentanaJuego{
 	//Atributos
 	protected Logica miLogica;
-	
+
 	protected int filas,columnas;
 	protected int animaciones_pendientes;
 	protected int movimientosRestantes;
@@ -45,17 +43,10 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 	protected boolean bloquear_intercambios;
 	protected CentralPaneles mi_central_paneles;
 	protected CentralAnimaciones mi_animador;
-	
 	protected JPanel panel_tablero,panel_principal;
-	protected JLabel timerLabel,movimientosLabel, scoreLabel;
-	protected JLabel[] objetivosProgreso;
-
-	private Imagenfondo fondo = new Imagenfondo();
-
-	
-	
+	private Imagenfondo fondo = new Imagenfondo();	
 	// Define un mapa para asociar los códigos de tecla con las acciones
-	Map<Integer, Runnable> acciones = new HashMap<>();
+	private Map<Integer, Runnable> acciones = new HashMap<>();
 	
 	
 	public static final int ARRIBA = 15000;
@@ -84,7 +75,6 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 
 		panel_principal = new JPanel();
 		panel_principal.setBackground(new Color(0,0,0,0));
-
 		
 		mi_central_pantallas = new CentralPantallas(panel_principal, this, miLogica);
 		mi_central_paneles = new CentralPaneles(panel_principal, this);
@@ -94,12 +84,7 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 		panel_principal.setSize(screenSize);
 		
 		panel_principal.setLayout(new GridBagLayout());
-
-
 		
-
-		
-
 		inicializarPanels();
 
 		panel_tablero = new JPanel();
@@ -116,11 +101,8 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 		c.weighty = 1;
 		c.anchor = GridBagConstraints.CENTER;
 		agregarConGBCs(panel_tablero, panel_principal, c, 2, 1, 4, 4); 
-		 	
-		
 		
 		panel_tablero.setFocusable(true);
-
 		getContentPane().add(panel_principal);
 	}
 
@@ -187,52 +169,6 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 		    	mostrarPuntajes();
 		    }
 		});
-
-
-//------------------------- BOTONES PARA TESTING, BORRAR ANTES DE ENTREGA FINAL -------------------------
-		
-		acciones.put(KeyEvent.VK_M, () -> {
-		    mostrarMensajeFinDelJuego();
-		});
-
-		acciones.put(KeyEvent.VK_Y, () -> {
-		    mostrarMensajeDerrotaPorMovimientos();
-		});
-
-		acciones.put(KeyEvent.VK_U, () -> {
-		    mostrarMensajeDerrotaPorMovimientos();
-		});
-
-		acciones.put(KeyEvent.VK_O, () -> {
-		    if (!bloquear_intercambios){
-		    	animar_detonacion((Celda) panel_tablero.getComponent(1));
-		    }
-		});
-
-		acciones.put(KeyEvent.VK_L, () -> {
-		    if (!bloquear_intercambios){
-		    	mostrarMensajeVictoriaPorObjetivos();
-		    }
-		});
-
-		acciones.put(KeyEvent.VK_P, () -> {
-		    if (!bloquear_intercambios){
-		    	obtenerNombreJugador();
-		    }
-		});
-
-		acciones.put(KeyEvent.VK_I, () -> {
-		    if (!bloquear_intercambios){
-		    	mostrarModosDeJuego();
-		    }
-		});
-
-		acciones.put(KeyEvent.VK_K, () -> {
-		    if (!bloquear_intercambios){
-		    mostrarMensajeDerrotaPorVidas();
-		    }
-		});
-
 
 		// Agrega el KeyListener
 		panel_tablero.addKeyListener(new KeyAdapter() {
@@ -375,8 +311,6 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 	    mi_central_pantallas.mostrarMensajeVictoriaPorObjetivos();
 	}
 
-	
-
 	public int getCantidadDeObjetivos() {
 		return miLogica.getCantidadDeObjetivos();
 	}
@@ -409,39 +343,13 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 		mi_central_paneles.actualizarVidas();
 	}
 
-	public JLabel crearLabel(String texto, int tamañoFuente) {
-	    JLabel label = new JLabel(texto);
-	    label.setFont(new Font("Algerian", Font.PLAIN, tamañoFuente));
-	    label.setForeground(Color.WHITE);
-	    return label;
-	}
-
 	public void actualizarScore(int score) {
 		mi_central_paneles.actualizarScore(score);
-	}
-
-	public JLabel crearLabel(String texto, String fuente, int estilo, int tamano, Color color, int gridwidth, int gridheight) {
-	    JLabel label = new JLabel(texto);
-	    label.setFont(new Font(fuente, estilo, tamano));
-	    label.setForeground(color);
-
-	    GridBagConstraints c = new GridBagConstraints();
-	    c.insets = new Insets(0, 20, 0, 0);
-	    c.weightx = 0;
-	    c.gridwidth = gridwidth;
-	    c.gridheight = gridheight;
-
-	    return label;
 	}
 	
 	public void eliminar_celda(Celda celda) {
 		panel_principal.remove(celda);
 		panel_principal.repaint();
-	}
-
-	public void mostrarMensajeJuegoPerdido() {
-		System.out.println("GUI :: Perdiste");
-		
 	}
 
 	public PriorityQueue<Jugador> obtenerListadeJugadores() {
@@ -489,38 +397,6 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 		return mi_central_paneles;
 	}
 
-	
-
-
-	public void cambiarFondo(int nivel) {
-        fondo.cambiarFondo(nivel);
-        repaint(); // Vuelve a pintar la GUI para reflejar el cambio de fondo
-    }
-	//Clase auxiliar para poder hacer el fondo
-
-	private class Imagenfondo extends JPanel{
-		
-        /**
-		 * 
-		 */
-		private static final long serialVersionUID = 4180857344385898634L;
-		
-		private Image imagen;
-		private int nivelActual = 1;
-        
-		public void paint(Graphics g) {
-            imagen = new ImageIcon(getClass().getResource("/assets/nivel/"+nivelActual+"_Nivel.png")).getImage();
-            g.drawImage(imagen, 0, 0, getWidth(), getHeight(), this);
-            super.paint(g);
-        }
-        
-        public void cambiarFondo(int nivel) {
-            nivelActual = nivel;
-            repaint(); // Vuelve a pintar el fondo con el nuevo nivel
-        }
-
-    }
-
 	@Override
 	public void ocultar() {
 		this.setVisible(false);
@@ -553,6 +429,42 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 	    mi_central_paneles.actualizarTimer(getTiempoRestante());
 	    mi_central_paneles.actualizarMovimientos(getMovimientos());
 	}
+
+	public void cambiarFondo(int nivel) {
+        fondo.cambiarFondo(nivel);
+        repaint(); // Vuelve a pintar la GUI para reflejar el cambio de fondo
+    }
+
+
+
+	
+
+
+
+	//Clase auxiliar para poder hacer el fondo
+
+	private class Imagenfondo extends JPanel{
+		
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 4180857344385898634L;
+		
+		private Image imagen;
+		private int nivelActual = 1;
+        
+		public void paint(Graphics g) {
+            imagen = new ImageIcon(getClass().getResource("/assets/nivel/"+nivelActual+"_Nivel.png")).getImage();
+            g.drawImage(imagen, 0, 0, getWidth(), getHeight(), this);
+            super.paint(g);
+        }
+        
+        public void cambiarFondo(int nivel) {
+            nivelActual = nivel;
+            repaint(); // Vuelve a pintar el fondo con el nuevo nivel
+        }
+
+    }
 
 	
 }

@@ -5,6 +5,10 @@ import java.util.LinkedList;
 import java.util.PriorityQueue;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 
 import Entidades.Entidad;
 import GUI.GUI;
@@ -25,6 +29,8 @@ public class Logica {
 	private int nivelActual;
 	private static final int MAX_NIVEL = 6;
 	protected AdministradordeScore administradordeScore;
+	private ScheduledExecutorService executorService;
+    private ScheduledFuture<?> future;
 
 	// Constructor
 	public Logica() {
@@ -103,10 +109,9 @@ public class Logica {
 		entidad_logica.set_EntidadGrafica(entidad_grafica);
 	}
 
-	public int disminuirTiempo(Timer timer) {
+	public int disminuirTiempo() {
 		int tiempo = miNivel.getTiempo() - 1;
 		if (tiempo == 0) {
-			timer.cancel();
 			miGUI.mostrarMensajeDerrotaPorTiempo();
 		} else {
 			miNivel.setTiempo(tiempo);
@@ -146,15 +151,28 @@ public class Logica {
     }
 
 	private void inicializarTiempo() {
-		Timer timer = new Timer();
-		timer.scheduleAtFixedRate(new TimerTask() {
-			@Override
-			public void run() {
-				disminuirTiempo(timer);
-				miGUI.actualizarTimer(getTiempo());
-			}
-		}, 1000, 1000); // Inicia el temporizador después de 1 segundo y se ejecuta cada 1 segundo
-	}
+        executorService = Executors.newSingleThreadScheduledExecutor();
+
+        future = executorService.scheduleAtFixedRate(() -> {
+            disminuirTiempo();
+            miGUI.actualizarTimer(getTiempo());
+        }, 1, 1, TimeUnit.SECONDS);  // Inicia el temporizador después de 1 segundo y se ejecuta cada 1 segundo
+    }
+
+    public void pausarTiempo() {
+        if (future != null && !future.isCancelled()) {
+            future.cancel(false);
+        }
+    }
+
+    public void reanudarTiempo() {
+        if (executorService != null && (future == null || future.isCancelled())) {
+            future = executorService.scheduleAtFixedRate(() -> {
+                disminuirTiempo();
+                miGUI.actualizarTimer(getTiempo());
+            }, 1, 1, TimeUnit.SECONDS);
+        }
+    }
 
 	public void notificar_actualizacion_objetivos(int cant, int tipoGema) {
 		miGUI.actualizarProgreso(cant, tipoGema);

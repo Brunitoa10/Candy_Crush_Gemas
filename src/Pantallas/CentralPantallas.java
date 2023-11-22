@@ -33,7 +33,7 @@ public class CentralPantallas {
 
     public void mostrarMensajeDerrotaPorMovimientos() {
 	    panelPrincipal.setVisible(false);
-
+		miLogica.pausarTiempo();
 	    PantallaDerrotaPorMovimientos mensajePanel = new PantallaDerrotaPorMovimientos(this);
 	    mensajePanel.crearPantalla(Frame.MAXIMIZED_HORIZ, Frame.MAXIMIZED_HORIZ);
 		mensajePanel.agregarComponentes();
@@ -46,6 +46,7 @@ public class CentralPantallas {
 
 	public void mostrarMensajeDerrotaPorTiempo() {
 	    panelPrincipal.setVisible(false);
+		miLogica.pausarTiempo();
 
 	    PantallaDerrotaPorTiempo mensajePanel = new PantallaDerrotaPorTiempo(this);
 	    mensajePanel.crearPantalla(Frame.MAXIMIZED_HORIZ, Frame.MAXIMIZED_HORIZ);
@@ -59,6 +60,7 @@ public class CentralPantallas {
 
 	public void mostrarMensajeFinDelJuego() {
 	    panelPrincipal.setVisible(false);
+		miLogica.pausarTiempo();
 
 	    PantallaFinDelJuego mensajePanel = new PantallaFinDelJuego(this);
 	    mensajePanel.crearPantalla(Frame.MAXIMIZED_HORIZ, Frame.MAXIMIZED_HORIZ);
@@ -72,6 +74,7 @@ public class CentralPantallas {
 
 	public void mostrarMensajeDerrotaPorVidas() {
 	    panelPrincipal.setVisible(false);
+		miLogica.pausarTiempo();
 
 	    PantallaDerrotaPorVidas mensajePanel = new PantallaDerrotaPorVidas(this);
 	    mensajePanel.crearPantalla(Frame.MAXIMIZED_HORIZ, Frame.MAXIMIZED_HORIZ);
@@ -85,7 +88,7 @@ public class CentralPantallas {
 
 	public void mostrarMensajeVictoriaPorObjetivos() {
 	    panelPrincipal.setVisible(false);
-
+		miLogica.pausarTiempo();
 	    PantallaVictoriaPorObjetivos mensajePanel = new PantallaVictoriaPorObjetivos(this);
 	    mensajePanel.crearPantalla(Frame.MAXIMIZED_HORIZ, Frame.MAXIMIZED_HORIZ);
 		mensajePanel.agregarComponentes();
@@ -98,7 +101,7 @@ public class CentralPantallas {
 
 	public void mostrarModosDeJuego() {
 	    panelPrincipal.setVisible(false);
-
+		miLogica.pausarTiempo();
 	    PantallaModosDeJuegos mensajePanel = new PantallaModosDeJuegos(this);
 	    mensajePanel.crearPantalla(Frame.MAXIMIZED_HORIZ, Frame.MAXIMIZED_HORIZ);
 		mensajePanel.agregarComponentes();
@@ -110,6 +113,7 @@ public class CentralPantallas {
 	}
 
 	public void mostrarPuntajes() {
+		miLogica.pausarTiempo();
 	    panelPrincipal.setVisible(false);
 
 	    PantallaPuntajes mensajePanel = new PantallaPuntajes(this);
@@ -179,6 +183,7 @@ public class CentralPantallas {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					panelPrincipal.setVisible(true);
+					miLogica.reanudarTiempo();
 					p.setVisibilidad(false);
 					miLogica.iniciarSiguienteNivel();
 				}
@@ -191,17 +196,7 @@ public class CentralPantallas {
 				public void actionPerformed(ActionEvent e) {
 					panelPrincipal.setVisible(true);
 					p.setVisibilidad(false);
-				}
-			});
-	}
-
-	public void agregarFuncionalidadBotonReiniciarDeCero(Pantalla p, JButton botonVolver) {
-		botonVolver.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-	            	panelPrincipal.setVisible(true);
-	            	p.setVisibilidad(false);
-	            	miLogica.notificarDerrotaPorVidas();
+					miLogica.reanudarTiempo();
 				}
 			});
 	}
