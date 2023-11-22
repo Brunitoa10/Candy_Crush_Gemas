@@ -38,7 +38,6 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 	protected Logica miLogica;
 	
 	protected int filas,columnas;
-	protected int tiempoRestante;
 	protected int animaciones_pendientes;
 	protected int movimientosRestantes;
 	private int size_label = 70;
@@ -47,7 +46,7 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 	protected CentralPaneles mi_central_paneles;
 	protected CentralAnimaciones mi_animador;
 	
-	protected JPanel panel_tablero,panel_principal, panel_movimientos, panel_timer;
+	protected JPanel panel_tablero,panel_principal;
 	protected JLabel timerLabel,movimientosLabel, scoreLabel;
 	protected JLabel[] objetivosProgreso;
 
@@ -69,7 +68,6 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 		miLogica = l;
 		filas = f;
 		columnas = c;
-		tiempoRestante = miLogica.getTiempo();
 		movimientosRestantes = miLogica.getMovimientos();
 		animaciones_pendientes = 0;
 		bloquear_intercambios = false;
@@ -97,14 +95,10 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 		
 		panel_principal.setLayout(new GridBagLayout());
 
-		panel_timer = new JPanel();
-		panel_timer.setBackground(new Color(0,0,0,200));
 
-		timerLabel = new JLabel("Tiempo restante: "+ agregarPaddingTiempo(tiempoRestante));
-		timerLabel.setFont(new Font("Algerian", Font.PLAIN, 20));
-		timerLabel.setForeground(Color.WHITE);
+		
 
-		panel_timer.add(timerLabel);
+		
 
 		inicializarPanels();
 
@@ -114,13 +108,8 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 		panel_tablero.setBackground(new Color(0,0,0,255));
 
 		configurarAccionesTeclado();
-
-		//Constraints TIMER
-		GridBagConstraints c = new GridBagConstraints();
-		c.insets = new Insets(0,10,0,0);
-		agregarConGBCs(panel_timer, panel_principal, c, 0, 0, 3, 1);
 		
-
+		GridBagConstraints c = new GridBagConstraints();
 		//Constraints TABLERO
 		c.insets = new Insets(0,0,0,0);
 		c.weightx = 1;
@@ -303,6 +292,7 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 		mi_central_paneles.mostrarPanelVidas();
 		mi_central_paneles.mostrarPanelMovimiento();
 		mi_central_paneles.mostrarPanelReglas();
+		mi_central_paneles.mostrarPanelTimer();
 	}
 
 	public int getVidas() {
@@ -322,23 +312,7 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
     }
 
 	public int getTiempoRestante() {
-		return tiempoRestante;
-	}
-
-	public void actualizarTiempo(int tiempo) {	
-	    timerLabel.setText("Tiempo restante: " + agregarPaddingTiempo(tiempo));
-		tiempoRestante = tiempo;
-		panel_timer.repaint();
-	}
-	
-	private String agregarPaddingTiempo(int tiempo) {
-		String padding = "";
-			if(tiempo <= 9) {
-			padding = "00";
-			} else if(tiempo <= 99) {
-				padding = "0";
-			}
-		return padding+tiempo;
+		return miLogica.getTiempo();
 	}
 
 	public void notificarse_animacion_en_progreso() {
@@ -379,6 +353,10 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 
 	public void actualizarMovimientos(int movimientos) {
 		mi_central_paneles.actualizarMovimientos(movimientos);
+	}
+
+	public void actualizarTimer(int tiempo) {
+		mi_central_paneles.actualizarTimer(tiempo);
 	}
 
 	public void mostrarMensajeDerrotaPorMovimientos() {
@@ -438,6 +416,10 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 	    return label;
 	}
 
+	public void actualizarScore(int score) {
+		mi_central_paneles.actualizarScore(score);
+	}
+
 	public JLabel crearLabel(String texto, String fuente, int estilo, int tamano, Color color, int gridwidth, int gridheight) {
 	    JLabel label = new JLabel(texto);
 	    label.setFont(new Font(fuente, estilo, tamano));
@@ -471,7 +453,6 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 	}
 	
 	public void limpiarGUI() {
-	    tiempoRestante = miLogica.getTiempo();
 	    movimientosRestantes = getMovimientos();
 	    animaciones_pendientes = 0;
 	    bloquear_intercambios = false;
@@ -479,8 +460,8 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 	    limpiarMatrizGUI();
 	    mi_central_paneles.actualizarVidas();
 
-	    timerLabel.setText("Tiempo restante: " + tiempoRestante);
-	    movimientosLabel.setText("Movimientos restantes: " + movimientosRestantes);
+		mi_central_paneles.actualizarTimer(getTiempoRestante());
+	    mi_central_paneles.actualizarMovimientos(miLogica.getMovimientos());
 	}
 
 	private void limpiarMatrizGUI() {
@@ -569,9 +550,8 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 		mi_central_paneles.mostrarPanelScore();
 		mi_central_paneles.mostrarPanelObjetivo();
 		mi_central_paneles.mostrarPanelControles();
-
-	    timerLabel.setText("Tiempo restante: " + tiempoRestante);
-	    movimientosLabel.setText("Movimientos restantes: " + movimientosRestantes);
+	    mi_central_paneles.actualizarTimer(getTiempoRestante());
+	    mi_central_paneles.actualizarMovimientos(getMovimientos());
 	}
 
 	

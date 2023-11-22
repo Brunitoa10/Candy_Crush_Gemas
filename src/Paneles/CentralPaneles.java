@@ -22,6 +22,7 @@ public class CentralPaneles {
 	protected PanelVidas miPanelVidas;
 	protected PanelMovimiento miPanelMovimiento;
 	protected PanelReglas miPanelReglas;
+	protected PanelTimer miPanelTimer;
 
 
     public CentralPaneles(JPanel p_principal, GUI mi_GUI) {
@@ -50,6 +51,20 @@ public class CentralPaneles {
 		miPanelControles.crearPanel();
         miPanelControles.agregarAPanelPrincipal();
     }
+
+	public void mostrarPanelTimer() {
+        miPanelTimer = new PanelTimer(this);
+		miPanelTimer.crearPanel();
+        miPanelTimer.agregarAPanelPrincipal();
+    }
+
+	public void actualizarTimer(int tiempo) {
+		miPanelTimer.actualizarTimer(tiempo);
+	}
+
+	public int getTiempoRestante() {
+		return miGUI.getTiempoRestante();
+	}
 
 	public void mostrarPanelVidas() {
         miPanelVidas = new PanelVidas(this);

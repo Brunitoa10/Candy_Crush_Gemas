@@ -2,6 +2,7 @@ package Paneles;
 
 import java.awt.GridBagConstraints;
 import java.awt.Image;
+import java.awt.Insets;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -20,6 +21,7 @@ public class PanelControles extends JPanel implements Paneles {
     @Override
     public void crearPanel() {
         GridBagConstraints gbc = new GridBagConstraints();
+		gbc.insets = new Insets(0,0,10,0);
         miCentral.agregarConGBCs(this,gbc, 0, 6, 5, 1);
     }
 

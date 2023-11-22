@@ -63,19 +63,19 @@ public class Logica {
 			reiniciarNivel(nivelActual);
 			miNivel.setVidas(tmpVidas);
 			miGUI.actualizarVidas();
+			System.out.println(administradordeScore.getScore());
 		} else {
 			miGUI.mostrarMensajeDerrotaPorVidas();
 		}
 	}
 
 	public void notificarDerrotaPorVidas() {
-		System.out.println("notificarDerrotaPorVidas");
+		miGUI.mostrarMensajeDerrotaPorVidas();
 		if (miTablero.obtenerAdministradordeScore().entro_en_el_top5()) {
 			String nombre_del_Jugador = miGUI.obtenerNombreJugador();
 			miTablero.obtenerAdministradordeScore().mejorJugador(nombre_del_Jugador);
 		}
 		nivelActual = 1;
-		reiniciarNivel(nivelActual);
 	}
 
 	public void notificarVictoriaPorObjetivos() {
@@ -131,11 +131,12 @@ public class Logica {
         // Cargar el nuevo nivel en el tablero
         miNivel = GeneradorNivel.cargar_nivel_y_tablero(miTablero, nuevoNivel, this);
 
+	
         // Crear una nueva GUI con el nuevo tablero
         miGUI = new GUI(this, miTablero.getFila(), miTablero.getColumna());
 		//miGUI.resetear(this, miTablero.getFila(), miTablero.getColumna());
 		miGUI.cambiarFondo(nuevoNivel);
-
+		miGUI.actualizarScore(administradordeScore.getScore());
         // Asociar entidades lógicas y gráficas en el nuevo tablero
         miTablero.asociar_entidades_logicas_y_graficas();
         
@@ -150,7 +151,7 @@ public class Logica {
 			@Override
 			public void run() {
 				disminuirTiempo(timer);
-				miGUI.actualizarTiempo(getTiempo());
+				miGUI.actualizarTimer(getTiempo());
 			}
 		}, 1000, 1000); // Inicia el temporizador después de 1 segundo y se ejecuta cada 1 segundo
 	}

@@ -30,18 +30,19 @@ public class PantallaPuntajes extends JPanel implements Pantalla {
 
     public void agregarComponentes() {
         GridBagConstraints gbc = new GridBagConstraints();
+		PriorityQueue<Jugador> jugadores = miCentral.obtenerListadeJugadores();
 
         JLabel titulo_puntajes = miCentral.crearLabelConColor("MEJORES PUNTAJES:", "Algerian", Font.PLAIN, 40, Color.WHITE, 2, 1);
 		miCentral.agregarConGBCs(titulo_puntajes, this, gbc, 0, 0, 3, 1);
 
-		for(int i=0; i < obtenerListadeJugadores().size();i++) {
+		for(int i=5; i < 0;i--) {
 			JLabel label_num = miCentral.crearLabelConColor((i+1) +" - ", "Algerian", Font.PLAIN, 30, Color.WHITE, 2, 1);
 			miCentral.agregarConGBCs(label_num, this, gbc, 0, i+1, 1, 1);
 
-			JLabel label_nombre = miCentral.crearLabelConColor("AAA", "Algerian", Font.PLAIN, 30, Color.WHITE, 2, 1);
+			JLabel label_nombre = miCentral.crearLabelConColor(jugadores.peek().get_nombre(), "Algerian", Font.PLAIN, 30, Color.WHITE, 2, 1);
 			miCentral.agregarConGBCs(label_nombre, this, gbc, 1, i+1, 1, 1);
 
-			JLabel label_puntaje1 = miCentral.crearLabel("0000000", 30);
+			JLabel label_puntaje1 = miCentral.crearLabel(agregarPadding(jugadores.remove().get_score()), 30);
 			miCentral.agregarConGBCs(label_puntaje1, this, gbc, 2, i+1, 1, 1);
 
 			if(i==0) {
@@ -70,4 +71,17 @@ public class PantallaPuntajes extends JPanel implements Pantalla {
     public void setVisibilidad(boolean vis) {
         setVisible(vis);
     }
+
+	private String agregarPadding(int score) {
+		String padding ="";
+		if(score <= 9) {
+			padding = "000";
+			} else if(score <= 99) {
+				padding = "00";
+			}	else if(score <= 999) {
+				padding = "0";
+			}
+
+		return padding + score;
+	}
 }

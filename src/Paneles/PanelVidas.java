@@ -45,6 +45,7 @@ public class PanelVidas extends JPanel implements Paneles {
         add(label_corazon2);
         add(label_corazon3);
         GridBagConstraints gbc = new GridBagConstraints();
+		gbc.insets = new Insets(0,0,10,0);
         miCentral.agregarConGBCs(this, gbc, 6, 6, 2, 1); 
     }
 

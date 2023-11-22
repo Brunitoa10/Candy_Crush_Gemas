@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
+import java.awt.Insets;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -31,6 +32,7 @@ public class PanelScore extends JPanel implements Paneles {
     @Override
     public void agregarAPanelPrincipal() {
         GridBagConstraints gbc = new GridBagConstraints();
+		gbc.insets = new Insets(10,0,0,0);
         miCentral.agregarConGBCs((Component)this, gbc, 2, 0, 4, 1);
     }
     
