@@ -8,7 +8,7 @@ public class TopScore
  {
     private PriorityQueue<Jugador> listadeJugadores;
     private static final int MAX_ELEMENTOS = 5;
-    private static final String Archivo_de_guardado = "p2-comision-06\\src\\Score\\TOP5.csv";
+    private static final String Archivo_de_guardado = "TOP5.csv";
     
     public TopScore() {
         listadeJugadores = new PriorityQueue<>(5,new ComparadorJugadores());
@@ -32,18 +32,20 @@ public class TopScore
     }
 
     public void guardarLista() {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(Archivo_de_guardado))) {
-            while (!listadeJugadores.isEmpty()) {
-                Jugador jugador = listadeJugadores.poll();
+        System.out.println("Estoy guardando la lista");
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(Archivo_de_guardado, false))) {
+            for (Jugador jugador : listadeJugadores) {
                 writer.write(jugador.get_nombre() + "," + jugador.get_score() + "\n");
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+    
 
     public void cargarLista() {
-         try (Scanner scanner = new Scanner(new File(Archivo_de_guardado))) {
+        listadeJugadores.clear(); // Limpiar la lista antes de cargarla nuevamente
+        try (Scanner scanner = new Scanner(new File(Archivo_de_guardado))) {
             while (scanner.hasNextLine()) {
                 String linea = scanner.nextLine();
                 String[] partes = linea.split(",");
@@ -55,4 +57,5 @@ public class TopScore
             e.printStackTrace();
         }
     }
+    
 }
