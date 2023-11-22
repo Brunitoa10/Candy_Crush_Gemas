@@ -32,7 +32,7 @@ public class AdministradordeScore {
 
     public boolean entro_en_el_top5()
     {
-        return (scoreActual>0 || topScore.obtenerListadeJugadores().size()<5 || topScore.obtenerListadeJugadores().peek().get_score()<=scoreActual);
+        return (scoreActual>0 && (topScore.obtenerListadeJugadores().size()<5 || topScore.obtenerListadeJugadores().peek().get_score()<=scoreActual));
     }
 
     public PriorityQueue<Jugador> obtenerListadeJugadores()

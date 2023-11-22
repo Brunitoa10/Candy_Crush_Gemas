@@ -21,7 +21,6 @@ public class Tablero implements TableroJuego{
 	protected int filas,columnas;
 	protected int fJugador,cJugador;
 	protected List<Entidad> entidades_asociadas;
-	protected AdministradordeScore administradordeScore;
 	public NotificadorDeEntidadesConTiempo notificadorDeGemasConTemporizador;
 
 	// Define un mapa para asociar las direcciones de intercambio con las funciones correspondientes
@@ -137,11 +136,6 @@ public class Tablero implements TableroJuego{
 	public Tablero obtenerTablero() {
         return this;
     }
-
-	public AdministradordeScore obtenerAdministradordeScore(){
-		return administradordeScore;
-	}
-
 	
 	public boolean hayEfectoExplosionAdyacente(int filaVecina, int columnaVecina) {
 		boolean esAfectadaPorExplosionAdyacente = false;
@@ -191,10 +185,6 @@ public class Tablero implements TableroJuego{
 	public void agregar_entidad_y_asociada(Hielo g) {
 		entidades[g.get_fila()][g.get_columna()] = g;
 		entidades_asociadas.add(g.get_gema_interna());
-	}
-
-	public PriorityQueue<Jugador> obtenerListadeJugadores() {
-		return administradordeScore.obtenerListadeJugadores();
 	}
 	
 /*	private boolean intercambiar_entidades_y_transicionar(int fila_destino, int columna_destino) {

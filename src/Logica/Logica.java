@@ -77,9 +77,9 @@ public class Logica {
 
 	public void notificarDerrotaPorVidas() {
 		miGUI.mostrarMensajeDerrotaPorVidas();
-		if (miTablero.obtenerAdministradordeScore().entro_en_el_top5()) {
+		if (administradordeScore.entro_en_el_top5()) {
 			String nombre_del_Jugador = miGUI.obtenerNombreJugador();
-			miTablero.obtenerAdministradordeScore().mejorJugador(nombre_del_Jugador);
+			administradordeScore.mejorJugador(nombre_del_Jugador);
 		}
 		nivelActual = 1;
 	}
@@ -97,7 +97,7 @@ public class Logica {
 	}
 
 	public PriorityQueue<Jugador> obtenerListadeJugadores() {
-		return miTablero.obtenerListadeJugadores();
+		return administradordeScore.obtenerListadeJugadores();
 	}
 
 	public int getCantidadDeObjetivos() {
@@ -235,9 +235,9 @@ public class Logica {
 	}
 
 	private void finalizarJuego() {
-		if (miTablero.obtenerAdministradordeScore().entro_en_el_top5()) {
+		if (administradordeScore.entro_en_el_top5()) {
 			String nombreDelJugador = miGUI.obtenerNombreJugador();
-			miTablero.obtenerAdministradordeScore().mejorJugador(nombreDelJugador);
+			administradordeScore.mejorJugador(nombreDelJugador);
 		}
 		miGUI.mostrarMensajeFinDelJuego();
 	}
