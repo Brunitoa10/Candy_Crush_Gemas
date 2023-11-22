@@ -122,27 +122,27 @@ public class Logica {
 		return miNivel.getMovimientos();
 	}
 
-	public void reiniciarNivel(int n) {
-		System.out.println("Logica :: Entre al reiniciar");
-		nivelActual = n;
-		miGUI.cambiarFondo(nivelActual);
-		miGUI.actualizarVidas();
+	public void reiniciarNivel(int nuevoNivel) {
+        miGUI.dispose();
+		
+        // Crear un nuevo tablero
+        miTablero = new Tablero(this);
 
-		miTablero.resetar_tablero(miTablero.getFila(), miTablero.getColumna());
+        // Cargar el nuevo nivel en el tablero
+        miNivel = GeneradorNivel.cargar_nivel_y_tablero(miTablero, nuevoNivel, this);
 
-		miGUI.limpiarGUI();
+        // Crear una nueva GUI con el nuevo tablero
+        miGUI = new GUI(this, miTablero.getFila(), miTablero.getColumna());
+		//miGUI.resetear(this, miTablero.getFila(), miTablero.getColumna());
+		miGUI.cambiarFondo(nuevoNivel);
 
-		miNivel = GeneradorNivel.cargar_nivel_y_tablero(miTablero, nivelActual, this); // Carga el nivel actual
-
-		// asociarEntidadesLogicasGraficas();
-		miNivel.setMovimientos(miNivel.getTotalMovimientos());
-		miGUI.actualizarMovimientos(miNivel.getMovimientos());
-
-		miGUI.reiniciarProgreso();
-		miNivel.setTiempo(miNivel.getTotalTiempo());
-		miTablero.fijar_jugador(miNivel.getFilaInicialJugador(), miNivel.getColumnaInicialJugador());
+        // Asociar entidades lógicas y gráficas en el nuevo tablero
+        miTablero.asociar_entidades_logicas_y_graficas();
+        
+        // Fijar la posición inicial del jugador en el nuevo nivel
+        miTablero.fijar_jugador(miNivel.getFilaInicialJugador(), miNivel.getColumnaInicialJugador());
 		inicializarTiempo();
-	}
+    }
 
 	private void inicializarTiempo() {
 		Timer timer = new Timer();
@@ -223,7 +223,8 @@ public class Logica {
 		miGUI.mostrarMensajeFinDelJuego();
 	}
 
-	public Tablero getTablero() {
-		return miTablero.obtenerTablero();
+	public int getNivelActual() {
+		return nivelActual;
 	}
+
 }

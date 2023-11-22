@@ -560,7 +560,10 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 		panel_principal = new JPanel();
 	    animaciones_pendientes = 0;
 	    bloquear_intercambios = false;
-
+		miLogica = logica;
+		this.filas = filas;
+		this.columnas = columnas;
+		
 	    limpiarMatrizGUI();
 	    mi_central_paneles.mostrarPanelVidas();
 		mi_central_paneles.mostrarPanelScore();
