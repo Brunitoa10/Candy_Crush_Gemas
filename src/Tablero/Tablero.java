@@ -1,15 +1,15 @@
 package Tablero;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.PriorityQueue;
 import java.util.Random;
+import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 
-import Score.*;
 import Entidades.*;
 import GUI.*;
 import Logica.*;
@@ -21,7 +21,7 @@ public class Tablero implements TableroJuego{
 	protected int filas,columnas;
 	protected int fJugador,cJugador;
 	protected List<Entidad> entidades_asociadas;
-	public NotificadorDeEntidadesConTiempo notificadorDeGemasConTemporizador;
+	protected NotificadorDeEntidadesConTiempo notificadorDeGemasConTemporizador;
 
 	// Define un mapa para asociar las direcciones de intercambio con las funciones correspondientes
 	private final Map<Integer, BiFunction<Integer, Integer, Boolean>> operaciones = new HashMap<>();
@@ -105,17 +105,6 @@ public class Tablero implements TableroJuego{
 		return nombreGema;
 	}
 
-	public void caida(int puntero,int columna ) {
-		for (int i = puntero; i > 0; i--) {
-			if (entidades[i][columna].get_color() != 0) {
-				Entidad aux=entidades[i - 1][columna];
-				entidades[i][columna] = entidades[i - 1][columna];
-				entidades[i - 1][columna]=aux;
-			}
-		}
-		entidades[0][columna] = new GemaNormal(this,0,columna,new Color(new Random().nextInt(8)),true);
-	}
-	
 	private void mover_jugador_auxiliar(int nf, int nc) {
 		if (en_rango(nf,nc)) {
 			entidades[nf][nc].enfocar();
@@ -125,14 +114,6 @@ public class Tablero implements TableroJuego{
 		}
 	}
 
-	
-	
-	public void imprimirLista(LinkedList<Entidad> listaCombos) {
-        for (Entidad elemento : listaCombos) {
-            System.out.print(elemento.get_color()+" - ");
-        }
-    }
-	
 	public Tablero obtenerTablero() {
         return this;
     }
@@ -150,7 +131,6 @@ public class Tablero implements TableroJuego{
 		return (0 <= fila && fila < filas) && (0 <= columna && columna < columnas);
 	}
 	
-
 	public void imprimirTablero() {
 		for (int i = 0; i < filas; i++) {
 	        for (int j = 0; j < columnas; j++) {
@@ -160,7 +140,6 @@ public class Tablero implements TableroJuego{
 	    }
 	 }
 	
-	//---------------LO NUEVO-----------------
 	public void asociar_entidades_logicas_y_graficas() {
 		Entidad entidad;
 			
@@ -186,35 +165,6 @@ public class Tablero implements TableroJuego{
 		entidades[g.get_fila()][g.get_columna()] = g;
 		entidades_asociadas.add(g.get_gema_interna());
 	}
-	
-/*	private boolean intercambiar_entidades_y_transicionar(int fila_destino, int columna_destino) {
-		int fila_origen = fJugador;
-		int columna_origen = cJugador;
-		Entidad entidad_origen, entidad_destino;
-		EfectosDeTransicion efecto_intercambio = null;
-		boolean movimientoValido = false;
-		
-		if (en_rango(fila_destino, columna_destino)) {	
-			entidad_origen = entidades[fila_origen][columna_origen];
-			entidad_destino = entidades[fila_destino][columna_destino];
-			
-			if (entidad_origen.es_posible_intercambiar(entidad_destino)) {
-				cambiar_posicion_jugador(fila_destino, columna_destino);
-				entidad_origen.intercambiar(entidad_destino);
-				efecto_intercambio = calcular_efectos_por_intercambio(entidad_origen, entidad_destino);
-				
-				if (efecto_intercambio.existen_entidades_a_detonar()) {
-					transicionar_proximo_estado(efecto_intercambio);
-				}else{
-					deshacer_intercambio(entidad_origen, entidad_destino, fila_origen, columna_origen);
-				}
-			}
-			System.out.println("TABLERO despues de DETONAR y reemplazar");
-			imprimirTablero();
-			movimientoValido = true;
-		}
-		return movimientoValido;
-	}*/
 	
 	private boolean intercambiar_entidades_y_transicionar(int filaDestino, int columnaDestino) {
 	    int filaOrigen = fJugador;
@@ -297,14 +247,12 @@ public class Tablero implements TableroJuego{
 			manejarMatch(efecto_transicion, entidad_origen);
 	        manejarMatch(efecto_transicion, entidad_destino);
 		}else {
-			
 			// To DO: incorporar logica asociada a control de match, generador de potenciadores, etc. 
 			LinkedList<Entidad> listaEntidadesEnCombo = buscarCombos(entidad_origen.get_fila(),entidad_origen.get_columna(),entidad_destino.get_fila(),entidad_destino.get_columna());
 			for(int pos = 0; pos < listaEntidadesEnCombo.size(); pos ++) {
 				manejarMatch(efecto_transicion,listaEntidadesEnCombo.get(pos));
 			}
 		}
-		
 		return efecto_transicion;
 	}
 	
@@ -316,13 +264,13 @@ public class Tablero implements TableroJuego{
 			listaCombos.addAll(buscarCombosEnColumna(f1, c1));
 			listaCombos.addAll(buscarCombosEnFila(f2, c2));
 			listaCombos.addAll(buscarCombosEnColumna(f2, c2));
-			
+
 			miLogica.actualizarObjetivos(listaCombos);
 			
-			return listaCombos;
 		} else {
 			throw new IllegalArgumentException("Posición inválida en buscarCombos");
 		}
+		return listaCombos;
 	}
 	private LinkedList<Entidad> buscarCombosEnFila(int fila, int columna) {
 		LinkedList<Entidad> combosEnFila = new LinkedList<>();
@@ -401,15 +349,15 @@ public class Tablero implements TableroJuego{
 
 	private GemaNormal crearGemaNormalRandom(int fila, int columna) {
 	    // Lógica para crear una GemaNormal con color aleatorio
-	    return new GemaNormal(this, fila, columna,new Color(new Random().nextInt(7) + 1), false);
+	    return new GemaNormal(this, fila, columna,new Color(new Random().nextInt(6)+1), false);
 	}
 
 	
 	
 	protected void transicionar_proximo_estado(EfectosDeTransicion efecto_transicion) {
 		detonar(efecto_transicion.entidades_a_detonar());
-		agregar_entidades_nuevas(efecto_transicion.entidades_a_incorporar());
-		//aplicar_caida_y_reubicar(efecto_transicion.entidades_a_reemplazar());
+		//agregar_entidades_nuevas(efecto_transicion.entidades_a_incorporar());
+		aplicar_caida_y_reubicar(efecto_transicion.entidades_a_reemplazar());
 	}
 	
 	protected void detonar(List<Entidad> entidades_a_detonar) {
@@ -417,7 +365,7 @@ public class Tablero implements TableroJuego{
 		imprimirTablero();
 		for(Entidad e: entidades_a_detonar) {
 			miLogica.agregarScore(e.get_score());
-			e.detonar(this); //Segun fede e.detonar();
+			e.detonar(this);
 		}
 		System.out.println("TABLERO despues de DETONAR");
 		imprimirTablero();
@@ -432,7 +380,46 @@ public class Tablero implements TableroJuego{
 	}
 	
 	protected void aplicar_caida_y_reubicar(List<Entidad> entidades_a_reemplazar) {
-		// To DO.
+    	// Obtener las columnas afectadas
+		Set<Integer> columnasAfectadas = new HashSet<>();
+		for (Entidad entidad : entidades_a_reemplazar) {
+			columnasAfectadas.add(entidad.get_columna());
+		}
+
+		// Iterar sobre cada columna afectada
+		for (int columna : columnasAfectadas) {
+			// Iterar desde abajo hacia arriba en la columna
+			for (int fila = filas - 1; fila >= 0; fila--) {
+				Entidad entidadActual = entidades[fila][columna];
+
+				// Verificar si la entidad actual debe ser reemplazada
+				if (entidades_a_reemplazar.contains(entidadActual)) {
+					// Realizar la caída
+					caerEntidad(entidadActual, fila, columna);
+
+					// Reubicar la entidad en la parte superior de la columna
+					reubicarEntidad(entidadActual, 0, columna);
+					//reubicar(entidadActual);
+				}
+			}
+    	}
+	}
+
+	private void caerEntidad(Entidad entidad, int filaOrigen, int columna) {
+		// Mover la entidad hacia abajo en la columna
+		for (int filaDestino = 0; filaDestino < filas - 1; filaDestino++) {
+			entidades[filaDestino][columna] = entidades[filaDestino + 1][columna];
+		}
+		// La última fila se convierte en una nueva entidad (puede ser una gema normal aleatoria)
+		entidades[filas - 1][columna] = crearGemaNormalRandom(filas - 1, columna);
+	}
+
+	private void reubicarEntidad(Entidad entidad, int fila, int columna) {
+		// Actualizar la posición de la entidad
+		entidad.cambiar_posicion(fila, columna);
+
+		// Vincular la entidad con la lógica y la interfaz gráfica
+		miLogica.asociar_entidad_logica_y_grafica(entidad);
 	}
 
 	@Override

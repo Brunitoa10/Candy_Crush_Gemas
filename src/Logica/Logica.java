@@ -3,8 +3,6 @@ package Logica;
 import java.awt.EventQueue;
 import java.util.LinkedList;
 import java.util.PriorityQueue;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
@@ -18,7 +16,6 @@ import Nivel.Nivel;
 import Score.AdministradordeScore;
 import Score.Jugador;
 import Tablero.Tablero;
-import Score.*;
 
 public class Logica {
 	// Atributos
@@ -186,22 +183,6 @@ public class Logica {
 		return miTablero.get_entidad(posx, posy);
 	}
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-			EventQueue.invokeLater(new Runnable() {
-				public void run() {
-					new Logica();
-				}
-			});
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			e.printStackTrace();
-		}
-	}
-
 	public String obtenerTipoDeGema(int tipoGema) {
 		return miTablero.obtenerTipoGema(tipoGema);
 	}
@@ -219,8 +200,6 @@ public class Logica {
 		} else {
 			finalizarJuego();
 		}
-
-		
 	}
 
 	private void cargarSiguienteNivel() {
@@ -246,4 +225,19 @@ public class Logica {
 		return nivelActual;
 	}
 
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		try {
+			EventQueue.invokeLater(new Runnable() {
+				public void run() {
+					new Logica();
+				}
+			});
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		}
+	}
 }
