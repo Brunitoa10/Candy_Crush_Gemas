@@ -30,12 +30,12 @@ public class PantallaPuntajes extends JPanel implements Pantalla {
 
     public void agregarComponentes() {
         GridBagConstraints gbc = new GridBagConstraints();
-		//PriorityQueue<Jugador> jugadores = miCentral.obtenerListadeJugadores();
+		PriorityQueue<Jugador> jugadores = miCentral.obtenerListadeJugadores();
 
         JLabel titulo_puntajes = miCentral.crearLabelConColor("MEJORES PUNTAJES:", "Algerian", Font.PLAIN, 40, Color.WHITE, 2, 1);
 		miCentral.agregarConGBCs(titulo_puntajes, this, gbc, 0, 0, 3, 1);
 
-		/*for(int i=5; i < 0;i--) {
+		for(int i=5; i < 0;i--) {
 			JLabel label_num = miCentral.crearLabelConColor((i+1) +" - ", "Algerian", Font.PLAIN, 30, Color.WHITE, 2, 1);
 			miCentral.agregarConGBCs(label_num, this, gbc, 0, i+1, 1, 1);
 
@@ -55,7 +55,7 @@ public class PantallaPuntajes extends JPanel implements Pantalla {
 						label_num.setForeground(Color.ORANGE);
 						label_nombre.setForeground(Color.ORANGE);
 					}
-		}*/
+		}
 
 		JButton button_volver = new JButton("Volver");
 		button_volver.setBackground(new Color(0, 0, 0, 200));
