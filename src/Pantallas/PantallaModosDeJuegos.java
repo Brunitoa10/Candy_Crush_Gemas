@@ -35,9 +35,11 @@ public class PantallaModosDeJuegos extends JPanel implements Pantalla {
 
 		JButton imageButton = crearBotonConImagen("/assets/modosDeJuego/original.png");
 		miCentral.agregarConGBCs(imageButton, this, gbc, 0, 1, 1, 1);
+        miCentral.agregarFuncionalidadSkinOriginal(this, imageButton);
 
 		JButton imageButton2 = crearBotonConImagen("/assets/modosDeJuego/halloween.png");
 		miCentral.agregarConGBCs(imageButton2, this, gbc, 2, 1, 1, 1);
+        miCentral.agregarFuncionalidadSkinHalloween(this, imageButton2);
 	}
 
     public void setVisibilidad(boolean vis) {
@@ -61,14 +63,6 @@ public class PantallaModosDeJuegos extends JPanel implements Pantalla {
 		boton.setBorderPainted(false);
 		boton.setRolloverEnabled(false);
 		boton.setBackground(new Color(0,0,0,0));
-
-        // Add an ActionListener if needed
-        boton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Handle button click
-            }
-        });
 
         return boton;
     }

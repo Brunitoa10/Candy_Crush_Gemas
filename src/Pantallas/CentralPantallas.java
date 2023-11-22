@@ -167,6 +167,32 @@ public class CentralPantallas {
 		return miGUI.obtenerListadeJugadores();
 	}
 
+	public void agregarFuncionalidadSkinOriginal(Pantalla p, JButton botonOriginal) {
+		botonOriginal.addActionListener(new ActionListener() {
+	        @Override
+	        public void actionPerformed(ActionEvent e) {
+				miLogica.set_skin("original");
+				panelPrincipal.setVisible(true);
+				p.setVisibilidad(false);
+				panelPrincipal.repaint();
+				panelPrincipal.revalidate();
+	            miLogica.inicializarJuego();
+	        }
+	    });
+	}
+
+	public void agregarFuncionalidadSkinHalloween(Pantalla p, JButton botonHalloween) {
+		botonHalloween.addActionListener(new ActionListener() {
+	        @Override
+	        public void actionPerformed(ActionEvent e) {
+				miLogica.set_skin("halloween");
+				panelPrincipal.setVisible(true);
+				p.setVisibilidad(false);
+	            miLogica.inicializarJuego();
+	        }
+	    });
+	}
+
 	public void agregarFuncionalidadBotonReiniciar(Pantalla p, JButton botonReiniciar) {
 		botonReiniciar.addActionListener(new ActionListener() {
 	        @Override

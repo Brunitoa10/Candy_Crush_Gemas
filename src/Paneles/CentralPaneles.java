@@ -157,6 +157,7 @@ public class CentralPaneles {
 	}
 
     public JLabel crearImagen(String ruta) {
+		System.out.println("La ruta en cuestion:" +ruta);
 	    ImageIcon imgIcon = new ImageIcon(this.getClass().getResource(ruta));
 	    Image imgEscalada = imgIcon.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
 	    Icon iconoEscalado = new ImageIcon(imgEscalada);

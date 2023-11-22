@@ -32,16 +32,16 @@ public class Logica {
 
 	// Constructor
 	public Logica() {
+		miTablero = new Tablero(this);
 		miGUI = new GUI(this, miTablero.getFila(), miTablero.getColumna());
 		miGUI.mostrar();
 		miGUI.mostrarModosDeJuego();
 	}
 
-	public void inicializarJuego()
-	{
+	public void inicializarJuego(){
 		nivelActual = 1;
-		miTablero = new Tablero(this);
 		miNivel = GeneradorNivel.cargar_nivel_y_tablero(miTablero, nivelActual, this, skin);
+		miGUI.inicializarJuego();
 		miTablero.asociar_entidades_logicas_y_graficas();
 		miTablero.fijar_jugador(miNivel.getFilaInicialJugador(), miNivel.getColumnaInicialJugador());
 		administradordeScore = new AdministradordeScore(miGUI.obtenerCentralPaneles());

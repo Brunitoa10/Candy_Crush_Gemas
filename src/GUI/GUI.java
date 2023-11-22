@@ -59,14 +59,14 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 		miLogica = l;
 		filas = f;
 		columnas = c;
-		movimientosRestantes = miLogica.getMovimientos();
 		animaciones_pendientes = 0;
 		bloquear_intercambios = false;
 		mi_animador = new CentralAnimaciones(this);
-		
 		inicializarGUI();
+		
+		
 	}
-	 
+
 	private void inicializarGUI() {
 		this.setContentPane(fondo);
 		
@@ -84,7 +84,13 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 		panel_principal.setSize(screenSize);
 		
 		panel_principal.setLayout(new GridBagLayout());
-		
+		getContentPane().add(panel_principal);
+		mostrarModosDeJuego();
+	}
+	 
+	public void inicializarJuego() {
+		repaint();
+		revalidate();
 		inicializarPanels();
 
 		panel_tablero = new JPanel();
@@ -103,7 +109,7 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 		agregarConGBCs(panel_tablero, panel_principal, c, 2, 1, 4, 4); 
 		
 		panel_tablero.setFocusable(true);
-		getContentPane().add(panel_principal);
+		
 	}
 
 	private void setearJFrame(Dimension screenSize) {
