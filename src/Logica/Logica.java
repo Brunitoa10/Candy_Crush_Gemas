@@ -199,6 +199,11 @@ public class Logica {
         });
 	}
 
+	
+    public void setEstrategias(LinkedList<Estrategias> estrategias) {
+		miTablero.crearAdministradorEstrategias(estrategias);
+    }
+
 	public void notificar_actualizacion_objetivos(int cant, int tipoGema) {
 		miGUI.actualizarProgreso(cant, tipoGema);
 	}
@@ -267,4 +272,5 @@ public class Logica {
 			e.printStackTrace();
 		}
 	}
+
 }

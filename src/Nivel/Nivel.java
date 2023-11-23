@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.Map;
 
 import Entidades.Entidad;
+import EstrategiaMatch.Estrategias;
 import Logica.EntidadLogica;
 import Logica.Logica;
 
@@ -19,6 +20,7 @@ public class Nivel {
 	protected int tiempo;
 	protected int vidas;
 	protected static Logica miLogica;
+	protected LinkedList<Estrategias> estrategias;
 
 	//Constructor
 	public Nivel(int posX, int posY,Logica l) {
@@ -110,6 +112,11 @@ public class Nivel {
 
 	public void setVidas(int vida) {
 		this.vidas = vida;
+	}
+
+	public void setEstrategias(LinkedList<Estrategias> estrategias)
+	{
+		miLogica.setEstrategias(estrategias);
 	}
 
 	public String[] obtenerInfoObjetivos() {

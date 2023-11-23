@@ -7,6 +7,8 @@ import Logica.*;
 
 import java.util.*;
 
+import EstrategiaMatch.EstrategiaFactory;
+import EstrategiaMatch.Estrategias;
 import Tablero.TableroJuego;
 
 import java.io.File;
@@ -59,6 +61,23 @@ public class GeneradorNivel {
                     id++;
                 }
             }
+
+            // Leer Estrategias hasta encontrar la marca 'f'
+            id = 0;
+            continuar = true;
+            LinkedList<Estrategias> estrategias= new LinkedList<Estrategias>();
+            while (input.hasNextLine() && continuar) {
+                String line = input.nextLine();
+                char myChar = line.charAt(0);
+                if (line.equals("f")) {
+                    continuar = false;
+                } else {
+                    Estrategias estrategia= EstrategiaFactory.createEstrategia(myChar);
+                    estrategias.addLast(estrategia);
+                    id++;
+                }
+            }
+            miNivel.setEstrategias(estrategias);
 
             t.resetar_tablero(filas, columnas);
 

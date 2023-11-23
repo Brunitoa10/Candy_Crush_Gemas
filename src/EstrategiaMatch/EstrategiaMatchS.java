@@ -6,18 +6,19 @@ import Entidades.Entidad;
 import Entidades.GemaEnvuelta;
 import Logica.Color;
 
-public class EstrategiaMatchT implements Estrategias{
+public class EstrategiaMatchS implements Estrategias{
+
    protected int prioridad;
-   public EstrategiaMatchT()
+   public EstrategiaMatchS()
    {
-      this.prioridad=3;
+      this.prioridad=2;
    }
 
     public Resultado se_Cumple_la_Estrategia(LinkedList<Entidad> horizontal, LinkedList<Entidad> vertical, Entidad origen) {
       Resultado toReturn=null;
       int tamañoHorizontal=horizontal.size();
       int tamañoVertical=vertical.size();
-      if(cumpleLasDimensiones(tamañoHorizontal,tamañoVertical) && cumpleLascondiciones(horizontal.getFirst(), horizontal.getLast(), vertical.getFirst(), vertical.getLast(),horizontal,vertical))
+      if(cumpleLasDimensiones(tamañoHorizontal,tamañoVertical) && cumpleLascondiciones(horizontal.getFirst(), horizontal.getLast(), vertical.getFirst(), vertical.getLast()))
       {
        Entidad gemaCreada= new GemaEnvuelta(origen.get_TableroNotificable(),origen.get_fila() ,origen.get_columna(),new Color(origen.get_color()), false, origen.get_Skin());
        LinkedList<Entidad> toInsert= enlazarListas(horizontal, vertical);
@@ -45,9 +46,9 @@ public class EstrategiaMatchT implements Estrategias{
        return (tamañoHorizontal>=3 && tamañoVertical>=3);
     }
 
-    private boolean cumpleLascondiciones(Entidad primeraEntidadHorizontal, Entidad ultimaEntidadHorizontal, Entidad primeraEntidadVertical, Entidad ultimaEntidadVertical, LinkedList<Entidad> horizontal, LinkedList<Entidad> vertical)
+    private boolean cumpleLascondiciones(Entidad primeraEntidadHorizontal, Entidad ultimaEntidadHorizontal, Entidad primeraEntidadVertical, Entidad ultimaEntidadVertical)
     {
-      return (primeraEntidadHorizontal.equals(ultimaEntidadVertical)) && !(primeraEntidadHorizontal.equals(primeraEntidadVertical)) && (horizontal.contains(primeraEntidadVertical)) || !(primeraEntidadVertical.equals(ultimaEntidadHorizontal)) && !(primeraEntidadVertical.equals(primeraEntidadHorizontal)) && (vertical.contains(primeraEntidadHorizontal));
+      return !(primeraEntidadHorizontal.equals(ultimaEntidadVertical)) && !(primeraEntidadHorizontal.equals(primeraEntidadVertical)) && !(primeraEntidadVertical.equals(ultimaEntidadHorizontal)) && !(primeraEntidadVertical.equals(primeraEntidadHorizontal));
     }
 
     public void set_prioridad(int prioridad)
@@ -62,6 +63,6 @@ public class EstrategiaMatchT implements Estrategias{
 
     public String get_NombreRegla()
     {
-      return ("T");
+      return ("S");
     }
 }

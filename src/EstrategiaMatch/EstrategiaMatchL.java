@@ -9,9 +9,9 @@ import Logica.Color;
 public class EstrategiaMatchL implements Estrategias{
 
    protected int prioridad;
-   public EstrategiaMatchL(int prioridad)
+   public EstrategiaMatchL()
    {
-      this.prioridad=prioridad;
+      this.prioridad=4;
    }
 
     public Resultado se_Cumple_la_Estrategia(LinkedList<Entidad> horizontal, LinkedList<Entidad> vertical, Entidad origen) {

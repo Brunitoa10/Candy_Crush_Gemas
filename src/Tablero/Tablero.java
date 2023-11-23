@@ -1,6 +1,7 @@
 package Tablero;
 
 import java.util.HashMap;
+import java.util.*;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -504,4 +505,8 @@ public class Tablero implements TableroJuego{
 	public NotificadorDeEntidadesConTiempo obtenerObserver() {
 		return notificadorDeGemasConTemporizador;
 	}
+
+    public void crearAdministradorEstrategias(LinkedList<Estrategias> estrategias) {
+		miAdministradordeEstrategias= new AdministradorEstrategias(estrategias,this);
+    }
 }
