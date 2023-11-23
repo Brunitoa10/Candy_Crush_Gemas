@@ -35,14 +35,17 @@ public class PantallaPuntajes extends JPanel implements Pantalla {
         JLabel titulo_puntajes = miCentral.crearLabelConColor("MEJORES PUNTAJES:", "Algerian", Font.PLAIN, 40, Color.WHITE, 2, 1);
 		miCentral.agregarConGBCs(titulo_puntajes, this, gbc, 0, 0, 3, 1);
 
-		for(int i=5; i < 0;i--) {
+		for(int i=0; i < obtenerListadeJugadores().size();i++) {
+			String[] nombresJugadores = miCentral.obtenerArrayNombresJugadores();
+			int[] scoreJugadores = miCentral.obtenerArrayScoreJugadores();
+
 			JLabel label_num = miCentral.crearLabelConColor((i+1) +" - ", "Algerian", Font.PLAIN, 30, Color.WHITE, 2, 1);
 			miCentral.agregarConGBCs(label_num, this, gbc, 0, i+1, 1, 1);
 
-			JLabel label_nombre = miCentral.crearLabelConColor(jugadores.peek().get_nombre(), "Algerian", Font.PLAIN, 30, Color.WHITE, 2, 1);
+			JLabel label_nombre = miCentral.crearLabelConColor(nombresJugadores[i], "Algerian", Font.PLAIN, 30, Color.WHITE, 2, 1);
 			miCentral.agregarConGBCs(label_nombre, this, gbc, 1, i+1, 1, 1);
 
-			JLabel label_puntaje1 = miCentral.crearLabel(agregarPadding(jugadores.remove().get_score()), 30);
+			JLabel label_puntaje1 = miCentral.crearLabel(agregarPadding(scoreJugadores[i]), 30);
 			miCentral.agregarConGBCs(label_puntaje1, this, gbc, 2, i+1, 1, 1);
 
 			if(i==0) {
@@ -55,8 +58,7 @@ public class PantallaPuntajes extends JPanel implements Pantalla {
 						label_num.setForeground(Color.ORANGE);
 						label_nombre.setForeground(Color.ORANGE);
 					}
-		}
-
+				}
 		JButton button_volver = new JButton("Volver");
 		button_volver.setBackground(new Color(0, 0, 0, 200));
 	    button_volver.setForeground(Color.WHITE);
@@ -80,11 +82,11 @@ public class PantallaPuntajes extends JPanel implements Pantalla {
 	private String agregarPadding(int score) {
 		String padding ="";
 		if(score <= 9) {
-			padding = "000";
+			padding = "0000";
 			} else if(score <= 99) {
-				padding = "00";
+				padding = "000";
 			}	else if(score <= 999) {
-				padding = "0";
+				padding = "00";
 			}
 
 		return padding + score;

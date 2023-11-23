@@ -16,9 +16,8 @@ public class Bomba extends Obstaculo implements EntidadNotificable {
     cargarImagenesRepresentativas(rutadeLaImagen);
     System.out.println("CREACION DE BOMBA");
     notificador = n;
-    notificador.subscribirse(this);
     logica = l;
-    
+    l.suscribirBombaATimer(this);
    }
 
     public void detonar(Tablero t) {
@@ -56,21 +55,21 @@ public class Bomba extends Obstaculo implements EntidadNotificable {
     }
 
     public void notificar() {
-        System.out.println(tiempo);
         tiempo--;
         cargarImagenesRepresentativas(rutadeLaImagen);
         System.out.println(enfocada);
         if(enfocada){
-            System.out.println("enfocada, enfocar");
             enfocar();}
         else {
-            System.out.println("desenfocada");
             desenfocar(); // para que se actualice con el sprite adecuado
-            }
+        }
         if(tiempo <= 0){
             finalizarJuegoPorExplosionDeBomba();
         }
     }
 
+    public int getTiempo() {
+        return tiempo;
+    }
 
 }
