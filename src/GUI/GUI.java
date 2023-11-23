@@ -116,7 +116,7 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 		panel_tablero = new JPanel();
 		panel_tablero.setSize(size_label * filas, size_label * columnas);
 		panel_tablero.setLayout(new GridBagLayout());
-		panel_tablero.setBackground(new Color(0,0,0,255));
+		panel_tablero.setBackground(new Color(0,0,0,125));
 
 		configurarAccionesTeclado();
 		

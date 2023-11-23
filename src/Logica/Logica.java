@@ -48,8 +48,7 @@ public class Logica {
 		inicializarTiempo();
 	}
 
-	public void set_skin(String skin)
-	{
+	public void set_skin(String skin){
 		this.skin=skin;
 	}
 
@@ -135,7 +134,7 @@ public class Logica {
 	}
 
 	public void reiniciarNivel(int nuevoNivel) {
-		
+		this.nivelActual = nuevoNivel;
         // Crear un nuevo tablero
         miTablero = new Tablero(this);
 
@@ -192,22 +191,6 @@ public class Logica {
 		return miTablero.get_entidad(posx, posy);
 	}
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-			EventQueue.invokeLater(new Runnable() {
-				public void run() {
-					new Logica();
-				}
-			});
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			e.printStackTrace();
-		}
-	}
-
 	public String obtenerTipoDeGema(int tipoGema) {
 		return miTablero.obtenerTipoGema(tipoGema);
 	}
@@ -224,9 +207,7 @@ public class Logica {
 			cargarSiguienteNivel();
 		} else {
 			finalizarJuego();
-		}
-
-		
+		}	
 	}
 
 	private void cargarSiguienteNivel() {
@@ -252,4 +233,19 @@ public class Logica {
 		return nivelActual;
 	}
 
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		try {
+			EventQueue.invokeLater(new Runnable() {
+				public void run() {
+					new Logica();
+				}
+			});
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		}
+	}
 }
