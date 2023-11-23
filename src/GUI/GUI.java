@@ -108,7 +108,6 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
         };
     }
 	public void inicializarJuego() {
-		SwingUtilities.invokeLater(()->{
 		eliminarPantallaModosDeJuego();
 		setContentPane(fondo);
 		repaint();
@@ -130,13 +129,27 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 		c.weightx = 1;
 		c.weighty = 1;
 		c.anchor = GridBagConstraints.CENTER;
-		agregarConGBCs(panel_tablero, panel_principal, c, 2, 1, 4, 4); 
 		
-		panel_principal.setFocusable(true);
+		agregarConGBCs(panel_tablero, panel_principal, c, 2, 1, 4, 4); 
+		panel_tablero.setVisible(true);
+		panel_tablero.setRequestFocusEnabled(true);
 		panel_tablero.setFocusable(true);
-		panel_tablero.requestFocus();
 		getContentPane().add(panel_principal);
+
+		SwingUtilities.invokeLater(()->{
+			panel_principal.requestFocus();
+			panel_tablero.requestFocus();
+			panel_tablero.grabFocus();
+			repaint();
+			revalidate();
 		});
+	}
+
+	public void darFocusATablero() {
+		panel_tablero.requestFocus();
+		panel_tablero.grabFocus();
+		repaint();
+		revalidate();
 	}
 
 	private void configurarAccionesTeclado() {

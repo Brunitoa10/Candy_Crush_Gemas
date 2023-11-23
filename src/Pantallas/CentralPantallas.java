@@ -3,6 +3,7 @@ package Pantallas;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 import GUI.GUI;
 import Logica.Logica;
@@ -198,12 +199,13 @@ public class CentralPantallas {
 	        @Override
 	        public void actionPerformed(ActionEvent e) {
 				miLogica.set_skin("halloween");
-	            miLogica.inicializarJuego();
-				p.setVisibilidad(false);
-				p.refrescar();
-				panelPrincipal.setVisible(true);
 				panelPrincipal.setFocusable(true);
 				panelPrincipal.requestFocusInWindow();
+				panelPrincipal.setVisible(true);
+				p.setVisibilidad(false);
+				panelPrincipal.repaint();
+				panelPrincipal.revalidate();
+	            miLogica.inicializarJuego();
 	        }
 	    });
 	}
@@ -238,6 +240,12 @@ public class CentralPantallas {
 					panelPrincipal.setVisible(true);
 					p.setVisibilidad(false);
 					miLogica.reanudarTiempo();
+					SwingUtilities.invokeLater(()->{
+						panelPrincipal.requestFocus();
+						miGUI.repaint();
+						miGUI.revalidate();
+						miGUI.darFocusATablero();
+					});
 				}
 			});
 	}
