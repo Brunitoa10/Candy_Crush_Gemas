@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
-import java.awt.ContainerOrderFocusTraversalPolicy;
 import java.awt.GridBagConstraints;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
@@ -14,12 +13,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.PriorityQueue;
 import java.awt.Insets;
-import java.awt.List;
 import java.awt.Toolkit;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import java.awt.Dimension;
-import java.awt.FocusTraversalPolicy;
 import java.awt.Graphics;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -94,7 +91,7 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 		mostrarModosDeJuego();
 	}
 	
-	public static FocusListener createFocusListener(String panelName) {
+	public FocusListener createFocusListener(String panelName) {
         return new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {

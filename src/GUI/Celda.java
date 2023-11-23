@@ -8,7 +8,6 @@ import javax.swing.JLabel;
 
 import Logica.EntidadLogica;
 
-@SuppressWarnings("serial")
 public class Celda extends JLabel implements EntidadGrafica {
 	
 	protected GUI ventana;
