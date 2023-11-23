@@ -1,24 +1,24 @@
 package Timer;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 // Custom event class to represent the tick
-class TickEvent {
-    // You can include additional information related to the event if needed
-}
+
 
 // Observable timer class
-class ObservableTimer {
+public class ObservableTimer {
     private ScheduledExecutorService scheduler;
-    private TickObserver tickObserver;
+    private List<TickObserver> observers;
     private ScheduledFuture<?> future;
 
     public ObservableTimer() {
         scheduler = Executors.newSingleThreadScheduledExecutor();
-        tickObserver = new TickObserver();
+        observers = new ArrayList<>();
 
         // Schedule the task to execute every second
         future = scheduler.scheduleAtFixedRate(() -> notifyObservers(new TickEvent()), 1, 1, TimeUnit.SECONDS);
@@ -26,12 +26,19 @@ class ObservableTimer {
 
     // Add an observer
     public void addObserver(TickObserver observer) {
-        tickObserver = observer;
+        observers.add(observer);
+    }
+
+    // Remove an observer
+    public void removeObserver(TickObserver observer) {
+        observers.remove(observer);
     }
 
     // Notify observers
     private void notifyObservers(TickEvent event) {
-        tickObserver.update(event);
+        for (TickObserver observer : observers) {
+            observer.update(event);
+        }
     }
 
     // Pause the timer
@@ -53,15 +60,6 @@ class ObservableTimer {
         scheduler.shutdown();
     }
 }
-
-// Observer class
-class TickObserver {
-    public void update(TickEvent event) {
-        // Do something when a second has passed
-        System.out.println("Tick!");
-    }
-}
-
 
 //ejemplo (gracias chatGPT)
 

@@ -107,7 +107,6 @@ public class CentralPantallas {
 	    miModosDeJuegos = new PantallaModosDeJuegos(this);
 	    miModosDeJuegos.crearPantalla(Frame.MAXIMIZED_HORIZ, Frame.MAXIMIZED_HORIZ);
 		miModosDeJuegos.agregarComponentes();
-		miModosDeJuegos.addFocusListener(miGUI.createFocusListener("modos de juego"));
 
 	    miGUI.getContentPane().add(miModosDeJuegos);
 
@@ -120,7 +119,6 @@ public class CentralPantallas {
 		miModosDeJuegos.setVisibilidad(false);
 		panelPrincipal.setFocusable(true);
 		panelPrincipal.requestFocusInWindow();
-		
 	}
 	
 	public void mostrarPuntajes() {
@@ -135,6 +133,14 @@ public class CentralPantallas {
 
 	    mensajePanel.setVisibilidad(true);
 	    mensajePanel.revalidate();
+	}
+
+	public String[] obtenerArrayNombresJugadores() {
+		return miGUI.obtenerArrayNombresJugadores();
+	}
+
+	public int[] obtenerArrayScoreJugadores() {
+		return miGUI.obtenerArrayScoreJugadores();
 	}
 
     public void agregarConGBCs(Component componenteAAgregar, JPanel panelBase, GridBagConstraints gbc, int gridx, int gridy, int gridwidth,int gridheight) {

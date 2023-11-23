@@ -2,12 +2,17 @@ package Logica;
 
 import java.awt.EventQueue;
 import java.util.LinkedList;
+import Timer.ObservableTimer;
+import Timer.TickEvent;
+import Timer.TickObserver;
+
 import java.util.PriorityQueue;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
+import Entidades.Bomba;
 import Entidades.Entidad;
 import GUI.GUI;
 import GUI.EntidadGrafica;
@@ -26,9 +31,9 @@ public class Logica {
 	private int nivelActual;
 	private static final int MAX_NIVEL = 6;
 	protected AdministradordeScore administradordeScore;
-	private ScheduledExecutorService executorService;
-    private ScheduledFuture<?> future;
 	protected String skin;
+	ObservableTimer observableTimer = new ObservableTimer();
+	
 
 	// Constructor
 	public Logica() {
@@ -102,6 +107,14 @@ public class Logica {
 		return miNivel.obtenerInfoObjetivos();
 	}
 
+	public String[] obtenerArrayNombresJugadores() {
+		return administradordeScore.obtenerArrayNombresJugadores();
+	}
+
+	public int[] obtenerArrayScoreJugadores() {
+		return administradordeScore.obtenerArrayScoreJugadores();
+	}
+
 	public PriorityQueue<Jugador> obtenerListadeJugadores() {
 		return administradordeScore.obtenerListadeJugadores();
 	}
@@ -156,28 +169,33 @@ public class Logica {
     }
 
 	private void inicializarTiempo() {
-        executorService = Executors.newSingleThreadScheduledExecutor();
-
-        future = executorService.scheduleAtFixedRate(() -> {
-            disminuirTiempo();
-            miGUI.actualizarTimer(getTiempo());
-        }, 1, 1, TimeUnit.SECONDS);  // Inicia el temporizador después de 1 segundo y se ejecuta cada 1 segundo
+        // Add the observer
+		observableTimer.resume();
+        observableTimer.addObserver(new TickObserver() {
+            @Override
+            public void update(TickEvent event) {
+                disminuirTiempo();
+            	miGUI.actualizarTimer(getTiempo());
+            }
+        });
     }
 
     public void pausarTiempo() {
-        if (future != null && !future.isCancelled()) {
-            future.cancel(false);
-        }
+        observableTimer.pause();
     }
 
     public void reanudarTiempo() {
-        if (executorService != null && (future == null || future.isCancelled())) {
-            future = executorService.scheduleAtFixedRate(() -> {
-                disminuirTiempo();
-                miGUI.actualizarTimer(getTiempo());
-            }, 1, 1, TimeUnit.SECONDS);
-        }
+        observableTimer.resume();
     }
+
+	public void suscribirBombaATimer(Bomba bomba) {
+        observableTimer.addObserver(new TickObserver() {
+            @Override
+            public void update(TickEvent event) {
+                bomba.notificar();
+            }
+        });
+	}
 
 	public void notificar_actualizacion_objetivos(int cant, int tipoGema) {
 		miGUI.actualizarProgreso(cant, tipoGema);
