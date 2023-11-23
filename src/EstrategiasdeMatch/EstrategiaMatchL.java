@@ -14,7 +14,7 @@ public class EstrategiaMatchL implements Estrategias{
 
     public Resultado se_Cumple_la_Estrategia(LinkedList<Entidad> horizontal, LinkedList<Entidad> vertical, Entidad origen) {
       Resultado toReturn=null;
-      if((horizontal.getFirst().equals(vertical.getLast())) || (horizontal.getFirst().equals(vertical.getFirst())) || (horizontal.getLast().equals(vertical.getLast()))||(horizontal.getLast().equals(vertical.getFirst())))
+      if((horizontal.size()>=3 && vertical.size()>=3) && ((horizontal.getFirst().equals(vertical.getLast())) || (horizontal.getFirst().equals(vertical.getFirst())) || (horizontal.getLast().equals(vertical.getLast()))||(horizontal.getLast().equals(vertical.getFirst()))))
       {
        Entidad gemaCreada= new GemaEnvuelta(origen.get_TableroNotificable(),origen.get_fila() ,origen.get_columna(),new Color(origen.get_color()), false, origen.get_Skin());
        LinkedList<Entidad> toInsert= enlazarListas(horizontal, vertical);

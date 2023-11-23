@@ -43,9 +43,9 @@ public class AdministradorEstrategias {
                            resultadoparcial2= estrategias.next().se_Cumple_la_Estrategia(caramelosEnFila, caramelosEnColumna, entidad); 
                           }
                                }
-                                    if(resultadoparcial2!=null)
+                                 if(resultadoparcial2!=null)
                                     {
-                                         resultadoparcial=resultadoparcial2;
+                                     resultadoparcial=resultadoparcial2;
                                      }
                                        }
        else

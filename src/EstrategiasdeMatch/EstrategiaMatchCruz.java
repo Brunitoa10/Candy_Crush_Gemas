@@ -14,7 +14,7 @@ public class EstrategiaMatchCruz implements Estrategias{
 
     public Resultado se_Cumple_la_Estrategia(LinkedList<Entidad> horizontal, LinkedList<Entidad> vertical, Entidad origen) {
       Resultado toReturn=null;
-      if(!(horizontal.getFirst().equals(vertical.getLast())) && !(horizontal.getFirst().equals(vertical.getFirst())) && !(vertical.getFirst().equals(horizontal.getLast())) && !(vertical.getFirst().equals(horizontal.getFirst())))
+      if((horizontal.size()>=4 && vertical.size()>=3) && !(horizontal.getFirst().equals(vertical.getLast())) && !(horizontal.getFirst().equals(vertical.getFirst())) && !(vertical.getFirst().equals(horizontal.getLast())) && !(vertical.getFirst().equals(horizontal.getFirst())))
       {
        Entidad gemaCreada= new GemaEnvuelta(origen.get_TableroNotificable(),origen.get_fila() ,origen.get_columna(),new Color(origen.get_color()), false, origen.get_Skin());
        LinkedList<Entidad> toInsert= enlazarListas(horizontal, vertical);
