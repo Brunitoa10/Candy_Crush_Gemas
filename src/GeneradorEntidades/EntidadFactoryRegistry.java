@@ -18,4 +18,5 @@ public class EntidadFactoryRegistry {
     public static Map<String, EntidadFactory> getEntidadFactories() {
         return entidadFactories;
     }
+   
 }

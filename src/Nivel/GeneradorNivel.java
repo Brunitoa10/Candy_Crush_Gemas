@@ -12,16 +12,6 @@ import Tablero.TableroJuego;
 import java.io.File;
 
 public class GeneradorNivel {
-	/*private static final Map<String, EntidadFactory> entidadFactories = new HashMap<>();
-
-    static {
-        entidadFactories.put("n", new GemaNormalFactory());
-        entidadFactories.put("r", new RocaFactory());
-        entidadFactories.put("b", new BombaFactory());
-        entidadFactories.put("p", new GemaRayadaFactory());
-        entidadFactories.put("e", new GemaEnvueltaFactory());
-        entidadFactories.put("c", new GemaCruzadaFactory());
-    }*/
     private static final Map<String, EntidadFactory> entidadFactories = EntidadFactoryRegistry.getEntidadFactories();
     
 	public static Nivel cargar_nivel_y_tablero(TableroJuego t, int nivel,Logica l, String skin) {

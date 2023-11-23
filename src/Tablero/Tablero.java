@@ -14,6 +14,7 @@ import Entidades.*;
 import GUI.*;
 import GeneradorEntidades.EntidadFactory;
 import GeneradorEntidades.EntidadFactoryRegistry;
+import GeneradorEntidades.GemaNormalFactory;
 import Logica.*;
 
 public class Tablero implements TableroJuego{
@@ -109,17 +110,6 @@ public class Tablero implements TableroJuego{
 		}
 		return nombreGema;
 	}
-
-	/*public void caida(int puntero,int columna ) {
-		for (int i = puntero; i > 0; i--) {
-			if (entidades[i][columna].get_color() != 0) {
-				Entidad aux=entidades[i - 1][columna];
-				entidades[i][columna] = entidades[i - 1][columna];
-				entidades[i - 1][columna]=aux;
-			}
-		}
-		entidades[0][columna] = new GemaNormal(this,0,columna,new Color(new Random().nextInt(8)),true,skin);
-	}*/
 	
 	private void mover_jugador_auxiliar(int nf, int nc) {
 		if (en_rango(nf,nc)) {
@@ -369,16 +359,19 @@ public class Tablero implements TableroJuego{
 	
 	private void manejarMatch(EfectosDeTransicion efecto_transicion, Entidad entidad) {
 	    efecto_transicion.agregar_entidad_a_detonar_y_reemplazar(entidad);
-	    efecto_transicion.agregar_entidad_de_reemplazo(crearGemaRandom(entidad.get_fila(), entidad.get_columna()));
+	    efecto_transicion.agregar_entidad_de_reemplazo(crearGemaNormalRandom(entidad.get_fila(), entidad.get_columna()));
 	}
 
-	private Gema crearGemaRandom(int fila, int columna) {
-	    return entidadFactories.crear(this, fila, columna, partes,skin);
+	/*private Gema crearGemaNormalRandom(int fila, int columna) {
+	    return entidadFactories.crear(this, fila, columna,partes[0],skin);
+	}*/
+	private GemaNormal crearGemaNormalRandom(int fila, int columna) {
+		String[] partes = {"n"};  // Asegúrate de que partes contenga el valor "n"
+		return (GemaNormal) entidadFactories.get("n").crear(this, fila, columna, partes, skin);
 	}
-
 	protected void transicionar_proximo_estado(EfectosDeTransicion efecto_transicion) {
 		detonar(efecto_transicion.entidades_a_detonar());
-		//agregar_entidades_nuevas(efecto_transicion.entidades_a_incorporar());
+		agregar_entidades_nuevas(efecto_transicion.entidades_a_incorporar());
 		aplicar_caida_y_reubicar(efecto_transicion.entidades_a_reemplazar());
 	}
 	
