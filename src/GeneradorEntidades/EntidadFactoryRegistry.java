@@ -13,6 +13,10 @@ public class EntidadFactoryRegistry {
         entidadFactories.put("p", new GemaRayadaFactory());
         entidadFactories.put("e", new GemaEnvueltaFactory());
         entidadFactories.put("c", new GemaCruzadaFactory());
+        entidadFactories.put("hp", new HieloGemaRayadaFactory());
+        entidadFactories.put("he", new HieloGemaEnvueltaFactory());
+        entidadFactories.put("hc", new HieloGemaCruzadaFactory());
+        entidadFactories.put("hn", new HieloGemaNormalFactory());
     }
 
     public static Map<String, EntidadFactory> getEntidadFactories() {

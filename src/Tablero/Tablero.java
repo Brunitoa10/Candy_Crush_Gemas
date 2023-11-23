@@ -1,21 +1,19 @@
 package Tablero;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 
 import Entidades.*;
+import EstrategiaMatch.*;
 import GUI.*;
-import GeneradorEntidades.EntidadFactory;
-import GeneradorEntidades.EntidadFactoryRegistry;
-import GeneradorEntidades.GemaNormalFactory;
 import Logica.*;
+import Score.AdministradordeScore;
+
 
 public class Tablero implements TableroJuego{
 
@@ -25,6 +23,8 @@ public class Tablero implements TableroJuego{
 	protected int fJugador,cJugador;
 	protected List<Entidad> entidades_asociadas;
 	protected String skin;
+	protected AdministradordeScore miAdministradordeScore;
+	protected AdministradorEstrategias miAdministradordeEstrategias;
 	public NotificadorDeEntidadesConTiempo notificadorDeGemasConTemporizador;
 
 	// Define un mapa para asociar las direcciones de intercambio con las funciones correspondientes
@@ -32,9 +32,7 @@ public class Tablero implements TableroJuego{
 
 	// Define un mapa para asociar las direcciones de movimientos con las funciones correspondientes
 	private final Map<Integer, BiConsumer<Integer, Integer>> movimientos = new HashMap<>();
-	
-	private static final Map<String, EntidadFactory> entidadFactories = EntidadFactoryRegistry.getEntidadFactories();
-	
+
 	public Tablero(Logica l) {
 		miLogica = l;
 		notificadorDeGemasConTemporizador = new NotificadorDeEntidadesConTiempo();
@@ -67,12 +65,22 @@ public class Tablero implements TableroJuego{
 		entidades[e.get_fila()][e.get_columna()] = e;
 	}
 
-	public int getFila() {
+	public void set_Skin(String skin)
+	{
+		this.skin=skin;
+	}
+
+		public int getFila() {
 		return filas;
 	}
 
 	public int getColumna() {
 		return columnas;
+	}
+
+	public LinkedList<Estrategias> getEstrategias()
+	{
+		return miAdministradordeEstrategias.get_lista_de_Estrategias();
 	}
 
 	public void fijar_jugador(int f, int c) {
@@ -110,6 +118,17 @@ public class Tablero implements TableroJuego{
 		}
 		return nombreGema;
 	}
+
+	public void caida(int puntero,int columna ) {
+		for (int i = puntero; i > 0; i--) {
+			if (entidades[i][columna].get_color() != 0) {
+				Entidad aux=entidades[i - 1][columna];
+				entidades[i][columna] = entidades[i - 1][columna];
+				entidades[i - 1][columna]=aux;
+			}
+		}
+		entidades[0][columna] = new GemaNormal(this,0,columna,new Color(new Random().nextInt(8)),true,skin);
+	}
 	
 	private void mover_jugador_auxiliar(int nf, int nc) {
 		if (en_rango(nf,nc)) {
@@ -120,6 +139,8 @@ public class Tablero implements TableroJuego{
 		}
 	}
 
+	
+	
 	public void imprimirLista(LinkedList<Entidad> listaCombos) {
         for (Entidad elemento : listaCombos) {
             System.out.print(elemento.get_color()+" - ");
@@ -153,6 +174,7 @@ public class Tablero implements TableroJuego{
 	    }
 	 }
 	
+	//---------------LO NUEVO-----------------
 	public void asociar_entidades_logicas_y_graficas() {
 		Entidad entidad;
 			
@@ -179,6 +201,35 @@ public class Tablero implements TableroJuego{
 		entidades_asociadas.add(g.get_gema_interna());
 	}
 	
+/*	private boolean intercambiar_entidades_y_transicionar(int fila_destino, int columna_destino) {
+		int fila_origen = fJugador;
+		int columna_origen = cJugador;
+		Entidad entidad_origen, entidad_destino;
+		EfectosDeTransicion efecto_intercambio = null;
+		boolean movimientoValido = false;
+		
+		if (en_rango(fila_destino, columna_destino)) {	
+			entidad_origen = entidades[fila_origen][columna_origen];
+			entidad_destino = entidades[fila_destino][columna_destino];
+			
+			if (entidad_origen.es_posible_intercambiar(entidad_destino)) {
+				cambiar_posicion_jugador(fila_destino, columna_destino);
+				entidad_origen.intercambiar(entidad_destino);
+				efecto_intercambio = calcular_efectos_por_intercambio(entidad_origen, entidad_destino);
+				
+				if (efecto_intercambio.existen_entidades_a_detonar()) {
+					transicionar_proximo_estado(efecto_intercambio);
+				}else{
+					deshacer_intercambio(entidad_origen, entidad_destino, fila_origen, columna_origen);
+				}
+			}
+			System.out.println("TABLERO despues de DETONAR y reemplazar");
+			imprimirTablero();
+			movimientoValido = true;
+		}
+		return movimientoValido;
+	}*/
+	
 	private boolean intercambiar_entidades_y_transicionar(int filaDestino, int columnaDestino) {
 	    int filaOrigen = fJugador;
 	    int columnaOrigen = cJugador;
@@ -199,6 +250,7 @@ public class Tablero implements TableroJuego{
 	    	realizarIntercambioYTransicion(entidadOrigen, entidadDestino, filaOrigen, columnaOrigen);
 	    }
 
+	    imprimirTablero();
 	    return movientosValido;
 	}
 
@@ -281,12 +333,11 @@ public class Tablero implements TableroJuego{
 			
 			miLogica.actualizarObjetivos(listaCombos);
 			
+			return listaCombos;
 		} else {
 			throw new IllegalArgumentException("Posición inválida en buscarCombos");
 		}
-		return listaCombos;
 	}
-
 	private LinkedList<Entidad> buscarCombosEnFila(int fila, int columna) {
 		LinkedList<Entidad> combosEnFila = new LinkedList<>();
 
@@ -363,19 +414,9 @@ public class Tablero implements TableroJuego{
 	}
 
 	private GemaNormal crearGemaNormalRandom(int fila, int columna) {
-		String[] partes = new String[] {"n"};
-		// Obtén la fábrica de GemaNormal del registro
-		EntidadFactory gemaNormalFactory = EntidadFactoryRegistry.getEntidadFactories().get("n");
-	
-		// Crea la GemaNormal utilizando la fábrica
-		if (gemaNormalFactory != null) {
-			return (GemaNormal) gemaNormalFactory.crear(this, fila, columna, partes, skin);
-		} else {
-			// Manejar el caso en que la fábrica no está registrada
-			throw new IllegalStateException("Fábrica de GemaNormal no encontrada en el registro.");
-		}
+		String[] partes = {"n"};  // Asegúrate de que partes contenga el valor "n"
+		return (GemaNormal) entidadFactories.get("n").crear(this, fila, columna, partes, skin);
 	}
-	
 	protected void transicionar_proximo_estado(EfectosDeTransicion efecto_transicion) {
 		detonar(efecto_transicion.entidades_a_detonar());
 		agregar_entidades_nuevas(efecto_transicion.entidades_a_incorporar());
@@ -383,10 +424,14 @@ public class Tablero implements TableroJuego{
 	}
 	
 	protected void detonar(List<Entidad> entidades_a_detonar) {
+		System.out.println("TABLERO antes de DETONAR");
+		imprimirTablero();
 		for(Entidad e: entidades_a_detonar) {
 			miLogica.agregarScore(e.get_score());
-			e.detonar(this);
+			e.detonar(this); //Segun fede e.detonar();
 		}
+		System.out.println("TABLERO despues de DETONAR");
+		imprimirTablero();
 	}
 	
 	protected void agregar_entidades_nuevas(List<Entidad> entidades_a_incorporar) {
@@ -424,10 +469,16 @@ public class Tablero implements TableroJuego{
 
 	private void caerEntidad(Entidad entidad,int puntero ,int columna) {
 		// Mover la entidad hacia abajo en la columna
-		for (int filaDestino = filas - 1; filaDestino > 0; filaDestino--) {
+		/*for (int filaDestino = filas - 1; filaDestino > 0; filaDestino--) {
 			entidades[filaDestino][columna] = entidades[filaDestino - 1][columna];
+		}*/
+		for (int i = puntero; i > 0; i--) {
+			if (entidades[i][columna].get_color() != 0) {
+				Entidad aux=entidades[i - 1][columna];
+				entidades[i][columna] = entidades[i - 1][columna];
+				entidades[i - 1][columna]=aux;
+			}
 		}
-		
 		// La primera fila se convierte en una nueva entidad (puede ser una gema normal aleatoria)
 		entidades[0][columna] = crearGemaNormalRandom(0, columna);
 	}
@@ -438,12 +489,12 @@ public class Tablero implements TableroJuego{
 		// Actualizar la posición de la entidad
 		//entidad.cambiar_posicion(fila, columna);
 		// Vincular la entidad con la lógica y la interfaz gráfica
-		//miLogica.asociar_entidad_logica_y_grafica(entidad);
+		miLogica.asociar_entidad_logica_y_grafica(entidad);
 		
 		entidad.intercambiar_Caida(fila, columna);
 
 		// Vincular la entidad con la lógica y la interfaz gráfica
-		miLogica.asociar_entidad_logica_y_grafica(entidad);
+		//miLogica.asociar_entidad_logica_y_grafica(entidad);
 		
 		System.out.println("Despues de reubicar");
 		this.imprimirTablero();
