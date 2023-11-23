@@ -362,17 +362,24 @@ public class Tablero implements TableroJuego{
 	    efecto_transicion.agregar_entidad_de_reemplazo(crearGemaNormalRandom(entidad.get_fila(), entidad.get_columna()));
 	}
 
-	/*private Gema crearGemaNormalRandom(int fila, int columna) {
-	    return entidadFactories.crear(this, fila, columna,partes[0],skin);
-	}*/
 	private GemaNormal crearGemaNormalRandom(int fila, int columna) {
-		String[] partes = {"n"};  // Asegúrate de que partes contenga el valor "n"
-		return (GemaNormal) entidadFactories.get("n").crear(this, fila, columna, partes, skin);
+		String[] partes = new String[] {"n"};
+		// Obtén la fábrica de GemaNormal del registro
+		EntidadFactory gemaNormalFactory = EntidadFactoryRegistry.getEntidadFactories().get("n");
+	
+		// Crea la GemaNormal utilizando la fábrica
+		if (gemaNormalFactory != null) {
+			return (GemaNormal) gemaNormalFactory.crear(this, fila, columna, partes, skin);
+		} else {
+			// Manejar el caso en que la fábrica no está registrada
+			throw new IllegalStateException("Fábrica de GemaNormal no encontrada en el registro.");
+		}
 	}
+	
 	protected void transicionar_proximo_estado(EfectosDeTransicion efecto_transicion) {
 		detonar(efecto_transicion.entidades_a_detonar());
 		agregar_entidades_nuevas(efecto_transicion.entidades_a_incorporar());
-		aplicar_caida_y_reubicar(efecto_transicion.entidades_a_reemplazar());
+		//aplicar_caida_y_reubicar(efecto_transicion.entidades_a_reemplazar());
 	}
 	
 	protected void detonar(List<Entidad> entidades_a_detonar) {
@@ -417,16 +424,10 @@ public class Tablero implements TableroJuego{
 
 	private void caerEntidad(Entidad entidad,int puntero ,int columna) {
 		// Mover la entidad hacia abajo en la columna
-		/*for (int filaDestino = filas - 1; filaDestino > 0; filaDestino--) {
+		for (int filaDestino = filas - 1; filaDestino > 0; filaDestino--) {
 			entidades[filaDestino][columna] = entidades[filaDestino - 1][columna];
-		}*/
-		for (int i = puntero; i > 0; i--) {
-			if (entidades[i][columna].get_color() != 0) {
-				Entidad aux=entidades[i - 1][columna];
-				entidades[i][columna] = entidades[i - 1][columna];
-				entidades[i - 1][columna]=aux;
-			}
 		}
+		
 		// La primera fila se convierte en una nueva entidad (puede ser una gema normal aleatoria)
 		entidades[0][columna] = crearGemaNormalRandom(0, columna);
 	}
@@ -437,12 +438,12 @@ public class Tablero implements TableroJuego{
 		// Actualizar la posición de la entidad
 		//entidad.cambiar_posicion(fila, columna);
 		// Vincular la entidad con la lógica y la interfaz gráfica
-		miLogica.asociar_entidad_logica_y_grafica(entidad);
+		//miLogica.asociar_entidad_logica_y_grafica(entidad);
 		
 		entidad.intercambiar_Caida(fila, columna);
 
 		// Vincular la entidad con la lógica y la interfaz gráfica
-		//miLogica.asociar_entidad_logica_y_grafica(entidad);
+		miLogica.asociar_entidad_logica_y_grafica(entidad);
 		
 		System.out.println("Despues de reubicar");
 		this.imprimirTablero();
