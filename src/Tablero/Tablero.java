@@ -11,6 +11,7 @@ import java.util.function.BiFunction;
 import Entidades.*;
 import GUI.*;
 import Logica.*;
+import Score.AdministradordeScore;
 
 public class Tablero implements TableroJuego{
 
@@ -20,6 +21,7 @@ public class Tablero implements TableroJuego{
 	protected int fJugador,cJugador;
 	protected List<Entidad> entidades_asociadas;
 	protected String skin;
+	protected AdministradordeScore miAdministradordeScore;
 	public NotificadorDeEntidadesConTiempo notificadorDeGemasConTemporizador;
 
 	// Define un mapa para asociar las direcciones de intercambio con las funciones correspondientes

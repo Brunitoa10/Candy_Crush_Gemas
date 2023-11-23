@@ -14,6 +14,11 @@ public class AdministradorEstrategias {
        this.miTablero=miTablero;
     }
 
+	public LinkedList<Estrategias> get_lista_de_Estrategias()
+	{
+		return listas_Estrategias;
+	}
+
     public Resultado buscar_match(Entidad entidad)
     {
        LinkedList<Entidad> caramelosEnFila=buscarCombosEnFila(entidad.get_fila(), entidad.get_columna());
@@ -51,9 +56,32 @@ public class AdministradorEstrategias {
                 resultadoparcial=estrategias.next().se_Cumple_la_Estrategia(caramelosEnFila, caramelosEnColumna, entidad);
             }
             }
+		if(resultadoparcial==null)
+		{
+			resultadoparcial=gemasNormales(caramelosEnFila,caramelosEnColumna);
+		}
        return resultadoparcial;
     }
 
+	private Resultado gemasNormales(LinkedList<Entidad> caramelosEnFila,LinkedList<Entidad> caramelosEnColumna)
+	{
+		LinkedList<Entidad> toInsert=new LinkedList<>();
+		if(caramelosEnColumna.size()==3 && caramelosEnFila.size()<3)
+		{
+		   for(Entidad caramelo: caramelosEnColumna)
+		   {
+              toInsert.addLast(caramelo);
+		   }
+		}
+		if(caramelosEnFila.size()==3 && caramelosEnColumna.size()<3)
+		{
+		   for(Entidad caramelo: caramelosEnFila)
+		   {
+              toInsert.addLast(caramelo);
+		   }
+		}
+		return new Resultado(toInsert, null);
+	}
 
     private LinkedList<Entidad> buscarCombosEnFila(int fila, int columna) {
 		LinkedList<Entidad> combosEnFila = new LinkedList<>();
