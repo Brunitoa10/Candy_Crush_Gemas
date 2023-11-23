@@ -7,7 +7,7 @@ import EstrategiaDetonaciones.*;
 public class Bomba extends Obstaculo implements EntidadNotificable {
    protected int tiempo= tiempoInicial;
    protected NotificadorDeEntidadesConTiempo notificador;
-   protected static final int tiempoInicial = 10;
+   protected static final int tiempoInicial = 30;
    protected Logica logica;
 
 
