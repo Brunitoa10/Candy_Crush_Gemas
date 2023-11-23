@@ -6,7 +6,6 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.GridBagConstraints;
 import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.HashMap;
@@ -74,9 +73,7 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 		
 		ImageIcon logo = new ImageIcon(this.getClass().getResource("/assets/nivel/Icono.png"));
 		setIconImage(logo.getImage());
-		addFocusListener(createFocusListener("JFrame"));
 		panel_principal = new JPanel();
-		panel_principal.addFocusListener(createFocusListener("Panel principal"));
 		panel_principal.setBackground(new Color(0,0,0,0));
 		
 		mi_central_pantallas = new CentralPantallas(panel_principal, this, miLogica);
@@ -91,19 +88,6 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 		mostrarModosDeJuego();
 	}
 	
-	public FocusListener createFocusListener(String panelName) {
-        return new FocusListener() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                System.out.println(panelName + " gained focus");
-            }
-
-            @Override
-            public void focusLost(FocusEvent e) {
-                System.out.println(panelName + " lost focus");
-            }
-        };
-    }
 	public void inicializarJuego() {
 		eliminarPantallaModosDeJuego();
 		setContentPane(fondo);
@@ -394,6 +378,14 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 
 	public PriorityQueue<Jugador> obtenerListadeJugadores() {
 		return miLogica.obtenerListadeJugadores();
+	}
+
+	public String[] obtenerArrayNombresJugadores() {
+		return miLogica.obtenerArrayNombresJugadores();
+	}
+
+	public int[] obtenerArrayScoreJugadores() {
+		return miLogica.obtenerArrayScoreJugadores();
 	}
 
 	public int getMovimientos() {
