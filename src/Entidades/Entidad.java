@@ -21,6 +21,7 @@ public abstract class Entidad implements EntidadLogica, Enfocable, Intercambiabl
 	protected String[] imagenes;
 	protected EstategiaDetonacion estrategiadeDetonacion;
 	protected TableroNotificable tablero;
+	protected String skin;
 
 	//Constructor
 
@@ -79,6 +80,11 @@ public abstract class Entidad implements EntidadLogica, Enfocable, Intercambiabl
 		return columna;
 	}
 
+	public String get_Skin()
+	{
+		return skin;
+	}
+
 	public String get_rutadeLaImagen() {
 		return rutadeLaImagen;
 	}
@@ -92,6 +98,11 @@ public abstract class Entidad implements EntidadLogica, Enfocable, Intercambiabl
         return color.get_score();
 	}
 
+	public TableroNotificable get_TableroNotificable()
+	{
+		return tablero;
+	}
+	
 	public abstract Entidad get_gema_interna();
 	//Metodos particulares
 
