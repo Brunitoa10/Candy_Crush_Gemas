@@ -6,6 +6,12 @@ import Logica.Color;
 
 public class EstrategiaMatch4 implements Estrategias{
     
+   protected int prioridad;
+   public EstrategiaMatch4(int prioridad)
+   {
+      this.prioridad=prioridad;
+   }
+
     public Resultado se_Cumple_la_Estrategia(LinkedList<Entidad> horizontal, LinkedList<Entidad> vertical, Entidad origen) {
         Resultado toReturn=null;
         if(horizontal.size()==4 && vertical.size()<3)
@@ -23,4 +29,13 @@ public class EstrategiaMatch4 implements Estrategias{
      return toReturn;
     }
 
+    public void set_prioridad(int prioridad)
+    {
+      this.prioridad=prioridad;
+    }
+
+    public int get_prioridad()
+    {
+      return prioridad;
+    }
 }

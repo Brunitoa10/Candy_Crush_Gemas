@@ -5,6 +5,11 @@ import Entidades.GemaEnvuelta;
 import Logica.Color;
 
 public class EstrategiaMatchT implements Estrategias{
+   protected int prioridad;
+   public EstrategiaMatchT(int prioridad)
+   {
+      this.prioridad=prioridad;
+   }
 
     public Resultado se_Cumple_la_Estrategia(LinkedList<Entidad> horizontal, LinkedList<Entidad> vertical, Entidad origen) {
       Resultado toReturn=null;
@@ -29,5 +34,15 @@ public class EstrategiaMatchT implements Estrategias{
             toReturn.addLast(ent);
          }
          return toReturn;
+    }
+
+    public void set_prioridad(int prioridad)
+    {
+      this.prioridad=prioridad;
+    }
+
+    public int get_prioridad()
+    {
+      return prioridad;
     }
 }

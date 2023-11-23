@@ -6,6 +6,12 @@ import Logica.Color;
 
 public class EstrategiaMatchCruz implements Estrategias{
 
+   protected int prioridad;
+   public EstrategiaMatchCruz(int prioridad)
+   {
+      this.prioridad=prioridad;
+   }
+
     public Resultado se_Cumple_la_Estrategia(LinkedList<Entidad> horizontal, LinkedList<Entidad> vertical, Entidad origen) {
       Resultado toReturn=null;
       if(!(horizontal.getFirst().equals(vertical.getLast())) && !(horizontal.getFirst().equals(vertical.getFirst())) && !(vertical.getFirst().equals(horizontal.getLast())) && !(vertical.getFirst().equals(horizontal.getFirst())))
@@ -29,5 +35,15 @@ public class EstrategiaMatchCruz implements Estrategias{
             toReturn.addLast(ent);
          }
          return toReturn;
+    }
+
+    public void set_prioridad(int prioridad)
+    {
+      this.prioridad=prioridad;
+    }
+
+    public int get_prioridad()
+    {
+      return prioridad;
     }
 }
