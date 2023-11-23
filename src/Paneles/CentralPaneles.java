@@ -40,6 +40,7 @@ public class CentralPaneles {
         miPanelScore = new PanelScore(this);
 		miPanelScore.crearPanel();
         miPanelScore.agregarAPanelPrincipal();
+		miPanelScore.addFocusListener(miGUI.createFocusListener("score"));
     }
 
 	public void actualizarScore(int score) {

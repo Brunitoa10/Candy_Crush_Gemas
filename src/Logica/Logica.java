@@ -135,7 +135,6 @@ public class Logica {
 	}
 
 	public void reiniciarNivel(int nuevoNivel) {
-        miGUI.dispose();
 		
         // Crear un nuevo tablero
         miTablero = new Tablero(this);
@@ -145,7 +144,7 @@ public class Logica {
 
 	
         // Crear una nueva GUI con el nuevo tablero
-        miGUI = new GUI(this, miTablero.getFila(), miTablero.getColumna());
+        miGUI.reiniciarGUI(miTablero.getFila(), miTablero.getColumna());
 		//miGUI.resetear(this, miTablero.getFila(), miTablero.getColumna());
 		miGUI.cambiarFondo(nuevoNivel);
 		miGUI.actualizarScore(administradordeScore.getScore());

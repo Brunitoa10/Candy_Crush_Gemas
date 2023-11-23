@@ -106,6 +106,7 @@ public class CentralPantallas {
 	    miModosDeJuegos = new PantallaModosDeJuegos(this);
 	    miModosDeJuegos.crearPantalla(Frame.MAXIMIZED_HORIZ, Frame.MAXIMIZED_HORIZ);
 		miModosDeJuegos.agregarComponentes();
+		miModosDeJuegos.addFocusListener(miGUI.createFocusListener("modos de juego"));
 
 	    miGUI.getContentPane().add(miModosDeJuegos);
 
@@ -114,9 +115,13 @@ public class CentralPantallas {
 	}
 
 	public void eliminarPantallaModosDeJuego() {
-		miGUI.getContentPane().remove(miModosDeJuegos);
+		miGUI.setFocusable(true);
+		miModosDeJuegos.setVisibilidad(false);
+		panelPrincipal.setFocusable(true);
+		panelPrincipal.requestFocusInWindow();
+		
 	}
-
+	
 	public void mostrarPuntajes() {
 		miLogica.pausarTiempo();
 	    panelPrincipal.setVisible(false);
@@ -177,6 +182,8 @@ public class CentralPantallas {
 	        @Override
 	        public void actionPerformed(ActionEvent e) {
 				miLogica.set_skin("original");
+				panelPrincipal.setFocusable(true);
+				panelPrincipal.requestFocusInWindow();
 				panelPrincipal.setVisible(true);
 				p.setVisibilidad(false);
 				panelPrincipal.repaint();
@@ -192,9 +199,11 @@ public class CentralPantallas {
 	        public void actionPerformed(ActionEvent e) {
 				miLogica.set_skin("halloween");
 	            miLogica.inicializarJuego();
-				panelPrincipal.setVisible(true);
 				p.setVisibilidad(false);
 				p.refrescar();
+				panelPrincipal.setVisible(true);
+				panelPrincipal.setFocusable(true);
+				panelPrincipal.requestFocusInWindow();
 	        }
 	    });
 	}

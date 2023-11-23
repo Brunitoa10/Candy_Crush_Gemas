@@ -4,23 +4,30 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.ContainerOrderFocusTraversalPolicy;
 import java.awt.GridBagConstraints;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.PriorityQueue;
 import java.awt.Insets;
+import java.awt.List;
 import java.awt.Toolkit;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import java.awt.Dimension;
+import java.awt.FocusTraversalPolicy;
 import java.awt.Graphics;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
+
 import java.awt.GridBagLayout;
 import Logica.EntidadLogica;
 import Logica.Logica;
@@ -70,8 +77,9 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 		
 		ImageIcon logo = new ImageIcon(this.getClass().getResource("/assets/nivel/Icono.png"));
 		setIconImage(logo.getImage());
-
+		addFocusListener(createFocusListener("JFrame"));
 		panel_principal = new JPanel();
+		panel_principal.addFocusListener(createFocusListener("Panel principal"));
 		panel_principal.setBackground(new Color(0,0,0,0));
 		
 		mi_central_pantallas = new CentralPantallas(panel_principal, this, miLogica);
@@ -85,8 +93,22 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 		
 		mostrarModosDeJuego();
 	}
-	 
+	
+	public static FocusListener createFocusListener(String panelName) {
+        return new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                System.out.println(panelName + " gained focus");
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                System.out.println(panelName + " lost focus");
+            }
+        };
+    }
 	public void inicializarJuego() {
+		SwingUtilities.invokeLater(()->{
 		eliminarPantallaModosDeJuego();
 		setContentPane(fondo);
 		repaint();
@@ -112,7 +134,9 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 		
 		panel_principal.setFocusable(true);
 		panel_tablero.setFocusable(true);
+		panel_tablero.requestFocus();
 		getContentPane().add(panel_principal);
+		});
 	}
 
 	private void configurarAccionesTeclado() {
@@ -182,7 +206,6 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 		setLayout(new BorderLayout());
 		setExtendedState(JFrame.MAXIMIZED_BOTH); 
 		setLocationRelativeTo(null);
-		setUndecorated(false); 
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -397,6 +420,56 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 		gbc.gridheight = gridheight;
 
 		panelBase.add(componenteAAgregar,gbc);
+	}
+
+	public void reiniciarGUI( int f, int c) {
+		filas = f;
+		columnas = c;
+		movimientosRestantes = miLogica.getMovimientos();
+		animaciones_pendientes = 0;
+		bloquear_intercambios = false;
+		mi_animador = new CentralAnimaciones(this);
+
+		inicializarGUI2();
+	}
+
+	private void inicializarGUI2() {
+		this.setContentPane(fondo);
+		
+		ImageIcon logo = new ImageIcon(this.getClass().getResource("/assets/nivel/Icono.png"));
+		setIconImage(logo.getImage());
+
+		panel_principal = new JPanel();
+		panel_principal.setBackground(new Color(0,0,0,0));
+		
+		mi_central_pantallas = new CentralPantallas(panel_principal, this, miLogica);
+		mi_central_paneles = new CentralPaneles(panel_principal, this);
+
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		setearJFrame(screenSize);
+		panel_principal.setSize(screenSize);
+		
+		panel_principal.setLayout(new GridBagLayout());
+		
+		inicializarPanels();
+
+		panel_tablero = new JPanel();
+		panel_tablero.setSize(size_label * filas, size_label * columnas);
+		panel_tablero.setLayout(new GridBagLayout());
+		panel_tablero.setBackground(new Color(0,0,0,255));
+
+		configurarAccionesTeclado();
+		
+		GridBagConstraints c = new GridBagConstraints();
+		//Constraints TABLERO
+		c.insets = new Insets(0,0,0,0);
+		c.weightx = 1;
+		c.weighty = 1;
+		c.anchor = GridBagConstraints.CENTER;
+		agregarConGBCs(panel_tablero, panel_principal, c, 2, 1, 4, 4); 
+		
+		panel_tablero.setFocusable(true);
+		getContentPane().add(panel_principal);
 	}
 
     public CentralPaneles obtenerCentralPaneles()
