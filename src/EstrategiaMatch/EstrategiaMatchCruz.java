@@ -16,7 +16,9 @@ public class EstrategiaMatchCruz implements Estrategias{
 
     public Resultado se_Cumple_la_Estrategia(LinkedList<Entidad> horizontal, LinkedList<Entidad> vertical, Entidad origen) {
       Resultado toReturn=null;
-      if((horizontal.size()>=4 && vertical.size()>=3) && !(horizontal.getFirst().equals(vertical.getLast())) && !(horizontal.getFirst().equals(vertical.getFirst())) && !(vertical.getFirst().equals(horizontal.getLast())) && !(vertical.getFirst().equals(horizontal.getFirst())))
+      int tamañoHorizontal=horizontal.size();
+      int tamañoVertical=vertical.size();
+      if(cumpleLasDimensiones(tamañoHorizontal,tamañoVertical) && cumpleLascondiciones(horizontal.getFirst(), horizontal.getLast(), vertical.getFirst(), vertical.getLast()))
       {
        Entidad gemaCreada= new GemaEnvuelta(origen.get_TableroNotificable(),origen.get_fila() ,origen.get_columna(),new Color(origen.get_color()), false, origen.get_Skin());
        LinkedList<Entidad> toInsert= enlazarListas(horizontal, vertical);
@@ -37,6 +39,16 @@ public class EstrategiaMatchCruz implements Estrategias{
             toReturn.addLast(ent);
          }
          return toReturn;
+    }
+
+    private boolean cumpleLasDimensiones(int tamañoHorizontal, int tamañoVertical)
+    {
+       return (tamañoHorizontal>=3 && tamañoVertical>=3);
+    }
+
+    private boolean cumpleLascondiciones(Entidad primeraEntidadHorizontal, Entidad ultimaEntidadHorizontal, Entidad primeraEntidadVertical, Entidad ultimaEntidadVertical)
+    {
+      return !(primeraEntidadHorizontal.equals(ultimaEntidadVertical)) && !(primeraEntidadHorizontal.equals(primeraEntidadVertical)) && !(primeraEntidadVertical.equals(ultimaEntidadHorizontal)) && !(primeraEntidadVertical.equals(primeraEntidadHorizontal));
     }
 
     public void set_prioridad(int prioridad)
