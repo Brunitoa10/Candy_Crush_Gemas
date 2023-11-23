@@ -7,8 +7,8 @@ import Tablero.TableroNotificable;
 public class Hielo extends Obstaculo {
    protected Entidad caramelo_interno;
 
-	public Hielo(TableroNotificable tablero,int f, int c, Color col, boolean visible, Entidad ent) {
-		super(tablero,f, c, "/assets/obstaculo/gema_normal/", col, visible);
+	public Hielo(TableroNotificable tablero,int f, int c, Color color, boolean visible, Entidad ent) {
+		super(tablero,f, c, "/assets/obstaculo/gema_normal/", color, visible);
 		caramelo_interno=ent;
 		cargarImagenesRepresentativas(rutadeLaImagen);
 	}

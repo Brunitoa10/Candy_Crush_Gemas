@@ -70,7 +70,7 @@ public class Tablero implements TableroJuego{
 		this.skin=skin;
 	}
 
-	public int getFila() {
+		public int getFila() {
 		return filas;
 	}
 
