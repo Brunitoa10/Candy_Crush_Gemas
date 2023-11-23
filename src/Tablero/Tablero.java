@@ -9,9 +9,11 @@ import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 
 import Entidades.*;
+import EstrategiaMatch.*;
 import GUI.*;
 import Logica.*;
 import Score.AdministradordeScore;
+
 
 public class Tablero implements TableroJuego{
 
@@ -22,6 +24,7 @@ public class Tablero implements TableroJuego{
 	protected List<Entidad> entidades_asociadas;
 	protected String skin;
 	protected AdministradordeScore miAdministradordeScore;
+	protected AdministradorEstrategias miAdministradordeEstrategias;
 	public NotificadorDeEntidadesConTiempo notificadorDeGemasConTemporizador;
 
 	// Define un mapa para asociar las direcciones de intercambio con las funciones correspondientes
@@ -73,6 +76,11 @@ public class Tablero implements TableroJuego{
 
 	public int getColumna() {
 		return columnas;
+	}
+
+	public LinkedList<Estrategias> getEstrategias()
+	{
+		return miAdministradordeEstrategias.get_lista_de_Estrategias();
 	}
 
 	public void fijar_jugador(int f, int c) {

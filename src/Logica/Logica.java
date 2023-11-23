@@ -10,6 +10,7 @@ import java.util.PriorityQueue;
 
 import Entidades.Bomba;
 import Entidades.Entidad;
+import EstrategiaMatch.Estrategias;
 import GUI.GUI;
 import GUI.EntidadGrafica;
 import Nivel.GeneradorNivel;
@@ -140,6 +141,11 @@ public class Logica {
 
 	public int getMovimientos() {
 		return miNivel.getMovimientos();
+	}
+
+	public LinkedList<Estrategias> getEstrategias()
+	{
+		return miTablero.getEstrategias();
 	}
 
 	public void reiniciarNivel(int nuevoNivel) {
