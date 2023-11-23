@@ -49,4 +49,9 @@ public class EstrategiaMatchL implements Estrategias{
     {
       return prioridad;
     }
+
+    public String get_NombreRegla()
+    {
+      return ("L");
+    }
 }

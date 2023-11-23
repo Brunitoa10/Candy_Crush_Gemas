@@ -48,4 +48,9 @@ public class EstrategiaMatchCruz implements Estrategias{
     {
       return prioridad;
     }
+
+    public String get_NombreRegla()
+    {
+      return ("S");
+    }
 }

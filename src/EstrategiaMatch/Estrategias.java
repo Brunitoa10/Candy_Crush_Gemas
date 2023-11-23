@@ -8,4 +8,5 @@ public interface Estrategias {
     public abstract Resultado se_Cumple_la_Estrategia(LinkedList<Entidad> horizontal, LinkedList<Entidad> vertical, Entidad origen);
     public abstract void set_prioridad(int prioridad);
     public abstract int get_prioridad();
+    public abstract String get_NombreRegla();
 }

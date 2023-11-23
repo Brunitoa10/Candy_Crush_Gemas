@@ -40,4 +40,9 @@ public class EstrategiaMatch4 implements Estrategias{
     {
       return prioridad;
     }
+
+    public String get_NombreRegla()
+    {
+      return ("4");
+    }
 }
