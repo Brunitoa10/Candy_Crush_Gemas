@@ -76,7 +76,6 @@ public class GeneradorNivel {
             input.close();
 
         } catch (Exception ex) {
-            System.out.println("GenerarNivelDefinitivo :: ME ROMPI");
             ex.printStackTrace();
         }
         return miNivel;

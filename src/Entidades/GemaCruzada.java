@@ -18,7 +18,6 @@ public class GemaCruzada extends Gema {
 	//Metodos Particulares
 	public void detonar(Tablero tablero)
 	{
-		System.out.println("Cruzadaaaaaaaaaaaaaaa");
 		EstategiaDetonacion estrategia= new EstrategiaDetonacionGemaCruz();
 		estrategia.detonar(this,tablero);
 	}
@@ -38,6 +37,7 @@ public class GemaCruzada extends Gema {
 	public void intercambiar(Entidad entidad) {
 		entidad.intercambiar_con(this);
 	}
+	
 	//Metodos redefinidos de la interfaz matcheable
 	public boolean es_posible_intercambiar(Entidad entidad) {
 		return entidad.puede_recibir(this);

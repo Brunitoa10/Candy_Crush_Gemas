@@ -7,7 +7,6 @@ import Tablero.Tablero;
 public class EstrategiaDetonacionGemaRayadaHorizontal implements EstategiaDetonacion{
 	@Override
 	public void detonar(Entidad entidad, Tablero tablero) {
-		System.out.println("-------EstrategiaDetonacionGemaRayadaHorizontal----------");
 	    int fila = entidad.get_fila();
 		int columna_adyacente=entidad.get_columna();
 	    entidad.set_color(Color.TRANSPARENTE);

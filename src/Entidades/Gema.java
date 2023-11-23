@@ -58,7 +58,6 @@ public abstract class Gema extends Entidad{
 	}
 	
 	public void intercambiar_con(GemaNormal gemaNormal) {
-		System.out.println("intercambio con una gema normal");
 	   intercambiar_entidad_y_entidad(this, gemaNormal);
 
 	}

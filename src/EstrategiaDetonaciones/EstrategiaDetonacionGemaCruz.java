@@ -8,7 +8,6 @@ public class EstrategiaDetonacionGemaCruz implements EstategiaDetonacion{
 
 	@Override
 	 public void detonar(Entidad entidad, Tablero tablero) {
-		System.out.println("------EstrategiaDetonacionGemaCruz---------");
         detonarEntidadesEnFila(entidad, tablero);
         detonarEntidadesEnColumna(entidad, tablero);
     }

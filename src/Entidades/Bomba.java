@@ -57,7 +57,6 @@ public class Bomba extends Obstaculo implements EntidadNotificable {
     public void notificar() {
         tiempo--;
         cargarImagenesRepresentativas(rutadeLaImagen);
-        System.out.println(enfocada);
         if(enfocada){
             enfocar();}
         else {

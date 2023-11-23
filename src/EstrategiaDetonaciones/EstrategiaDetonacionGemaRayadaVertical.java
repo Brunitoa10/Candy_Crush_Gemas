@@ -7,7 +7,6 @@ import Tablero.Tablero;
 public class EstrategiaDetonacionGemaRayadaVertical implements EstategiaDetonacion{
 
 	public void detonar(Entidad entidad, Tablero tablero) {
-		System.out.println("-------EstrategiaDetonacionGemaRayadaVertical----------");
 		int columna = entidad.get_columna();
 		int fila_adycaente=entidad.get_fila();
 		entidad.set_color(Color.TRANSPARENTE);

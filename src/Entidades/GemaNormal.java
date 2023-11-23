@@ -22,7 +22,6 @@ public class GemaNormal extends Gema{
 	}
 	
 	public void detonar(Tablero tablero) {
-	  System.out.println("Normaaaaal");
 	 EstategiaDetonacion estrategia= new EstrategiaDetonacionGemaNormal();
    	 estrategia.detonar(this,tablero);
 	}

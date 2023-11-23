@@ -220,7 +220,6 @@ public class Logica {
 	}
 
 	public void iniciarSiguienteNivel() {
-		System.out.println("Logica :: iniciarSiguienteNivel");
 		nivelActual++;
 
 		if (nivelActual < MAX_NIVEL) {

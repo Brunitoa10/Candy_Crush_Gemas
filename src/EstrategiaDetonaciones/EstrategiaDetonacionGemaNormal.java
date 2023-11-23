@@ -7,7 +7,6 @@ import Tablero.Tablero;
 public class EstrategiaDetonacionGemaNormal implements EstategiaDetonacion{
 
 	public void detonar(Entidad entidad, Tablero tablero) {
-	    System.out.println("------EstrategiaDetonacionGemaNormal---------");
 
 	    int fila = entidad.get_fila();
 	    int columna = entidad.get_columna();

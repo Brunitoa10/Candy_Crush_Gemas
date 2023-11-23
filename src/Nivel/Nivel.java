@@ -90,11 +90,8 @@ public class Nivel {
 
 	public void restarMovimientos() {
 	    movimientos--;
-	    System.out.println("Movientos :: "+movimientos);
-	    System.out.println("Cantidad de objetivos :: "+mapeoDeObjetivos.size());
 	    if (movimientos == 0) {
 	    	restarVidas();
-	    	System.out.println("Nivel :: vidas "+vidas);
 	    	if(vidas>0) {
 				miLogica.notificarDerrotaPorMovimientos();
 	    	}else {
@@ -151,7 +148,6 @@ public class Nivel {
 	                }   
 	            }
 	        } else {
-	            System.out.println("Entidad es nula");
 	        }
 	    }
 	    

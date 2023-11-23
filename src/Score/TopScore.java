@@ -32,7 +32,6 @@ public class TopScore
     }
 
     public void guardarLista() {
-        System.out.println("Estoy guardando la lista");
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(Archivo_de_guardado, false))) {
             for (Jugador jugador : listadeJugadores) {
                 writer.write(jugador.get_nombre() + "," + jugador.get_score() + "\n");

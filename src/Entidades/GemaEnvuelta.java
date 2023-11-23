@@ -20,7 +20,6 @@ public class GemaEnvuelta extends Gema{
 	}
 
 	public void detonar(Tablero tablero) {
-	 System.out.println("Envueltaaa");
 	 EstategiaDetonacion estrategia= new EstrategiaDetonacionGemaEnvuelta();
    	 estrategia.detonar(this,tablero);
 	}
