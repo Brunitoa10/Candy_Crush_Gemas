@@ -1,11 +1,6 @@
 package Tablero;
 
-import java.util.HashMap;
 import java.util.*;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 
@@ -259,7 +254,7 @@ public class Tablero implements TableroJuego{
 		cambiar_posicion_jugador(entidadDestino.get_fila(),entidadDestino.get_columna());
 	    entidadOrigen.intercambiar(entidadDestino);
 
-	    EfectosDeTransicion efectoIntercambio = calcularEfectosPorIntercambio(entidadOrigen, entidadDestino);
+	    EfectosDeTransicion efectoIntercambio = calcular_efectos_por_intercambio(entidadOrigen, entidadDestino);
 
 	    if (efectoIntercambio.existen_entidades_a_detonar()) {
 	        transicionar_proximo_estado(efectoIntercambio);
@@ -273,26 +268,23 @@ public class Tablero implements TableroJuego{
 	    entidadOrigen.intercambiar(entidadDestino);
 	}
 
-	private EfectosDeTransicion calcularEfectosPorIntercambio(Entidad entidadOrigen, Entidad entidadDestino) {
-	    EfectosDeTransicion efectoIntercambio = new EfectosDeTransicion();
+	protected EfectosDeTransicion calcular_efectos_por_intercambio(Entidad entidad_origen, Entidad entidad_destino){
+		 EfectosDeTransicion efecto_transicion = new EfectosDeTransicion();
 
-	    if (entidadOrigen.se_produce_match_con(entidadDestino)) {
-	        manejarMatch(efectoIntercambio, entidadOrigen);
-	        manejarMatch(efectoIntercambio, entidadDestino);
-	    } else {
-	        manejarCombos(efectoIntercambio, entidadOrigen, entidadDestino);
-	    }
+		// Verificar si se produce un match entre las entidades
+		Resultado resultado = miAdministradordeEstrategias.buscar_match(entidad_origen);
 
-	    return efectoIntercambio;
-	}
-
-	private void manejarCombos(EfectosDeTransicion efectoIntercambio, Entidad entidadOrigen, Entidad entidadDestino) {
-	    LinkedList<Entidad> listaEntidadesEnCombo = buscarCombos(
-	        entidadOrigen.get_fila(), entidadOrigen.get_columna(),
-	        entidadDestino.get_fila(), entidadDestino.get_columna()
-	    );
-
-	    listaEntidadesEnCombo.forEach(e -> manejarMatch(efectoIntercambio, e));
+		// Analizar el resultado para determinar los efectos
+		if (resultado != null && !resultado.get_Gemas_a_romper().isEmpty()) {
+			// Se produce un match, aplicar efectos correspondientes
+			for (Entidad entidad : resultado.get_Gemas_a_romper()) {
+				manejarMatch(efecto_transicion,entidad);
+			}
+		} else {
+			// No hay match, puedes agregar lógica adicional según tus requisitos
+		}
+		
+		return efecto_transicion;
 	}
 
 	public boolean en_rango(int fila, int columna){
@@ -306,24 +298,9 @@ public class Tablero implements TableroJuego{
 		cJugador = nueva_columna;
 	}
 	
-	protected EfectosDeTransicion calcular_efectos_por_intercambio(Entidad entidad_origen, Entidad entidad_destino){
-		EfectosDeTransicion efecto_transicion = new EfectosDeTransicion();
-		if (entidad_origen.se_produce_match_con(entidad_destino)) {
-			manejarMatch(efecto_transicion, entidad_origen);
-	        manejarMatch(efecto_transicion, entidad_destino);
-		}else {
-			
-			// To DO: incorporar logica asociada a control de match, generador de potenciadores, etc. 
-			LinkedList<Entidad> listaEntidadesEnCombo = buscarCombos(entidad_origen.get_fila(),entidad_origen.get_columna(),entidad_destino.get_fila(),entidad_destino.get_columna());
-			for(int pos = 0; pos < listaEntidadesEnCombo.size(); pos ++) {
-				manejarMatch(efecto_transicion,listaEntidadesEnCombo.get(pos));
-			}
-		}
-		
-		return efecto_transicion;
-	}
 	
-	private LinkedList<Entidad> buscarCombos(int f1, int c1, int f2, int c2) {
+	
+	/*private LinkedList<Entidad> buscarCombos(int f1, int c1, int f2, int c2) {
 		LinkedList<Entidad> listaCombos = new LinkedList<>();
 		
 		if (esPosicionValida(f1, c1) && esPosicionValida(f2, c2)) {
@@ -338,86 +315,15 @@ public class Tablero implements TableroJuego{
 		} else {
 			throw new IllegalArgumentException("Posición inválida en buscarCombos");
 		}
-	}
-	private LinkedList<Entidad> buscarCombosEnFila(int fila, int columna) {
-		LinkedList<Entidad> combosEnFila = new LinkedList<>();
+	}*/
 
-		// Obtener el tipo de gema en la posición (fila, columna)
-		Entidad entidad = entidades[fila][columna];
-
-		// Contador para el número de gemas iguales consecutivas
-		int cantidad = 1;
-
-		// Buscar hacia la izquierda
-		int colIzquierda = columna - 1;
-		while (colIzquierda >= 0 && entidades[fila][colIzquierda].get_color() == entidad.get_color()) {
-			combosEnFila.add(entidades[fila][colIzquierda]); // Agregar a la lista de combos
-			cantidad++;
-			colIzquierda--;
-		}
-
-		// Buscar hacia la derecha
-		int colDerecha = columna + 1;
-		while (colDerecha < columnas && entidades[fila][colDerecha].get_color() == entidad.get_color()) {
-			combosEnFila.add(entidades[fila][colDerecha]); // Agregar a la lista de combos
-			cantidad++;
-			colDerecha++;
-		}
-
-		// Si hay al menos 3 gemas iguales consecutivas, agregar la posición actual
-		if (cantidad >= 3) {
-			combosEnFila.add(entidad); // Agregar la posición actual a la lista de combos
-		} else {
-			combosEnFila.clear(); // No hay combos, limpiar la lista
-		}
-
-		return combosEnFila;
-	}
-
-	private LinkedList<Entidad> buscarCombosEnColumna(int fila, int columna) {
-		LinkedList<Entidad> combosEnColumna = new LinkedList<>();
-
-		// Obtener el tipo de gema en la posición (fila, columna)
-		Entidad entidad = entidades[fila][columna];
-
-		// Contador para el número de gemas iguales consecutivas
-		int cantidad = 1;
-
-		// Buscar hacia arriba
-		int filaArriba = fila - 1;
-		while (filaArriba >= 0 && entidades[filaArriba][columna].get_color() == entidad.get_color()) {
-			combosEnColumna.add(entidades[filaArriba][columna]); // Agregar a la lista de combos
-			cantidad++;
-			filaArriba--;
-		}
-
-		// Buscar hacia abajo
-		int filaAbajo = fila + 1;
-		while (filaAbajo < filas && entidades[filaAbajo][columna].get_color() == entidad.get_color()) {
-			combosEnColumna.add(entidades[filaAbajo][columna]); // Agregar a la lista de combos
-			cantidad++;
-			filaAbajo++;
-		}
-
-		// Si hay al menos 3 gemas iguales consecutivas, agregar la posición actual
-		if (cantidad >= 3) {
-			combosEnColumna.add(entidad); // Agregar la posición actual a la lista de combos
-		} else {
-			combosEnColumna.clear(); // No hay combos, limpiar la lista
-		}
-
-		return combosEnColumna;
-	}
 	
 	private void manejarMatch(EfectosDeTransicion efecto_transicion, Entidad entidad) {
 	    efecto_transicion.agregar_entidad_a_detonar_y_reemplazar(entidad);
-	    efecto_transicion.agregar_entidad_de_reemplazo(crearGemaNormalRandom(entidad.get_fila(), entidad.get_columna()));
+	    efecto_transicion.agregar_entidad_de_reemplazo(new GemaNormal(this, entidad.get_fila(), entidad.get_columna(), new Color(new Random().nextInt(6)*1), false, skin));
 	}
 
-	private GemaNormal crearGemaNormalRandom(int fila, int columna) {
-		String[] partes = {"n"};  // Asegúrate de que partes contenga el valor "n"
-		return (GemaNormal) entidadFactories.get("n").crear(this, fila, columna, partes, skin);
-	}
+	
 	protected void transicionar_proximo_estado(EfectosDeTransicion efecto_transicion) {
 		detonar(efecto_transicion.entidades_a_detonar());
 		agregar_entidades_nuevas(efecto_transicion.entidades_a_incorporar());
@@ -444,61 +350,7 @@ public class Tablero implements TableroJuego{
 	}
 	
 	protected void aplicar_caida_y_reubicar(List<Entidad> entidades_a_reemplazar) {
-    	// Obtener las columnas afectadas
-		Set<Integer> columnasAfectadas = new HashSet<>();
-		for (Entidad entidad : entidades_a_reemplazar) {
-			columnasAfectadas.add(entidad.get_columna());
-		}
-
-		// Iterar sobre cada columna afectada
-		for (int columna : columnasAfectadas) {
-			// Iterar desde abajo hacia arriba en la columna
-			for (int fila = filas - 1; fila >= 0; fila--) {
-				Entidad entidadActual = entidades[fila][columna];
-
-				// Verificar si la entidad actual debe ser reemplazada
-				if (entidades_a_reemplazar.contains(entidadActual)) {
-					// Realizar la caída
-					caerEntidad(entidadActual, fila,columna);
-
-					// Reubicar la entidad en la parte superior de la columna
-					reubicarEntidad(entidadActual, 0, columna);
-				}
-			}
-    	}
-	}
-
-	private void caerEntidad(Entidad entidad,int puntero ,int columna) {
-		// Mover la entidad hacia abajo en la columna
-		/*for (int filaDestino = filas - 1; filaDestino > 0; filaDestino--) {
-			entidades[filaDestino][columna] = entidades[filaDestino - 1][columna];
-		}*/
-		for (int i = puntero; i > 0; i--) {
-			if (entidades[i][columna].get_color() != 0) {
-				Entidad aux=entidades[i - 1][columna];
-				entidades[i][columna] = entidades[i - 1][columna];
-				entidades[i - 1][columna]=aux;
-			}
-		}
-		// La primera fila se convierte en una nueva entidad (puede ser una gema normal aleatoria)
-		entidades[0][columna] = crearGemaNormalRandom(0, columna);
-	}
-
-	private void reubicarEntidad(Entidad entidad, int fila, int columna) {
-		System.out.println("Antes de reubicar");
-		this.imprimirTablero();
-		// Actualizar la posición de la entidad
-		//entidad.cambiar_posicion(fila, columna);
-		// Vincular la entidad con la lógica y la interfaz gráfica
-		miLogica.asociar_entidad_logica_y_grafica(entidad);
-		
-		entidad.intercambiar_Caida(fila, columna);
-
-		// Vincular la entidad con la lógica y la interfaz gráfica
-		//miLogica.asociar_entidad_logica_y_grafica(entidad);
-		
-		System.out.println("Despues de reubicar");
-		this.imprimirTablero();
+    	
 	}
 
 	@Override
