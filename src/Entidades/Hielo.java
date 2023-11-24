@@ -28,7 +28,7 @@ public class Hielo extends Obstaculo {
 
 	public void set_EntidadGrafica_entidadInterna(EntidadGrafica entidadGrafica)
 	{
-		this.entidadGrafica=entidadGrafica;
+		caramelo_interno.set_EntidadGrafica(entidadGrafica);
 	}
 
 	public void cargarImagenesRepresentativas(String ri) {
