@@ -256,10 +256,17 @@ public class Tablero implements TableroJuego{
 	private void manejarMatch(EfectosDeTransicion efecto_transicion, Entidad entidad) {
 		miLogica.agregarScore(entidad.get_score());
 	    efecto_transicion.agregar_entidad_a_detonar_y_reemplazar(entidad);
-		if(get_entidad(entidad.get_fila(),entidad.get_columna()).get_color()==Color.TRANSPARENTE)
+		System.out.println("ManejarMatch antes del IF");
+		System.out.println("ManejarMatch estados :: "+get_entidad(entidad.get_fila(),entidad.get_columna()).get_color());
+		System.out.println("ManejarMatch nueva gema creada "+crearGemaNormalRandom(entidad.get_fila(),entidad.get_columna()).get_rutadeLaImagen());
+		System.out.println("ManejarMatch nueva gema creada "+new GemaNormal(this, entidad.get_fila(), entidad.get_columna(), new Color(new Random().nextInt(6)+1), false, skin).get_rutadeLaImagen());
+		//efecto_transicion.agregar_entidad_de_reemplazo(new GemaNormal(this, entidad.get_fila(), entidad.get_columna(), new Color(new Random().nextInt(6)+1), false, skin));
+		efecto_transicion.agregar_entidad_de_reemplazo(crearGemaNormalRandom(entidad.get_fila(),entidad.get_columna()));
+		/*if(get_entidad(entidad.get_fila(),entidad.get_columna()).get_color()==Color.TRANSPARENTE)
 		{
+			System.out.println("ManejarMatch entre en el IF");
 	    	efecto_transicion.agregar_entidad_de_reemplazo(crearGemaNormalRandom(entidad.get_fila(),entidad.get_columna()));
-		}
+		}*/
 	}
 
 	private GemaNormal crearGemaNormalRandom(int fila, int columna) {
@@ -293,119 +300,13 @@ public class Tablero implements TableroJuego{
 		cJugador = nueva_columna;
 	}
 	
-	/*protected void transicionar_proximo_estado(EfectosDeTransicion efecto_transicion) {
-		detonar(efecto_transicion.entidades_a_detonar());
-		//agregar_entidades_nuevas(efecto_transicion.entidades_a_incorporar());
-		System.out.println("Antes de caida ");
-		imprimirTablero();
-		//aplicar_caida_y_reubicar(efecto_transicion.entidades_a_reemplazar());
-		System.out.println("Despues de caida ");
-		imprimirTablero();
-	}
-
-	protected void detonar(List<Entidad> entidades_a_detonar) {
-		System.out.println("TABLERO antes de DETONAR");
-		imprimirTablero();
-		for(Entidad e: entidades_a_detonar) {
-			miLogica.agregarScore(e.get_score());
-			e.detonar(this);
-		}
-		//entidades_a_detonar.clear();
-		System.out.println("TABLERO despues de DETONAR");
-		imprimirTablero();
-	}
-	
-	protected void agregar_entidades_nuevas(List<Entidad> entidades_a_incorporar) {
-		for(Entidad e: entidades_a_incorporar) {
-			entidades[e.get_fila()][e.get_columna()] = e;
-			miLogica.asociar_entidad_logica_y_grafica(e);
-			e.mostrar();
-		}
-		//entidades_a_incorporar.clear();
-	}
-
-	protected void aplicar_caida_y_reubicar(List<Entidad> entidades_a_reemplazar) {
-    	// Obtener las columnas afectadas
-		Set<Integer> columnasAfectadas = new HashSet<>();
-		for (Entidad entidad : entidades_a_reemplazar) {
-			columnasAfectadas.add(entidad.get_columna());
-		}
-
-		// Iterar sobre cada columna afectada
-		for (int columna : columnasAfectadas) {
-			// Iterar desde abajo hacia arriba en la columna
-			for (int fila = filas - 1; fila >= 0; fila--) {
-				Entidad entidadActual = entidades[fila][columna];
-
-				// Verificar si la entidad actual debe ser reemplazada
-				if (entidades_a_reemplazar.contains(entidadActual)) {
-					caerEntidad(fila,columna);
-					entidades[filas - 1][columna] = crearGemaNormalRandom(filas - 1, columna);
-					reubicarEntidad(entidadActual, 0, columna);
-				}
-			}
-    	}
-	}
-
-	private void caerEntidad(int puntero, int columna) {
-		// Mover las entidades hacia arriba en la columna
-		for (int filaDestino = 0; filaDestino < filas - 1; filaDestino++) {
-			entidades[filaDestino][columna] = entidades[filaDestino + 1][columna];
-		}
-	}
-	
-	private void reubicarEntidad(Entidad entidad, int fila, int columna) {
-		System.out.println("Antes de reubicar");
-		this.imprimirTablero();
-		// Actualizar la posición de la entidad
-		entidad.intercambiar_Caida(fila, columna);
-
-		// Vincular la entidad con la lógica y la interfaz gráfica
-		miLogica.asociar_entidad_logica_y_grafica(entidad);
-		
-		System.out.println("Despues de reubicar");
-		this.imprimirTablero();
-	}
-	
-	
-	 public void gravedad(ArrayList<Entidad> a) {
-		for(Entidad e : a) {
-			int f = e.get_fila();
-			int c = e.get_columna();
-			if(e.estaDetonada())
-				gravedad_auxiliar(f,c);
-			}
-		
-	}
-	
-	private void gravedad_auxiliar(int f, int c) {
-		int nf = f - 1;
-		
-		if (!detenete_aca(f,c) && en_rango(nf,c)){
-			this.intercambiar_entidades_y_transicionar(f, c);	
-			//aplicar_intercambio(f, c, nf, c);
-			gravedad_auxiliar(nf,c);
-		}
-		
-	}
-
-	
-	private boolean detenete_aca(int f, int c) {
-		if(entidades[f][c].estaDetonada()) {
-			if(en_rango(f-1,c))
-				return detenete_aca(f-1,c);
-		}else
-			if(!entidades[f][c].estaDetonada())
-				return false;
-		return true;
-	}*/
 	protected void transicionar_proximo_estado(EfectosDeTransicion efecto_transicion) {
 		detonar(efecto_transicion.entidades_a_detonar());
-		//agregar_entidades_nuevas(efecto_transicion.entidades_a_incorporar());
+		agregar_entidades_nuevas(efecto_transicion.entidades_a_incorporar());
 		System.out.println("Antes de caida ");
 		imprimirTablero();
 		aplicar_caida_y_reubicar(efecto_transicion.entidades_a_reemplazar());
-		System.out.println("Despues de caida ");
+		System.out.println("Despues de caida :: dimesiones :: "+this.getFila()+" , "+this.getColumna());
 		imprimirTablero();
 	}
 	
@@ -416,9 +317,9 @@ public class Tablero implements TableroJuego{
 			miLogica.agregarScore(e.get_score());
 			e.detonar(this);
 		}
-		//entidades_a_detonar.clear();
-		System.out.println("TABLERO despues de DETONAR");
+		System.out.println("TABLERO despues de DETONAR :: dimesiones :: "+this.getFila()+" , "+this.getColumna());
 		imprimirTablero();
+		
 	}
 	
 	protected void agregar_entidades_nuevas(List<Entidad> entidades_a_incorporar) {
@@ -427,99 +328,8 @@ public class Tablero implements TableroJuego{
 			miLogica.asociar_entidad_logica_y_grafica(e);
 			e.mostrar();
 		}
-		//entidades_a_incorporar.clear();
 	}
 	
-	/*protected void aplicar_caida_y_reubicar(List<Entidad> entidades_a_reemplazar) {
-		// Obtener las columnas afectadas
-		Set<Integer> columnasAfectadas = new HashSet<>();
-		for (Entidad entidad : entidades_a_reemplazar) {
-			columnasAfectadas.add(entidad.get_columna());
-		}
-	
-		// Iterar sobre cada columna afectada
-		for (int columna : columnasAfectadas) {
-			// Iterar desde abajo hacia arriba en la columna
-			for (int fila = filas - 1; fila >= 0; fila--) {
-				Entidad entidadActual = entidades[fila][columna];
-	
-				// Verificar si la entidad actual debe ser reemplazada
-				if (entidades_a_reemplazar.contains(entidadActual)) {
-					caerEntidad(fila, columna);
-					entidades[filas - 1][columna] = crearGemaNormalRandom(filas - 1, columna);
-					reubicarEntidad(entidadActual, 0, columna);
-				}
-			}
-		}
-	}
-	
-	private void caerEntidad(int puntero, int columna) {
-		// Mover las entidades hacia arriba en la columna
-		for (int filaDestino = 0; filaDestino < filas - 1; filaDestino++) {
-			entidades[filaDestino][columna] = entidades[filaDestino + 1][columna];
-		}
-	}
-	
-	private void reubicarEntidad(Entidad entidad, int fila, int columna) {
-		System.out.println("Antes de reubicar");
-		this.imprimirTablero();
-		// Actualizar la posición de la entidad
-		entidad.intercambiar_Caida(fila, columna);
-	
-		// Vincular la entidad con la lógica y la interfaz gráfica
-		miLogica.asociar_entidad_logica_y_grafica(entidad);
-	
-		System.out.println("Despues de reubicar");
-		this.imprimirTablero();
-	}
-	
-	/*public void gravedad(ArrayList<Entidad> a) {
-		for (Entidad e : a) {
-			int f = e.get_fila();
-			int c = e.get_columna();
-			if (e.estaDetonada())
-				gravedad_auxiliar(f, c);
-		}
-	
-	}
-	
-	private void gravedad_auxiliar(int f, int c) {
-		int nf = f - 1;
-	
-		if (!detenete_aca(f, c) && en_rango(nf, c)) {
-			aplicar_gravedad(f, c);
-			gravedad_auxiliar(nf, c);
-		}
-	
-	}
-	
-	private void aplicar_gravedad(int f, int c) {
-		// Verificar si la celda actual no está en el borde superior
-		if (f > 0) {
-			Entidad entidadActual = entidades[f][c];
-			// Verificar si la celda actual no está detonada y la celda superior está vacía
-			if (!entidadActual.estaDetonada() && entidades[f - 1][c] == null) {
-				// Mover la entidad hacia arriba en la columna
-				entidades[f - 1][c] = entidadActual;
-				entidades[f][c] = null;
-				// Actualizar la posición de la entidad
-				entidadActual.intercambiar_Caida(f - 1, c);
-				// Vincular la entidad con la lógica y la interfaz gráfica
-				miLogica.asociar_entidad_logica_y_grafica(entidadActual);
-			}
-		}
-	}
-
-	private boolean detenete_aca(int f, int c) {
-		if(entidades[f][c].estaDetonada()) {
-			if(en_rango(f-1,c))
-				return detenete_aca(f-1,c);
-		}else
-			if(!entidades[f][c].estaDetonada())
-				return false;
-		return true;
-	}*/
-
 	protected void aplicar_caida_y_reubicar(List<Entidad> entidades_a_reemplazar) {
 		// Obtener las columnas afectadas
 		Set<Integer> columnasAfectadas = new HashSet<>();

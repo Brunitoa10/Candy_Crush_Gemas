@@ -56,6 +56,7 @@ public class Logica {
 
 	public void set_skin(String skin){
 		this.skin=skin;
+		miTablero.set_Skin(skin);
 	}
 
 	public void mover_jugador(int direccion) {
