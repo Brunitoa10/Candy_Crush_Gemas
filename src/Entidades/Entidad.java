@@ -133,6 +133,11 @@ public abstract class Entidad implements EntidadLogica, Enfocable, Intercambiabl
 		entidadGrafica.notificarse_intercambio();
 	}
 
+	public boolean tieneGemaInterna()
+	{
+		return false;
+	}
+	
 	//Metodos visuales
 
 	public void intercambiar_Posicion(int nuevaFila, int nuevaColumna) {

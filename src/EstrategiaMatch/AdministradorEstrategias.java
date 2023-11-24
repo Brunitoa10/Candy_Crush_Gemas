@@ -91,6 +91,11 @@ public class AdministradorEstrategias {
 
 		// Obtener el tipo de gema en la posición (fila, columna)
 		Entidad entidad = miTablero.get_entidad(fila, columna);
+		Entidad entidadAinsertar=entidad;
+		if(entidad.tieneGemaInterna())
+		{
+			entidad=entidad.get_gema_interna();
+		}
 
 		// Contador para el número de gemas iguales consecutivas
 		int cantidad = 1;
@@ -98,7 +103,7 @@ public class AdministradorEstrategias {
 
 		// Buscar hacia la izquierda
 		int colIzquierda = columna - 1;
-		while (colIzquierda >= 0 && miTablero.get_entidad(fila, colIzquierda).get_color() == entidad.get_color()) {
+		while (colIzquierda >= 0 && cumpleConelColor(miTablero.get_entidad(fila, colIzquierda),entidad)) {
 			combosEnFila.add(miTablero.get_entidad(fila, colIzquierda)); // Agregar a la lista de combos
 			cantidad++;
 			colIzquierda--;
@@ -106,7 +111,7 @@ public class AdministradorEstrategias {
 
 		// Buscar hacia la derecha
 		int colDerecha = columna + 1;
-		while (colDerecha < columnas && miTablero.get_entidad(fila, colDerecha).get_color() == entidad.get_color()) {
+		while (colDerecha < columnas && cumpleConelColor(miTablero.get_entidad(fila, colDerecha),entidad)) {
 			combosEnFila.add(miTablero.get_entidad(fila, colDerecha)); // Agregar a la lista de combos
 			cantidad++;
 			colDerecha++;
@@ -114,7 +119,7 @@ public class AdministradorEstrategias {
 
 		// Si hay al menos 3 gemas iguales consecutivas, agregar la posición actual
 		if (cantidad >= 3) {
-			combosEnFila.add(entidad); // Agregar la posición actual a la lista de combos
+			combosEnFila.add(entidadAinsertar); // Agregar la posición actual a la lista de combos
 		} else {
 			combosEnFila.clear(); // No hay combos, limpiar la lista
 		}
@@ -126,7 +131,13 @@ public class AdministradorEstrategias {
 		LinkedList<Entidad> combosEnColumna = new LinkedList<>();
 
 		// Obtener el tipo de gema en la posición (fila, columna)
-		Entidad entidad = miTablero.get_entidad(fila, columna);;
+		Entidad entidad = miTablero.get_entidad(fila, columna);
+		Entidad entidadAinsertar=entidad;
+		if(entidad.tieneGemaInterna())
+		{
+			entidad=entidad.get_gema_interna();
+		}
+		
 
 		// Contador para el número de gemas iguales consecutivas
 		int cantidad = 1;
@@ -134,7 +145,7 @@ public class AdministradorEstrategias {
 
 		// Buscar hacia arriba
 		int filaArriba = fila - 1;
-		while (filaArriba >= 0 && miTablero.get_entidad(filaArriba, columna).get_color() == entidad.get_color()) {
+		while (filaArriba >= 0 && cumpleConelColor(miTablero.get_entidad(filaArriba, columna),entidad)) {
 			combosEnColumna.add(miTablero.get_entidad(filaArriba, columna)); // Agregar a la lista de combos
 			cantidad++;
 			filaArriba--;
@@ -142,7 +153,7 @@ public class AdministradorEstrategias {
 
 		// Buscar hacia abajo
 		int filaAbajo = fila + 1;
-		while (filaAbajo < filas && miTablero.get_entidad(filaAbajo, columna).get_color() == entidad.get_color()) {
+		while (filaAbajo < filas && cumpleConelColor(miTablero.get_entidad(filaAbajo, columna),entidad)) {
 			combosEnColumna.add(miTablero.get_entidad(filaAbajo, columna)); // Agregar a la lista de combos
 			cantidad++;
 			filaAbajo++;
@@ -150,11 +161,25 @@ public class AdministradorEstrategias {
 
 		// Si hay al menos 3 gemas iguales consecutivas, agregar la posición actual
 		if (cantidad >= 3) {
-			combosEnColumna.add(entidad); // Agregar la posición actual a la lista de combos
+			combosEnColumna.add(entidadAinsertar); // Agregar la posición actual a la lista de combos
 		} else {
 			combosEnColumna.clear(); // No hay combos, limpiar la lista
 		}
 
 		return combosEnColumna;
+	}
+
+	private boolean cumpleConelColor(Entidad comparada, Entidad aComparar)
+	{
+        boolean toRet=false;
+		if(comparada.tieneGemaInterna())
+		{
+           toRet= comparada.get_gema_interna().get_color()==aComparar.get_color();
+		}
+		else{
+			toRet=comparada.get_color()==aComparar.get_color();
+		}
+
+		return toRet;
 	}
 }

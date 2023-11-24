@@ -51,4 +51,9 @@ public class Hielo extends Obstaculo {
 	public void intercambiar_con(Hielo hielo) {
 		intercambiar_hielo_y_hielo(this, hielo);
 	 }
+
+	 public boolean tieneGemaInterna()
+	{
+		return true;
+	}
 }
