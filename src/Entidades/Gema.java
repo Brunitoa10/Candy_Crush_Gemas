@@ -88,7 +88,6 @@ public abstract class Gema extends Entidad{
 	}
 
 	public void intercambiar_con(Hielo hielo) {
-		System.out.println("Antes de realizar el metodo intercambiar gema y hielo");
 	   intercambiar_gema_y_hielo(this, hielo);
 	}
 
