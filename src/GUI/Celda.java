@@ -28,6 +28,11 @@ public class Celda extends JLabel implements EntidadGrafica {
 		int alto = size_label;
 		int ancho = size_label;
 		
+		if(entidad_logica.tieneGemaInterna())
+		{
+           entidad_logica.set_EntidadGrafica_entidadInterna(new Celda(ventana,entidad_logica.get_gema_interna(), size_label, true));
+		}
+
 		setBounds(ubicacion_eje_x, ubicacion_eje_y, ancho, alto);
 		String imagen1 = entidad_logica.get_imagenes_representativas()[0];
 		String imagen2 = entidad_logica.get_imagenes_representativas()[1];

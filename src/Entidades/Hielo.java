@@ -2,6 +2,7 @@ package Entidades;
 
 import EstrategiaDetonaciones.EstategiaDetonacion;
 import EstrategiaDetonaciones.EstrategiaDetonacionHielo;
+import GUI.EntidadGrafica;
 import Logica.Color;
 import Tablero.Tablero;
 import Tablero.TableroNotificable;
@@ -23,6 +24,11 @@ public class Hielo extends Obstaculo {
     public void set_gema_interna(Entidad e)
 	{
     	caramelo_interno=e;
+	}
+
+	public void set_EntidadGrafica_entidadInterna(EntidadGrafica entidadGrafica)
+	{
+		caramelo_interno.set_EntidadGrafica(entidadGrafica);
 	}
 
 	public void cargarImagenesRepresentativas(String ri) {
