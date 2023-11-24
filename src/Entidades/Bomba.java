@@ -17,6 +17,7 @@ public class Bomba extends Obstaculo implements TickObserver {
    public Bomba(TableroNotificable tablero,int f, int c, Color col, boolean visible, ObservableTimer n,Logica l){
     super(tablero,f, c, "/assets/obstaculo/bomba/", col, visible); 
     cargarImagenesRepresentativas(rutadeLaImagen);
+    System.out.println("CREACION DE BOMBA");
     notificador = n;
     logica = l;
     l.suscribirBombaATimer(this);
@@ -48,7 +49,7 @@ public class Bomba extends Obstaculo implements TickObserver {
 	}
 
     public void cargarImagenesRepresentativas(String ri){//"/assets/obstaculo/bomba/"
-        imagenes = new String [5];
+        imagenes = new String [4];
 		imagenes[0] = ri +tiempo +"/"+tiempo+".png";
 		imagenes[1] = ri +tiempo +"/"+tiempo+"-cursor.png";
 		imagenes[2] = ri + "detonado.gif";
@@ -56,8 +57,16 @@ public class Bomba extends Obstaculo implements TickObserver {
         
     }
 
-    public void update(TickEvent event) {
-        tiempo--;
+    public void notificar() {
+        
+    }
+
+    public int getTiempo() {
+        return tiempo;
+    }
+
+    @Override
+    public void update(TickEvent event) {tiempo--;
         cargarImagenesRepresentativas(rutadeLaImagen);
         if(enfocada){
             enfocar();}
@@ -67,10 +76,6 @@ public class Bomba extends Obstaculo implements TickObserver {
         if(tiempo <= 0){
             finalizarJuegoPorExplosionDeBomba();
         }
-    }
-
-    public int getTiempo() {
-        return tiempo;
     }
 
 }

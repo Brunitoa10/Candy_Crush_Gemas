@@ -56,7 +56,6 @@ public class AnimadorDetonacion extends Thread implements Animador {
 
 		celda_animada.revalidate();
 		celda_animada.repaint();
-		celda_animada.eliminar_de_ventana();
 		manager.notificarse_finalizacion_animador(this);
 	}
 

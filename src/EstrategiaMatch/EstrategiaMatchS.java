@@ -1,3 +1,4 @@
+
 package EstrategiaMatch;
 
 import java.util.LinkedList;
@@ -63,6 +64,6 @@ public class EstrategiaMatchS implements Estrategias{
 
     public String get_NombreRegla()
     {
-      return ("MATCH SIGMOIDE VALIDO");
+      return ("S");
     }
 }

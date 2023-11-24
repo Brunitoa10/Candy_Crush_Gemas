@@ -306,6 +306,7 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 	
 	public void animar_detonacion(Celda celda) {
 		mi_animador.animar_detonacion(celda);
+		moverComponentes(panel_tablero, celda, celda.get_entidad_logica().get_columna(), celda.get_entidad_logica().get_fila());
 		repaint();
 		revalidate();
 	}
