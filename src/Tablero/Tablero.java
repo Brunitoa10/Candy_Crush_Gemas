@@ -226,13 +226,13 @@ public class Tablero implements TableroJuego{
 			Resultado resultado_origen = miAdministradordeEstrategias.buscar_match(entidad_origen);
 			if (resultado_origen != null) {
 				// Se produce un match, aplicar efectos correspondientes
-				if(!resultado_origen.get_Gemas_a_romper().isEmpty())
-				{ miLogica.actualizarObjetivos(resultado_origen.get_Gemas_a_romper());
+				if(!resultado_origen.get_Gemas_a_romper().isEmpty()){
+					miLogica.actualizarObjetivos(resultado_origen.get_Gemas_a_romper());
 					for (Entidad entidad : resultado_origen.get_Gemas_a_romper()) {
-					manejarMatch(efecto_transicion,entidad);
-				}}
-				if(resultado_origen.get_resultado()!=null)
-				{
+						manejarMatch(efecto_transicion,entidad);
+					}
+				}
+				if(resultado_origen.get_resultado()!=null){
 					agregar_entidad(resultado_origen.get_resultado());
 				}
 			}
@@ -259,7 +259,7 @@ public class Tablero implements TableroJuego{
 	    efecto_transicion.agregar_entidad_a_detonar_y_reemplazar(entidad);
 		if(get_entidad(entidad.get_fila(),entidad.get_columna()).get_color()==Color.TRANSPARENTE)
 		{
-	    efecto_transicion.agregar_entidad_de_reemplazo(crearGemaNormalRandom(entidad.get_fila(),entidad.get_columna()));
+	    	efecto_transicion.agregar_entidad_de_reemplazo(crearGemaNormalRandom(entidad.get_fila(),entidad.get_columna()));
 		}
 	}
 
@@ -294,7 +294,7 @@ public class Tablero implements TableroJuego{
 		cJugador = nueva_columna;
 	}
 	
-	protected void transicionar_proximo_estado(EfectosDeTransicion efecto_transicion) {
+	/*protected void transicionar_proximo_estado(EfectosDeTransicion efecto_transicion) {
 		System.out.println("------------ ANTES de efecto_transicion.existen_entidades_a_detonar() ------------");
 		System.out.println("transicionar_proximo_estado :: efecto_transicion.existen_entidades_a_detonar() :: "+efecto_transicion.existen_entidades_a_detonar());
 		System.out.println("transicionar_proximo_estado :: efecto_transicion.existen_entidades_a_incorporar() :: "+efecto_transicion.existen_entidades_a_incorporar());
@@ -323,8 +323,17 @@ public class Tablero implements TableroJuego{
 			System.out.println("Despues de caida ");
 			imprimirTablero();
 		}
+	}*/
+	protected void transicionar_proximo_estado(EfectosDeTransicion efecto_transicion) {
+		detonar(efecto_transicion.entidades_a_detonar());
+		//agregar_entidades_nuevas(efecto_transicion.entidades_a_incorporar());
+		System.out.println("Antes de caida ");
+			imprimirTablero();
+		//aplicar_caida_y_reubicar(efecto_transicion.entidades_a_reemplazar());
+		System.out.println("Despues de caida ");
+			imprimirTablero();
 	}
-	
+
 	protected void detonar(List<Entidad> entidades_a_detonar) {
 		System.out.println("TABLERO antes de DETONAR");
 		imprimirTablero();
