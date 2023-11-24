@@ -1,5 +1,7 @@
 package Entidades;
 
+import EstrategiaDetonaciones.EstategiaDetonacion;
+import EstrategiaDetonaciones.EstrategiaDetonacionHielo;
 import Logica.Color;
 import Tablero.Tablero;
 import Tablero.TableroNotificable;
@@ -14,10 +16,8 @@ public class Hielo extends Obstaculo {
 	}
 	
 	public void detonar(Tablero  t) {
-		System.out.println("destruido "+ this.color + " en: "+fila+","+columna );
-	    color.set_color(Color.TRANSPARENTE);
-	    cargarImagenesRepresentativas(rutadeLaImagen);
-	    entidadGrafica.notificarse_detonacion();
+		EstategiaDetonacion estrategia= new EstrategiaDetonacionHielo();
+		estrategia.detonar(this,t);
 	}
 
     public void set_gema_interna(Entidad e)

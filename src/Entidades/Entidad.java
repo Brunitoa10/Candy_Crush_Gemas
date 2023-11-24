@@ -185,7 +185,6 @@ public abstract class Entidad implements EntidadLogica, Enfocable, Intercambiabl
 	}
 	
 	protected void intercambiar_gema_y_hielo(Entidad gema, Hielo hielo) {
-		System.out.println("En el metodo intercambiar gema y hielo");
 		Entidad gema_interna_hielo = hielo.get_gema_interna();
 		int nueva_fila_gema = hielo.get_fila();
 		int nueva_columna_gema = hielo.get_columna();

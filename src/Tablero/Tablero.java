@@ -187,12 +187,11 @@ public class Tablero implements TableroJuego{
 	    if (movientosValido && !entidadOrigen.es_posible_intercambiar(entidadDestino)) {
 	    	movientosValido = false;
 	    }
-
-		System.out.println("el estado de movimiento valido es:"+ movientosValido);
+		
 	    if(movientosValido) {
 	    	realizarIntercambioYTransicion(entidadOrigen, entidadDestino, filaOrigen, columnaOrigen);
 	    }
-		System.out.println("Estado tablero en intercambiar_entidades_y_transicionar");
+
 	    imprimirTablero();
 	    return movientosValido;
 	}
