@@ -2,6 +2,8 @@ package Logica;
 
 import java.awt.EventQueue;
 import java.util.LinkedList;
+import java.util.List;
+
 import Timer.ObservableTimer;
 import Timer.TickEvent;
 import Timer.TickObserver;
@@ -220,7 +222,7 @@ public class Logica {
 		return miTablero.obtenerTipoGema(tipoGema);
 	}
 
-	public void actualizarObjetivos(LinkedList<Entidad> listaCombos) {
+	public void actualizarObjetivos(List<Entidad> listaCombos) {
 		miNivel.actualizarObjetivos(listaCombos);
 	}
 

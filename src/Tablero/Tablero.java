@@ -7,6 +7,8 @@ import java.util.function.BiFunction;
 import Entidades.*;
 import EstrategiaMatch.*;
 import GUI.*;
+import GeneradorEntidades.EntidadFactory;
+import GeneradorEntidades.EntidadFactoryRegistry;
 import Logica.*;
 import Score.AdministradordeScore;
 
@@ -28,6 +30,8 @@ public class Tablero implements TableroJuego{
 
 	// Define un mapa para asociar las direcciones de movimientos con las funciones correspondientes
 	private final Map<Integer, BiConsumer<Integer, Integer>> movimientos = new HashMap<>();
+
+	private static final Map<String, EntidadFactory> entidadFactories = EntidadFactoryRegistry.getEntidadFactories();
 
 	public Tablero(Logica l) {
 		miLogica = l;
@@ -114,17 +118,6 @@ public class Tablero implements TableroJuego{
 		}
 		return nombreGema;
 	}
-
-	/*public void caida(int puntero,int columna ) {
-		for (int i = puntero; i > 0; i--) {
-			if (entidades[i][columna].get_color() != 0) {
-				Entidad aux=entidades[i - 1][columna];
-				entidades[i][columna] = entidades[i - 1][columna];
-				entidades[i - 1][columna]=aux;
-			}
-		}
-		entidades[0][columna] = new GemaNormal(this,0,columna,new Color(new Random().nextInt(8)),true,skin);
-	}*/
 	
 	private void mover_jugador_auxiliar(int nf, int nc) {
 		if (en_rango(nf,nc)) {
@@ -135,8 +128,6 @@ public class Tablero implements TableroJuego{
 		}
 	}
 
-	
-	
 	public void imprimirLista(LinkedList<Entidad> listaCombos) {
         for (Entidad elemento : listaCombos) {
             System.out.print(elemento.get_color()+" - ");
@@ -216,7 +207,7 @@ public class Tablero implements TableroJuego{
 	    if(movientosValido) {
 	    	realizarIntercambioYTransicion(entidadOrigen, entidadDestino, filaOrigen, columnaOrigen);
 	    }
-
+		System.out.println("Estado tablero en intercambiar_entidades_y_transicionar");
 	    imprimirTablero();
 	    return movientosValido;
 	}
@@ -228,7 +219,6 @@ public class Tablero implements TableroJuego{
 	    EfectosDeTransicion efectoIntercambio = calcular_efectos_por_intercambio(entidadOrigen, entidadDestino);
 
 	    if (efectoIntercambio.existen_entidades_a_detonar()) {
-			System.out.println("Entre a existe_Entidades_a_detonar en realizarIntercambioYTransicion");
 	        transicionar_proximo_estado(efectoIntercambio);
 	    } else {
 	        deshacerIntercambio(entidadOrigen, entidadDestino, filaOrigen, columnaOrigen);
@@ -243,7 +233,6 @@ public class Tablero implements TableroJuego{
 	protected EfectosDeTransicion calcular_efectos_por_intercambio(Entidad entidad_origen, Entidad entidad_destino){
 		EfectosDeTransicion efecto_transicion = new EfectosDeTransicion();
 		if (entidad_origen.se_produce_match_con(entidad_destino)) {
-			System.out.println("ENTRE en calcular_efectos_por_intercambio IF");
 			manejarMatch(efecto_transicion,entidad_origen);
 			manejarMatch(efecto_transicion,entidad_destino);
 		}else {
@@ -254,17 +243,57 @@ public class Tablero implements TableroJuego{
 				for (Entidad entidad : resultado.get_Gemas_a_romper()) {
 					manejarMatch(efecto_transicion,entidad);
 				}
-			} else {
-				// No hay match, puedes agregar lógica adicional según tus requisitos
 			}
 		}
 		return efecto_transicion;
 	}
 	private void manejarMatch(EfectosDeTransicion efecto_transicion, Entidad entidad) {
 	    efecto_transicion.agregar_entidad_a_detonar_y_reemplazar(entidad);
-	    efecto_transicion.agregar_entidad_de_reemplazo(new GemaNormal(this, entidad.get_fila(), entidad.get_columna(), new Color(new Random().nextInt(6)*1), false, skin));
+	    efecto_transicion.agregar_entidad_de_reemplazo(crearGemaNormalRandom(entidad.get_fila(),entidad.get_columna()));
+		
 	}
 
+	/*private GemaNormal crearGemaNormalRandom(int fila, int columna) {
+		// Obtén la fábrica de GemaNormal del registro
+		EntidadFactory gemaNormalFactory = EntidadFactoryRegistry.getEntidadFactories().get("n");
+	
+		// Crea la GemaNormal utilizando la fábrica
+		if (gemaNormalFactory != null) {
+			 String[] cadena = {"1","2","3"};//EntidadFactoryRegistry.getFactoryKeys();
+			return (GemaNormal) gemaNormalFactory.crear(this, fila, columna,cadena, skin);
+		} else {
+			// Manejar el caso en que la fábrica no está registrada
+			throw new IllegalStateException("Fábrica de GemaNormal no encontrada en el registro.");
+		}
+	}*/
+
+	private GemaNormal crearGemaNormalRandom(int fila, int columna) {
+		// Obtén la fábrica de GemaNormal del registro
+		EntidadFactory gemaNormalFactory = EntidadFactoryRegistry.getEntidadFactories().get("n");
+	
+		// Crea la GemaNormal utilizando la fábrica
+		if (gemaNormalFactory != null) {
+			// Crear un objeto Random para generar números aleatorios
+			Random random = new Random();
+	
+			// Tamaño del arreglo
+			int tamanoArreglo = 2;
+	
+			// Crear el arreglo para almacenar los valores aleatorios
+			String[] cadena = new String[tamanoArreglo];
+	
+			// Llenar el arreglo con valores aleatorios entre "1" y "7"
+			for (int i = 0; i < tamanoArreglo; i++) {
+				int numeroAleatorio = random.nextInt(6) + 1; 
+				cadena[i] = String.valueOf(numeroAleatorio);  // Convertir a cadena y asignar al arreglo
+			}
+	
+			return (GemaNormal) gemaNormalFactory.crear(this, fila, columna, cadena, skin);
+		} else {
+			// Manejar el caso en que la fábrica no está registrada
+			throw new IllegalStateException("Fábrica de GemaNormal no encontrada en el registro.");
+		}
+	}
 	public boolean en_rango(int fila, int columna){
 		boolean en_rango_fila = (0 <= fila) && (fila < filas);
 		boolean en_rango_columna = (0 <= columna) && (columna < columnas);
@@ -276,29 +305,20 @@ public class Tablero implements TableroJuego{
 		cJugador = nueva_columna;
 	}
 	
-	
-	
 	/*private LinkedList<Entidad> buscarCombos(int f1, int c1, int f2, int c2) {
-		LinkedList<Entidad> listaCombos = new LinkedList<>();
-		
-		if (esPosicionValida(f1, c1) && esPosicionValida(f2, c2)) {
-			listaCombos.addAll(buscarCombosEnFila(f1, c1));
-			listaCombos.addAll(buscarCombosEnColumna(f1, c1));
-			listaCombos.addAll(buscarCombosEnFila(f2, c2));
-			listaCombos.addAll(buscarCombosEnColumna(f2, c2));
-			
-			miLogica.actualizarObjetivos(listaCombos);
-			
-			return listaCombos;
-		} else {
-			throw new IllegalArgumentException("Posición inválida en buscarCombos");
-		}
+		miLogica.actualizarObjetivos(listaCombos);
 	}*/
 
 	protected void transicionar_proximo_estado(EfectosDeTransicion efecto_transicion) {
 		detonar(efecto_transicion.entidades_a_detonar());
 		//agregar_entidades_nuevas(efecto_transicion.entidades_a_incorporar());
+		System.out.println("Antes de caida");
+		imprimirTablero();
 		//aplicar_caida_y_reubicar(efecto_transicion.entidades_a_reemplazar());
+		aplicar_caida_y_reubicar(efecto_transicion.entidades_a_reemplazar());
+		System.out.println("Despues de caida ");
+		imprimirTablero();
+		//agregar_entidades_nuevas(efecto_transicion.entidades_a_incorporar());
 	}
 	
 	protected void detonar(List<Entidad> entidades_a_detonar) {
@@ -306,8 +326,10 @@ public class Tablero implements TableroJuego{
 		imprimirTablero();
 		for(Entidad e: entidades_a_detonar) {
 			miLogica.agregarScore(e.get_score());
+			//miLogica.actualizarObjetivos(entidades_a_detonar);
 			e.detonar(this); //Segun fede e.detonar();
 		}
+		
 		System.out.println("TABLERO despues de DETONAR");
 		imprimirTablero();
 	}
@@ -319,11 +341,60 @@ public class Tablero implements TableroJuego{
 			e.mostrar();
 		}
 	}
-	
+
 	protected void aplicar_caida_y_reubicar(List<Entidad> entidades_a_reemplazar) {
-    	
+    	// Obtener las columnas afectadas
+		Set<Integer> columnasAfectadas = new HashSet<>();
+		for (Entidad entidad : entidades_a_reemplazar) {
+			columnasAfectadas.add(entidad.get_columna());
+		}
+
+		// Iterar sobre cada columna afectada
+		for (int columna : columnasAfectadas) {
+			// Iterar desde abajo hacia arriba en la columna
+			for (int fila = filas - 1; fila >= 0; fila--) {
+				Entidad entidadActual = entidades[fila][columna];
+
+				// Verificar si la entidad actual debe ser reemplazada
+				if (entidades_a_reemplazar.contains(entidadActual)) {
+					// Realizar la caída
+					//caerEntidad(entidad,fila,columna);
+					caerEntidad(fila,columna);
+
+					// Reubicar la entidad en la parte superior de la columna
+					reubicarEntidad(entidadActual, 0, columna);
+				}
+			}
+    	}
 	}
 
+	private void caerEntidad(int puntero, int columna) {
+		// Mover las entidades hacia arriba en la columna
+		for (int filaDestino = 0; filaDestino < filas - 1; filaDestino++) {
+			entidades[filaDestino][columna] = entidades[filaDestino + 1][columna];
+		}
+	
+		// La última fila se convierte en una nueva entidad (puede ser una gema normal aleatoria)
+		entidades[filas - 1][columna] = crearGemaNormalRandom(filas - 1, columna);
+	}
+	
+	private void reubicarEntidad(Entidad entidad, int fila, int columna) {
+		System.out.println("Antes de reubicar");
+		this.imprimirTablero();
+		// Actualizar la posición de la entidad
+	
+		// Vincular la entidad con la lógica y la interfaz gráfica
+		//miLogica.asociar_entidad_logica_y_grafica(entidad);
+		
+		entidad.intercambiar_Caida(fila, columna);
+
+		// Vincular la entidad con la lógica y la interfaz gráfica
+		miLogica.asociar_entidad_logica_y_grafica(entidad);
+		
+		System.out.println("Despues de reubicar");
+		this.imprimirTablero();
+	}
+	
 	@Override
 	public NotificadorDeEntidadesConTiempo obtenerObserver() {
 		return notificadorDeGemasConTemporizador;
@@ -332,4 +403,5 @@ public class Tablero implements TableroJuego{
     public void crearAdministradorEstrategias(LinkedList<Estrategias> estrategias) {
 		miAdministradordeEstrategias= new AdministradorEstrategias(estrategias,this);
     }
+
 }

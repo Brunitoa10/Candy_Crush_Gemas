@@ -6,7 +6,7 @@ import java.util.Map;
 public class EntidadFactoryRegistry {
     private static final Map<String, EntidadFactory> entidadFactories = new HashMap<>();
 
-    static {
+    static{
         entidadFactories.put("n", new GemaNormalFactory());
         entidadFactories.put("r", new RocaFactory());
         entidadFactories.put("b", new BombaFactory());
@@ -22,5 +22,8 @@ public class EntidadFactoryRegistry {
     public static Map<String, EntidadFactory> getEntidadFactories() {
         return entidadFactories;
     }
-   
+
+    public static String[] getFactoryKeys() {
+        return entidadFactories.keySet().toArray(new String[0]);
+    }
 }

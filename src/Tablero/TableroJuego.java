@@ -25,4 +25,5 @@ public interface TableroJuego extends TableroNotificable{
 	
 	//public void intercambiar_entidades(int direccion); segun fede
 	public boolean intercambiar_entidades(int direccion);
+
 }

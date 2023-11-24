@@ -2,6 +2,7 @@ package Nivel;
 
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 import Entidades.Entidad;
@@ -138,7 +139,7 @@ public class Nivel {
 		return miLogica.obtenerTipoDeGema(tipoGema);
 	}
 	
-	public void actualizarObjetivos(LinkedList<Entidad> listaCombos) {
+	public void actualizarObjetivos(List<Entidad> listaCombos) {
 	    int progreso = 0, tipoGema = 0; 
 	    
 	    for (EntidadLogica entidad : listaCombos) {
@@ -154,7 +155,6 @@ public class Nivel {
 	                    miLogica.notificar_actualizacion_objetivos(objetivo.getCantGemas(), objetivo.getTipoGema());
 	                }   
 	            }
-	        } else {
 	        }
 	    }
 	    
