@@ -188,6 +188,7 @@ public class Tablero implements TableroJuego{
 	    	movientosValido = false;
 	    }
 
+		System.out.println("el estado de movimiento valido es:"+ movientosValido);
 	    if(movientosValido) {
 	    	realizarIntercambioYTransicion(entidadOrigen, entidadDestino, filaOrigen, columnaOrigen);
 	    }
@@ -198,6 +199,7 @@ public class Tablero implements TableroJuego{
 
 	private void realizarIntercambioYTransicion(Entidad entidadOrigen, Entidad entidadDestino, int filaOrigen, int columnaOrigen) {
 		cambiar_posicion_jugador(entidadDestino.get_fila(),entidadDestino.get_columna());
+		System.out.println("Antes de mandar el mensaje intercamiar, estoy en tablero");
 	    entidadOrigen.intercambiar(entidadDestino);
 
 	    EfectosDeTransicion efectoIntercambio = calcular_efectos_por_intercambio(entidadOrigen, entidadDestino);

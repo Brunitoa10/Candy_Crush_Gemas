@@ -18,6 +18,7 @@ public class GemaNormal extends Gema{
 	}
 	
 	public void intercambiar(Entidad entidad) {
+		System.out.println("Estoy antes del metodo intercambiar_con");
 		entidad.intercambiar_con(this);
 	}
 	

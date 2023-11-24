@@ -48,12 +48,52 @@ public class Hielo extends Obstaculo {
 		return caramelo_interno;
 	}
 
+	public void intercambiar_con(GemaNormal gemaNormal) {
+	  intercambiar_gema_y_hielo(gemaNormal, this);
+
+	}
+
+	public void intercambiar_con(GemaRayada gemaRayada) {
+	  intercambiar_gema_y_hielo(gemaRayada, this);
+	}
+
+	public void intercambiar_con(GemaEnvuelta gemaEnvuelta) {
+	    intercambiar_gema_y_hielo(gemaEnvuelta, this);
+	}
+
+	public void intercambiar_con(GemaCruzada gemaCruzada) {
+	    intercambiar_gema_y_hielo(gemaCruzada, this);
+	}
+
 	public void intercambiar_con(Hielo hielo) {
 		intercambiar_hielo_y_hielo(this, hielo);
 	 }
 
 	 public boolean tieneGemaInterna()
 	{
+		return true;
+	}
+
+	public boolean puede_recibir(GemaNormal c) {
+		return true;
+	}
+
+	@Override
+	public boolean puede_recibir(GemaRayada p) {
+		return true;
+	}
+
+	@Override
+	public boolean puede_recibir(GemaEnvuelta p) {
+		return true;
+	}
+
+	@Override
+	public boolean puede_recibir(GemaCruzada p) {
+		return true;
+	}
+
+	public boolean puede_recibir(Hielo p) {
 		return true;
 	}
 }

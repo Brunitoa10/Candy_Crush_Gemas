@@ -57,6 +57,11 @@ public abstract class Gema extends Entidad{
 		return false;
 	}
 	
+	public boolean puede_recibir(Hielo hielo)
+	{
+		return true;
+	}
+	
 	public void intercambiar_con(GemaNormal gemaNormal) {
 	   intercambiar_entidad_y_entidad(this, gemaNormal);
 
@@ -83,6 +88,7 @@ public abstract class Gema extends Entidad{
 	}
 
 	public void intercambiar_con(Hielo hielo) {
+		System.out.println("Antes de realizar el metodo intercambiar gema y hielo");
 	   intercambiar_gema_y_hielo(this, hielo);
 	}
 
