@@ -268,7 +268,7 @@ public class Tablero implements TableroJuego{
 	    entidadOrigen.intercambiar(entidadDestino);
 	}
 
-	protected EfectosDeTransicion calcular_efectos_por_intercambio(Entidad entidad_origen, Entidad entidad_destino){
+	/*protected EfectosDeTransicion calcular_efectos_por_intercambio(Entidad entidad_origen, Entidad entidad_destino){
 		 EfectosDeTransicion efecto_transicion = new EfectosDeTransicion();
 
 		// Verificar si se produce un match entre las entidades
@@ -285,8 +285,26 @@ public class Tablero implements TableroJuego{
 		}
 		
 		return efecto_transicion;
+	}*/
+	protected EfectosDeTransicion calcular_efectos_por_intercambio(Entidad entidad_origen, Entidad entidad_destino){
+		EfectosDeTransicion efecto_transicion = new EfectosDeTransicion();
+		if (entidad_origen.se_produce_match_con(entidad_destino)) {
+			manejarMatch(efecto_transicion,entidad_origen);
+			manejarMatch(efecto_transicion,entidad_destino);
+		}else {
+			// To DO: incorporar logica asociada a control de match, generador de potenciadores, etc. 
+			Resultado resultado = miAdministradordeEstrategias.buscar_match(entidad_origen);
+			if (resultado != null && !resultado.get_Gemas_a_romper().isEmpty()) {
+				// Se produce un match, aplicar efectos correspondientes
+				for (Entidad entidad : resultado.get_Gemas_a_romper()) {
+					manejarMatch(efecto_transicion,entidad);
+				}
+			} else {
+				// No hay match, puedes agregar lógica adicional según tus requisitos
+			}
+		}
+		return efecto_transicion;
 	}
-
 	public boolean en_rango(int fila, int columna){
 		boolean en_rango_fila = (0 <= fila) && (fila < filas);
 		boolean en_rango_columna = (0 <= columna) && (columna < columnas);
