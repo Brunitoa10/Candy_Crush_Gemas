@@ -9,9 +9,9 @@ public class EstrategiaFactory {
 
     static {
         estrategiaMap.put('4', new EstrategiaMatch4());
-        estrategiaMap.put('L', new EstrategiaMatchL());
-        estrategiaMap.put('S', new EstrategiaMatchS());
-        estrategiaMap.put('T', new EstrategiaMatchT());
+        estrategiaMap.put('l', new EstrategiaMatchL());
+        estrategiaMap.put('s', new EstrategiaMatchS());
+        estrategiaMap.put('t', new EstrategiaMatchT());
     }
 
     public static Estrategias createEstrategia(char type) {
