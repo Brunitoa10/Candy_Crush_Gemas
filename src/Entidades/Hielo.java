@@ -8,21 +8,31 @@ public class Hielo extends Obstaculo {
    protected Entidad caramelo_interno;
 
 	public Hielo(TableroNotificable tablero,int f, int c, Color color, boolean visible, Entidad ent) {
-		super(tablero,f, c, "/assets/obstaculo/hielo", color, visible);
+		super(tablero,f, c, "/assets/obstaculo/hielo/", color, visible);
 		caramelo_interno=ent;
 		cargarImagenesRepresentativas(rutadeLaImagen);
 	}
 	
 	public void detonar(Tablero  t) {
-		    System.out.println("destruido "+ this.color + " en: "+fila+","+columna );
-		    color.set_color(Color.TRANSPARENTE);
-		    cargarImagenesRepresentativas(rutadeLaImagen);
-	        entidadGrafica.notificarse_detonacion();
+		System.out.println("destruido "+ this.color + " en: "+fila+","+columna );
+	    color.set_color(Color.TRANSPARENTE);
+	    cargarImagenesRepresentativas(rutadeLaImagen);
+	    entidadGrafica.notificarse_detonacion();
 	}
 
     public void set_gema_interna(Entidad e)
 	{
     	caramelo_interno=e;
+	}
+
+	public void cargarImagenesRepresentativas(String ri) {
+		imagenes = new String [5];
+		imagenes[0] = ri + color.get_color() +".png";
+		imagenes[1] = ri + color.get_color() +"-cursor.png";
+		imagenes[2] = ri + "detonado.gif";
+		imagenes[3] = ri + "enfocado-detonado.gif";
+		imagenes[4] = caramelo_interno.get_imagenes_representativas()[0];
+		System.out.println(imagenes[4]);
 	}
 
 	public int get_score()

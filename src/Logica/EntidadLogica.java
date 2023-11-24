@@ -8,7 +8,7 @@ public interface EntidadLogica {
 	
 	public boolean get_visibilidad();
 
-	public String get_imagen_representativa();
+	public String[] get_imagenes_representativas();
 
 	public int get_color();
 }
