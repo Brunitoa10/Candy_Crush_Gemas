@@ -294,36 +294,6 @@ public class Tablero implements TableroJuego{
 		cJugador = nueva_columna;
 	}
 	
-	/*protected void transicionar_proximo_estado(EfectosDeTransicion efecto_transicion) {
-		System.out.println("------------ ANTES de efecto_transicion.existen_entidades_a_detonar() ------------");
-		System.out.println("transicionar_proximo_estado :: efecto_transicion.existen_entidades_a_detonar() :: "+efecto_transicion.existen_entidades_a_detonar());
-		System.out.println("transicionar_proximo_estado :: efecto_transicion.existen_entidades_a_incorporar() :: "+efecto_transicion.existen_entidades_a_incorporar());
-		System.out.println("transicionar_proximo_estado :: efecto_transicion.existen_entidades_a_reemplazar() :: "+efecto_transicion.existen_entidades_a_reemplazar());
-		if(efecto_transicion.existen_entidades_a_detonar()){
-			System.out.println("transicionar_proximo_estado :: efecto_transicion.existen_entidades_a_detonar()");
-			detonar(efecto_transicion.entidades_a_detonar());
-		}
-		System.out.println("------------ LUEGO de efecto_transicion.existen_entidades_a_detonar() ------------");
-		System.out.println("transicionar_proximo_estado :: efecto_transicion.existen_entidades_a_detonar() :: "+efecto_transicion.existen_entidades_a_detonar());
-		System.out.println("transicionar_proximo_estado :: efecto_transicion.existen_entidades_a_incorporar() :: "+efecto_transicion.existen_entidades_a_incorporar());
-		System.out.println("transicionar_proximo_estado :: efecto_transicion.existen_entidades_a_reemplazar() :: "+efecto_transicion.existen_entidades_a_reemplazar());
-		if(!efecto_transicion.existen_entidades_a_detonar() && efecto_transicion.existen_entidades_a_incorporar()){
-			System.out.println("transicionar_proximo_estado :: efecto_transicion.existen_entidades_a_incorporar()");
-			agregar_entidades_nuevas(efecto_transicion.entidades_a_incorporar());
-		}
-		System.out.println("------------ EN CONSECUENCIA DE efecto_transicion.existen_entidades_a_detonar() ------------");
-		System.out.println("transicionar_proximo_estado :: efecto_transicion.existen_entidades_a_detonar() :: "+efecto_transicion.existen_entidades_a_detonar());
-		System.out.println("transicionar_proximo_estado :: efecto_transicion.existen_entidades_a_incorporar() :: "+efecto_transicion.existen_entidades_a_incorporar());
-		System.out.println("transicionar_proximo_estado :: efecto_transicion.existen_entidades_a_reemplazar() :: "+efecto_transicion.existen_entidades_a_reemplazar());
-		if(!efecto_transicion.existen_entidades_a_detonar() && !efecto_transicion.existen_entidades_a_incorporar() && efecto_transicion.existen_entidades_a_reemplazar()){
-			System.out.println("transicionar_proximo_estado :: efecto_transicion.existen_entidades_a_reemplazar()");
-			System.out.println("Antes de caida");
-			imprimirTablero();
-			aplicar_caida_y_reubicar(efecto_transicion.entidades_a_reemplazar());
-			System.out.println("Despues de caida ");
-			imprimirTablero();
-		}
-	}*/
 	protected void transicionar_proximo_estado(EfectosDeTransicion efecto_transicion) {
 		detonar(efecto_transicion.entidades_a_detonar());
 		//agregar_entidades_nuevas(efecto_transicion.entidades_a_incorporar());
@@ -341,7 +311,7 @@ public class Tablero implements TableroJuego{
 			miLogica.agregarScore(e.get_score());
 			e.detonar(this);
 		}
-		entidades_a_detonar.clear();
+		//entidades_a_detonar.clear();
 		System.out.println("TABLERO despues de DETONAR");
 		imprimirTablero();
 	}
@@ -352,7 +322,7 @@ public class Tablero implements TableroJuego{
 			miLogica.asociar_entidad_logica_y_grafica(e);
 			e.mostrar();
 		}
-		entidades_a_incorporar.clear();
+		//entidades_a_incorporar.clear();
 	}
 
 	protected void aplicar_caida_y_reubicar(List<Entidad> entidades_a_reemplazar) {
