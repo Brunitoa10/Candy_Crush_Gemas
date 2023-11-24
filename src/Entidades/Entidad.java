@@ -3,7 +3,6 @@ package Entidades;
 
 
 import EstrategiaDetonaciones.EstategiaDetonacion;
-import GUI.Celda;
 import GUI.EntidadGrafica;
 import Logica.*;
 import Tablero.TableroNotificable;
@@ -40,6 +39,11 @@ public abstract class Entidad implements EntidadLogica, Enfocable, Intercambiabl
 
 	public void set_EstrategiaDetonacion(EstategiaDetonacion estrategiaDetonacion) {
 		this.estrategiadeDetonacion = estrategiaDetonacion;
+	}
+
+	public void set_EntidadGrafica_entidadInterna(EntidadGrafica entidadGrafica)
+	{
+		this.entidadGrafica=entidadGrafica;
 	}
 
 	public void set_EntidadGrafica(EntidadGrafica entidadGrafica){
