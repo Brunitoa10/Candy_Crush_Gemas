@@ -292,18 +292,35 @@ public class Tablero implements TableroJuego{
 		cJugador = nueva_columna;
 	}
 	
-	/*private LinkedList<Entidad> buscarCombos(int f1, int c1, int f2, int c2) {
-		miLogica.actualizarObjetivos(listaCombos);
-	}*/
-
 	protected void transicionar_proximo_estado(EfectosDeTransicion efecto_transicion) {
-		detonar(efecto_transicion.entidades_a_detonar());
-		//agregar_entidades_nuevas(efecto_transicion.entidades_a_incorporar());
-		System.out.println("Antes de caida");
-		imprimirTablero();
-		aplicar_caida_y_reubicar(efecto_transicion.entidades_a_reemplazar());
-		System.out.println("Despues de caida ");
-		imprimirTablero();
+		System.out.println("------------ ANTES de efecto_transicion.existen_entidades_a_detonar() ------------");
+		System.out.println("transicionar_proximo_estado :: efecto_transicion.existen_entidades_a_detonar() :: "+efecto_transicion.existen_entidades_a_detonar());
+		System.out.println("transicionar_proximo_estado :: efecto_transicion.existen_entidades_a_incorporar() :: "+efecto_transicion.existen_entidades_a_incorporar());
+		System.out.println("transicionar_proximo_estado :: efecto_transicion.existen_entidades_a_reemplazar() :: "+efecto_transicion.existen_entidades_a_reemplazar());
+		if(efecto_transicion.existen_entidades_a_detonar()){
+			System.out.println("transicionar_proximo_estado :: efecto_transicion.existen_entidades_a_detonar()");
+			detonar(efecto_transicion.entidades_a_detonar());
+		}
+		System.out.println("------------ LUEGO de efecto_transicion.existen_entidades_a_detonar() ------------");
+		System.out.println("transicionar_proximo_estado :: efecto_transicion.existen_entidades_a_detonar() :: "+efecto_transicion.existen_entidades_a_detonar());
+		System.out.println("transicionar_proximo_estado :: efecto_transicion.existen_entidades_a_incorporar() :: "+efecto_transicion.existen_entidades_a_incorporar());
+		System.out.println("transicionar_proximo_estado :: efecto_transicion.existen_entidades_a_reemplazar() :: "+efecto_transicion.existen_entidades_a_reemplazar());
+		if(!efecto_transicion.existen_entidades_a_detonar() && efecto_transicion.existen_entidades_a_incorporar()){
+			System.out.println("transicionar_proximo_estado :: efecto_transicion.existen_entidades_a_incorporar()");
+			agregar_entidades_nuevas(efecto_transicion.entidades_a_incorporar());
+		}
+		System.out.println("------------ EN CONSECUENCIA DE efecto_transicion.existen_entidades_a_detonar() ------------");
+		System.out.println("transicionar_proximo_estado :: efecto_transicion.existen_entidades_a_detonar() :: "+efecto_transicion.existen_entidades_a_detonar());
+		System.out.println("transicionar_proximo_estado :: efecto_transicion.existen_entidades_a_incorporar() :: "+efecto_transicion.existen_entidades_a_incorporar());
+		System.out.println("transicionar_proximo_estado :: efecto_transicion.existen_entidades_a_reemplazar() :: "+efecto_transicion.existen_entidades_a_reemplazar());
+		if(!efecto_transicion.existen_entidades_a_detonar() && !efecto_transicion.existen_entidades_a_incorporar() && efecto_transicion.existen_entidades_a_reemplazar()){
+			System.out.println("transicionar_proximo_estado :: efecto_transicion.existen_entidades_a_reemplazar()");
+			System.out.println("Antes de caida");
+			imprimirTablero();
+			aplicar_caida_y_reubicar(efecto_transicion.entidades_a_reemplazar());
+			System.out.println("Despues de caida ");
+			imprimirTablero();
+		}
 	}
 	
 	protected void detonar(List<Entidad> entidades_a_detonar) {
@@ -311,10 +328,9 @@ public class Tablero implements TableroJuego{
 		imprimirTablero();
 		for(Entidad e: entidades_a_detonar) {
 			miLogica.agregarScore(e.get_score());
-			//miLogica.actualizarObjetivos(entidades_a_detonar);
 			e.detonar(this);
 		}
-		
+		entidades_a_detonar.clear();
 		System.out.println("TABLERO despues de DETONAR");
 		imprimirTablero();
 	}
@@ -325,6 +341,7 @@ public class Tablero implements TableroJuego{
 			miLogica.asociar_entidad_logica_y_grafica(e);
 			e.mostrar();
 		}
+		entidades_a_incorporar.clear();
 	}
 
 	protected void aplicar_caida_y_reubicar(List<Entidad> entidades_a_reemplazar) {
@@ -361,10 +378,6 @@ public class Tablero implements TableroJuego{
 		System.out.println("Antes de reubicar");
 		this.imprimirTablero();
 		// Actualizar la posición de la entidad
-	
-		// Vincular la entidad con la lógica y la interfaz gráfica
-		//miLogica.asociar_entidad_logica_y_grafica(entidad);
-		
 		entidad.intercambiar_Caida(fila, columna);
 
 		// Vincular la entidad con la lógica y la interfaz gráfica

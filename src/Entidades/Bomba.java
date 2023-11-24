@@ -10,7 +10,7 @@ import EstrategiaDetonaciones.*;
 public class Bomba extends Obstaculo implements TickObserver {
    protected int tiempo= tiempoInicial;
    protected ObservableTimer notificador;
-   protected static final int tiempoInicial = 10;
+   protected static final int tiempoInicial = 30;
    protected Logica logica;
 
 
