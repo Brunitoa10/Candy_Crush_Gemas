@@ -225,7 +225,8 @@ public class Tablero implements TableroJuego{
 			if (resultado_origen != null) {
 				// Se produce un match, aplicar efectos correspondientes
 				if(!resultado_origen.get_Gemas_a_romper().isEmpty())
-				{for (Entidad entidad : resultado_origen.get_Gemas_a_romper()) {
+				{ miLogica.actualizarObjetivos(resultado_origen.get_Gemas_a_romper());
+					for (Entidad entidad : resultado_origen.get_Gemas_a_romper()) {
 					manejarMatch(efecto_transicion,entidad);
 				}}
 				if(resultado_origen.get_resultado()!=null)
@@ -238,6 +239,7 @@ public class Tablero implements TableroJuego{
 			if (resultado_destino != null) {
 				// Se produce un match, aplicar efectos correspondientes
 				if(!resultado_destino.get_Gemas_a_romper().isEmpty()) {
+				 miLogica.actualizarObjetivos(resultado_destino.get_Gemas_a_romper());
 				for (Entidad entidad : resultado_destino.get_Gemas_a_romper()) {
 					manejarMatch(efecto_transicion,entidad);
 				} }
@@ -251,6 +253,7 @@ public class Tablero implements TableroJuego{
 	}
 	
 	private void manejarMatch(EfectosDeTransicion efecto_transicion, Entidad entidad) {
+		miLogica.agregarScore(entidad.get_score());
 	    efecto_transicion.agregar_entidad_a_detonar_y_reemplazar(entidad);
 		if(get_entidad(entidad.get_fila(),entidad.get_columna()).get_color()==Color.TRANSPARENTE)
 		{
