@@ -37,10 +37,19 @@ public class PanelReglas extends JPanel implements Paneles {
 
     public void mostrarReglas() {   
 	    JLabel tituloObjetivo = miCentral.crearLabelConColor(" REGLAS:", "Algerian", Font.PLAIN, 20, Color.RED, 2, 1);
-	    GridBagConstraints cTitulo = new GridBagConstraints();
-	    cTitulo.insets = new Insets(0, 0, 0, 0);      
-	    cTitulo.gridx = 0;                               
-	    cTitulo.gridy = 0;
-	    add(tituloObjetivo, cTitulo);
+	    GridBagConstraints c = new GridBagConstraints();
+	    c.insets = new Insets(0, 0, 0, 0);      
+	    c.gridx = 0;                               
+	    c.gridy = 0;
+	    add(tituloObjetivo, c);
+
+		for(int i=0; i < miCentral.getEstrategias().size() ; i++) {
+			int y = 1;
+			String[] textoRegla = miCentral.getNombresEstrategiasEnUso();
+			JLabel regla = miCentral.crearLabelConColor(textoRegla[i], "Algerian", Font.PLAIN, 20, Color.WHITE, 2, 1);
+			c.gridy = y;
+	    	add(regla, c);
+			y++;
+		}
 	}
 }

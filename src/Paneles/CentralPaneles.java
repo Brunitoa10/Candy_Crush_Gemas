@@ -4,6 +4,8 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import EstrategiaMatch.Estrategias;
 import GUI.GUI;
 import java.awt.Color;
 import java.awt.Component;
@@ -11,6 +13,8 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.Image;
 import java.awt.Insets;
+import java.util.Iterator;
+import java.util.LinkedList;
 
 
 
@@ -34,6 +38,23 @@ public class CentralPaneles {
 		miPanelReglas = new PanelReglas(this);
 		miPanelReglas.crearPanel();
         miPanelReglas.agregarAPanelPrincipal();
+	}
+
+	public LinkedList<Estrategias> getEstrategias(){
+		return miGUI.getEstrategias();
+	}
+
+	public String[] getNombresEstrategiasEnUso() {
+		String [] devolver = new String[4];
+		int i = 0;
+		while(getEstrategias().get(i).get_NombreRegla() != null) {
+			System.out.println("Nombre regla: "+getEstrategias().get(i).get_NombreRegla());
+			System.out.println("size lista: "+getEstrategias().size());
+            devolver[i] = getEstrategias().get(i).get_NombreRegla();
+			i++;
+        }
+
+		return devolver;
 	}
 
     public void mostrarPanelScore() {

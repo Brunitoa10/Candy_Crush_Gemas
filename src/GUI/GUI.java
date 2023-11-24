@@ -8,6 +8,7 @@ import java.awt.GridBagConstraints;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 import java.util.PriorityQueue;
 import java.awt.Insets;
@@ -22,6 +23,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
+
+import EstrategiaMatch.Estrategias;
 
 import java.awt.GridBagLayout;
 import Logica.EntidadLogica;
@@ -411,6 +414,10 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 	
 	public boolean getBloquear_intercambios() {
 		return bloquear_intercambios;
+	}
+
+	public LinkedList<Estrategias> getEstrategias(){
+		return miLogica.getEstrategias();
 	}
 
 	private void agregarConGBCs(Component componenteAAgregar, JPanel panelBase, GridBagConstraints gbc, int gridx, int gridy, int gridwidth,int gridheight) {
