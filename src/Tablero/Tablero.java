@@ -111,7 +111,7 @@ public class Tablero implements TableroJuego{
 				if (entidades[i][j].get_color() == tipoGema) {
 					encontre = true; 
 					if(encontre) {
-						nombreGema = entidades[i][j].get_imagen_representativa();
+						nombreGema = entidades[i][j].get_imagenes_representativas()[0];
 					}
 				}
 			}

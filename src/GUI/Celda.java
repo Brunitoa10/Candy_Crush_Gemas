@@ -1,7 +1,6 @@
 package GUI;
 
 import java.awt.Image;
-
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -29,7 +28,12 @@ public class Celda extends JLabel implements EntidadGrafica {
 		int ancho = size_label;
 		
 		setBounds(ubicacion_eje_x, ubicacion_eje_y, ancho, alto);
-		fijar_imagen_escalada_para_celda(entidad_logica.get_imagen_representativa());	
+		String imagen1 = entidad_logica.get_imagenes_representativas()[0];
+		String imagen2 = entidad_logica.get_imagenes_representativas()[1];
+		if(entidad_logica.get_imagenes_representativas()[1] == null) {
+			fijar_imagen_escalada_para_celda(imagen1);
+		}
+		else fijar_imagen_escalada_para_celda_con_hielo(imagen2, imagen1);
 	}
 	
 	public EntidadLogica get_entidad_logica() {
@@ -67,12 +71,26 @@ public class Celda extends JLabel implements EntidadGrafica {
 	}
 	
 	// Operaciones locales a celda
-	
+
 	protected void fijar_imagen_escalada_para_celda(String path_imagen) {
 		ImageIcon icono_imagen = new ImageIcon(this.getClass().getResource(path_imagen));
 		Image imagen_escalada = icono_imagen.getImage().getScaledInstance(size_label, size_label, Image.SCALE_SMOOTH);
 		Icon icono_imagen_escalado = new ImageIcon(imagen_escalada);
 		setIcon(icono_imagen_escalado);
+	}
+	
+	protected void fijar_imagen_escalada_para_celda_con_hielo(String path_imagen1, String path_imagen2) {
+		ImageIcon icono_imagen1 = new ImageIcon(this.getClass().getResource(path_imagen1));
+		Image imagen_escalada1 = icono_imagen1.getImage().getScaledInstance(size_label, size_label, Image.SCALE_SMOOTH);
+		Icon icono_imagen_escalado1 = new ImageIcon(imagen_escalada1);
+	
+		ImageIcon icono_imagen2 = new ImageIcon(this.getClass().getResource(path_imagen2));
+		Image imagen_escalada2 = icono_imagen2.getImage().getScaledInstance(size_label, size_label, Image.SCALE_SMOOTH);
+		Icon icono_imagen_escalado2 = new ImageIcon(imagen_escalada2);
+	
+		MultiIcon iconoConHielo = new MultiIcon(icono_imagen_escalado1, icono_imagen_escalado2);
+		iconoConHielo.setIconSize(size_label, size_label);
+		setIcon(iconoConHielo);
 	}
 
 }

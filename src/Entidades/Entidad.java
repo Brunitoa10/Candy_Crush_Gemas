@@ -62,10 +62,17 @@ public abstract class Entidad implements EntidadLogica, Enfocable, Intercambiabl
 		return entidadGrafica;
 	}
 	
-	public String get_imagen_representativa() {
+	public String[] get_imagenes_representativas() {
+		String[] devolver = new String[2];
 		int indice = 0;
 		indice += (enfocada ? 1 : 0);
-		return imagenes[indice];
+		devolver[0] = imagenes[indice];
+
+		if(imagenes[4] != null) {
+			devolver[1] = imagenes[4];
+			System.out.println("Segunda imagen agregada "+devolver[1]);
+		}
+		return devolver;
 	}
 
 	public int get_color() {
@@ -111,11 +118,12 @@ public abstract class Entidad implements EntidadLogica, Enfocable, Intercambiabl
 	}
 
 	public void cargarImagenesRepresentativas(String ri) {
-		imagenes = new String [4];
+		imagenes = new String [5];
 		imagenes[0] = ri + color.get_color() +".png";
 		imagenes[1] = ri + color.get_color() +"-cursor.png";
 		imagenes[2] = ri + "detonado.gif";
 		imagenes[3] = ri + "enfocado-detonado.gif";
+		imagenes[4] = null;
 	}
 
 	public abstract boolean esAfectadaPorExplosionAdyacente();

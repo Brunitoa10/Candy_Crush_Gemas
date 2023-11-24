@@ -13,7 +13,6 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.Image;
 import java.awt.Insets;
-import java.util.Iterator;
 import java.util.LinkedList;
 
 
