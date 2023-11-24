@@ -14,7 +14,6 @@ public class Bomba extends Obstaculo implements EntidadNotificable {
    public Bomba(TableroNotificable tablero,int f, int c, Color col, boolean visible, NotificadorDeEntidadesConTiempo n,Logica l){
     super(tablero,f, c, "/assets/obstaculo/bomba/", col, visible); 
     cargarImagenesRepresentativas(rutadeLaImagen);
-    System.out.println("CREACION DE BOMBA");
     notificador = n;
     logica = l;
     l.suscribirBombaATimer(this);
