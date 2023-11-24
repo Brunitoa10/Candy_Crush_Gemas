@@ -328,10 +328,10 @@ public class Tablero implements TableroJuego{
 		detonar(efecto_transicion.entidades_a_detonar());
 		//agregar_entidades_nuevas(efecto_transicion.entidades_a_incorporar());
 		System.out.println("Antes de caida ");
-			imprimirTablero();
+		imprimirTablero();
 		//aplicar_caida_y_reubicar(efecto_transicion.entidades_a_reemplazar());
 		System.out.println("Despues de caida ");
-			imprimirTablero();
+		imprimirTablero();
 	}
 
 	protected void detonar(List<Entidad> entidades_a_detonar) {
