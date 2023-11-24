@@ -54,6 +54,10 @@ public class Hielo extends Obstaculo {
 		return caramelo_interno;
 	}
 
+	public void intercambiar(Entidad entidad) {
+		entidad.intercambiar_con(this);
+	}
+
 	public void intercambiar_con(GemaNormal gemaNormal) {
 	  intercambiar_gema_y_hielo(gemaNormal, this);
 
@@ -73,9 +77,9 @@ public class Hielo extends Obstaculo {
 
 	public void intercambiar_con(Hielo hielo) {
 		intercambiar_hielo_y_hielo(this, hielo);
-	 }
+	}
 
-	 public boolean tieneGemaInterna()
+	public boolean tieneGemaInterna()
 	{
 		return true;
 	}
@@ -101,5 +105,9 @@ public class Hielo extends Obstaculo {
 
 	public boolean puede_recibir(Hielo p) {
 		return true;
+	}
+
+	public boolean esPosibleIntercambiar(Entidad e) {
+		return e.puede_recibir(this);
 	}
 }
