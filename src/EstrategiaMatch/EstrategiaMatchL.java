@@ -64,6 +64,6 @@ public class EstrategiaMatchL implements Estrategias{
 
     public String get_NombreRegla()
     {
-      return ("L");
+      return ("MATCH L VALIDO");
     }
 }

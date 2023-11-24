@@ -62,6 +62,6 @@ public class EstrategiaMatchT implements Estrategias{
 
     public String get_NombreRegla()
     {
-      return ("T");
+      return ("MATCH T VALIDO");
     }
 }

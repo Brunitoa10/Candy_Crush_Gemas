@@ -63,6 +63,6 @@ public class EstrategiaMatchS implements Estrategias{
 
     public String get_NombreRegla()
     {
-      return ("S");
+      return ("MATCH SIGMOIDE VALIDO");
     }
 }
