@@ -13,9 +13,6 @@ public class GemaNormal extends Gema{
 	}
 	
 	//Metodos particulares
-	public boolean puede_recibir(Hielo hielo) {
-		return hielo.get_gema_interna().puede_recibir(this);
-	}
 	
 	public void intercambiar(Entidad entidad) {
 		entidad.intercambiar_con(this);

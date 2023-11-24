@@ -25,4 +25,9 @@ public class Roca extends Obstaculo{
 	public boolean esAfectadaPorExplosionAdyacente() {
 		return true;
 	}
+
+	public boolean es_posible_intercambiar(Entidad e)
+	{
+		return false;
+	}
 }
