@@ -147,21 +147,6 @@ public class Tablero implements TableroJuego{
 	    return esAfectadaPorExplosionAdyacente;
 	}
 	
-	private boolean esPosicionValida(int fila, int columna) {
-		return (0 <= fila && fila < filas) && (0 <= columna && columna < columnas);
-	}
-	
-
-	public void imprimirTablero() {
-		for (int i = 0; i < filas; i++) {
-	        for (int j = 0; j < columnas; j++) {
-	            System.out.print("[ "+entidades[i][j].get_color()+" ]");
-	        }
-	        System.out.println();
-	    }
-	 }
-	
-	//---------------LO NUEVO-----------------
 	public void asociar_entidades_logicas_y_graficas() {
 		Entidad entidad;
 			
@@ -253,47 +238,26 @@ public class Tablero implements TableroJuego{
 		
 	}
 
-	/*private GemaNormal crearGemaNormalRandom(int fila, int columna) {
-		// Obtén la fábrica de GemaNormal del registro
-		EntidadFactory gemaNormalFactory = EntidadFactoryRegistry.getEntidadFactories().get("n");
-	
-		// Crea la GemaNormal utilizando la fábrica
-		if (gemaNormalFactory != null) {
-			 String[] cadena = {"1","2","3"};//EntidadFactoryRegistry.getFactoryKeys();
-			return (GemaNormal) gemaNormalFactory.crear(this, fila, columna,cadena, skin);
-		} else {
-			// Manejar el caso en que la fábrica no está registrada
-			throw new IllegalStateException("Fábrica de GemaNormal no encontrada en el registro.");
-		}
-	}*/
-
 	private GemaNormal crearGemaNormalRandom(int fila, int columna) {
-		// Obtén la fábrica de GemaNormal del registro
-		EntidadFactory gemaNormalFactory = EntidadFactoryRegistry.getEntidadFactories().get("n");
-	
-		// Crea la GemaNormal utilizando la fábrica
-		if (gemaNormalFactory != null) {
-			// Crear un objeto Random para generar números aleatorios
-			Random random = new Random();
-	
-			// Tamaño del arreglo
-			int tamanoArreglo = 2;
-	
-			// Crear el arreglo para almacenar los valores aleatorios
-			String[] cadena = new String[tamanoArreglo];
-	
-			// Llenar el arreglo con valores aleatorios entre "1" y "7"
-			for (int i = 0; i < tamanoArreglo; i++) {
-				int numeroAleatorio = random.nextInt(6) + 1; 
-				cadena[i] = String.valueOf(numeroAleatorio);  // Convertir a cadena y asignar al arreglo
-			}
-	
-			return (GemaNormal) gemaNormalFactory.crear(this, fila, columna, cadena, skin);
-		} else {
-			// Manejar el caso en que la fábrica no está registrada
-			throw new IllegalStateException("Fábrica de GemaNormal no encontrada en el registro.");
-		}
-	}
+        EntidadFactory gemaNormalFactory = entidadFactories.get("n");
+
+        if (gemaNormalFactory != null) {
+            String[] cadena = generarCadenaAleatoria(2);
+            return (GemaNormal) gemaNormalFactory.crear(this, fila, columna, cadena, skin);
+        } else {
+            throw new IllegalStateException("Fábrica de GemaNormal no encontrada en el registro.");
+        }
+    }
+
+    private String[] generarCadenaAleatoria(int tamano) {
+        String[] cadena = new String[tamano];
+        for (int i = 0; i < tamano; i++) {
+            int numeroAleatorio = new Random().nextInt(6) + 1;
+            cadena[i] = String.valueOf(numeroAleatorio);
+        }
+        return cadena;
+    }
+
 	public boolean en_rango(int fila, int columna){
 		boolean en_rango_fila = (0 <= fila) && (fila < filas);
 		boolean en_rango_columna = (0 <= columna) && (columna < columnas);
@@ -327,7 +291,7 @@ public class Tablero implements TableroJuego{
 		for(Entidad e: entidades_a_detonar) {
 			miLogica.agregarScore(e.get_score());
 			//miLogica.actualizarObjetivos(entidades_a_detonar);
-			e.detonar(this); //Segun fede e.detonar();
+			e.detonar(this);
 		}
 		
 		System.out.println("TABLERO despues de DETONAR");
@@ -357,11 +321,8 @@ public class Tablero implements TableroJuego{
 
 				// Verificar si la entidad actual debe ser reemplazada
 				if (entidades_a_reemplazar.contains(entidadActual)) {
-					// Realizar la caída
-					//caerEntidad(entidad,fila,columna);
 					caerEntidad(fila,columna);
-
-					// Reubicar la entidad en la parte superior de la columna
+					entidades[filas - 1][columna] = crearGemaNormalRandom(filas - 1, columna);
 					reubicarEntidad(entidadActual, 0, columna);
 				}
 			}
@@ -373,9 +334,6 @@ public class Tablero implements TableroJuego{
 		for (int filaDestino = 0; filaDestino < filas - 1; filaDestino++) {
 			entidades[filaDestino][columna] = entidades[filaDestino + 1][columna];
 		}
-	
-		// La última fila se convierte en una nueva entidad (puede ser una gema normal aleatoria)
-		entidades[filas - 1][columna] = crearGemaNormalRandom(filas - 1, columna);
 	}
 	
 	private void reubicarEntidad(Entidad entidad, int fila, int columna) {
@@ -404,4 +362,16 @@ public class Tablero implements TableroJuego{
 		miAdministradordeEstrategias= new AdministradorEstrategias(estrategias,this);
     }
 
+	private boolean esPosicionValida(int fila, int columna) {
+		return (0 <= fila && fila < filas) && (0 <= columna && columna < columnas);
+	}
+	
+	public void imprimirTablero() {
+		for (int i = 0; i < filas; i++) {
+	        for (int j = 0; j < columnas; j++) {
+	            System.out.print("[ "+entidades[i][j].get_color()+" ]");
+	        }
+	        System.out.println();
+	    }
+	 }
 }
