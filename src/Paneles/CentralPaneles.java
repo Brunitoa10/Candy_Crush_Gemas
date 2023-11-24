@@ -46,12 +46,9 @@ public class CentralPaneles {
 
 	public String[] getNombresEstrategiasEnUso() {
 		String [] devolver = new String[4];
-		int i = 0;
-		while(getEstrategias().get(i).get_NombreRegla() != null) {
-			System.out.println("Nombre regla: "+getEstrategias().get(i).get_NombreRegla());
-			System.out.println("size lista: "+getEstrategias().size());
+		
+		for (int i = 0; i < getEstrategias().size(); i++) {
             devolver[i] = getEstrategias().get(i).get_NombreRegla();
-			i++;
         }
 
 		return devolver;

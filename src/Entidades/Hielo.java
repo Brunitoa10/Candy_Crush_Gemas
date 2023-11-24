@@ -8,7 +8,7 @@ public class Hielo extends Obstaculo {
    protected Entidad caramelo_interno;
 
 	public Hielo(TableroNotificable tablero,int f, int c, Color color, boolean visible, Entidad ent) {
-		super(tablero,f, c, "/assets/obstaculo/gema_normal/", color, visible);
+		super(tablero,f, c, "/assets/obstaculo/hielo", color, visible);
 		caramelo_interno=ent;
 		cargarImagenesRepresentativas(rutadeLaImagen);
 	}
