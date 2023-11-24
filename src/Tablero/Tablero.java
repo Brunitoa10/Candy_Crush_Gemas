@@ -24,7 +24,6 @@ public class Tablero implements TableroJuego{
 	protected String skin;
 	protected AdministradordeScore miAdministradordeScore;
 	protected AdministradorEstrategias miAdministradordeEstrategias;
-	public NotificadorDeEntidadesConTiempo notificadorDeGemasConTemporizador;
 
 	// Define un mapa para asociar las direcciones de intercambio con las funciones correspondientes
 	private final Map<Integer, BiFunction<Integer, Integer, Boolean>> operaciones = new HashMap<>();
@@ -36,8 +35,7 @@ public class Tablero implements TableroJuego{
 
 	public Tablero(Logica l) {
 		miLogica = l;
-		notificadorDeGemasConTemporizador = new NotificadorDeEntidadesConTiempo();
-		notificadorDeGemasConTemporizador.empezarContador();
+
 		//Intercambios
 		operaciones.put(GUI.ABAJO, (fila, columna) -> intercambiar_entidades_y_transicionar(fila + 1, columna));
 		operaciones.put(GUI.ARRIBA, (fila, columna) -> intercambiar_entidades_y_transicionar(fila - 1, columna));
