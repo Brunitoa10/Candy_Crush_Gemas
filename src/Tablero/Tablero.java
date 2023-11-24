@@ -221,20 +221,41 @@ public class Tablero implements TableroJuego{
 			manejarMatch(efecto_transicion,entidad_destino);
 		}else {
 			// To DO: incorporar logica asociada a control de match, generador de potenciadores, etc. 
-			Resultado resultado = miAdministradordeEstrategias.buscar_match(entidad_origen);
-			if (resultado != null && !resultado.get_Gemas_a_romper().isEmpty()) {
+			Resultado resultado_origen = miAdministradordeEstrategias.buscar_match(entidad_origen);
+			if (resultado_origen != null) {
 				// Se produce un match, aplicar efectos correspondientes
-				for (Entidad entidad : resultado.get_Gemas_a_romper()) {
+				if(!resultado_origen.get_Gemas_a_romper().isEmpty())
+				{for (Entidad entidad : resultado_origen.get_Gemas_a_romper()) {
 					manejarMatch(efecto_transicion,entidad);
+				}}
+				if(resultado_origen.get_resultado()!=null)
+				{
+					agregar_entidad(resultado_origen.get_resultado());
+				}
+			}
+			
+			Resultado resultado_destino = miAdministradordeEstrategias.buscar_match(entidad_destino);
+			if (resultado_destino != null) {
+				// Se produce un match, aplicar efectos correspondientes
+				if(!resultado_destino.get_Gemas_a_romper().isEmpty()) {
+				for (Entidad entidad : resultado_destino.get_Gemas_a_romper()) {
+					manejarMatch(efecto_transicion,entidad);
+				} }
+				if(resultado_destino.get_resultado()!=null)
+				{
+					agregar_entidad(resultado_destino.get_resultado());
 				}
 			}
 		}
 		return efecto_transicion;
 	}
+	
 	private void manejarMatch(EfectosDeTransicion efecto_transicion, Entidad entidad) {
 	    efecto_transicion.agregar_entidad_a_detonar_y_reemplazar(entidad);
+		if(get_entidad(entidad.get_fila(),entidad.get_columna()).get_color()==Color.TRANSPARENTE)
+		{
 	    efecto_transicion.agregar_entidad_de_reemplazo(crearGemaNormalRandom(entidad.get_fila(),entidad.get_columna()));
-		
+		}
 	}
 
 	private GemaNormal crearGemaNormalRandom(int fila, int columna) {
