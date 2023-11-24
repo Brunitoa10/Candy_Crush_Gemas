@@ -81,7 +81,6 @@ public class Logica {
 			reiniciarNivel(nivelActual);
 			miNivel.setVidas(tmpVidas);
 			miGUI.actualizarVidas();
-			System.out.println(administradordeScore.getScore());
 		} else {
 			miGUI.mostrarMensajeDerrotaPorVidas();
 		}
@@ -190,6 +189,7 @@ public class Logica {
             public void update(TickEvent event) {
                 disminuirTiempo();
             	miGUI.actualizarTimer(getTiempo());
+				miGUI.refrescar();
             }
         });
     }
@@ -204,7 +204,6 @@ public class Logica {
 
 	public void suscribirBombaATimer(Bomba bomba) {
         observableTimer.addObserver(bomba);
-		System.out.println("timer bomba iniciado");
 	}
 	
     public void setEstrategias(LinkedList<Estrategias> estrategias) {
@@ -275,7 +274,6 @@ public class Logica {
 				}
 			});
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
 			e.printStackTrace();
 		}
 	}

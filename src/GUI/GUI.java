@@ -180,6 +180,12 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 		    }
 		});
 
+		acciones.put(KeyEvent.VK_V, () -> {
+		    if (!bloquear_intercambios){
+		    	animar_intercambio((Celda)panel_tablero.getComponent(2));
+		    }
+		});
+
 		// Agrega el KeyListener
 		panel_tablero.addKeyListener(new KeyAdapter() {
 		    @Override
@@ -214,7 +220,6 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
             nombre = abrirVentanaParaIngresarNombre();
         }
 
-		System.out.println(nombre);
 		return nombre;
 	}
 
@@ -301,6 +306,13 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 	
 	public void animar_detonacion(Celda celda) {
 		mi_animador.animar_detonacion(celda);
+		repaint();
+		revalidate();
+	}
+
+	public void refrescar() {
+		repaint();
+		revalidate();
 	}
 	
 	public void animar_caida(Celda celda) {

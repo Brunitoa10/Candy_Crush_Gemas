@@ -64,7 +64,6 @@ public class ObservableTimer {
 
     public void desuscribirTodo() {
         for(int i = 0; i<observers.size(); i++) {
-            System.out.println("desuscrito");
             desuscribirse(observers.get(i));
         }
     }
