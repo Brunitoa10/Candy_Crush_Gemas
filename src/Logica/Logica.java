@@ -161,7 +161,7 @@ public class Logica {
         // Crear un nuevo tablero
         miTablero = new Tablero(this);
 		observableTimer.desuscribirTodo();
-		
+
         // Cargar el nuevo nivel en el tablero
         miNivel = GeneradorNivel.cargar_nivel_y_tablero(miTablero, nuevoNivel, this, skin);
 		
@@ -242,7 +242,7 @@ public class Logica {
 	}
 
 	private void cargarSiguienteNivel() {
-		
+		observableTimer.desuscribirTodo();
 		miTablero = new Tablero(this);
 		miNivel = GeneradorNivel.cargar_nivel_y_tablero(miTablero, nivelActual, this, skin);
 
