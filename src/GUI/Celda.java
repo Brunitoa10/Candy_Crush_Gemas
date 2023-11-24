@@ -11,6 +11,7 @@ public class Celda extends JLabel implements EntidadGrafica {
 	
 	protected GUI ventana;
 	protected EntidadLogica entidad_logica;
+	protected MultiIcon miMultiIcon;
 	
 	protected int size_label;
 	
@@ -33,7 +34,7 @@ public class Celda extends JLabel implements EntidadGrafica {
 		if(entidad_logica.get_imagenes_representativas()[1] == null) {
 			fijar_imagen_escalada_para_celda(imagen1);
 		}
-		else fijar_imagen_escalada_para_celda_con_hielo(imagen2, imagen1);
+		else fijar_imagen_escalada_para_celda(imagen2, imagen1);
 	}
 	
 	public EntidadLogica get_entidad_logica() {
@@ -46,6 +47,10 @@ public class Celda extends JLabel implements EntidadGrafica {
 	
 	public void eliminar_de_ventana() {
 		ventana.eliminar_celda(this);
+	}
+
+	public MultiIcon getMultiIcon() {
+		return miMultiIcon;
 	}
 	
 	// Operaciones para Entidad Grafica (Celda <-- Entidad Lógica)
@@ -76,10 +81,12 @@ public class Celda extends JLabel implements EntidadGrafica {
 		ImageIcon icono_imagen = new ImageIcon(this.getClass().getResource(path_imagen));
 		Image imagen_escalada = icono_imagen.getImage().getScaledInstance(size_label, size_label, Image.SCALE_SMOOTH);
 		Icon icono_imagen_escalado = new ImageIcon(imagen_escalada);
-		setIcon(icono_imagen_escalado);
+		miMultiIcon = new MultiIcon(icono_imagen_escalado, null);
+		miMultiIcon.setIconSize(size_label, size_label);
+		setIcon(miMultiIcon);
 	}
 	
-	protected void fijar_imagen_escalada_para_celda_con_hielo(String path_imagen1, String path_imagen2) {
+	protected void fijar_imagen_escalada_para_celda(String path_imagen1, String path_imagen2) {
 		ImageIcon icono_imagen1 = new ImageIcon(this.getClass().getResource(path_imagen1));
 		Image imagen_escalada1 = icono_imagen1.getImage().getScaledInstance(size_label, size_label, Image.SCALE_SMOOTH);
 		Icon icono_imagen_escalado1 = new ImageIcon(imagen_escalada1);
@@ -88,9 +95,9 @@ public class Celda extends JLabel implements EntidadGrafica {
 		Image imagen_escalada2 = icono_imagen2.getImage().getScaledInstance(size_label, size_label, Image.SCALE_SMOOTH);
 		Icon icono_imagen_escalado2 = new ImageIcon(imagen_escalada2);
 	
-		MultiIcon iconoConHielo = new MultiIcon(icono_imagen_escalado1, icono_imagen_escalado2);
-		iconoConHielo.setIconSize(size_label, size_label);
-		setIcon(iconoConHielo);
+		miMultiIcon = new MultiIcon(icono_imagen_escalado1, icono_imagen_escalado2);
+		miMultiIcon.setIconSize(size_label, size_label);
+		setIcon(miMultiIcon);
 	}
 
 }
