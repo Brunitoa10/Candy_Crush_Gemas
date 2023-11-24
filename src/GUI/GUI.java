@@ -91,7 +91,6 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 	}
 	
 	public void inicializarJuego() {
-		eliminarPantallaModosDeJuego();
 		setContentPane(fondo);
 		repaint();
 		revalidate();
@@ -259,10 +258,6 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 
 	public int getScore() {
 		return miLogica.getScore();
-	}
-
-	private void eliminarPantallaModosDeJuego() {
-		mi_central_pantallas.eliminarPantallaModosDeJuego();
 	}
 
 	private static void moverComponentes(Container container, Component component, int gridx, int gridy) {
@@ -441,6 +436,7 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 		animaciones_pendientes = 0;
 		bloquear_intercambios = false;
 		mi_animador = new CentralAnimaciones(this);
+		mi_central_paneles = new CentralPaneles(panel_principal, this);
 
 		inicializarGUI2();
 	}
@@ -481,7 +477,14 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 		c.anchor = GridBagConstraints.CENTER;
 		agregarConGBCs(panel_tablero, panel_principal, c, 2, 1, 4, 4); 
 		
-		panel_tablero.setFocusable(true);
+		SwingUtilities.invokeLater(()->{
+			panel_principal.requestFocus();
+			panel_tablero.requestFocus();
+			panel_tablero.grabFocus();
+			repaint();
+			revalidate();
+		});
+		
 		getContentPane().add(panel_principal);
 	}
 

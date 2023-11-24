@@ -11,6 +11,7 @@ import GeneradorEntidades.EntidadFactory;
 import GeneradorEntidades.EntidadFactoryRegistry;
 import Logica.*;
 import Score.AdministradordeScore;
+import Timer.ObservableTimer;
 
 
 public class Tablero implements TableroJuego{
@@ -352,8 +353,8 @@ public class Tablero implements TableroJuego{
 	}
 	
 	@Override
-	public NotificadorDeEntidadesConTiempo obtenerObserver() {
-		return notificadorDeGemasConTemporizador;
+	public ObservableTimer obtenerObserver() {
+		return miLogica.getTimer();
 	}
 
     public void crearAdministradorEstrategias(LinkedList<Estrategias> estrategias) {

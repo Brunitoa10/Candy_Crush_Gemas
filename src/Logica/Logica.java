@@ -40,6 +40,7 @@ public class Logica {
 		miGUI = new GUI(this, miTablero.getFila(), miTablero.getColumna());
 		miGUI.mostrar();
 		miGUI.mostrarModosDeJuego();
+		
 	}
 
 	public void inicializarJuego(){
@@ -159,11 +160,11 @@ public class Logica {
 		this.nivelActual = nuevoNivel;
         // Crear un nuevo tablero
         miTablero = new Tablero(this);
-
+		observableTimer.desuscribirTodo();
+		
         // Cargar el nuevo nivel en el tablero
         miNivel = GeneradorNivel.cargar_nivel_y_tablero(miTablero, nuevoNivel, this, skin);
-
-	
+		
         // Crear una nueva GUI con el nuevo tablero
         miGUI.reiniciarGUI(miTablero.getFila(), miTablero.getColumna());
 		//miGUI.resetear(this, miTablero.getFila(), miTablero.getColumna());
@@ -174,8 +175,12 @@ public class Logica {
         
         // Fijar la posición inicial del jugador en el nuevo nivel
         miTablero.fijar_jugador(miNivel.getFilaInicialJugador(), miNivel.getColumnaInicialJugador());
-		inicializarTiempo();
+		reanudarTiempo();
     }
+
+	public ObservableTimer getTimer() {
+		return observableTimer;
+	}
 
 	private void inicializarTiempo() {
         // Add the observer
@@ -198,14 +203,9 @@ public class Logica {
     }
 
 	public void suscribirBombaATimer(Bomba bomba) {
-        observableTimer.addObserver(new TickObserver() {
-            @Override
-            public void update(TickEvent event) {
-                bomba.notificar();
-            }
-        });
+        observableTimer.addObserver(bomba);
+		System.out.println("timer bomba iniciado");
 	}
-
 	
     public void setEstrategias(LinkedList<Estrategias> estrategias) {
 		miTablero.crearAdministradorEstrategias(estrategias);
@@ -242,11 +242,11 @@ public class Logica {
 	}
 
 	private void cargarSiguienteNivel() {
-		miGUI.dispose();
+		
 		miTablero = new Tablero(this);
 		miNivel = GeneradorNivel.cargar_nivel_y_tablero(miTablero, nivelActual, this, skin);
-		miGUI = new GUI(this, miTablero.getFila(), miTablero.getColumna());
-		
+
+		miGUI.reiniciarGUI(miTablero.getColumna(), miTablero.getFila());
 		miGUI.cambiarFondo(nivelActual);
 		miTablero.asociar_entidades_logicas_y_graficas();
 		miTablero.fijar_jugador(miNivel.getFilaInicialJugador(), miNivel.getColumnaInicialJugador());

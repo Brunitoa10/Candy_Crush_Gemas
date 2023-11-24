@@ -195,6 +195,7 @@ public class CentralPantallas {
 				p.setVisibilidad(false);
 				panelPrincipal.repaint();
 				panelPrincipal.revalidate();
+				eliminarPantallaModosDeJuego();
 	            miLogica.inicializarJuego();
 	        }
 	    });
@@ -211,6 +212,7 @@ public class CentralPantallas {
 				p.setVisibilidad(false);
 				panelPrincipal.repaint();
 				panelPrincipal.revalidate();
+				eliminarPantallaModosDeJuego();
 	            miLogica.inicializarJuego();
 	        }
 	    });

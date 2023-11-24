@@ -2,6 +2,7 @@ package Tablero;
 
 import Entidades.Entidad;
 import Entidades.Hielo;
+import Timer.ObservableTimer;
 
 public interface TableroJuego extends TableroNotificable{
 	
@@ -21,7 +22,7 @@ public interface TableroJuego extends TableroNotificable{
 	
 	public void mover_jugador(int direccion);
 
-	public NotificadorDeEntidadesConTiempo obtenerObserver();
+	public ObservableTimer obtenerObserver();
 	
 	//public void intercambiar_entidades(int direccion); segun fede
 	public boolean intercambiar_entidades(int direccion);

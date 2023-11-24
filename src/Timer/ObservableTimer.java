@@ -30,7 +30,7 @@ public class ObservableTimer {
     }
 
     // Remove an observer
-    public void removeObserver(TickObserver observer) {
+    public void desuscribirse(TickObserver observer) {
         observers.remove(observer);
     }
 
@@ -41,12 +41,14 @@ public class ObservableTimer {
         }
     }
 
+
     // Pause the timer
     public void pause() {
         if (future != null && !future.isCancelled()) {
             future.cancel(false);
         }
     }
+
 
     // Resume the timer
     public void resume() {
@@ -59,34 +61,11 @@ public class ObservableTimer {
     public void stop() {
         scheduler.shutdown();
     }
-}
 
-//ejemplo (gracias chatGPT)
-
-/*
-public class Main {
-    public static void main(String[] args) {
-        ObservableTimer observableTimer = new ObservableTimer();
-
-        // Add the observer
-        observableTimer.addObserver(new TickObserver());
-
-        // Do other setup or start your application logic
-
-        // For the sake of this example, let's pause and then resume the timer
-        try {
-            Thread.sleep(3000);  // Sleep for 3 seconds
-            observableTimer.pause();
-
-            Thread.sleep(3000);  // Sleep for another 3 seconds (timer is paused)
-            observableTimer.resume();
-
-            Thread.sleep(5000);  // Sleep for 5 seconds
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+    public void desuscribirTodo() {
+        for(int i = 0; i<observers.size(); i++) {
+            System.out.println("desuscrito");
+            desuscribirse(observers.get(i));
         }
-
-        // Stop the timer (cleanup)
-        observableTimer.stop();
     }
-*/
+}

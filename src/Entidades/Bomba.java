@@ -2,16 +2,19 @@ package Entidades;
 
 import Logica.*;
 import Tablero.*;
+import Timer.ObservableTimer;
+import Timer.TickEvent;
+import Timer.TickObserver;
 import EstrategiaDetonaciones.*;
 
-public class Bomba extends Obstaculo implements EntidadNotificable {
+public class Bomba extends Obstaculo implements TickObserver {
    protected int tiempo= tiempoInicial;
-   protected NotificadorDeEntidadesConTiempo notificador;
-   protected static final int tiempoInicial = 30;
+   protected ObservableTimer notificador;
+   protected static final int tiempoInicial = 10;
    protected Logica logica;
 
 
-   public Bomba(TableroNotificable tablero,int f, int c, Color col, boolean visible, NotificadorDeEntidadesConTiempo n,Logica l){
+   public Bomba(TableroNotificable tablero,int f, int c, Color col, boolean visible, ObservableTimer n,Logica l){
     super(tablero,f, c, "/assets/obstaculo/bomba/", col, visible); 
     cargarImagenesRepresentativas(rutadeLaImagen);
     notificador = n;
@@ -20,13 +23,13 @@ public class Bomba extends Obstaculo implements EntidadNotificable {
    }
 
     public void detonar(Tablero t) {
-        notificador.desubscribirse(this);
+        notificador.desuscribirse(this);
         EstategiaDetonacion estrategiadeDetonacion= new EstrategiaDetonacionBomba();
         estrategiadeDetonacion.detonar(this, t);
     }
 
     public void finalizarJuegoPorExplosionDeBomba(){
-        notificador.desubscribirse(this);
+        notificador.desuscribirse(this);
         logica.notificarDerrotaPorVidas();
     }
 
@@ -53,7 +56,7 @@ public class Bomba extends Obstaculo implements EntidadNotificable {
         
     }
 
-    public void notificar() {
+    public void update(TickEvent event) {
         tiempo--;
         cargarImagenesRepresentativas(rutadeLaImagen);
         if(enfocada){
