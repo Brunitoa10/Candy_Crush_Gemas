@@ -3,6 +3,7 @@ import java.awt.Image;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.SwingUtilities;
 
 import GUI.Celda;
 
@@ -33,8 +34,13 @@ public class AnimadorDetonacion extends Thread implements Animador {
 	public void comenzar_animacion() {
 		this.start();
 	}
+
+
+    public void run() {
+        runAnimation();
+    }
 	
-	public void run() {
+	public void runAnimation() {
 		int size_label = celda_animada.get_size_label();
 		try {
 			ImageIcon imagen_icon = new ImageIcon(this.getClass().getResource("/assets/gemas/detonado.gif"));

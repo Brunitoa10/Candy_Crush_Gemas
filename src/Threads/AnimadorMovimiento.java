@@ -47,7 +47,6 @@ public class AnimadorMovimiento extends Thread implements Animador {
 		if(miMultiIcon.hasSingleIcon()) {
 			moverCelda();
 		} else {moverContenidoInterno();}
-
 	}
 
 private void moverCelda() {
