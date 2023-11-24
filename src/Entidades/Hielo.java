@@ -32,7 +32,6 @@ public class Hielo extends Obstaculo {
 		imagenes[2] = ri + "detonado.gif";
 		imagenes[3] = ri + "enfocado-detonado.gif";
 		imagenes[4] = caramelo_interno.get_imagenes_representativas()[0];
-		System.out.println(imagenes[4]);
 	}
 
 	public int get_score()

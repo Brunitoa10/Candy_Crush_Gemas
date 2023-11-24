@@ -257,6 +257,10 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 		return miLogica.getVidas();
 	}
 
+	public int getScore() {
+		return miLogica.getScore();
+	}
+
 	private void eliminarPantallaModosDeJuego() {
 		mi_central_pantallas.eliminarPantallaModosDeJuego();
 	}
@@ -443,6 +447,7 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable,V
 
 	private void inicializarGUI2() {
 		this.setContentPane(fondo);
+		getContentPane().remove(panel_principal);
 		
 		ImageIcon logo = new ImageIcon(this.getClass().getResource("/assets/nivel/Icono.png"));
 		setIconImage(logo.getImage());

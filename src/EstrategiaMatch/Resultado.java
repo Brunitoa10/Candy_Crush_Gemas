@@ -1,9 +1,7 @@
 package EstrategiaMatch;
 
 import Entidades.*;
-
 import java.util.LinkedList;
-import java.util.List;
 
 public class Resultado {
     protected Entidad resultado;

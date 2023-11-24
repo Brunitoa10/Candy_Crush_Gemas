@@ -45,10 +45,11 @@ public class Logica {
 	public void inicializarJuego(){
 		nivelActual = 1;
 		miNivel = GeneradorNivel.cargar_nivel_y_tablero(miTablero, nivelActual, this, skin);
+		administradordeScore = new AdministradordeScore(miGUI.obtenerCentralPaneles());
 		miGUI.inicializarJuego();
 		miTablero.asociar_entidades_logicas_y_graficas();
 		miTablero.fijar_jugador(miNivel.getFilaInicialJugador(), miNivel.getColumnaInicialJugador());
-		administradordeScore = new AdministradordeScore(miGUI.obtenerCentralPaneles());
+		
 		inicializarTiempo();
 	}
 
@@ -83,6 +84,10 @@ public class Logica {
 		} else {
 			miGUI.mostrarMensajeDerrotaPorVidas();
 		}
+	}
+
+	public int getScore() {
+		return administradordeScore.getScore();
 	}
 
 	public void notificarDerrotaPorVidas() {

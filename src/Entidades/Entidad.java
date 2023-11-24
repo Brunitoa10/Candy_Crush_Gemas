@@ -70,7 +70,6 @@ public abstract class Entidad implements EntidadLogica, Enfocable, Intercambiabl
 
 		if(imagenes[4] != null) {
 			devolver[1] = imagenes[4];
-			System.out.println("Segunda imagen agregada "+devolver[1]);
 		}
 		return devolver;
 	}

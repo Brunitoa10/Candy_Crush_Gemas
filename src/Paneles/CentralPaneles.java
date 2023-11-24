@@ -63,6 +63,10 @@ public class CentralPaneles {
 		miPanelScore.actualizarScore(score);
 	}
 
+	public int getScore() {
+		return miGUI.getScore();
+	}
+
 	public void mostrarPanelControles() {
         PanelControles miPanelControles = new PanelControles(this);
 		miPanelControles.crearPanel();

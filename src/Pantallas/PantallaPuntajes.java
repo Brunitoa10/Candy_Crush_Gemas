@@ -30,7 +30,6 @@ public class PantallaPuntajes extends JPanel implements Pantalla {
 
     public void agregarComponentes() {
         GridBagConstraints gbc = new GridBagConstraints();
-		PriorityQueue<Jugador> jugadores = miCentral.obtenerListadeJugadores();
 
         JLabel titulo_puntajes = miCentral.crearLabelConColor("MEJORES PUNTAJES:", "Algerian", Font.PLAIN, 40, Color.WHITE, 2, 1);
 		miCentral.agregarConGBCs(titulo_puntajes, this, gbc, 0, 0, 3, 1);

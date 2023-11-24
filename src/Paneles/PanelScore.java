@@ -23,7 +23,7 @@ public class PanelScore extends JPanel implements Paneles {
     public void crearPanel() {
         setBackground(new Color(0,0,0,200));
 
-		scoreLabel = new JLabel("SCORE: 0000");
+		scoreLabel = new JLabel("SCORE: "+agregarPadding(miCentral.getScore()));
 		scoreLabel.setFont(new Font("Algerian", Font.PLAIN, 40));
 		scoreLabel.setForeground(Color.WHITE);
 		add(scoreLabel);
