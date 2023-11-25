@@ -69,7 +69,7 @@ public class Tablero implements TableroJuego{
 		this.skin=skin;
 	}
 
-		public int getFila() {
+	public int getFila() {
 		return filas;
 	}
 
@@ -192,7 +192,6 @@ public class Tablero implements TableroJuego{
 	    	realizarIntercambioYTransicion(entidadOrigen, entidadDestino, filaOrigen, columnaOrigen);
 	    }
 
-	    imprimirTablero();
 	    return movientosValido;
 	}
 
@@ -291,13 +290,13 @@ public class Tablero implements TableroJuego{
 	
 	protected void transicionar_proximo_estado(EfectosDeTransicion efecto_transicion) {
 		detonar(efecto_transicion.entidades_a_detonar());
-		
+		agregar_entidades_nuevas(efecto_transicion.entidades_a_incorporar());
 		System.out.println("Antes de caida ");
 		imprimirTablero();
 		aplicar_caida_y_reubicar(efecto_transicion.entidades_a_reemplazar());
 		System.out.println("Despues de caida :: dimesiones :: "+this.getFila()+" , "+this.getColumna());
 		imprimirTablero();
-		agregar_entidades_nuevas(efecto_transicion.entidades_a_incorporar());
+		
 	}
 	
 	protected void detonar(List<Entidad> entidades_a_detonar) {
@@ -341,22 +340,46 @@ public class Tablero implements TableroJuego{
 		}
 	}
 	
-	private void aplicar_gravedad(int f, int c) {
+	/*private void aplicar_gravedad(int f, int c) {
 		// Iterar hacia arriba en la columna
 		for (int nf = f - 1; nf >= 0; nf--) {
 			Entidad entidadActual = entidades[nf][c];
 	
 			// Verificar si la celda actual no está detonada y la celda superior está vacía
-			if (!entidadActual.estaDetonada() && entidades[nf + 1][c].get_color() == Color.TRANSPARENTE) {
+			if (!entidadActual.estaDetonada()) {
+				if (entidades[nf + 1][c].get_color() == Color.TRANSPARENTE) {
+					// Mover la entidad hacia abajo en la columna
+					entidades[nf + 1][c] = entidadActual;
+					entidades[nf][c].set_color(Color.TRANSPARENTE);
+					// Actualizar la posición de la entidad
+					entidadActual.intercambiar_Caida(nf + 1, c);
+					// Vincular la entidad con la lógica y la interfaz gráfica
+					miLogica.asociar_entidad_logica_y_grafica(entidadActual);
+				} else {
+					// Si la celda superior no está vacía, detenemos la gravedad
+					break;
+				}
+			}
+		}
+	}*/
+
+	private void aplicar_gravedad(int f, int c) {
+		// Iterar hacia arriba en la columna
+		for (int nf = f - 1; nf >= 0; nf--) {
+			Entidad entidadActual = entidades[nf][c];
+			Entidad entidadSuperior = entidades[nf + 1][c];
+	
+			// Verificar si la celda superior está vacía o tiene entidad transparente
+			if (entidadSuperior == null || entidadSuperior.get_color() == Color.TRANSPARENTE) {
 				// Mover la entidad hacia abajo en la columna
 				entidades[nf + 1][c] = entidadActual;
-				entidades[nf][c].set_color(Color.TRANSPARENTE);
+				entidades[nf][c].set_color(Color.TRANSPARENTE); // o ajusta a una entidad especial de celda vacía
 				// Actualizar la posición de la entidad
 				entidadActual.intercambiar_Caida(nf + 1, c);
 				// Vincular la entidad con la lógica y la interfaz gráfica
 				miLogica.asociar_entidad_logica_y_grafica(entidadActual);
 			} else {
-				// Si encontramos una entidad detonada o la celda superior no está vacía, detenemos la gravedad
+				// Si la celda superior no está vacía, detenemos la gravedad
 				break;
 			}
 		}
