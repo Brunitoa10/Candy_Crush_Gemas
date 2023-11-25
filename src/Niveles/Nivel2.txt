@@ -11,11 +11,13 @@ f
 4
 l
 s
+t
 f
-n,3 n,2 n,1 n,1 n,2 n,2 n,3
-n,2 n,3 n,3 n,5 e,4 hn,4 n,5
-n,1 hn,2 n,2 n,6 r,7 n,3 n,6
-n,6 n,1 n,1 n,4 n,4 n,2 n,4
-n,3 n,4 n,5 e,5 n,4 n,5h n,5
-n,2 n,1 hn,2 n,3 n,1 n,3 r,7
-n,3 n,4 n,5 n,5 n,4 n,5 n,5
+n,3 n,2 n,1 n,1 n,2 n,2 n,3 n,2
+n,2 n,3 n,3 n,5 n,4 n,4 n,5 n,4
+n,1 n,2 n,2 n,6 r,7 n,3 n,6 n,3
+n,6 n,1 n,1 n,4 n,4 n,2 n,4 n,4
+n,3 n,4 n,5 n,5 n,4 n,5 n,5 r,7
+n,2 n,1 n,2 n,3 n,1 n,3 r,7 n,2
+n,3 n,4 n,5 n,5 n,4 n,5 n,5 n,7
+n,2 n,1 n,2 n,3 n,1 n,3 r,7 n,2
