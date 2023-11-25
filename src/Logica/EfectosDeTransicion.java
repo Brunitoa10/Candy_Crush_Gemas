@@ -19,7 +19,6 @@ public class EfectosDeTransicion {
 	
 	public void agregar_entidad_a_detonar_y_reemplazar(Entidad entidad) {
 		entidades_a_detonar.add(entidad);
-		//entidad.set_color(Color.TRANSPARENTE);
 		entidades_a_reemplazar.add(entidad);
 	}
 	

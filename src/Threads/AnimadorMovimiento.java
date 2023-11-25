@@ -28,7 +28,6 @@ public class AnimadorMovimiento extends Thread implements Animador {
 		int size_label = celda_animada.get_size_label();
 		pos_x_destino = celda.get_entidad_logica().get_columna() * size_label;
 		pos_y_destino = celda.get_entidad_logica().get_fila() * size_label;		
-		System.out.println("Animacion en progreso");
 	}
 	
 	public Celda get_celda_asociada() {

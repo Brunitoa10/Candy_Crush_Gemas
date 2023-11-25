@@ -290,25 +290,15 @@ public class Tablero implements TableroJuego{
 	
 	protected void transicionar_proximo_estado(EfectosDeTransicion efecto_transicion) {
 		detonar(efecto_transicion.entidades_a_detonar());
-		
-		System.out.println("Antes de caida ");
-		imprimirTablero();
-		aplicar_caida_y_reubicar(efecto_transicion.entidades_a_reemplazar());
-		System.out.println("Despues de caida :: dimesiones :: "+this.getFila()+" , "+this.getColumna());
-		imprimirTablero();
 		agregar_entidades_nuevas(efecto_transicion.entidades_a_incorporar());
+		aplicar_caida_y_reubicar(efecto_transicion.entidades_a_reemplazar());
 	}
 	
 	protected void detonar(List<Entidad> entidades_a_detonar) {
-		System.out.println("TABLERO antes de DETONAR");
-		imprimirTablero();
 		for (Entidad e : entidades_a_detonar) {
 			miLogica.agregarScore(e.get_score());
 			e.detonar(this);
-		}
-		System.out.println("TABLERO despues de DETONAR :: dimesiones :: "+this.getFila()+" , "+this.getColumna());
-		imprimirTablero();
-		
+		}	
 	}
 	
 	protected void agregar_entidades_nuevas(List<Entidad> entidades_a_incorporar) {
@@ -338,7 +328,6 @@ public class Tablero implements TableroJuego{
 				}
 			}
 		}
-		aplicar_gravedad_en_tablero();
 	}
 	
 	private void aplicar_gravedad(int f, int c) {
@@ -350,7 +339,7 @@ public class Tablero implements TableroJuego{
 			if (!entidadActual.estaDetonada() && entidades[nf + 1][c].get_color() == Color.TRANSPARENTE) {
 				// Mover la entidad hacia abajo en la columna
 				entidades[nf + 1][c] = entidadActual;
-				entidades[nf][c].set_color(Color.TRANSPARENTE);
+				entidades[nf][c] = new GemaNormal(this, nf, c, new Color(Color.TRANSPARENTE), true, skin);
 				// Actualizar la posición de la entidad
 				entidadActual.intercambiar_Caida(nf + 1, c);
 				// Vincular la entidad con la lógica y la interfaz gráfica
@@ -361,17 +350,7 @@ public class Tablero implements TableroJuego{
 			}
 		}
 	}
-	private void aplicar_gravedad_en_tablero() {
-		// Iterar sobre todo el tablero
-		for (int fila = filas - 1; fila >= 0; fila--) {
-			for (int columna = 0; columna < columnas; columna++) {
-				// Verificar si la celda actual está detonada
-				if (entidades[fila][columna].estaDetonada()) {
-					aplicar_gravedad(fila, columna);
-				}
-			}
-		}
-	}
+	
 	@Override
 	public ObservableTimer obtenerObserver() {
 		return miLogica.getTimer();
