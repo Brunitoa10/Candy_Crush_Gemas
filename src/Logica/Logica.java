@@ -183,7 +183,6 @@ public class Logica {
 	}
 
 	private void inicializarTiempo() {
-        // Add the observer
 		observableTimer.resume();
         observableTimer.addObserver(new TickObserver() {
             @Override

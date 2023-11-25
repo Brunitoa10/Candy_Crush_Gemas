@@ -133,10 +133,6 @@ public class Tablero implements TableroJuego{
         }
     }
 	
-	public Tablero obtenerTablero() {
-        return this;
-    }
-	
 	public boolean hayEfectoExplosionAdyacente(int filaVecina, int columnaVecina) {
 		boolean esAfectadaPorExplosionAdyacente = false;
 	   
