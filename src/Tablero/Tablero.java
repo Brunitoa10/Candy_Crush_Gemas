@@ -339,7 +339,7 @@ public class Tablero implements TableroJuego{
 			if (!entidadActual.estaDetonada() && entidades[nf + 1][c].get_color() == Color.TRANSPARENTE) {
 				// Mover la entidad hacia abajo en la columna
 				entidades[nf + 1][c] = entidadActual;
-				entidades[nf][c] = new GemaNormal(this, nf, c, new Color(Color.TRANSPARENTE), true, skin);
+				entidades[nf][c] = new GemaNormal(this, nf, c, new Color(Color.TRANSPARENTE), false, skin);
 				// Actualizar la posición de la entidad
 				entidadActual.intercambiar_Caida(nf + 1, c);
 				// Vincular la entidad con la lógica y la interfaz gráfica
