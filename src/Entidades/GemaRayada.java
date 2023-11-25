@@ -34,10 +34,6 @@ public class GemaRayada extends Gema{
 		return e.puede_recibir(this);
 	}
 	
-	public boolean puede_recibir(Hielo hielo) {
-		return hielo.get_gema_interna().puede_recibir(this);
-	}
-	
 	public void intercambiar(Entidad entidad) {
 		entidad.intercambiar_con(this);
 	}

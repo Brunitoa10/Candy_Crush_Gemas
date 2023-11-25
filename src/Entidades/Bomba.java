@@ -79,4 +79,9 @@ public class Bomba extends Obstaculo implements TickObserver {
         }
     }
 
+    public boolean es_posible_intercambiar(Entidad e)
+	{
+		return false;
+	}
+
 }

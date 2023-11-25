@@ -11,37 +11,29 @@ public abstract class Obstaculo extends Entidad{
 	}
 
 	//Interfaz de intercambiable
-	public boolean esPosibleIntercambiar(Entidad e) {
-		return false;
-	}
-  
-	@Override
-	public boolean es_posible_intercambiar(Entidad e) {
-		return false;
-	}
 
 	@Override
 	public boolean puede_recibir(GemaNormal c) {
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean puede_recibir(GemaRayada p) {
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean puede_recibir(GemaEnvuelta p) {
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean puede_recibir(GemaCruzada p) {
-		return false;
+		return true;
 	}
 
 	public boolean puede_recibir(Hielo p) {
-		return false;
+		return true;
 	}
 
 	public boolean puede_recibir(Bomba p) {

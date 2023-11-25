@@ -55,6 +55,7 @@ public class Hielo extends Obstaculo {
 	}
 
 	public void intercambiar(Entidad entidad) {
+		System.out.println("Estoy en hielo en el metodo intercambiar");
 		entidad.intercambiar_con(this);
 	}
 
@@ -107,7 +108,8 @@ public class Hielo extends Obstaculo {
 		return true;
 	}
 
-	public boolean esPosibleIntercambiar(Entidad e) {
+	@Override
+	public boolean es_posible_intercambiar(Entidad e) {
 		return e.puede_recibir(this);
 	}
 }
