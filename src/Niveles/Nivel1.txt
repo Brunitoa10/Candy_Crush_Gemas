@@ -14,7 +14,7 @@ t
 f
 n,1 n,2 n,1 n,1 p,52 p,12
 n,2 n,1 n,2 n,2 n,1 n,4
-n,1 n,3 b,4 n,6 n,3 n,4
-n,6 n,2 n,3 n,5 n,4 n,2
-n,2 n,4 n,2 c,1 hn,4 n,5
+n,1 hn,3 b,4 n,6 n,3 n,4
+n,6 e,2 n,3 n,5 n,4 n,2
+n,2 n,4 hn,2 c,1 hn,4 n,5
 n,1 n,1 n,3 n,1 p,51 n,3
