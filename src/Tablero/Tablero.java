@@ -338,6 +338,7 @@ public class Tablero implements TableroJuego{
 				}
 			}
 		}
+		aplicar_gravedad_en_tablero();
 	}
 	
 	private void aplicar_gravedad(int f, int c) {
@@ -360,7 +361,17 @@ public class Tablero implements TableroJuego{
 			}
 		}
 	}
-
+	private void aplicar_gravedad_en_tablero() {
+		// Iterar sobre todo el tablero
+		for (int fila = filas - 1; fila >= 0; fila--) {
+			for (int columna = 0; columna < columnas; columna++) {
+				// Verificar si la celda actual está detonada
+				if (entidades[fila][columna].estaDetonada()) {
+					aplicar_gravedad(fila, columna);
+				}
+			}
+		}
+	}
 	@Override
 	public ObservableTimer obtenerObserver() {
 		return miLogica.getTimer();
