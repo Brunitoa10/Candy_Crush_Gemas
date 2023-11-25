@@ -127,12 +127,6 @@ public class Tablero implements TableroJuego{
 		}
 	}
 
-	public void imprimirLista(LinkedList<Entidad> listaCombos) {
-        for (Entidad elemento : listaCombos) {
-            System.out.print(elemento.get_color()+" - ");
-        }
-    }
-	
 	public boolean hayEfectoExplosionAdyacente(int filaVecina, int columnaVecina) {
 		boolean esAfectadaPorExplosionAdyacente = false;
 	   
@@ -359,15 +353,6 @@ public class Tablero implements TableroJuego{
 	private boolean esPosicionValida(int fila, int columna) {
 		return (0 <= fila && fila < filas) && (0 <= columna && columna < columnas);
 	}
-	
-	public void imprimirTablero() {
-		for (int i = 0; i < filas; i++) {
-	        for (int j = 0; j < columnas; j++) {
-	            System.out.print("[ "+entidades[i][j].get_color()+" ]");
-	        }
-	        System.out.println();
-	    }
-	 }
 
     public void detono(LinkedList<Entidad> entidades) {
 		miLogica.actualizarObjetivos(entidades);
