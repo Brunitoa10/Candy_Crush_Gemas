@@ -407,4 +407,11 @@ public class Tablero implements TableroJuego{
 	    }
 	 }
 
+    public void detono(LinkedList<Entidad> entidades) {
+		miLogica.actualizarObjetivos(entidades);
+		for (Entidad ent : entidades) {
+			miLogica.agregarScore(ent.get_score());
+		}
+    }
+
 }
