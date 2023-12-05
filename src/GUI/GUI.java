@@ -369,7 +369,7 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable, 
 		movimientosRestantes = miLogica.getMovimientos();
 		animaciones_pendientes = 0;
 		bloquear_intercambios = false;
-		mi_animador = new CentralAnimaciones(this);
+		central_animaciones = new CentralAnimaciones(this);
 		mi_central_paneles = new CentralPaneles(panel_principal, this);
 
 		inicializarGUI2();
