@@ -3,7 +3,6 @@ package GUI;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Container;
 import java.awt.GridBagConstraints;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -41,7 +40,7 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable, 
 	private CentralPantallas mi_central_pantallas;
 	protected boolean bloquear_intercambios;
 	protected CentralPaneles mi_central_paneles;
-	protected CentralAnimaciones mi_animador;
+	protected CentralAnimaciones central_animaciones;
 	protected JPanel panel_tablero, panel_principal;
 	private ImagenFondo fondo = new ImagenFondo();
 
@@ -58,7 +57,7 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable, 
 		columnas = c;
 		animaciones_pendientes = 0;
 		bloquear_intercambios = false;
-		mi_animador = new CentralAnimaciones(this);
+		central_animaciones = new CentralAnimaciones(this);
 		configuracionTeclado = new ConfiguracionTeclado(l, this);
 		inicializarGUI();
 	}
@@ -222,15 +221,15 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable, 
 	}
 
 	public void animar_intercambio(Celda celda) {
-		mi_animador.animar_intercambio(celda);
+		central_animaciones.animar_intercambio(celda);
 	}
 
 	public void animar_cambio_foco(Celda celda) {
-		mi_animador.animar_cambio_foco(celda);
+		central_animaciones.animar_cambio_foco(celda);
 	}
 
 	public void animar_detonacion(Celda celda) {
-		mi_animador.animar_detonacion(celda);
+		central_animaciones.animar_detonacion(celda);
 	}
 
 	public void refrescar() {
@@ -239,11 +238,11 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable, 
 	}
 
 	public void animar_caida(Celda celda) {
-		mi_animador.animar_caida(celda);
+		central_animaciones.animar_caida(celda);
 	}
 
 	public void animar_cambio_visibilidad(Celda celda) {
-		mi_animador.animar_cambio_visibilidad(celda);
+		central_animaciones.animar_cambio_visibilidad(celda);
 	}
 
 	public void actualizarMovimientos(int movimientos) {
