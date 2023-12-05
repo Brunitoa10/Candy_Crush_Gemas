@@ -203,18 +203,6 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable, 
 		return miLogica.getScore();
 	}
 
-	private static void moverComponentes(Container container, Component component, int gridx, int gridy) {
-		GridBagConstraints gbc = new GridBagConstraints();
-		gbc.gridx = gridx;
-		gbc.gridy = gridy;
-
-		container.remove(component);
-		container.add(component, gbc);
-
-		container.revalidate();
-		container.repaint();
-	}
-
 	public int getTiempoRestante() {
 		return miLogica.getTiempo();
 	}
@@ -235,8 +223,6 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable, 
 
 	public void animar_intercambio(Celda celda) {
 		mi_animador.animar_intercambio(celda);
-		moverComponentes(panel_tablero, celda, celda.get_entidad_logica().get_columna(),
-				celda.get_entidad_logica().get_fila());
 	}
 
 	public void animar_cambio_foco(Celda celda) {
@@ -245,10 +231,6 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable, 
 
 	public void animar_detonacion(Celda celda) {
 		mi_animador.animar_detonacion(celda);
-		moverComponentes(panel_tablero, celda, celda.get_entidad_logica().get_columna(),
-				celda.get_entidad_logica().get_fila());
-		repaint();
-		revalidate();
 	}
 
 	public void refrescar() {
@@ -258,8 +240,6 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable, 
 
 	public void animar_caida(Celda celda) {
 		mi_animador.animar_caida(celda);
-		moverComponentes(panel_tablero, celda, celda.get_entidad_logica().get_columna(),
-				celda.get_entidad_logica().get_fila());
 	}
 
 	public void animar_cambio_visibilidad(Celda celda) {
