@@ -1,6 +1,5 @@
 package Pantallas;
 
-
 public interface Pantalla {
     public void crearPantalla(int width, int height);
 
@@ -8,5 +7,4 @@ public interface Pantalla {
 
     public void setVisibilidad(boolean vis);
 
-    public void refrescar();
 }

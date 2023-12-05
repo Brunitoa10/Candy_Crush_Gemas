@@ -15,86 +15,83 @@ import java.awt.Image;
 import java.awt.Insets;
 import java.util.LinkedList;
 
-
-
 public class CentralPaneles {
-    protected JPanel panelPrincipal;
-    protected GUI miGUI;
-    protected PanelScore miPanelScore;
-    protected PanelObjetivo miPanelObjetivo;
+	protected JPanel panelPrincipal;
+	protected GUI miGUI;
+	protected PanelScore miPanelScore;
+	protected PanelObjetivo miPanelObjetivo;
 	protected PanelVidas miPanelVidas;
 	protected PanelMovimiento miPanelMovimiento;
 	protected PanelReglas miPanelReglas;
 	protected PanelTimer miPanelTimer;
 
-
-    public CentralPaneles(JPanel p_principal, GUI mi_GUI) {
-        panelPrincipal = p_principal;
-        miGUI = mi_GUI;
-    }
+	public CentralPaneles(JPanel p_principal, GUI mi_GUI) {
+		panelPrincipal = p_principal;
+		miGUI = mi_GUI;
+	}
 
 	public void mostrarPanelReglas() {
 		miPanelReglas = new PanelReglas(this);
 		miPanelReglas.crearPanel();
-        miPanelReglas.agregarAPanelPrincipal();
+		miPanelReglas.agregarAPanelPrincipal();
 	}
 
-	public LinkedList<Estrategias> getEstrategias(){
-		return miGUI.getEstrategias();
+	public LinkedList<Estrategias> getEstrategias() {
+		return null;// miGUI.getEstrategias();
 	}
 
 	public String[] getNombresEstrategiasEnUso() {
-		String [] devolver = new String[4];
-		
+		String[] devolver = new String[4];
+
 		for (int i = 0; i < getEstrategias().size(); i++) {
-            devolver[i] = getEstrategias().get(i).get_NombreRegla();
-        }
+			devolver[i] = getEstrategias().get(i).get_NombreRegla();
+		}
 
 		return devolver;
 	}
 
-    public void mostrarPanelScore() {
-        miPanelScore = new PanelScore(this);
+	public void mostrarPanelScore() {
+		miPanelScore = new PanelScore(this);
 		miPanelScore.crearPanel();
-        miPanelScore.agregarAPanelPrincipal();
-    }
+		miPanelScore.agregarAPanelPrincipal();
+	}
 
 	public void actualizarScore(int score) {
 		miPanelScore.actualizarScore(score);
 	}
 
 	public int getScore() {
-		return miGUI.getScore();
+		return 0;// miGUI.getScore();
 	}
 
 	public void mostrarPanelControles() {
-        PanelControles miPanelControles = new PanelControles(this);
+		PanelControles miPanelControles = new PanelControles(this);
 		miPanelControles.crearPanel();
-        miPanelControles.agregarAPanelPrincipal();
-    }
+		miPanelControles.agregarAPanelPrincipal();
+	}
 
 	public void mostrarPanelTimer() {
-        miPanelTimer = new PanelTimer(this);
+		miPanelTimer = new PanelTimer(this);
 		miPanelTimer.crearPanel();
-        miPanelTimer.agregarAPanelPrincipal();
-    }
+		miPanelTimer.agregarAPanelPrincipal();
+	}
 
 	public void actualizarTimer(int tiempo) {
 		miPanelTimer.actualizarTimer(tiempo);
 	}
 
 	public int getTiempoRestante() {
-		return miGUI.getTiempoRestante();
+		return 0;// miGUI.getTiempoRestante();
 	}
 
 	public void mostrarPanelVidas() {
-        miPanelVidas = new PanelVidas(this);
+		miPanelVidas = new PanelVidas(this);
 		miPanelVidas.crearPanel();
-        miPanelVidas.agregarAPanelPrincipal();
-    }
+		miPanelVidas.agregarAPanelPrincipal();
+	}
 
 	public int getVidas() {
-		return miGUI.getVidas();
+		return 0;// miGUI.getVidas();
 	}
 
 	public void actualizarVidas() {
@@ -104,7 +101,7 @@ public class CentralPaneles {
 	public void mostrarPanelMovimiento() {
 		miPanelMovimiento = new PanelMovimiento(this);
 		miPanelMovimiento.crearPanel();
-        miPanelMovimiento.agregarAPanelPrincipal();	
+		miPanelMovimiento.agregarAPanelPrincipal();
 	}
 
 	public void actualizarMovimientos(int movimientosRestantes) {
@@ -112,79 +109,82 @@ public class CentralPaneles {
 	}
 
 	public int getCantidadDeMovimientos() {
-		return miGUI.getMovimientos();
+		return 0;// miGUI.getMovimientos();
 	}
 
-    public void mostrarPanelObjetivo() {
-        miPanelObjetivo = new PanelObjetivo(this);
+	public void mostrarPanelObjetivo() {
+		miPanelObjetivo = new PanelObjetivo(this);
 		miPanelObjetivo.crearPanel();
-        miPanelObjetivo.mostrarObjetivos();
-        miPanelObjetivo.agregarAPanelPrincipal();
-    }
-
-    public int getCantidadDeObjetivos() {
-		return miGUI.getCantidadDeObjetivos();
+		miPanelObjetivo.mostrarObjetivos();
+		miPanelObjetivo.agregarAPanelPrincipal();
 	}
 
-    public String[] obtenerInfoObjetivos() {
-	    return miGUI.obtenerInfoObjetivos();
+	public int getCantidadDeObjetivos() {
+		return 0;// miGUI.getCantidadDeObjetivos();
 	}
 
-    public void actualizarProgreso(int gemasRestantes, int tipoGema) {
-        miPanelObjetivo.actualizarProgreso(gemasRestantes, tipoGema);
-    }
+	public String[] obtenerInfoObjetivos() {
+		return null;// miGUI.obtenerInfoObjetivos();
+	}
 
-    public void reiniciarProgresoObjetivos() {
-        miPanelObjetivo.reiniciarProgreso();
-    }
+	public void actualizarProgreso(int gemasRestantes, int tipoGema) {
+		miPanelObjetivo.actualizarProgreso(gemasRestantes, tipoGema);
+	}
 
-	public void agregarConGBCs(Component componenteAAgregar, GridBagConstraints gbc, int gridx, int gridy, int gridwidth,int gridheight) {
+	public void reiniciarProgresoObjetivos() {
+		miPanelObjetivo.reiniciarProgreso();
+	}
+
+	public void agregarConGBCs(Component componenteAAgregar, GridBagConstraints gbc, int gridx, int gridy,
+			int gridwidth, int gridheight) {
 		gbc.gridx = gridx;
 		gbc.gridy = gridy;
 		gbc.gridwidth = gridwidth;
 		gbc.gridheight = gridheight;
 
-		panelPrincipal.add(componenteAAgregar,gbc);
+		panelPrincipal.add(componenteAAgregar, gbc);
 	}
 
-    public void agregarConGBCs(Component componenteAAgregar, JPanel panelAAgregar, GridBagConstraints gbc, int gridx, int gridy, int gridwidth,int gridheight) {
+	public void agregarConGBCs(Component componenteAAgregar, JPanel panelAAgregar, GridBagConstraints gbc, int gridx,
+			int gridy, int gridwidth, int gridheight) {
 		gbc.gridx = gridx;
 		gbc.gridy = gridy;
 		gbc.gridwidth = gridwidth;
 		gbc.gridheight = gridheight;
 
-		panelAAgregar.add(componenteAAgregar,gbc);
+		panelAAgregar.add(componenteAAgregar, gbc);
 	}
 
-    public JLabel crearLabel(String texto, int tamañoFuente) {
-	    JLabel label = new JLabel(texto);
-	    label.setFont(new Font("Algerian", Font.PLAIN, tamañoFuente));
-	    label.setForeground(Color.WHITE);
-	    return label;
+	public JLabel crearLabel(String texto, int tamañoFuente) {
+		JLabel label = new JLabel(texto);
+		label.setFont(new Font("Algerian", Font.PLAIN, tamañoFuente));
+		label.setForeground(Color.WHITE);
+		return label;
 	}
 
-	public JLabel crearLabelConColor(String texto, String fuente, int estilo, int tamano, Color color, int gridwidth, int gridheight) {
-	    JLabel label = new JLabel(texto);
-	    label.setFont(new Font(fuente, estilo, tamano));
-	    label.setForeground(color);
+	public JLabel crearLabelConColor(String texto, String fuente, int estilo, int tamano, Color color, int gridwidth,
+			int gridheight) {
+		JLabel label = new JLabel(texto);
+		label.setFont(new Font(fuente, estilo, tamano));
+		label.setForeground(color);
 
-	    GridBagConstraints c = new GridBagConstraints();
-	    c.insets = new Insets(0, 20, 0, 0);
-	    c.weightx = 0;
-	    c.gridwidth = gridwidth;
-	    c.gridheight = gridheight;
+		GridBagConstraints c = new GridBagConstraints();
+		c.insets = new Insets(0, 20, 0, 0);
+		c.weightx = 0;
+		c.gridwidth = gridwidth;
+		c.gridheight = gridheight;
 
-	    return label;
+		return label;
 	}
 
-    public JLabel crearImagen(String ruta) {
-	    ImageIcon imgIcon = new ImageIcon(this.getClass().getResource(ruta));
-	    Image imgEscalada = imgIcon.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
-	    Icon iconoEscalado = new ImageIcon(imgEscalada);
+	public JLabel crearImagen(String ruta) {
+		ImageIcon imgIcon = new ImageIcon(this.getClass().getResource(ruta));
+		Image imgEscalada = imgIcon.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+		Icon iconoEscalado = new ImageIcon(imgEscalada);
 
-	    JLabel label = new JLabel();
-	    label.setIcon(iconoEscalado);
+		JLabel label = new JLabel();
+		label.setIcon(iconoEscalado);
 
-	    return label;
+		return label;
 	}
 }

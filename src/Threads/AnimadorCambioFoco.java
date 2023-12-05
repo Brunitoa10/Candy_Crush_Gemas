@@ -83,7 +83,7 @@ public class AnimadorCambioFoco implements Animador {
 		this.manager = manager;
 		this.celda_animada = celda;
 		this.prioridad = PrioridadAnimaciones.PRIORIDAD_FOCO;
-		path_imagen_estado = celda.get_entidad_logica().get_imagenes_representativas()[0];
+		path_imagen_estado = celda.get_entidad_logica().get_imagen_representativa();
 	}
 
 	public Celda get_celda_asociada() {

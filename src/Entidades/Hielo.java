@@ -8,45 +8,41 @@ import Tablero.Tablero;
 import Tablero.TableroNotificable;
 
 public class Hielo extends Obstaculo {
-   protected Entidad caramelo_interno;
+	protected Entidad caramelo_interno;
 
-	public Hielo(TableroNotificable tablero,int f, int c, Color color, boolean visible, Entidad ent) {
-		super(tablero,f, c, "/assets/obstaculo/hielo/", color, visible);
-		caramelo_interno=ent;
+	public Hielo(TableroNotificable tablero, int f, int c, Color color, boolean visible, Entidad ent) {
+		super(tablero, f, c, "/assets/obstaculo/hielo/", color, visible);
+		caramelo_interno = ent;
 		cargarImagenesRepresentativas(rutadeLaImagen);
 	}
-	
-	public void detonar(Tablero  t) {
-		EstategiaDetonacion estrategia= new EstrategiaDetonacionHielo();
-		estrategia.detonar(this,t);
+
+	public void detonar(Tablero t) {
+		EstategiaDetonacion estrategia = new EstrategiaDetonacionHielo();
+		estrategia.detonar(this, t);
 	}
 
-    public void set_gema_interna(Entidad e)
-	{
-    	caramelo_interno=e;
+	public void set_gema_interna(Entidad e) {
+		caramelo_interno = e;
 	}
 
-	public void set_EntidadGrafica_entidadInterna(EntidadGrafica entidadGrafica)
-	{
+	public void set_EntidadGrafica_entidadInterna(EntidadGrafica entidadGrafica) {
 		caramelo_interno.set_EntidadGrafica(entidadGrafica);
 	}
 
 	public void cargarImagenesRepresentativas(String ri) {
-		imagenes = new String [5];
-		imagenes[0] = ri + color.get_color() +".png";
-		imagenes[1] = ri + color.get_color() +"-cursor.png";
-		imagenes[2] = ri + "detonado.gif";
-		imagenes[3] = ri + "enfocado-detonado.gif";
-		imagenes[4] = caramelo_interno.get_imagenes_representativas()[0];
+		imagenes_representativas = new String[5];
+		imagenes_representativas[0] = ri + color.get_color() + ".png";
+		imagenes_representativas[1] = ri + color.get_color() + "-cursor.png";
+		imagenes_representativas[2] = ri + "detonado.gif";
+		imagenes_representativas[3] = ri + "enfocado-detonado.gif";
+		imagenes_representativas[4] = caramelo_interno.get_imagen_representativa();
 	}
 
-	public int get_score()
-	{
+	public int get_score() {
 		return color.get_score() + caramelo_interno.get_score();
 	}
 
-	public boolean esAfectadaPorExplosionAdyacente()
-	{
+	public boolean esAfectadaPorExplosionAdyacente() {
 		return false;
 	}
 
@@ -60,28 +56,27 @@ public class Hielo extends Obstaculo {
 	}
 
 	public void intercambiar_con(GemaNormal gemaNormal) {
-	  intercambiar_gema_y_hielo(gemaNormal, this);
+		intercambiar_gema_y_hielo(gemaNormal, this);
 
 	}
 
 	public void intercambiar_con(GemaRayada gemaRayada) {
-	  intercambiar_gema_y_hielo(gemaRayada, this);
+		intercambiar_gema_y_hielo(gemaRayada, this);
 	}
 
 	public void intercambiar_con(GemaEnvuelta gemaEnvuelta) {
-	    intercambiar_gema_y_hielo(gemaEnvuelta, this);
+		intercambiar_gema_y_hielo(gemaEnvuelta, this);
 	}
 
 	public void intercambiar_con(GemaCruzada gemaCruzada) {
-	    intercambiar_gema_y_hielo(gemaCruzada, this);
+		intercambiar_gema_y_hielo(gemaCruzada, this);
 	}
 
 	public void intercambiar_con(Hielo hielo) {
 		intercambiar_hielo_y_hielo(this, hielo);
 	}
 
-	public boolean tieneGemaInterna()
-	{
+	public boolean tieneGemaInterna() {
 		return true;
 	}
 

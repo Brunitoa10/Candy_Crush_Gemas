@@ -19,99 +19,97 @@ import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 
-
-
 public class CentralPantallas {
-    protected JPanel panelPrincipal;
-    protected GUI miGUI;
-    protected Logica miLogica;
+	protected JPanel panelPrincipal;
+	protected GUI miGUI;
+	protected Logica miLogica;
 	protected PantallaModosDeJuegos miModosDeJuegos;
 
-    public CentralPantallas(JPanel p_principal, GUI mi_GUI, Logica mi_logica) {
-        panelPrincipal = p_principal;
-        miGUI = mi_GUI;
-        miLogica = mi_logica;
-    }
+	public CentralPantallas(JPanel p_principal, GUI mi_GUI, Logica mi_logica) {
+		panelPrincipal = p_principal;
+		miGUI = mi_GUI;
+		miLogica = mi_logica;
+	}
 
-    public void mostrarMensajeDerrotaPorMovimientos() {
-	    panelPrincipal.setVisible(false);
+	public void mostrarMensajeDerrotaPorMovimientos() {
+		panelPrincipal.setVisible(false);
 		miLogica.pausarTiempo();
-	    PantallaDerrotaPorMovimientos mensajePanel = new PantallaDerrotaPorMovimientos(this);
-	    mensajePanel.crearPantalla(Frame.MAXIMIZED_HORIZ, Frame.MAXIMIZED_HORIZ);
+		PantallaDerrotaPorMovimientos mensajePanel = new PantallaDerrotaPorMovimientos(this);
+		mensajePanel.crearPantalla(Frame.MAXIMIZED_HORIZ, Frame.MAXIMIZED_HORIZ);
 		mensajePanel.agregarComponentes();
 
-	    miGUI.getContentPane().add(mensajePanel);
+		miGUI.getContentPane().add(mensajePanel);
 
-	    mensajePanel.setVisibilidad(true);
-	    mensajePanel.revalidate();
+		mensajePanel.setVisibilidad(true);
+		mensajePanel.revalidate();
 	}
 
 	public void mostrarMensajeDerrotaPorTiempo() {
-	    panelPrincipal.setVisible(false);
+		panelPrincipal.setVisible(false);
 		miLogica.pausarTiempo();
 
-	    PantallaDerrotaPorTiempo mensajePanel = new PantallaDerrotaPorTiempo(this);
-	    mensajePanel.crearPantalla(Frame.MAXIMIZED_HORIZ, Frame.MAXIMIZED_HORIZ);
+		PantallaDerrotaPorTiempo mensajePanel = new PantallaDerrotaPorTiempo(this);
+		mensajePanel.crearPantalla(Frame.MAXIMIZED_HORIZ, Frame.MAXIMIZED_HORIZ);
 		mensajePanel.agregarComponentes();
 
-	    miGUI.getContentPane().add(mensajePanel);
+		miGUI.getContentPane().add(mensajePanel);
 
-	    mensajePanel.setVisibilidad(true);
-	    mensajePanel.revalidate();
+		mensajePanel.setVisibilidad(true);
+		mensajePanel.revalidate();
 	}
 
 	public void mostrarMensajeFinDelJuego() {
-	    panelPrincipal.setVisible(false);
+		panelPrincipal.setVisible(false);
 		miLogica.pausarTiempo();
 
-	    PantallaFinDelJuego mensajePanel = new PantallaFinDelJuego(this);
-	    mensajePanel.crearPantalla(Frame.MAXIMIZED_HORIZ, Frame.MAXIMIZED_HORIZ);
+		PantallaFinDelJuego mensajePanel = new PantallaFinDelJuego(this);
+		mensajePanel.crearPantalla(Frame.MAXIMIZED_HORIZ, Frame.MAXIMIZED_HORIZ);
 		mensajePanel.agregarComponentes();
 
-	    miGUI.getContentPane().add(mensajePanel);
+		miGUI.getContentPane().add(mensajePanel);
 
-	    mensajePanel.setVisibilidad(true);
-	    mensajePanel.revalidate();
+		mensajePanel.setVisibilidad(true);
+		mensajePanel.revalidate();
 	}
 
 	public void mostrarMensajeDerrotaPorVidas() {
-	    panelPrincipal.setVisible(false);
+		panelPrincipal.setVisible(false);
 		miLogica.pausarTiempo();
 
-	    PantallaDerrotaPorVidas mensajePanel = new PantallaDerrotaPorVidas(this);
-	    mensajePanel.crearPantalla(Frame.MAXIMIZED_HORIZ, Frame.MAXIMIZED_HORIZ);
+		PantallaDerrotaPorVidas mensajePanel = new PantallaDerrotaPorVidas(this);
+		mensajePanel.crearPantalla(Frame.MAXIMIZED_HORIZ, Frame.MAXIMIZED_HORIZ);
 		mensajePanel.agregarComponentes();
 
-	    miGUI.getContentPane().add(mensajePanel);
+		miGUI.getContentPane().add(mensajePanel);
 
-	    mensajePanel.setVisibilidad(true);
-	    mensajePanel.revalidate();
+		mensajePanel.setVisibilidad(true);
+		mensajePanel.revalidate();
 	}
 
 	public void mostrarMensajeVictoriaPorObjetivos() {
-	    panelPrincipal.setVisible(false);
+		panelPrincipal.setVisible(false);
 		miLogica.pausarTiempo();
-	    PantallaVictoriaPorObjetivos mensajePanel = new PantallaVictoriaPorObjetivos(this);
-	    mensajePanel.crearPantalla(Frame.MAXIMIZED_HORIZ, Frame.MAXIMIZED_HORIZ);
+		PantallaVictoriaPorObjetivos mensajePanel = new PantallaVictoriaPorObjetivos(this);
+		mensajePanel.crearPantalla(Frame.MAXIMIZED_HORIZ, Frame.MAXIMIZED_HORIZ);
 		mensajePanel.agregarComponentes();
 
-	    miGUI.getContentPane().add(mensajePanel);
+		miGUI.getContentPane().add(mensajePanel);
 
-	    mensajePanel.setVisibilidad(true);
-	    mensajePanel.revalidate();
+		mensajePanel.setVisibilidad(true);
+		mensajePanel.revalidate();
 	}
 
 	public void mostrarModosDeJuego() {
-	    panelPrincipal.setVisible(false);
+		panelPrincipal.setVisible(false);
 		miLogica.pausarTiempo();
-	    miModosDeJuegos = new PantallaModosDeJuegos(this);
-	    miModosDeJuegos.crearPantalla(Frame.MAXIMIZED_HORIZ, Frame.MAXIMIZED_HORIZ);
+		miModosDeJuegos = new PantallaModosDeJuegos(this);
+		miModosDeJuegos.crearPantalla(Frame.MAXIMIZED_HORIZ, Frame.MAXIMIZED_HORIZ);
 		miModosDeJuegos.agregarComponentes();
 
-	    miGUI.getContentPane().add(miModosDeJuegos);
+		miGUI.getContentPane().add(miModosDeJuegos);
 
-	    miModosDeJuegos.setVisibilidad(true);
-	    miModosDeJuegos.refrescar();
+		miModosDeJuegos.setVisibilidad(true);
+
 	}
 
 	public void eliminarPantallaModosDeJuego() {
@@ -120,141 +118,133 @@ public class CentralPantallas {
 		panelPrincipal.setFocusable(true);
 		panelPrincipal.requestFocusInWindow();
 	}
-	
+
 	public void mostrarPuntajes() {
 		miLogica.pausarTiempo();
-	    panelPrincipal.setVisible(false);
+		panelPrincipal.setVisible(false);
 
-	    PantallaPuntajes mensajePanel = new PantallaPuntajes(this);
-	    mensajePanel.crearPantalla(Frame.MAXIMIZED_HORIZ, Frame.MAXIMIZED_HORIZ);
+		PantallaPuntajes mensajePanel = new PantallaPuntajes(this);
+		mensajePanel.crearPantalla(Frame.MAXIMIZED_HORIZ, Frame.MAXIMIZED_HORIZ);
 		mensajePanel.agregarComponentes();
 
-	    miGUI.getContentPane().add(mensajePanel);
+		miGUI.getContentPane().add(mensajePanel);
 
-	    mensajePanel.setVisibilidad(true);
-	    mensajePanel.revalidate();
+		mensajePanel.setVisibilidad(true);
+		mensajePanel.revalidate();
 	}
 
 	public String[] obtenerArrayNombresJugadores() {
-		return miGUI.obtenerArrayNombresJugadores();
+		return null;// miGUI.obtenerArrayNombresJugadores();
 	}
 
 	public int[] obtenerArrayScoreJugadores() {
-		return miGUI.obtenerArrayScoreJugadores();
+		return null;// miGUI.obtenerArrayScoreJugadores();
 	}
 
-    public void agregarConGBCs(Component componenteAAgregar, JPanel panelBase, GridBagConstraints gbc, int gridx, int gridy, int gridwidth,int gridheight) {
+	public void agregarConGBCs(Component componenteAAgregar, JPanel panelBase, GridBagConstraints gbc, int gridx,
+			int gridy, int gridwidth, int gridheight) {
 		gbc.gridx = gridx;
 		gbc.gridy = gridy;
 		gbc.gridwidth = gridwidth;
 		gbc.gridheight = gridheight;
 
-		panelBase.add(componenteAAgregar,gbc);
+		panelBase.add(componenteAAgregar, gbc);
 	}
 
-    public JLabel crearLabel(String texto, int tamañoFuente) {
-	    JLabel label = new JLabel(texto);
-	    label.setFont(new Font("Algerian", Font.PLAIN, tamañoFuente));
-	    label.setForeground(Color.WHITE);
-	    return label;
+	public JLabel crearLabel(String texto, int tamañoFuente) {
+		JLabel label = new JLabel(texto);
+		label.setFont(new Font("Algerian", Font.PLAIN, tamañoFuente));
+		label.setForeground(Color.WHITE);
+		return label;
 	}
 
-	public JLabel crearLabelConColor(String texto, String fuente, int estilo, int tamano, Color color, int gridwidth, int gridheight) {
-	    JLabel label = new JLabel(texto);
-	    label.setFont(new Font(fuente, estilo, tamano));
-	    label.setForeground(color);
+	public JLabel crearLabelConColor(String texto, String fuente, int estilo, int tamano, Color color, int gridwidth,
+			int gridheight) {
+		JLabel label = new JLabel(texto);
+		label.setFont(new Font(fuente, estilo, tamano));
+		label.setForeground(color);
 
-	    GridBagConstraints c = new GridBagConstraints();
-	    c.insets = new Insets(0, 20, 0, 0);
-	    c.weightx = 0;
-	    c.gridwidth = gridwidth;
-	    c.gridheight = gridheight;
+		GridBagConstraints c = new GridBagConstraints();
+		c.insets = new Insets(0, 20, 0, 0);
+		c.weightx = 0;
+		c.gridwidth = gridwidth;
+		c.gridheight = gridheight;
 
-	    return label;
+		return label;
 	}
 
-    public JButton crearBoton(String texto) {
-	    JButton boton = new JButton(texto);
-	    boton.setBackground(new Color(0, 0, 0, 200));
-	    boton.setForeground(Color.WHITE);
-	    return boton;
+	public JButton crearBoton(String texto) {
+		JButton boton = new JButton(texto);
+		boton.setBackground(new Color(0, 0, 0, 200));
+		boton.setForeground(Color.WHITE);
+		return boton;
 	}
 
 	public PriorityQueue<Jugador> obtenerListadeJugadores() {
-		return miGUI.obtenerListadeJugadores();
+		return null;// miGUI.obtenerListadeJugadores();
+	}
+
+	private void agregarFuncionalidadSkin(Pantalla p, JButton boton, String skin) {
+		boton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				panelPrincipal.setFocusable(true);
+				panelPrincipal.requestFocusInWindow();
+				panelPrincipal.setVisible(true);
+				p.setVisibilidad(false);
+				panelPrincipal.repaint();
+				panelPrincipal.revalidate();
+				eliminarPantallaModosDeJuego();
+				// miLogica.inicializarJuego(skin);
+			}
+		});
 	}
 
 	public void agregarFuncionalidadSkinOriginal(Pantalla p, JButton botonOriginal) {
-		botonOriginal.addActionListener(new ActionListener() {
-	        @Override
-	        public void actionPerformed(ActionEvent e) {
-				miLogica.set_skin("original");
-				panelPrincipal.setFocusable(true);
-				panelPrincipal.requestFocusInWindow();
-				panelPrincipal.setVisible(true);
-				p.setVisibilidad(false);
-				panelPrincipal.repaint();
-				panelPrincipal.revalidate();
-				eliminarPantallaModosDeJuego();
-	            miLogica.inicializarJuego();
-	        }
-	    });
+		agregarFuncionalidadSkin(p, botonOriginal, "original");
 	}
 
 	public void agregarFuncionalidadSkinHalloween(Pantalla p, JButton botonHalloween) {
-		botonHalloween.addActionListener(new ActionListener() {
-	        @Override
-	        public void actionPerformed(ActionEvent e) {
-				miLogica.set_skin("halloween");
-				panelPrincipal.setFocusable(true);
-				panelPrincipal.requestFocusInWindow();
-				panelPrincipal.setVisible(true);
-				p.setVisibilidad(false);
-				panelPrincipal.repaint();
-				panelPrincipal.revalidate();
-				eliminarPantallaModosDeJuego();
-	            miLogica.inicializarJuego();
-	        }
-	    });
+		agregarFuncionalidadSkin(p, botonHalloween, "halloween");
 	}
 
 	public void agregarFuncionalidadBotonReiniciar(Pantalla p, JButton botonReiniciar) {
 		botonReiniciar.addActionListener(new ActionListener() {
-	        @Override
-	        public void actionPerformed(ActionEvent e) {
-	            panelPrincipal.setVisible(true);
-	            p.setVisibilidad(false);
-	            miLogica.notificarDerrotaPorTiempo();
-	        }
-	    });
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				panelPrincipal.setVisible(true);
+				p.setVisibilidad(false);
+				miLogica.notificarDerrotaPorTiempo();
+			}
+		});
 	}
 
 	public void agregarFuncionalidadBotonSiguienteNivel(Pantalla p, JButton botonSiguienteNivel) {
-			botonSiguienteNivel.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					panelPrincipal.setVisible(true);
-					miLogica.reanudarTiempo();
-					p.setVisibilidad(false);
-					miLogica.iniciarSiguienteNivel();
-				}
-			});
+		botonSiguienteNivel.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				panelPrincipal.setVisible(true);
+				miLogica.reanudarTiempo();
+				p.setVisibilidad(false);
+				miLogica.iniciarSiguienteNivel();
+			}
+		});
 	}
 
 	public void agregarFuncionalidadBotonVolver(Pantalla p, JButton botonVolver) {
 		botonVolver.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					panelPrincipal.setVisible(true);
-					p.setVisibilidad(false);
-					miLogica.reanudarTiempo();
-					SwingUtilities.invokeLater(()->{
-						panelPrincipal.requestFocus();
-						miGUI.repaint();
-						miGUI.revalidate();
-						miGUI.darFocusATablero();
-					});
-				}
-			});
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				panelPrincipal.setVisible(true);
+				p.setVisibilidad(false);
+				miLogica.reanudarTiempo();
+				SwingUtilities.invokeLater(() -> {
+					panelPrincipal.requestFocus();
+					miGUI.repaint();
+					miGUI.revalidate();
+					// miGUI.darFocusATablero();
+				});
+			}
+		});
 	}
 }

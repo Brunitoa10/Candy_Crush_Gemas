@@ -139,7 +139,7 @@ public class Celda extends JLabel implements EntidadGrafica {
 		int ancho = size_label;
 
 		setBounds(ubicacion_eje_x, ubicacion_eje_y, ancho, alto);
-		fijar_imagen_escalada_para_celda(entidad_logica.get_imagenes_representativas()[0]);
+		fijar_imagen_escalada_para_celda(entidad_logica.get_imagen_representativa());
 	}
 
 	public EntidadLogica get_entidad_logica() {

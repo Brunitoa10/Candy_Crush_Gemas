@@ -83,7 +83,7 @@ public class AnimadorDetonacion extends Thread implements Animador {
 		this.celda_animada = celda;
 		this.delay = delay;
 		this.prioridad = PrioridadAnimaciones.PRIORIDAD_DETONACION;
-		path_imagen_estado = celda.get_entidad_logica().get_imagenes_representativas()[0];
+		path_imagen_estado = celda.get_entidad_logica().get_imagen_representativa();
 	}
 
 	public Celda get_celda_asociada() {

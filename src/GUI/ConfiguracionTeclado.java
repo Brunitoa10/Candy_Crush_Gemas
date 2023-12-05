@@ -42,16 +42,18 @@ public class ConfiguracionTeclado {
                 miLogica.intercambiar(GUI.DERECHA);
             }
         });
-        accionesTeclado.put(KeyEvent.VK_R, () -> {
-            if (!miGUI.getBloquear_intercambios()) {
-                miGUI.mostrarPuntajes();
-            }
-        });
-        accionesTeclado.put(KeyEvent.VK_V, () -> {
-            if (!miGUI.getBloquear_intercambios()) {
-                miGUI.animar_intercambio((Celda) miGUI.getPanelTablero().getComponent(2));
-            }
-        });
+        /*
+         * accionesTeclado.put(KeyEvent.VK_R, () -> {
+         * if (!miGUI.getBloquear_intercambios()) {
+         * miGUI.mostrarPuntajes();
+         * }
+         * });
+         * accionesTeclado.put(KeyEvent.VK_V, () -> {
+         * if (!miGUI.getBloquear_intercambios()) {
+         * miGUI.animar_intercambio((Celda) miGUI.getPanelTablero().getComponent(2));
+         * }
+         * });
+         */
     }
 
     public Runnable obtenerAccion(int codigoTecla) {
