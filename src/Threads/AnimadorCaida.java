@@ -8,33 +8,4 @@ public class AnimadorCaida extends AnimadorMovimiento {
         super(manager, step, delay, celda);
         prioridad = PrioridadAnimaciones.PRIORIDAD_CAIDA;
     }
-
-    /*
-     * @Override
-     * public void run() {
-     * int size_label = celda_animada.get_size_label();
-     * int pos_y_actual = celda_animada.getY();
-     * int paso_en_y = 1; // Cambiado a 1 para indicar la dirección hacia abajo
-     * long tiempoInicio = System.currentTimeMillis();
-     * 
-     * while (pos_y_actual <= pos_y_destino) {
-     * long tiempoActual = System.currentTimeMillis();
-     * long tiempoTranscurrido = tiempoActual - tiempoInicio;
-     * 
-     * pos_y_actual += paso_en_y * step;
-     * 
-     * celda_animada.setBounds(pos_x_destino, pos_y_actual, size_label, size_label);
-     * celda_animada.repaint();
-     * celda_animada.paintImmediately(celda_animada.getBounds());
-     * 
-     * try {
-     * long tiempoEspera = delay - tiempoTranscurrido % delay;
-     * sleep(tiempoEspera);
-     * } catch (InterruptedException e) {
-     * e.printStackTrace();
-     * }
-     * }
-     * manager.notificarse_finalizacion_animador(this);
-     * }
-     */
 }

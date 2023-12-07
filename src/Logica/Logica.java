@@ -17,8 +17,6 @@ import GUI.GUI;
 import GUI.EntidadGrafica;
 import Nivel.GeneradorNivel;
 import Nivel.Nivel;
-import Score.AdministradordeScore;
-import Score.Jugador;
 import Tablero.Tablero;
 
 public class Logica {
@@ -29,7 +27,7 @@ public class Logica {
 	protected Thread contadorTiempo;
 	private int nivelActual;
 	private static final int MAX_NIVEL = 6;
-	protected AdministradordeScore administradordeScore;
+
 	protected String skin;
 	ObservableTimer observableTimer = new ObservableTimer();
 
@@ -80,16 +78,9 @@ public class Logica {
 		}
 	}
 
-	public int getScore() {
-		return administradordeScore.getScore();
-	}
-
 	public void notificarDerrotaPorVidas() {
 		// miGUI.mostrarMensajeDerrotaPorVidas();
-		if (administradordeScore.entro_en_el_top5()) {
-			// String nombre_del_Jugador = miGUI.obtenerNombreJugador();
-			// administradordeScore.mejorJugador(nombre_del_Jugador);
-		}
+
 		nivelActual = 1;
 	}
 
@@ -103,18 +94,6 @@ public class Logica {
 
 	public String[] obtenerInfoObjetivos() {
 		return miNivel.obtenerInfoObjetivos();
-	}
-
-	public String[] obtenerArrayNombresJugadores() {
-		return administradordeScore.obtenerArrayNombresJugadores();
-	}
-
-	public int[] obtenerArrayScoreJugadores() {
-		return administradordeScore.obtenerArrayScoreJugadores();
-	}
-
-	public PriorityQueue<Jugador> obtenerListadeJugadores() {
-		return administradordeScore.obtenerListadeJugadores();
 	}
 
 	public int getCantidadDeObjetivos() {
@@ -248,10 +227,6 @@ public class Logica {
 	}
 
 	private void finalizarJuego() {
-		if (administradordeScore.entro_en_el_top5()) {
-			// String nombreDelJugador = miGUI.obtenerNombreJugador();
-			// administradordeScore.mejorJugador(nombreDelJugador);
-		}
 		// miGUI.mostrarMensajeFinDelJuego();
 	}
 

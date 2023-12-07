@@ -11,7 +11,6 @@ import GeneradorEntidades.EntidadFactory;
 import GeneradorEntidades.EntidadFactoryRegistry;
 import Logica.*;
 import Resultado.Resultado;
-import Score.AdministradordeScore;
 import Timer.ObservableTimer;
 
 public class Tablero implements TableroJuego {
@@ -21,7 +20,6 @@ public class Tablero implements TableroJuego {
 	protected int filas, columnas;
 	protected int fJugador, cJugador;
 	protected List<Entidad> entidades_asociadas;
-	protected AdministradordeScore miAdministradordeScore;
 	protected AdministradorEstrategias miAdministradordeEstrategias;
 
 	// Define un mapa para asociar las direcciones de intercambio con las funciones
