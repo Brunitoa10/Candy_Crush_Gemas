@@ -11,6 +11,7 @@ import javax.swing.JLabel;
 
 import javax.swing.JPanel;
 
+import GestorTeclado.ConfiguracionTeclado;
 import Logica.EntidadLogica;
 import Logica.Logica;
 

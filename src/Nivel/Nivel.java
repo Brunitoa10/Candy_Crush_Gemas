@@ -7,7 +7,6 @@ import java.util.Map;
 
 import Entidades.Entidad;
 import EstrategiaMatch.Estrategias;
-import Logica.EntidadLogica;
 import Logica.Logica;
 
 public class Nivel {

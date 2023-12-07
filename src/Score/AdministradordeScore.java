@@ -1,7 +1,9 @@
 package Score;
 
+import java.util.LinkedList;
 import java.util.PriorityQueue;
 
+import Entidades.Entidad;
 import Paneles.*;
 
 public class AdministradordeScore {
@@ -64,4 +66,7 @@ public class AdministradordeScore {
 
 		return devolver;
 	}
+
+    public void actualizarObjetivos(LinkedList<Entidad> entidades) {
+    }
 }

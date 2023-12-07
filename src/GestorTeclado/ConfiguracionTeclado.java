@@ -1,9 +1,10 @@
-package GUI;
+package GestorTeclado;
 
 import java.awt.event.KeyEvent;
 import java.util.HashMap;
 import java.util.Map;
 
+import GUI.GUI;
 import Logica.Logica;
 
 public class ConfiguracionTeclado {
