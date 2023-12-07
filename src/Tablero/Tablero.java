@@ -10,6 +10,7 @@ import GUI.*;
 import GeneradorEntidades.EntidadFactory;
 import GeneradorEntidades.EntidadFactoryRegistry;
 import Logica.*;
+import Resultado.Resultado;
 import Score.AdministradordeScore;
 import Timer.ObservableTimer;
 

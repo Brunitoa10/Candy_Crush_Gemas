@@ -15,7 +15,6 @@ public class EstrategiaFactory {
     }
 
     public static Estrategias createEstrategia(char type) {
-        Estrategias estrategia = estrategiaMap.get(type);
-        return estrategia;
+        return estrategiaMap.get(type);
     }
 }

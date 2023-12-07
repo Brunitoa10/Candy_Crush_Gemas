@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 
 import Entidades.Entidad;
+import Resultado.Resultado;
 import Tablero.Tablero;
 
 public class AdministradorEstrategias {
