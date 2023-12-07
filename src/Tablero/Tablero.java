@@ -212,7 +212,7 @@ public class Tablero implements TableroJuego {
 			if (resultado_origen != null) {
 				// Se produce un match, aplicar efectos correspondientes
 				if (!resultado_origen.get_Gemas_a_romper().isEmpty()) {
-					miLogica.actualizarObjetivos(resultado_origen.get_Gemas_a_romper());
+					// miLogica.actualizarObjetivos(resultado_origen.get_Gemas_a_romper());
 					for (Entidad entidad : resultado_origen.get_Gemas_a_romper()) {
 						manejarMatch(efecto_transicion, entidad);
 					}
@@ -240,7 +240,7 @@ public class Tablero implements TableroJuego {
 	}
 
 	private void manejarMatch(EfectosDeTransicion efecto_transicion, Entidad entidad) {
-		miLogica.agregarScore(entidad.get_score());
+		// miLogica.agregarScore(entidad.get_score());
 		efecto_transicion.agregar_entidad_a_detonar_y_reemplazar(entidad);
 		efecto_transicion.agregar_entidad_de_reemplazo(crearGemaNormalRandom(entidad.get_columna()));
 	}
@@ -284,7 +284,7 @@ public class Tablero implements TableroJuego {
 
 	protected void detonar(List<Entidad> entidades_a_detonar) {
 		for (Entidad e : entidades_a_detonar) {
-			miLogica.agregarScore(e.get_score());
+			// miLogica.agregarScore(e.get_score());
 			e.detonar(this);
 		}
 	}
@@ -330,8 +330,8 @@ public class Tablero implements TableroJuego {
 				entidades[nf][c] = new GemaNormal(this, nf, c, new Color(Color.TRANSPARENTE), false,
 						miLogica.getSkin());
 				// Actualizar la posición de la entidad
-				// entidadActual.intercambiar_Caida(nf + 1, c);
-				entidadActual.caer();
+				entidadActual.intercambiar_Caida(nf + 1, c);
+				// entidadActual.caer();
 				// Vincular la entidad con la lógica y la interfaz gráfica
 				miLogica.asociar_entidad_logica_y_grafica(entidadActual);
 			} else {

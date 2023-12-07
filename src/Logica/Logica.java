@@ -42,7 +42,6 @@ public class Logica {
 		miTablero.asociar_entidades_logicas_y_graficas();
 		miTablero.fijar_jugador(miNivel.getFilaInicialJugador(), miNivel.getColumnaInicialJugador());
 
-		// miGUI.mostrarModosDeJuego();
 		miGUI.mostrar();
 		inicializarTiempo();
 	}
@@ -56,11 +55,13 @@ public class Logica {
 	}
 
 	public void intercambiar(int direccion) {
-		if (miTablero.intercambiar_entidades(direccion)) {
-			miNivel.restarMovimientos();
-			// miGUI.actualizarMovimientos(miNivel.getMovimientos());
-		}
-
+		/*
+		 * if (miTablero.intercambiar_entidades(direccion)) {
+		 * miNivel.restarMovimientos();
+		 * miGUI.actualizarMovimientos(miNivel.getMovimientos());
+		 * }
+		 */
+		miTablero.intercambiar_entidades(direccion);
 	}
 
 	public void notificarDerrotaPorMovimientos() {
@@ -97,7 +98,7 @@ public class Logica {
 	}
 
 	public void agregarScore(int score) {
-		administradordeScore.agregarScore(score);
+		// administradordeScore.agregarScore(score);
 	}
 
 	public String[] obtenerInfoObjetivos() {
@@ -241,7 +242,7 @@ public class Logica {
 		miNivel = GeneradorNivel.cargar_nivel_y_tablero(miTablero, nivelActual, this, skin);
 
 		// miGUI.reiniciarGUI(miTablero.getColumna(), miTablero.getFila());
-		miGUI.cambiarFondo(nivelActual);
+		// miGUI.cambiarFondo(nivelActual);
 		miTablero.asociar_entidades_logicas_y_graficas();
 		miTablero.fijar_jugador(miNivel.getFilaInicialJugador(), miNivel.getColumnaInicialJugador());
 	}

@@ -135,19 +135,20 @@ public abstract class Entidad implements EntidadLogica, Enfocable, Intercambiabl
 		entidadGrafica.notificarse_intercambio();
 	}
 
+	public void intercambiar_Caida(int nuevaFila, int nuevaColumna) {
+		fila = nuevaFila;
+		columna = nuevaColumna;
+		entidadGrafica.notificarse_caida();
+	}
+
+	// TO DO: Completar con su correcta definición
+	// Hardcodeada para mostrar caida simple y sin ningun tipo de control.
 	/*
-	 * public void intercambiar_Caida(int nuevaFila, int nuevaColumna) {
-	 * fila = nuevaFila;
-	 * columna = nuevaColumna;
+	 * public void caer() {
+	 * fila++;
 	 * entidadGrafica.notificarse_caida();
 	 * }
 	 */
-	// TO DO: Completar con su correcta definición
-	// Hardcodeada para mostrar caida simple y sin ningun tipo de control.
-	public void caer() {
-		fila++;
-		entidadGrafica.notificarse_caida();
-	}
 
 	public void enfocar() {
 		enfocada = true;

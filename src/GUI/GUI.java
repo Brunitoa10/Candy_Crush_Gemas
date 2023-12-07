@@ -10,24 +10,19 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 
-import Logica.Color;
 import Logica.EntidadLogica;
 import Logica.Logica;
-import Paneles.CentralPaneles;
-import Pantallas.CentralPantallas;
 
 import Threads.CentralAnimaciones;
 
 public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable, VentanaJuego {
+
 	private Logica miLogica;
 	private int filas, columnas;
 	private int animacionesPendientes;
 	private int sizeLabel = 70;
-	private CentralPantallas miCentralPantallas;
 	private boolean bloquearIntercambios;
-	private CentralPaneles miCentralPaneles;
 	private CentralAnimaciones centralAnimaciones;
 	private JPanel panelPrincipal;
 	private ImagenFondo fondo = new ImagenFondo();
@@ -50,7 +45,6 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable, 
 		configuracionTeclado = new ConfiguracionTeclado(miLogica, this);
 
 		crearComponentesGraficos();
-		// mostrarModosDeJuego();
 	}
 
 	// Métodos y operaciones de las interfaces omitidos por brevedad
@@ -65,7 +59,7 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable, 
 		textoSuperior = new JLabel("Esta es una versión mejorada del proyecto grupal de tdp");
 
 		panelPrincipal = new JPanel();
-		panelPrincipal.setSize(sizeLabel * filas, sizeLabel * columnas);
+		panelPrincipal.setSize(sizeLabel * filas * 2, sizeLabel * columnas * 2);
 		panelPrincipal.setLayout(null);
 
 		getContentPane().add(panelPrincipal, BorderLayout.CENTER);
@@ -73,6 +67,7 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable, 
 
 		configurarAccionesTeclado();
 		panelPrincipal.setFocusable(true);
+
 	}
 
 	private void configurarAccionesTeclado() {
@@ -101,6 +96,38 @@ public class GUI extends JFrame implements VentanaAnimable, VentanaNotificable, 
 		panelPrincipal.add(celda);
 		return celda;
 	}
+
+	public int getFilas() {
+		return filas;
+	}
+
+	public int getColumnas() {
+		return columnas;
+	}
+
+	public int getHeight() {
+		return panelPrincipal.getHeight();
+	}
+
+	public int getWidth() {
+		return panelPrincipal.getWidth();
+	}
+
+	/*
+	 * public EntidadGrafica agregar_entidad(EntidadLogica e) {
+	 * 
+	 * int x = (panelPrincipal.getWidth() - sizeLabel * filas) / 2 + e.get_columna()
+	 * * sizeLabel;
+	 * int y = (panelPrincipal.getHeight() - sizeLabel * columnas) / 2 +
+	 * e.get_fila() * sizeLabel;
+	 * 
+	 * Celda celda = new Celda(this, e, sizeLabel, e.get_visibilidad());
+	 * celda.setBounds(x, y, sizeLabel, sizeLabel);
+	 * 
+	 * panelPrincipal.add(celda);
+	 * return celda;
+	 * }
+	 */
 
 	public void ocultar() {
 		this.setVisible(false);
