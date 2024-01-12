@@ -1,4 +1,4 @@
-package Logica;
+package Nivel;
 
 import java.util.Random;
 

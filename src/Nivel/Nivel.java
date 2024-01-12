@@ -1,4 +1,4 @@
-package Logica;
+package Nivel;
 
 public class Nivel {
 	
