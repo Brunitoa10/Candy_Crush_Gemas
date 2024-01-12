@@ -1,0 +1,13 @@
+.metadata/
+
+/bin/
+
+*.project
+
+*.classpath
+
+.settings/
+
+*.class
+
+*.vs/
