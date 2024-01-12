@@ -8,6 +8,7 @@ import Entidades.Gelatina;
 import Entidades.Glaseado;
 import Entidades.PotenciadorHorizontal;
 import Entidades.PotenciadorVertical;
+import Tablero.TableroJuego;
 
 public class GeneradorNivel {
 

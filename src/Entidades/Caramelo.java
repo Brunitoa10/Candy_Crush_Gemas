@@ -1,6 +1,6 @@
 package Entidades;
 
-import Logica.TableroNotificable;
+import Tablero.TableroNotificable;
 
 public class Caramelo extends Entidad {
 	

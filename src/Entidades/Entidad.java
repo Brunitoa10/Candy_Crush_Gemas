@@ -1,7 +1,7 @@
 package Entidades;
 
 import GUI.EntidadGrafica;
-import Logica.TableroNotificable;
+import Tablero.TableroNotificable;
 
 public abstract class Entidad implements EntidadLogica, Enfocable, Intercambiable, Matchable, Detonable, Ocultable {
 	protected TableroNotificable tablero;

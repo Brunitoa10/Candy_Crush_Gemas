@@ -1,4 +1,4 @@
-package Logica;
+package Tablero;
 
 import Entidades.Entidad;
 import Entidades.Gelatina;

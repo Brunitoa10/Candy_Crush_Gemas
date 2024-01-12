@@ -1,4 +1,4 @@
-package Logica;
+package Tablero;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -8,6 +8,8 @@ import Entidades.Color;
 import Entidades.Entidad;
 import Entidades.Gelatina;
 import GestorTeclado.Movimiento;
+import Logica.EfectosDeTransicion;
+import Logica.Juego;
 
 public class Tablero implements TableroJuego{
 	

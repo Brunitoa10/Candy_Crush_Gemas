@@ -5,6 +5,8 @@ import Entidades.Entidad;
 import GUI.EntidadGrafica;
 import GUI.Ventana;
 import GUI.VentanaJuego;
+import Tablero.Tablero;
+import Tablero.TableroJuego;
 
 public class Juego {
 
