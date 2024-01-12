@@ -7,6 +7,7 @@ import Entidades.Caramelo;
 import Entidades.Color;
 import Entidades.Entidad;
 import Entidades.Gelatina;
+import GestorTeclado.Movimiento;
 
 public class Tablero implements TableroJuego{
 	
@@ -78,19 +79,19 @@ public class Tablero implements TableroJuego{
 	
 	public void mover_jugador(int direccion) {
 		switch(direccion) {
-			case Juego.ABAJO:{
+			case Movimiento.ABAJO:{
 				mover_jugador(fila_jugador + 1, columna_jugador);
 				break;
 			}
-			case Juego.ARRIBA:{
+			case Movimiento.ARRIBA:{
 				mover_jugador(fila_jugador - 1, columna_jugador);
 				break;
 			}
-			case Juego.IZQUIERDA:{
+			case Movimiento.IZQUIERDA:{
 				mover_jugador(fila_jugador, columna_jugador - 1);
 				break;
 			}
-			case Juego.DERECHA:{
+			case Movimiento.DERECHA:{
 				mover_jugador(fila_jugador, columna_jugador + 1);
 				break;
 			}
@@ -99,19 +100,19 @@ public class Tablero implements TableroJuego{
 	
 	public void intercambiar_entidades(int direccion) {
 		switch(direccion) {
-			case Juego.ABAJO:{
+			case Movimiento.ABAJO:{
 				intercambiar_entidades_y_transicionar(fila_jugador + 1, columna_jugador);
 				break;
 			}
-			case Juego.ARRIBA:{
+			case Movimiento.ARRIBA:{
 				intercambiar_entidades_y_transicionar(fila_jugador - 1, columna_jugador);
 				break;
 			}
-			case Juego.IZQUIERDA:{
+			case Movimiento.IZQUIERDA:{
 				intercambiar_entidades_y_transicionar(fila_jugador, columna_jugador - 1);
 				break;
 			}
-			case Juego.DERECHA:{
+			case Movimiento.DERECHA:{
 				intercambiar_entidades_y_transicionar(fila_jugador, columna_jugador + 1);
 				break;
 			}

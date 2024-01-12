@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import Entidades.EntidadLogica;
+import GestorTeclado.Movimiento;
 import Logica.Juego;
 import ManejadorAnimaciones.CentralAnimaciones;
 
@@ -123,14 +124,14 @@ public class Ventana extends JFrame implements VentanaJuego, VentanaAnimable, Ve
 			@Override
 			public void keyPressed(KeyEvent e) {	
 				switch(e.getKeyCode()) {
-					case KeyEvent.VK_LEFT: 	{ if (!bloquear_teclado) juego.mover_jugador(Juego.IZQUIERDA); break; }
-					case KeyEvent.VK_RIGHT: { if (!bloquear_teclado) juego.mover_jugador(Juego.DERECHA); break; }
-					case KeyEvent.VK_UP: 	{ if (!bloquear_teclado) juego.mover_jugador(Juego.ARRIBA);break; }
-					case KeyEvent.VK_DOWN: 	{ if (!bloquear_teclado) juego.mover_jugador(Juego.ABAJO); break; }
-					case KeyEvent.VK_W:		{ if (!bloquear_teclado) juego.intercambiar_entidades(Juego.ARRIBA); break; }
-					case KeyEvent.VK_S:		{ if (!bloquear_teclado) juego.intercambiar_entidades(Juego.ABAJO); break; }
-					case KeyEvent.VK_A:		{ if (!bloquear_teclado) juego.intercambiar_entidades(Juego.IZQUIERDA); break; }
-					case KeyEvent.VK_D:		{ if (!bloquear_teclado) juego.intercambiar_entidades(Juego.DERECHA); break; } 
+					case KeyEvent.VK_LEFT: 	{ if (!bloquear_teclado) juego.mover_jugador(Movimiento.IZQUIERDA); break; }
+					case KeyEvent.VK_RIGHT: { if (!bloquear_teclado) juego.mover_jugador(Movimiento.DERECHA); break; }
+					case KeyEvent.VK_UP: 	{ if (!bloquear_teclado) juego.mover_jugador(Movimiento.ARRIBA);break; }
+					case KeyEvent.VK_DOWN: 	{ if (!bloquear_teclado) juego.mover_jugador(Movimiento.ABAJO); break; }
+					case KeyEvent.VK_W:		{ if (!bloquear_teclado) juego.intercambiar_entidades(Movimiento.ARRIBA); break; }
+					case KeyEvent.VK_S:		{ if (!bloquear_teclado) juego.intercambiar_entidades(Movimiento.ABAJO); break; }
+					case KeyEvent.VK_A:		{ if (!bloquear_teclado) juego.intercambiar_entidades(Movimiento.IZQUIERDA); break; }
+					case KeyEvent.VK_D:		{ if (!bloquear_teclado) juego.intercambiar_entidades(Movimiento.DERECHA); break; } 
 				}
 			}
 		});

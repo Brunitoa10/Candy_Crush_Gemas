@@ -7,12 +7,7 @@ import GUI.Ventana;
 import GUI.VentanaJuego;
 
 public class Juego {
-	
-	public static final int ARRIBA = 15000;
-	public static final int ABAJO = 15001;
-	public static final int IZQUIERDA = 15002;
-	public static final int DERECHA = 15003;
-	
+
 	protected TableroJuego tablero;
 	protected VentanaJuego ventana;
 	protected Nivel nivel;
