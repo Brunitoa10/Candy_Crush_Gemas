@@ -5,7 +5,7 @@ import Entidades.Entidad;
 import GUI.EntidadGrafica;
 import GUI.Ventana;
 import GUI.VentanaJuego;
-import Nivel.GeneradorNivel;
+import Nivel.GeneradorNivelBasico;
 import Nivel.Nivel;
 import Tablero.Tablero;
 import Tablero.TableroJuego;
@@ -18,7 +18,7 @@ public class Juego {
 	
 	public Juego() {
 		tablero = new Tablero(this);
-		nivel = GeneradorNivel.cargar_nivel_y_tablero(1, tablero);
+		nivel = GeneradorNivelBasico.cargar_nivel_y_tablero(1, tablero);
 		ventana = new Ventana(this, tablero.get_filas(), tablero.get_columnas());
 		tablero.asociar_entidades_logicas_y_graficas();
 		tablero.fijar_jugador(nivel.get_fila_inicial_jugador(), nivel.get_columna_inicial_jugador());
