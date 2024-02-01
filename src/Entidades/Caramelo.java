@@ -5,11 +5,11 @@ import Tablero.TableroNotificable;
 public class Caramelo extends Entidad {
 	
 	public Caramelo(TableroNotificable tablero, int fila, int columna, int color) {
-		super(tablero, fila, columna, color, "/imagenes/caramelo/", true);
+		super(tablero, fila, columna, "/imagenes/caramelo/", color,true);
 	}
 	
 	public Caramelo(TableroNotificable tablero, int fila, int columna, int color, boolean visible) {
-		super(tablero, fila, columna, color, "/imagenes/caramelo/", visible);
+		super(tablero, fila, columna, "/imagenes/caramelo/", color,visible);
 	}
 	
 	public boolean es_posible_intercambiar(Entidad entidad) {

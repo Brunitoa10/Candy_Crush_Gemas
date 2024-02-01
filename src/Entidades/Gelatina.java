@@ -7,12 +7,12 @@ public class Gelatina extends Entidad {
 	protected Caramelo caramelo_interno;
 	
 	public Gelatina(TableroNotificable tablero, Caramelo caramelo, int fila, int columna, int color) {
-		super(tablero, fila, columna, color, "/imagenes/gelatina/", true);
+		super(tablero, fila, columna, "/imagenes/gelatina/", color,true);
 		caramelo_interno = caramelo;
 	}
 	
 	public Gelatina(TableroNotificable tablero, Caramelo caramelo, int fila, int columna, int color, boolean visible) {
-		super(tablero, fila, columna, color, "/imagenes/gelatina/", visible);
+		super(tablero, fila, columna, "/imagenes/gelatina/", color,visible);
 		caramelo_interno = caramelo;
 	}
 	

@@ -5,11 +5,11 @@ import Tablero.TableroNotificable;
 public class Glaseado extends Entidad {
 
 	public Glaseado(TableroNotificable tablero, int fila, int columna, int color) {
-		super(tablero, fila, columna, color, "/imagenes/glaseado/", true);
+		super(tablero, fila, columna, "/imagenes/glaseado/", color,true);
 	}
 	
 	public Glaseado(TableroNotificable tablero, int fila, int columna, int color, boolean visible) {
-		super(tablero, fila, columna, color, "/imagenes/glaseado/", visible);
+		super(tablero, fila, columna, "/imagenes/glaseado/", color,visible);
 	}
 	
 	public boolean es_posible_intercambiar(Entidad entidad) {

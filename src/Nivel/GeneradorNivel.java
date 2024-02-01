@@ -2,6 +2,7 @@ package Nivel;
 
 import java.io.File;
 import java.util.Map;
+import java.util.Random;
 import java.util.Scanner;
 
 import Entidades.Color;
@@ -80,16 +81,37 @@ public class GeneradorNivel {
             t.resetar_tablero(filas, columnas);
 
             for (int i = 0; i < filas; i++) {
-                //String[] valores = input.nextLine().split(" ");
+                String[] valores = input.nextLine().split(" ");
                 for (int j = 0; j < columnas; j++) {
-                    //String[] partes = valores[j].split(",");
-                    //EntidadFactory entidadFactory = entidadFactories.get(partes[0]);
-                     EntidadFactory entidadCaremelo = new EntidadCaramelo(); 
-                    //if (entidadFactory != null) {
-                        t.agregar_entidad(entidadCaremelo.crearEntidad(t, i, j, Color.VERDE));
-                    //}
+                    if (j < valores.length) { // Verificar si hay suficientes valores en la línea
+                        String[] partes = valores[j].split(",");
+                        if (partes.length >= 2) { // Verificar si hay suficientes partes en el valor
+                            EntidadFactory entidadFactory = entidadFactories.get(partes[0]);
+                            if (entidadFactory != null) {
+                                int colorEntidad = Integer.parseInt(partes[1].trim());
+                                t.agregar_entidad(entidadFactory.crearEntidad(t, i, j,colorEntidad));
+                            } else {
+                                System.err.println("Factoría de entidad no encontrada para " + partes[0]);
+                            }
+                        } else {
+                            System.err.println("Formato de valor inválido: " + valores[j]);
+                        }
+                    } else {
+                        System.err.println("Insuficientes valores en la línea: " + input.nextLine());
+                    }
                 }
             }
+            /*for (int i = 0; i < filas; i++) {
+                String[] valores = input.nextLine().split(" ");
+                for (int j = 0; j < columnas; j++) {
+                    String[] partes = valores[j].split(",");
+                    EntidadFactory entidadFactory = entidadFactories.get(partes[0]);
+                    // EntidadFactory entidadCaremelo = new EntidadCaramelo(); 
+                    if (entidadFactory != null) {
+                        t.agregar_entidad(entidadFactory.crearEntidad(t, i, j, Integer.parseInt(partes[1].trim())));
+                    }
+                }
+            }*/
 
             input.close();
 

@@ -5,7 +5,7 @@ import Tablero.TableroNotificable;
 public abstract class Potenciador extends Entidad {
 	
 	protected Potenciador(TableroNotificable tablero, int fila, int columna, int color, String path_imagenes, boolean visible) {
-		super(tablero, fila, columna, color, path_imagenes, visible);
+		super(tablero, fila, columna, path_imagenes, color,visible);
 	}
 	
 	public boolean es_posible_intercambiar(Entidad entidad) {

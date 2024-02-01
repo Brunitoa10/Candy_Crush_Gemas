@@ -17,7 +17,7 @@ public abstract class Entidad implements EntidadLogica, Enfocable, Intercambiabl
 	
 	protected String [] imagenes_representativas;
 	
-	protected Entidad(TableroNotificable tablero, int fila, int columna, int color, String path_imagenes, boolean visible) {
+	protected Entidad(TableroNotificable tablero, int fila, int columna, String path_imagenes, int color, boolean visible) {
 		this.tablero = tablero;
 		this.fila = fila;
 		this.columna = columna;
