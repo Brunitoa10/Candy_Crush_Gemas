@@ -2,11 +2,8 @@ package Nivel;
 
 import java.io.File;
 import java.util.Map;
-import java.util.Random;
 import java.util.Scanner;
 
-import Entidades.Color;
-import GeneradorEntidades.EntidadCaramelo;
 import GeneradorEntidades.EntidadFactory;
 import GeneradorEntidades.EntidadFactoryRegistry;
 import Tablero.TableroJuego;
