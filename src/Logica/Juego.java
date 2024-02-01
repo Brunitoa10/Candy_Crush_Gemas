@@ -6,7 +6,6 @@ import GUI.EntidadGrafica;
 import GUI.Ventana;
 import GUI.VentanaJuego;
 import Nivel.GeneradorNivel;
-import Nivel.GeneradorNivelBasico;
 import Nivel.Nivel;
 import Tablero.Tablero;
 import Tablero.TableroJuego;
