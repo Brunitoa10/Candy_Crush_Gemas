@@ -82,22 +82,18 @@ public class GeneradorNivel {
 
             for (int i = 0; i < filas; i++) {
                 String[] valores = input.nextLine().split(" ");
-                for (int j = 0; j < columnas; j++) {
-                    if (j < valores.length) { // Verificar si hay suficientes valores en la línea
-                        String[] partes = valores[j].split(",");
-                        if (partes.length >= 2) { // Verificar si hay suficientes partes en el valor
-                            EntidadFactory entidadFactory = entidadFactories.get(partes[0]);
-                            if (entidadFactory != null) {
-                                int colorEntidad = Integer.parseInt(partes[1].trim());
-                                t.agregar_entidad(entidadFactory.crearEntidad(t, i, j,colorEntidad));
-                            } else {
-                                System.err.println("Factoría de entidad no encontrada para " + partes[0]);
-                            }
+                for (int j = 0; j < Math.min(columnas, valores.length); j++) {
+                    String[] partes = valores[j].split(",");
+                    if (partes.length >= 2) {
+                        EntidadFactory entidadFactory = entidadFactories.get(partes[0]);
+                        if (entidadFactory != null) {
+                            int colorEntidad = Integer.parseInt(partes[1].trim());
+                            t.agregar_entidad(entidadFactory.crearEntidad(t, i, j, colorEntidad));
                         } else {
-                            System.err.println("Formato de valor inválido: " + valores[j]);
+                            System.err.println("Factoría de entidad no encontrada para " + partes[0]);
                         }
                     } else {
-                        System.err.println("Insuficientes valores en la línea: " + input.nextLine());
+                        System.err.println("Formato de valor inválido: " + valores[j]);
                     }
                 }
             }
