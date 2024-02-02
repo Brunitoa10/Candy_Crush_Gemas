@@ -19,7 +19,6 @@ public class GeneradorNivel {
              miNivel.setMaxNiveles(Integer.parseInt(lectorTotalNivel.nextLine().trim()));
             lectorTotalNivel.close();
 
-            System.out.println(miNivel.getMaxNiveles());
 
             Scanner input = new Scanner(new File("src//Niveles//Nivel" + nivel + ".txt"));
 
