@@ -7,13 +7,16 @@ public class Nivel {
 	protected int cantidadMovimientos;
 	protected int cantidadTiempo;
 	protected int cantidadVidas;
+	protected int nivelActual;
+	public int maxNiveles;
 
-	public Nivel(int f, int c) {
+	public Nivel(int f, int c,int n) {
 		fila_inicial_jugador = f;
 		columna_inicial_jugador = c;
 		cantidadMovimientos = 0;
 		cantidadTiempo = 0;
 		cantidadVidas = 0;
+		nivelActual = n;
 	}
 	
 	public int get_fila_inicial_jugador() {
@@ -56,5 +59,24 @@ public class Nivel {
 		this.cantidadVidas = cantidadVidas;
 	}
 
+	public int getNivelActual() {
+		return nivelActual;
+	}
+
+	public void setNivelActual(int nivelActual) {
+		this.nivelActual = nivelActual;
+	}
+	
+	public int getMaxNiveles() {
+		return maxNiveles;
+	}
+
+	public void setMaxNiveles(int maxNiveles) {
+		this.maxNiveles = maxNiveles;
+	}
+
+	public boolean ultimoNivel(){
+		return nivelActual >= maxNiveles;
+	}
 	
 }

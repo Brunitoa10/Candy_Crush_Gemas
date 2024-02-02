@@ -12,8 +12,15 @@ public class GeneradorNivel {
     private static final Map<String, EntidadFactory> entidadFactories = EntidadFactoryRegistry.getEntidadFactories();
     
 	public static Nivel cargar_nivel_y_tablero(TableroJuego t, int nivel) {
-        Nivel miNivel = new Nivel(0, 0);
+        Nivel miNivel = new Nivel(0, 0,nivel);
         try {
+
+            Scanner lectorTotalNivel = new Scanner(new File("src//Niveles//TotalNiveles.txt"));
+             miNivel.setMaxNiveles(Integer.parseInt(lectorTotalNivel.nextLine().trim()));
+            lectorTotalNivel.close();
+
+            System.out.println(miNivel.getMaxNiveles());
+
             Scanner input = new Scanner(new File("src//Niveles//Nivel" + nivel + ".txt"));
 
             // Leer tamaño del tablero
