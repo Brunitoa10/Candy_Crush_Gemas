@@ -13,4 +13,8 @@ public interface VentanaAnimable {
 	public void animar_cambio_visibilidad(Celda celda);
 	
 	public void eliminar_celda(Celda celda);
+
+	public int getWidth();
+	
+	public int getHeight();
 }

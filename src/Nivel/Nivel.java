@@ -79,4 +79,7 @@ public class Nivel {
 		return nivelActual >= maxNiveles;
 	}
 	
+	public void decrementarContadorMovientos(){
+		cantidadMovimientos--;
+	}
 }

@@ -44,6 +44,10 @@ public class Juego {
 		entidad_logica.set_entidad_grafica(entidad_grafica);
 	}
 	
+	public Nivel getNivelActual(){
+		return nivel;
+	}
+
 	public static void main(String [] args) {
 		EventQueue.invokeLater(new Runnable() {
             public void run() {

@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -13,6 +14,7 @@ import Entidades.EntidadLogica;
 import GestorTeclado.Movimiento;
 import Logica.Juego;
 import ManejadorAnimaciones.CentralAnimaciones;
+import GestorTeclado.*;
 
 @SuppressWarnings("serial")
 public class Ventana extends JFrame implements VentanaJuego, VentanaAnimable, VentanaNotificable{
@@ -28,7 +30,9 @@ public class Ventana extends JFrame implements VentanaJuego, VentanaAnimable, Ve
 	
 	protected JLabel texto_superior;
 	protected JPanel panel_principal;
-	
+	protected JPanel panel_estadisticas_derecho;
+	protected Etiquetas etiquetas;
+
 	public Ventana(Juego juego, int filas, int columnas) {
 		this.juego = juego;
 		this.central_animaciones = new CentralAnimaciones(this);
@@ -36,7 +40,9 @@ public class Ventana extends JFrame implements VentanaJuego, VentanaAnimable, Ve
 		this.columnas = columnas;
 		animaciones_pendientes = 0;
 		bloquear_teclado = false;
+		etiquetas = new Etiquetas(juego);
 		crear_componentes_graficos();
+		agregar_paneles();
 	}
 	
 	// Operaciones para Ventana Juego (Ventana <-- Juego)
@@ -109,8 +115,14 @@ public class Ventana extends JFrame implements VentanaJuego, VentanaAnimable, Ve
 	// Operaciones locales a ventana
 	
 	protected void crear_componentes_graficos() {
-		setTitle("TdP 2023 :: Super mini Candy Crush");
-		setSize(new Dimension(500, 500));
+		setTitle("TdP 2024 :: Super mini Candy Crush");
+		//setSize(new Dimension(500, 500));
+		// Obtener dimensiones de la pantalla
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+
+		// Establecer el tamaño de la ventana al máximo de la pantalla
+		setSize(screenSize.width, screenSize.height);
+
 		setResizable(false);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLayout(new BorderLayout());
@@ -128,10 +140,10 @@ public class Ventana extends JFrame implements VentanaJuego, VentanaAnimable, Ve
 					case KeyEvent.VK_RIGHT: { if (!bloquear_teclado) juego.mover_jugador(Movimiento.DERECHA); break; }
 					case KeyEvent.VK_UP: 	{ if (!bloquear_teclado) juego.mover_jugador(Movimiento.ARRIBA);break; }
 					case KeyEvent.VK_DOWN: 	{ if (!bloquear_teclado) juego.mover_jugador(Movimiento.ABAJO); break; }
-					case KeyEvent.VK_W:		{ if (!bloquear_teclado) juego.intercambiar_entidades(Movimiento.ARRIBA); break; }
-					case KeyEvent.VK_S:		{ if (!bloquear_teclado) juego.intercambiar_entidades(Movimiento.ABAJO); break; }
-					case KeyEvent.VK_A:		{ if (!bloquear_teclado) juego.intercambiar_entidades(Movimiento.IZQUIERDA); break; }
-					case KeyEvent.VK_D:		{ if (!bloquear_teclado) juego.intercambiar_entidades(Movimiento.DERECHA); break; } 
+					case KeyEvent.VK_W:		{ if (!bloquear_teclado) juego.intercambiar_entidades(Movimiento.ARRIBA); actualizarMovimientos(); break; }
+					case KeyEvent.VK_S:		{ if (!bloquear_teclado) juego.intercambiar_entidades(Movimiento.ABAJO); actualizarMovimientos(); break; }
+					case KeyEvent.VK_A:		{ if (!bloquear_teclado) juego.intercambiar_entidades(Movimiento.IZQUIERDA); actualizarMovimientos(); break; }
+					case KeyEvent.VK_D:		{ if (!bloquear_teclado) juego.intercambiar_entidades(Movimiento.DERECHA); actualizarMovimientos(); break; } 
 				}
 			}
 		});
@@ -140,5 +152,23 @@ public class Ventana extends JFrame implements VentanaJuego, VentanaAnimable, Ve
 		getContentPane().add(texto_superior, BorderLayout.NORTH);
 		
 		panel_principal.setFocusable(true);
+	}
+
+	private void agregar_paneles(){
+		panel_estadisticas_derecho = etiquetas.getPanelDerecho();
+		panel_estadisticas_derecho.setPreferredSize(new Dimension(150, getHeight())); // Establece el ancho del panel derecho
+    	add(panel_estadisticas_derecho, BorderLayout.EAST); // Agrega el panel derecho al lado derecho de la ventana
+	}	
+
+	public void actualizarMovimientos(){
+		etiquetas.actualizarEtiquetaMovimientos(juego.getNivelActual().getCantidadMovimientos());
+	}
+
+	public int getWidth(){
+		return super.getWidth();
+	}
+
+	public int getHeight(){
+		return super.getHeight();
 	}
 }

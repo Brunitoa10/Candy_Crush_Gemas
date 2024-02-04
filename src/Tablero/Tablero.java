@@ -151,6 +151,7 @@ public class Tablero implements TableroJuego{
 			entidad_destino = entidades[fila_destino][columna_destino];
 			
 			if (entidad_origen.es_posible_intercambiar(entidad_destino)) {
+				juego.getNivelActual().decrementarContadorMovientos();
 				cambiar_posicion_jugador(fila_destino, columna_destino);
 				entidad_origen.intercambiar(entidad_destino);
 				efecto_intercambio = calcular_efectos_por_intercambio(entidad_origen, entidad_destino);
