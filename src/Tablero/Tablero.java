@@ -1,9 +1,13 @@
 package Tablero;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
+import DeteccionDeCombos.ComboHandler;
 import Entidades.Caramelo;
 import Entidades.Color;
 import Entidades.Entidad;
@@ -26,10 +30,13 @@ public class Tablero implements TableroJuego{
 	protected int fila_jugador;
 	protected int columna_jugador;
 
+	protected final ComboHandler comboHandler;
+
 	public Tablero(Juego juego) {
 		this.juego = juego;
 		filas = 0;
 		columnas = 0;
+		this.comboHandler = new ComboHandler(this);
 	}
 		
 	// Operaciones para Tablero Juego (Tablero <-- Juego)
@@ -185,32 +192,21 @@ public class Tablero implements TableroJuego{
 	protected EfectosDeTransicion calcular_efectos_por_intercambio(Entidad entidad_origen, Entidad entidad_destino){
 		EfectosDeTransicion efecto_transicion = new EfectosDeTransicion();
 		if (entidad_origen.se_produce_match_con(entidad_destino)) {
-			// To DO :)
 			manejarMatch(efecto_transicion, entidad_origen);
 			manejarMatch(efecto_transicion, entidad_destino);
-			// Ejemplo harcodeado de la lógica que podría aplicar
-			/*Caramelo caramelo_1 = new Caramelo(this, entidad_origen.get_fila(), entidad_origen.get_columna(), Color.AZUL, false);
-			Caramelo caramelo_2 = new Caramelo(this, entidad_destino.get_fila(), entidad_destino.get_columna(), Color.NARANJA, false);
-			
-			efecto_transicion.agregar_entidad_a_detonar_y_reemplazar(entidad_origen);
-			efecto_transicion.agregar_entidad_a_detonar_y_reemplazar(entidad_destino);
-			efecto_transicion.agregar_entidad_de_reemplazo(caramelo_1);
-			efecto_transicion.agregar_entidad_de_reemplazo(caramelo_2);
-			*/
 		}else {
-			// To DO: incorporar logica asociada a control de match, generador de potenciadores, etc. 
-			LinkedList<Entidad> listaEntidadesEnCombo = buscarCombos(entidad_origen.get_fila(),entidad_origen.get_columna(),entidad_destino.get_fila(),entidad_destino.get_columna());
-			for(int pos = 0; pos < listaEntidadesEnCombo.size(); pos ++) {
-				manejarMatch(efecto_transicion,listaEntidadesEnCombo.get(pos));
-			}
+			//analizarCombos(efecto_transicion,buscarCombos(entidad_origen.get_fila(),entidad_origen.get_columna(),entidad_destino.get_fila(),entidad_destino.get_columna()));
+			comboHandler.analizarCombos(efecto_transicion,buscarCombos(entidad_origen.get_fila(), entidad_origen.get_columna(), entidad_destino.get_fila(), entidad_destino.get_columna()));
 		}
 		return efecto_transicion;
 	}
+
 	
 	protected void transicionar_proximo_estado(EfectosDeTransicion efecto_transicion) {
 		detonar(efecto_transicion.entidades_a_detonar());
 		agregar_entidades_nuevas(efecto_transicion.entidades_a_incorporar());
 		aplicar_caida_y_reubicar(efecto_transicion.entidades_a_reemplazar());
+		
 	}
 	
 	protected void detonar(List<Entidad> entidades_a_detonar) {
@@ -228,7 +224,7 @@ public class Tablero implements TableroJuego{
 	}
 	
 	protected void aplicar_caida_y_reubicar(List<Entidad> entidades_a_reemplazar) {
-		// To DO.
+		
 	}
 
 	@Override
@@ -257,21 +253,10 @@ public class Tablero implements TableroJuego{
 			colDerecha++;
 		}
 		// Si hay al menos 3 gemas iguales consecutivas, agregar la posición actual
-		if (cantidad == 3) {
-			System.out.println("New Match3");
+		if (cantidad >= 3) {
 			combosEnFila.add(entidad); // Agregar la posición actual a la lista de combos
 		} else {
-			if(cantidad == 4){
-				System.out.println("New Match4");
-				combosEnFila.add(entidad);
-			}else{
-				if(cantidad == 5 || cantidad == 6){
-					System.out.println("New Match5 o mas");
-					combosEnFila.add(entidad);
-				}else{
-					combosEnFila.clear(); // No hay combos, limpiar la lista
-				}
-			}
+			combosEnFila.clear(); // No hay combos, limpiar la lista
 		}
 		return combosEnFila;
 	}
@@ -299,22 +284,10 @@ public class Tablero implements TableroJuego{
 		}
 
 		// Si hay al menos 3 gemas iguales consecutivas, agregar la posición actual
-		if (cantidad == 3) {
-			System.out.println("New Match3");
+		if (cantidad >= 3) {
 			combosEnColumna.add(entidad); // Agregar la posición actual a la lista de combos
 		} else {
-			if(cantidad == 4){
-				System.out.println("New Match4");
-				combosEnColumna.add(entidad); // Agregar la posición actual a la lista de combos
-			}else{
-				if(cantidad == 5 || cantidad == 6){
-					System.out.println("New Match5 o mas");
-					combosEnColumna.add(entidad); // Agregar la posición actual a la lista de combos
-				}else{
-					combosEnColumna.clear(); // No hay combos, limpiar la lista
-				}
-			}
-			
+			combosEnColumna.clear(); // No hay combos, limpiar la lista
 		}
 		return combosEnColumna;
 	}
@@ -337,4 +310,60 @@ public class Tablero implements TableroJuego{
 		return listaCombos;
 		
 	}
+
+	/*private void determinarTipoMatch(EfectosDeTransicion efecto_transicion,List<Entidad> grupoEntidades) {
+		int size = grupoEntidades.size();
+	
+		if (size >= 3) {
+			//System.out.println("Se produjo un Match" + size);
+	
+			// Agregar lógica específica para cada tipo de match
+			switch (size) {
+				case 3:
+					manejarMatch3(efecto_transicion,grupoEntidades);
+					break;
+				case 4:
+					manejarMatch4(grupoEntidades);
+					break;
+				default:
+					manejarMatch5OMas(grupoEntidades);
+					break;
+			}
+		} else {
+			System.out.println("No se produjo un match.");
+		}
+	}
+	
+	private void manejarMatch3(EfectosDeTransicion efecto_transicion,List<Entidad> listaEntidadesEnCombo) {
+		// Lógica específica para Match3
+		System.out.println("manejarMatch3");
+		for(Entidad e: listaEntidadesEnCombo) {
+			manejarMatch(efecto_transicion, e);
+		}
+	}
+	
+	private void manejarMatch4(List<Entidad> listaEntidadesEnCombo) {
+		// Lógica específica para Match4
+		System.out.println("manejarMatch4");
+	}
+	
+	private void manejarMatch5OMas(List<Entidad> listaEntidadesEnCombo) {
+		// Lógica específica para Match5 o superior
+		System.out.println("manejarMatch5OMas");
+	}
+
+	private void analizarCombos(EfectosDeTransicion efecto_transicion,LinkedList<Entidad> listaEntidadesEnCombo) {
+		// Agrupar las entidades por color
+		Map<Integer, List<Entidad>> entidadesPorColor = new HashMap<>();
+		
+		for (Entidad entidad : listaEntidadesEnCombo) {
+			int color = entidad.get_color();
+			entidadesPorColor.computeIfAbsent(color, k -> new ArrayList<>()).add(entidad);
+		}
+	
+		// Analizar cada grupo de entidades del mismo color
+		for (List<Entidad> grupoEntidades : entidadesPorColor.values()) {
+			determinarTipoMatch(efecto_transicion,grupoEntidades);
+		}
+	}*/
 }

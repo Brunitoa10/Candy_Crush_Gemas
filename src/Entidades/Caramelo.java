@@ -57,7 +57,7 @@ public class Caramelo extends Entidad {
 	}
 	
 	public boolean aplica_match_con(Caramelo c) {
-		return c.get_color() == this.get_color();
+		return false;
 	}
 	
 	public boolean aplica_match_con(Potenciador p) {
