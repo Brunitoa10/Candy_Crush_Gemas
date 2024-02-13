@@ -195,7 +195,6 @@ public class Tablero implements TableroJuego{
 			manejarMatch(efecto_transicion, entidad_origen);
 			manejarMatch(efecto_transicion, entidad_destino);
 		}else {
-			//analizarCombos(efecto_transicion,buscarCombos(entidad_origen.get_fila(),entidad_origen.get_columna(),entidad_destino.get_fila(),entidad_destino.get_columna()));
 			comboHandler.analizarCombos(efecto_transicion,buscarCombos(entidad_origen.get_fila(), entidad_origen.get_columna(), entidad_destino.get_fila(), entidad_destino.get_columna()));
 		}
 		return efecto_transicion;
@@ -224,7 +223,7 @@ public class Tablero implements TableroJuego{
 	}
 	
 	protected void aplicar_caida_y_reubicar(List<Entidad> entidades_a_reemplazar) {
-		
+
 	}
 
 	@Override
@@ -310,60 +309,4 @@ public class Tablero implements TableroJuego{
 		return listaCombos;
 		
 	}
-
-	/*private void determinarTipoMatch(EfectosDeTransicion efecto_transicion,List<Entidad> grupoEntidades) {
-		int size = grupoEntidades.size();
-	
-		if (size >= 3) {
-			//System.out.println("Se produjo un Match" + size);
-	
-			// Agregar lógica específica para cada tipo de match
-			switch (size) {
-				case 3:
-					manejarMatch3(efecto_transicion,grupoEntidades);
-					break;
-				case 4:
-					manejarMatch4(grupoEntidades);
-					break;
-				default:
-					manejarMatch5OMas(grupoEntidades);
-					break;
-			}
-		} else {
-			System.out.println("No se produjo un match.");
-		}
-	}
-	
-	private void manejarMatch3(EfectosDeTransicion efecto_transicion,List<Entidad> listaEntidadesEnCombo) {
-		// Lógica específica para Match3
-		System.out.println("manejarMatch3");
-		for(Entidad e: listaEntidadesEnCombo) {
-			manejarMatch(efecto_transicion, e);
-		}
-	}
-	
-	private void manejarMatch4(List<Entidad> listaEntidadesEnCombo) {
-		// Lógica específica para Match4
-		System.out.println("manejarMatch4");
-	}
-	
-	private void manejarMatch5OMas(List<Entidad> listaEntidadesEnCombo) {
-		// Lógica específica para Match5 o superior
-		System.out.println("manejarMatch5OMas");
-	}
-
-	private void analizarCombos(EfectosDeTransicion efecto_transicion,LinkedList<Entidad> listaEntidadesEnCombo) {
-		// Agrupar las entidades por color
-		Map<Integer, List<Entidad>> entidadesPorColor = new HashMap<>();
-		
-		for (Entidad entidad : listaEntidadesEnCombo) {
-			int color = entidad.get_color();
-			entidadesPorColor.computeIfAbsent(color, k -> new ArrayList<>()).add(entidad);
-		}
-	
-		// Analizar cada grupo de entidades del mismo color
-		for (List<Entidad> grupoEntidades : entidadesPorColor.values()) {
-			determinarTipoMatch(efecto_transicion,grupoEntidades);
-		}
-	}*/
 }
