@@ -140,7 +140,7 @@ public class Tablero implements TableroJuego{
 	}
 	
 	// Operaciones locales
-	
+
 	private void mover_jugador(int fila_destino, int columna_destino) {
 		if (en_rango(fila_destino,columna_destino)) {
 			entidades[fila_destino][columna_destino].enfocar();
@@ -195,7 +195,7 @@ public class Tablero implements TableroJuego{
 			manejarMatch(efecto_transicion, entidad_origen);
 			manejarMatch(efecto_transicion, entidad_destino);
 		}else {
-			comboHandler.analizarCombos(efecto_transicion,buscarCombos(entidad_origen.get_fila(), entidad_origen.get_columna(), entidad_destino.get_fila(), entidad_destino.get_columna()));
+			comboHandler.analizarCombos(efecto_transicion,entidad_origen,entidad_destino);
 		}
 		return efecto_transicion;
 	}
@@ -231,66 +231,6 @@ public class Tablero implements TableroJuego{
 		return entidades[filaOrigen][col];
 	}
 	
-	private LinkedList<Entidad> buscarCombosEnFila(int fila, int columna) {
-		LinkedList<Entidad> combosEnFila = new LinkedList<>();
-		// Obtener el tipo de gema en la posición (fila, columna)
-		Entidad entidad = entidades[fila][columna];
-		// Contador para el número de gemas iguales consecutivas
-		int cantidad = 1;
-		// Buscar hacia la izquierda
-		int colIzquierda = columna - 1;
-		while (colIzquierda >= 0 && entidades[fila][colIzquierda].get_color() == entidad.get_color()) {
-			combosEnFila.add(entidades[fila][colIzquierda]); // Agregar a la lista de combos
-			cantidad++;
-			colIzquierda--;
-		}
-		// Buscar hacia la derecha
-		int colDerecha = columna + 1;
-		while (colDerecha < columnas && entidades[fila][colDerecha].get_color() == entidad.get_color()) {
-			combosEnFila.add(entidades[fila][colDerecha]); // Agregar a la lista de combos
-			cantidad++;
-			colDerecha++;
-		}
-		// Si hay al menos 3 gemas iguales consecutivas, agregar la posición actual
-		if (cantidad >= 3) {
-			combosEnFila.add(entidad); // Agregar la posición actual a la lista de combos
-		} else {
-			combosEnFila.clear(); // No hay combos, limpiar la lista
-		}
-		return combosEnFila;
-	}
-	
-
-	private LinkedList<Entidad> buscarCombosEnColumna(int fila, int columna) {
-		LinkedList<Entidad> combosEnColumna = new LinkedList<>();
-		// Obtener el tipo de gema en la posición (fila, columna)
-		Entidad entidad = entidades[fila][columna];
-		// Contador para el número de gemas iguales consecutivas
-		int cantidad = 1;
-		// Buscar hacia arriba
-		int filaArriba = fila - 1;
-		while (filaArriba >= 0 && entidades[filaArriba][columna].get_color() == entidad.get_color()) {
-			combosEnColumna.add(entidades[filaArriba][columna]); // Agregar a la lista de combos
-			cantidad++;
-			filaArriba--;
-		}
-		// Buscar hacia abajo
-		int filaAbajo = fila + 1;
-		while (filaAbajo < filas && entidades[filaAbajo][columna].get_color() == entidad.get_color()) {
-			combosEnColumna.add(entidades[filaAbajo][columna]); // Agregar a la lista de combos
-			cantidad++;
-			filaAbajo++;
-		}
-
-		// Si hay al menos 3 gemas iguales consecutivas, agregar la posición actual
-		if (cantidad >= 3) {
-			combosEnColumna.add(entidad); // Agregar la posición actual a la lista de combos
-		} else {
-			combosEnColumna.clear(); // No hay combos, limpiar la lista
-		}
-		return combosEnColumna;
-	}
-
 	private void manejarMatch(EfectosDeTransicion efecto_transicion, Entidad entidad) {
 	    // Lógica para el caso de match
 		EntidadFactory entidadCaramelo = new EntidadCaramelo();
@@ -298,15 +238,4 @@ public class Tablero implements TableroJuego{
 		efecto_transicion.agregar_entidad_de_reemplazo(entidadCaramelo.crearEntidad(this, entidad.get_fila(), entidad.get_columna(), new Random().nextInt(4)+1));
 	}
 
-	private LinkedList<Entidad> buscarCombos(int f1, int c1, int f2, int c2) {
-		LinkedList<Entidad> listaCombos = new LinkedList<>();
-
-		listaCombos.addAll(buscarCombosEnFila(f1, c1));
-		listaCombos.addAll(buscarCombosEnColumna(f1, c1));
-		listaCombos.addAll(buscarCombosEnFila(f2, c2));
-		listaCombos.addAll(buscarCombosEnColumna(f2, c2));
-
-		return listaCombos;
-		
-	}
 }

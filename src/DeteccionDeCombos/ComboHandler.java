@@ -24,8 +24,8 @@ public class ComboHandler {
         this.tablero = tablero;
     }
 
-    public void analizarCombos(EfectosDeTransicion efectoTransicion, LinkedList<Entidad> listaEntidadesEnCombo) {
-        Map<Integer, List<Entidad>> entidadesPorColor = agruparEntidadesPorColor(listaEntidadesEnCombo);
+    public void analizarCombos(EfectosDeTransicion efectoTransicion, Entidad entidad_origen,Entidad entidad_destino) {
+        Map<Integer, List<Entidad>> entidadesPorColor = agruparEntidadesPorColor(buscarCombos(entidad_origen.get_fila(), entidad_origen.get_columna(), entidad_destino.get_fila(), entidad_destino.get_columna()));
 
         for (List<Entidad> grupoEntidades : entidadesPorColor.values()) {
             determinarTipoMatch(efectoTransicion, grupoEntidades);
@@ -34,9 +34,10 @@ public class ComboHandler {
 
     private Map<Integer, List<Entidad>> agruparEntidadesPorColor(LinkedList<Entidad> listaEntidadesEnCombo) {
         Map<Integer, List<Entidad>> entidadesPorColor = new HashMap<>();
+        int color = 0;
 
         for (Entidad entidad : listaEntidadesEnCombo) {
-            int color = entidad.get_color();
+            color = entidad.get_color();
             entidadesPorColor.computeIfAbsent(color, k -> new ArrayList<>()).add(entidad);
         }
 
@@ -53,8 +54,6 @@ public class ComboHandler {
 
         if (size >= 3 && matchHandlers.containsKey(size)) {
             matchHandlers.get(size).run();
-        } else {
-            System.out.println("No se produjo un match.");
         }
     }
 
@@ -63,12 +62,11 @@ public class ComboHandler {
         EntidadFactory entidadCaramelo = new EntidadCaramelo();
         for (Entidad e : listaEntidadesEnCombo) {
             efectoTransicion.agregar_entidad_a_detonar_y_reemplazar(e);
-            efectoTransicion.agregar_entidad_de_reemplazo(entidadCaramelo.crearEntidad(tablero, e.get_fila(), e.get_columna(), new Random().nextInt(4) + 1));
+            efectoTransicion.agregar_entidad_de_reemplazo(entidadCaramelo.crearEntidad(tablero, e.get_fila(), e.get_columna(),  crearColorRandom()));
         }
     }
 
     private void manejarMatch4(EfectosDeTransicion efectoTransicion,List<Entidad> listaEntidadesEnCombo) {
-        // Lógica específica para Match4
         System.out.println("manejarMatch4");
         int direccion = evaluarDireccion(listaEntidadesEnCombo);
         EntidadFactory entidadFactory;
@@ -89,7 +87,7 @@ public class ComboHandler {
                 }else{
                     entidadFactory = new EntidadCaramelo();
                     efectoTransicion.agregar_entidad_a_detonar_y_reemplazar(e);
-                    efectoTransicion.agregar_entidad_de_reemplazo(entidadFactory.crearEntidad(tablero, e.get_fila(), e.get_columna(), new Random().nextInt(4) + 1));
+                    efectoTransicion.agregar_entidad_de_reemplazo(entidadFactory.crearEntidad(tablero, e.get_fila(), e.get_columna(), crearColorRandom()));
                 }
             }   
         }
@@ -100,12 +98,6 @@ public class ComboHandler {
         System.out.println("manejarMatch5OMas");
     }
 
-    private void manejarMatch(EfectosDeTransicion efectoTransicion, Entidad entidad) {
-        EntidadFactory entidadCaramelo = new EntidadCaramelo();
-        efectoTransicion.agregar_entidad_a_detonar_y_reemplazar(entidad);
-        efectoTransicion.agregar_entidad_de_reemplazo(entidadCaramelo.crearEntidad(tablero, entidad.get_fila(), entidad.get_columna(), new Random().nextInt(4) + 1));
-    }
-
     private int evaluarDireccion(List<Entidad> listaEntidadesEnCombo) {
        int direccion = VERTICAL;
        boolean evaluacion = false;
@@ -113,12 +105,12 @@ public class ComboHandler {
        for(int pos = 0; pos < listaEntidadesEnCombo.size() && !evaluacion; pos++){
             entidadA = listaEntidadesEnCombo.get(pos);
             entidadB = listaEntidadesEnCombo.get(pos+1);
-            if(entidadA.get_color() == entidadB.get_color()){
-                if(entidadA.get_fila() == entidadB.get_fila()){
+            if(sonEntidadesMismoColor(entidadA,entidadB)){
+                if(sonEntidesHorizontales(entidadA,entidadB)){
                     direccion = HORIZONTAL;
                     evaluacion = true;
                 }else{
-                    if(entidadA.get_columna() == entidadB.get_columna()){
+                    if(sonEntidadesVerticales(entidadA,entidadB)){
                         direccion = VERTICAL;
                         evaluacion = true;
                     }
@@ -127,4 +119,92 @@ public class ComboHandler {
         }
        return direccion;
     }
+
+    private boolean sonEntidadesVerticales(Entidad entidadA, Entidad entidadB) {
+        return entidadA.get_columna() == entidadB.get_columna();
+    }
+
+    private boolean sonEntidesHorizontales(Entidad entidadA, Entidad entidadB) {
+        return entidadA.get_fila() == entidadB.get_fila();
+    }
+
+    private boolean sonEntidadesMismoColor(Entidad entidadA, Entidad entidadB) {
+        return entidadA.get_color() == entidadB.get_color();
+    }
+
+    private int crearColorRandom() {
+        return new Random().nextInt(4) + 1;
+    }
+
+    private LinkedList<Entidad> buscarCombosEnFila(int fila, int columna) {
+		LinkedList<Entidad> combosEnFila = new LinkedList<>();
+		// Obtener el tipo de gema en la posición (fila, columna)
+		Entidad entidadFila = tablero.obtenerEntidad(fila, columna); //entidades[fila][columna];
+		// Contador para el número de gemas iguales consecutivas
+		int cantidad = 1;
+		// Buscar hacia la izquierda
+		int colIzquierda = columna - 1;
+		while (colIzquierda >= 0 && sonEntidadesMismoColor(tablero.obtenerEntidad(fila, colIzquierda),entidadFila)) {
+			combosEnFila.add(tablero.obtenerEntidad(fila, colIzquierda)); // Agregar a la lista de combos
+			cantidad++;
+			colIzquierda--;
+		}
+		// Buscar hacia la derecha
+		int colDerecha = columna + 1;
+		while (colDerecha < tablero.get_columnas() && sonEntidadesMismoColor(tablero.obtenerEntidad(fila, colDerecha),entidadFila)) {
+			combosEnFila.add(tablero.obtenerEntidad(fila, colDerecha)); // Agregar a la lista de combos
+			cantidad++;
+			colDerecha++;
+		}
+		// Si hay al menos 3 gemas iguales consecutivas, agregar la posición actual
+		if (cantidad >= 3) {
+			combosEnFila.add(entidadFila); // Agregar la posición actual a la lista de combos
+		} else {
+			combosEnFila.clear(); // No hay combos, limpiar la lista
+		}
+		return combosEnFila;
+	}
+	
+
+	private LinkedList<Entidad> buscarCombosEnColumna(int fila, int columna) {
+		LinkedList<Entidad> combosEnColumna = new LinkedList<>();
+		// Obtener el tipo de gema en la posición (fila, columna)
+		Entidad entidadColumna = tablero.obtenerEntidad(fila, columna);
+		// Contador para el número de gemas iguales consecutivas
+		int cantidad = 1;
+		// Buscar hacia arriba
+		int filaArriba = fila - 1;
+		while (filaArriba >= 0 && sonEntidadesMismoColor(tablero.obtenerEntidad(filaArriba, columna),entidadColumna)) {
+			combosEnColumna.add(tablero.obtenerEntidad(filaArriba, columna)); // Agregar a la lista de combos
+			cantidad++;
+			filaArriba--;
+		}
+		// Buscar hacia abajo
+		int filaAbajo = fila + 1;
+		while (filaAbajo < tablero.get_filas() && sonEntidadesMismoColor(tablero.obtenerEntidad(filaAbajo,columna),entidadColumna)) {
+			combosEnColumna.add(tablero.obtenerEntidad(filaAbajo, columna)); // Agregar a la lista de combos
+			cantidad++;
+			filaAbajo++;
+		}
+
+		// Si hay al menos 3 gemas iguales consecutivas, agregar la posición actual
+		if (cantidad >= 3) {
+			combosEnColumna.add(entidadColumna); // Agregar la posición actual a la lista de combos
+		} else {
+			combosEnColumna.clear(); // No hay combos, limpiar la lista
+		}
+		return combosEnColumna;
+	}
+
+    private LinkedList<Entidad> buscarCombos(int f1, int c1, int f2, int c2) {
+		LinkedList<Entidad> listaCombos = new LinkedList<>();
+
+		listaCombos.addAll(buscarCombosEnFila(f1, c1));
+		listaCombos.addAll(buscarCombosEnColumna(f1, c1));
+		listaCombos.addAll(buscarCombosEnFila(f2, c2));
+		listaCombos.addAll(buscarCombosEnColumna(f2, c2));
+
+		return listaCombos;
+		
+	}
 }
