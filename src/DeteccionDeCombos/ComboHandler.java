@@ -46,18 +46,13 @@ public class ComboHandler {
     private void determinarTipoMatch(EfectosDeTransicion efectoTransicion, List<Entidad> grupoEntidades) {
         int size = grupoEntidades.size();
 
-        if (size >= 3) {
-            switch (size) {
-                case 3:
-                    manejarMatch3(efectoTransicion, grupoEntidades);
-                    break;
-                case 4:
-                    manejarMatch4(efectoTransicion,grupoEntidades);
-                    break;
-                default:
-                    manejarMatch5OMas(grupoEntidades);
-                    break;
-            }
+        Map<Integer, Runnable> matchHandlers = new HashMap<>();
+        matchHandlers.put(3, () -> manejarMatch3(efectoTransicion, grupoEntidades));
+        matchHandlers.put(4, () -> manejarMatch4(efectoTransicion, grupoEntidades));
+        matchHandlers.put(5, () -> manejarMatch5OMas(efectoTransicion,grupoEntidades));
+
+        if (size >= 3 && matchHandlers.containsKey(size)) {
+            matchHandlers.get(size).run();
         } else {
             System.out.println("No se produjo un match.");
         }
@@ -100,7 +95,7 @@ public class ComboHandler {
         }
     }
 
-    private void manejarMatch5OMas(List<Entidad> listaEntidadesEnCombo) {
+    private void manejarMatch5OMas(EfectosDeTransicion efectoTransicion,List<Entidad> listaEntidadesEnCombo) {
         // Lógica específica para Match5 o superior
         System.out.println("manejarMatch5OMas");
     }
