@@ -2,10 +2,12 @@ package DeteccionDeCombos;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.Set;
 
 import Entidades.Entidad;
 import GeneradorEntidades.EntidadCaramelo;
@@ -25,7 +27,11 @@ public class ComboHandler {
     }
 
     public void analizarCombos(EfectosDeTransicion efectoTransicion, Entidad entidad_origen,Entidad entidad_destino) {
-        Map<Integer, List<Entidad>> entidadesPorColor = agruparEntidadesPorColor(buscarCombos(entidad_origen.get_fila(), entidad_origen.get_columna(), entidad_destino.get_fila(), entidad_destino.get_columna()));
+        //Map<Integer, List<Entidad>> entidadesPorColor = agruparEntidadesPorColor(buscarCombos(entidad_origen.get_fila(), entidad_origen.get_columna(), entidad_destino.get_fila(), entidad_destino.get_columna()));
+        LinkedList<Entidad> listaCombos = buscarCombos(entidad_origen.get_fila(), entidad_origen.get_columna());
+        listaCombos.addAll(buscarCombos(entidad_destino.get_fila(), entidad_destino.get_columna()));
+
+        Map<Integer, List<Entidad>> entidadesPorColor = agruparEntidadesPorColor(listaCombos);
 
         for (List<Entidad> grupoEntidades : entidadesPorColor.values()) {
             determinarTipoMatch(efectoTransicion, grupoEntidades);
@@ -50,7 +56,7 @@ public class ComboHandler {
         Map<Integer, Runnable> matchHandlers = new HashMap<>();
         matchHandlers.put(3, () -> manejarMatch3(efectoTransicion, grupoEntidades));
         matchHandlers.put(4, () -> manejarMatch4(efectoTransicion, grupoEntidades));
-        matchHandlers.put(5, () -> manejarMatch5OMas(efectoTransicion,grupoEntidades));
+        matchHandlers.put(5, () -> manejarMatch5o6(efectoTransicion,grupoEntidades));
 
         if (size >= 3 && matchHandlers.containsKey(size)) {
             matchHandlers.get(size).run();
@@ -89,13 +95,14 @@ public class ComboHandler {
                     efectoTransicion.agregar_entidad_a_detonar_y_reemplazar(e);
                     efectoTransicion.agregar_entidad_de_reemplazo(entidadFactory.crearEntidad(tablero, e.get_fila(), e.get_columna(), crearColorRandom()));
                 }
-            }   
+            } 
         }
     }
 
-    private void manejarMatch5OMas(EfectosDeTransicion efectoTransicion,List<Entidad> listaEntidadesEnCombo) {
+    private void manejarMatch5o6(EfectosDeTransicion efectoTransicion,List<Entidad> listaEntidadesEnCombo) {
         // Lógica específica para Match5 o superior
         System.out.println("manejarMatch5OMas");
+       
     }
 
     private int evaluarDireccion(List<Entidad> listaEntidadesEnCombo) {
@@ -138,73 +145,85 @@ public class ComboHandler {
 
     private LinkedList<Entidad> buscarCombosEnFila(int fila, int columna) {
 		LinkedList<Entidad> combosEnFila = new LinkedList<>();
-		// Obtener el tipo de gema en la posición (fila, columna)
-		Entidad entidadFila = tablero.obtenerEntidad(fila, columna); //entidades[fila][columna];
+		
+		Entidad entidadFila = tablero.obtenerEntidad(fila, columna);
+
 		// Contador para el número de gemas iguales consecutivas
 		int cantidad = 1;
+        
 		// Buscar hacia la izquierda
 		int colIzquierda = columna - 1;
 		while (colIzquierda >= 0 && sonEntidadesMismoColor(tablero.obtenerEntidad(fila, colIzquierda),entidadFila)) {
-			combosEnFila.add(tablero.obtenerEntidad(fila, colIzquierda)); // Agregar a la lista de combos
+            combosEnFila.add(tablero.obtenerEntidad(fila, colIzquierda)); 
 			cantidad++;
 			colIzquierda--;
 		}
 		// Buscar hacia la derecha
 		int colDerecha = columna + 1;
 		while (colDerecha < tablero.get_columnas() && sonEntidadesMismoColor(tablero.obtenerEntidad(fila, colDerecha),entidadFila)) {
-			combosEnFila.add(tablero.obtenerEntidad(fila, colDerecha)); // Agregar a la lista de combos
+			combosEnFila.add(tablero.obtenerEntidad(fila, colDerecha)); 
 			cantidad++;
 			colDerecha++;
 		}
 		// Si hay al menos 3 gemas iguales consecutivas, agregar la posición actual
 		if (cantidad >= 3) {
-			combosEnFila.add(entidadFila); // Agregar la posición actual a la lista de combos
+			combosEnFila.add(entidadFila); 
 		} else {
-			combosEnFila.clear(); // No hay combos, limpiar la lista
+			combosEnFila.clear();
 		}
+
 		return combosEnFila;
 	}
 	
 
 	private LinkedList<Entidad> buscarCombosEnColumna(int fila, int columna) {
 		LinkedList<Entidad> combosEnColumna = new LinkedList<>();
-		// Obtener el tipo de gema en la posición (fila, columna)
+		
 		Entidad entidadColumna = tablero.obtenerEntidad(fila, columna);
 		// Contador para el número de gemas iguales consecutivas
 		int cantidad = 1;
 		// Buscar hacia arriba
 		int filaArriba = fila - 1;
 		while (filaArriba >= 0 && sonEntidadesMismoColor(tablero.obtenerEntidad(filaArriba, columna),entidadColumna)) {
-			combosEnColumna.add(tablero.obtenerEntidad(filaArriba, columna)); // Agregar a la lista de combos
+			combosEnColumna.add(tablero.obtenerEntidad(filaArriba, columna));
 			cantidad++;
 			filaArriba--;
 		}
 		// Buscar hacia abajo
 		int filaAbajo = fila + 1;
 		while (filaAbajo < tablero.get_filas() && sonEntidadesMismoColor(tablero.obtenerEntidad(filaAbajo,columna),entidadColumna)) {
-			combosEnColumna.add(tablero.obtenerEntidad(filaAbajo, columna)); // Agregar a la lista de combos
+			combosEnColumna.add(tablero.obtenerEntidad(filaAbajo, columna)); 
 			cantidad++;
 			filaAbajo++;
 		}
 
 		// Si hay al menos 3 gemas iguales consecutivas, agregar la posición actual
 		if (cantidad >= 3) {
-			combosEnColumna.add(entidadColumna); // Agregar la posición actual a la lista de combos
+			combosEnColumna.add(entidadColumna); 
 		} else {
-			combosEnColumna.clear(); // No hay combos, limpiar la lista
+			combosEnColumna.clear(); 
 		}
 		return combosEnColumna;
 	}
 
-    private LinkedList<Entidad> buscarCombos(int f1, int c1, int f2, int c2) {
+    /*private LinkedList<Entidad> buscarCombos(int f1, int c1, int f2, int c2) {
 		LinkedList<Entidad> listaCombos = new LinkedList<>();
 
 		listaCombos.addAll(buscarCombosEnFila(f1, c1));
 		listaCombos.addAll(buscarCombosEnColumna(f1, c1));
 		listaCombos.addAll(buscarCombosEnFila(f2, c2));
 		listaCombos.addAll(buscarCombosEnColumna(f2, c2));
-
+       
 		return listaCombos;
-		
-	}
+	}*/
+    private LinkedList<Entidad> buscarCombos(int fila, int columna) {
+        LinkedList<Entidad> combosEnFila = buscarCombosEnFila(fila, columna);
+        LinkedList<Entidad> combosEnColumna = buscarCombosEnColumna(fila, columna);
+    
+        // Combinar las listas sin duplicar las entidades
+        Set<Entidad> combinedCombos = new HashSet<>(combosEnFila);
+        combinedCombos.addAll(combosEnColumna);
+    
+        return new LinkedList<>(combinedCombos);
+    }
 }

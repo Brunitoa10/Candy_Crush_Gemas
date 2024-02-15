@@ -1,15 +1,10 @@
 package Tablero;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
 import DeteccionDeCombos.ComboHandler;
-import Entidades.Caramelo;
-import Entidades.Color;
 import Entidades.Entidad;
 import Entidades.Gelatina;
 import GeneradorEntidades.EntidadCaramelo;

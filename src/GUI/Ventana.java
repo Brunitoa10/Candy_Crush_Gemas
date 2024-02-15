@@ -14,7 +14,6 @@ import Entidades.EntidadLogica;
 import GestorTeclado.Movimiento;
 import Logica.Juego;
 import ManejadorAnimaciones.CentralAnimaciones;
-import GestorTeclado.*;
 
 @SuppressWarnings("serial")
 public class Ventana extends JFrame implements VentanaJuego, VentanaAnimable, VentanaNotificable{

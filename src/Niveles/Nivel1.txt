@@ -5,8 +5,8 @@
 3
 t
 n,1 n,2 n,1 n,1 n,4 n,2
-n,2 n,1 n,2 n,2 n,1 n,4
-n,1 n,3 n,4 n,5 n,3 n,4
-n,3 n,2 n,3 n,5 n,4 n,4
-n,2 n,4 n,2 n,1 n,4 n,5
-n,1 n,1 n,3 n,1 n,1 n,3
+n,2 n,1 n,2 n,2 n,5 n,5
+n,1 n,3 n,4 n,5 n,5 n,4
+n,2 n,2 n,3 n,5 n,5 n,4
+n,2 n,2 n,2 n,1 n,4 n,5
+n,2 n,1 n,2 n,1 n,1 n,3
