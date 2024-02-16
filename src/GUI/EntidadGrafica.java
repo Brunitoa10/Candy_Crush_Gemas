@@ -11,4 +11,5 @@ public interface EntidadGrafica {
 	public void notificarse_caida();
 	
 	public void notificarse_cambio_visibilidad();
+
 }

@@ -205,7 +205,7 @@ public class Tablero implements TableroJuego{
 	
 	protected void detonar(List<Entidad> entidades_a_detonar) {
 		for(Entidad e: entidades_a_detonar) {
-			e.detonar();
+			e.detonar(this);
 		}
 	}
 	

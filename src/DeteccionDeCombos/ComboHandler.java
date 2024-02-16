@@ -2,12 +2,11 @@ package DeteccionDeCombos;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
+
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.util.Set;
 
 import Entidades.Entidad;
 import GeneradorEntidades.EntidadCaramelo;
@@ -27,11 +26,7 @@ public class ComboHandler {
     }
 
     public void analizarCombos(EfectosDeTransicion efectoTransicion, Entidad entidad_origen,Entidad entidad_destino) {
-        //Map<Integer, List<Entidad>> entidadesPorColor = agruparEntidadesPorColor(buscarCombos(entidad_origen.get_fila(), entidad_origen.get_columna(), entidad_destino.get_fila(), entidad_destino.get_columna()));
-        LinkedList<Entidad> listaCombos = buscarCombos(entidad_origen.get_fila(), entidad_origen.get_columna());
-        listaCombos.addAll(buscarCombos(entidad_destino.get_fila(), entidad_destino.get_columna()));
-
-        Map<Integer, List<Entidad>> entidadesPorColor = agruparEntidadesPorColor(listaCombos);
+        Map<Integer, List<Entidad>> entidadesPorColor = agruparEntidadesPorColor(buscarCombos(entidad_origen.get_fila(), entidad_origen.get_columna(), entidad_destino.get_fila(), entidad_destino.get_columna()));
 
         for (List<Entidad> grupoEntidades : entidadesPorColor.values()) {
             determinarTipoMatch(efectoTransicion, grupoEntidades);
@@ -206,7 +201,7 @@ public class ComboHandler {
 		return combosEnColumna;
 	}
 
-    /*private LinkedList<Entidad> buscarCombos(int f1, int c1, int f2, int c2) {
+    private LinkedList<Entidad> buscarCombos(int f1, int c1, int f2, int c2) {
 		LinkedList<Entidad> listaCombos = new LinkedList<>();
 
 		listaCombos.addAll(buscarCombosEnFila(f1, c1));
@@ -215,15 +210,6 @@ public class ComboHandler {
 		listaCombos.addAll(buscarCombosEnColumna(f2, c2));
        
 		return listaCombos;
-	}*/
-    private LinkedList<Entidad> buscarCombos(int fila, int columna) {
-        LinkedList<Entidad> combosEnFila = buscarCombosEnFila(fila, columna);
-        LinkedList<Entidad> combosEnColumna = buscarCombosEnColumna(fila, columna);
-    
-        // Combinar las listas sin duplicar las entidades
-        Set<Entidad> combinedCombos = new HashSet<>(combosEnFila);
-        combinedCombos.addAll(combosEnColumna);
-    
-        return new LinkedList<>(combinedCombos);
-    }
+	}
+   
 }

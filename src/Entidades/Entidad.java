@@ -1,5 +1,6 @@
 package Entidades;
 
+import EstrategiaDetonacion.EstrategiaDetonacion;
 import GUI.EntidadGrafica;
 import Tablero.TableroNotificable;
 
@@ -16,6 +17,8 @@ public abstract class Entidad implements EntidadLogica, Enfocable, Intercambiabl
 	protected boolean visible;
 	
 	protected String [] imagenes_representativas;
+
+	protected EstrategiaDetonacion estrategiaDetonacion;
 	
 	protected Entidad(TableroNotificable tablero, int fila, int columna, String path_imagenes, int color, boolean visible) {
 		this.tablero = tablero;
@@ -71,10 +74,10 @@ public abstract class Entidad implements EntidadLogica, Enfocable, Intercambiabl
 	
 	// Operaciones Detonable (Entidad <-- Juego)
 	
-	public void detonar() {
+	/*public void detonar() {
 		detonada = true;
 		entidad_grafica.notificarse_detonacion();
-	}
+	}*/
 	
 	// Operaciones Ocultable (Entidad <-- Tablero)
 	
@@ -135,5 +138,13 @@ public abstract class Entidad implements EntidadLogica, Enfocable, Intercambiabl
 		caramelo.cambiar_posicion(nueva_fila_caramelo, nueva_columna_caramelo);
 		gelatina.set_caramelo_interno(caramelo);
 		tablero.reubicar(caramelo_interno_gelatina);
+	}
+
+	public EntidadGrafica get_entidad_grafica() {
+		return entidad_grafica;
+	}
+
+	public void detonada() {
+		detonada = true;
 	}
 }

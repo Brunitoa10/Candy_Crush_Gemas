@@ -1,15 +1,19 @@
 package Entidades;
 
+import EstrategiaDetonacion.EstrategiaDetonacionNormal;
+import Tablero.TableroJuego;
 import Tablero.TableroNotificable;
 
 public class Caramelo extends Entidad {
 	
 	public Caramelo(TableroNotificable tablero, int fila, int columna, int color) {
 		super(tablero, fila, columna, "/imagenes/caramelo/", color,true);
+		estrategiaDetonacion = new EstrategiaDetonacionNormal();
 	}
 	
 	public Caramelo(TableroNotificable tablero, int fila, int columna, int color, boolean visible) {
 		super(tablero, fila, columna, "/imagenes/caramelo/", color,visible);
+		estrategiaDetonacion = new EstrategiaDetonacionNormal();
 	}
 	
 	public boolean es_posible_intercambiar(Entidad entidad) {
@@ -70,5 +74,10 @@ public class Caramelo extends Entidad {
 	
 	public boolean aplica_match_con(Gelatina g) {
 		return false;
+	}
+
+	@Override
+	public void detonar(TableroJuego tablero) {
+		estrategiaDetonacion.detonar(this, tablero);
 	}
 }

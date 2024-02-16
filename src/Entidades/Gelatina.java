@@ -1,5 +1,7 @@
 package Entidades;
 
+import EstrategiaDetonacion.EstrategiaDetonacionGelatina;
+import Tablero.TableroJuego;
 import Tablero.TableroNotificable;
 
 public class Gelatina extends Entidad {
@@ -9,11 +11,13 @@ public class Gelatina extends Entidad {
 	public Gelatina(TableroNotificable tablero, Caramelo caramelo, int fila, int columna, int color) {
 		super(tablero, fila, columna, "/imagenes/gelatina/", color,true);
 		caramelo_interno = caramelo;
+		estrategiaDetonacion = new EstrategiaDetonacionGelatina();
 	}
 	
 	public Gelatina(TableroNotificable tablero, Caramelo caramelo, int fila, int columna, int color, boolean visible) {
 		super(tablero, fila, columna, "/imagenes/gelatina/", color,visible);
 		caramelo_interno = caramelo;
+		estrategiaDetonacion = new EstrategiaDetonacionGelatina();
 	}
 	
 	public void set_caramelo_interno(Caramelo caramelo) {
@@ -94,5 +98,11 @@ public class Gelatina extends Entidad {
 
 	public boolean aplica_match_con(Gelatina g) {
 		return false;
+	}
+
+
+	@Override
+	public void detonar(TableroJuego tablero) {
+		estrategiaDetonacion.detonar(this, tablero);
 	}
 }

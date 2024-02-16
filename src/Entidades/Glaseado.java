@@ -1,15 +1,19 @@
 package Entidades;
 
+import EstrategiaDetonacion.EstrategiaDetonacionGlaseado;
+import Tablero.TableroJuego;
 import Tablero.TableroNotificable;
 
 public class Glaseado extends Entidad {
 
 	public Glaseado(TableroNotificable tablero, int fila, int columna, int color) {
 		super(tablero, fila, columna, "/imagenes/glaseado/", color,true);
+		estrategiaDetonacion = new EstrategiaDetonacionGlaseado();
 	}
 	
 	public Glaseado(TableroNotificable tablero, int fila, int columna, int color, boolean visible) {
 		super(tablero, fila, columna, "/imagenes/glaseado/", color,visible);
+		estrategiaDetonacion = new EstrategiaDetonacionGlaseado();
 	}
 	
 	public boolean es_posible_intercambiar(Entidad entidad) {
@@ -60,5 +64,10 @@ public class Glaseado extends Entidad {
 	
 	public boolean aplica_match_con(Gelatina g) {
 		return false;
+	}
+
+	@Override
+	public void detonar(TableroJuego tablero) {
+		estrategiaDetonacion.detonar(this, tablero);
 	}
 }

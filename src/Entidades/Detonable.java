@@ -1,6 +1,8 @@
 package Entidades;
 
+import Tablero.TableroJuego;
+
 public interface Detonable {
 
-	public void detonar();
+	public void detonar(TableroJuego tablero);
 }
