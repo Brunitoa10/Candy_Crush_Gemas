@@ -1,6 +1,6 @@
 package Animadores;
 
-import GUI.Celda;
+import Vista.Celda;
 
 public interface Animador{
 	

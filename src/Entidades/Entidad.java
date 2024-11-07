@@ -1,8 +1,8 @@
 package Entidades;
 
 import EstrategiaDetonacion.EstrategiaDetonacion;
-import GUI.EntidadGrafica;
 import Tablero.TableroNotificable;
+import Vista.EntidadGrafica;
 
 public abstract class Entidad implements EntidadLogica, Enfocable, Intercambiable, Matchable, Detonable, Ocultable {
 	protected TableroNotificable tablero;

@@ -11,9 +11,9 @@ import Animadores.AnimadorDetonacion;
 import Animadores.AnimadorMovimiento;
 import Animadores.AnimadorVisibilidad;
 import Animadores.PrioridadAnimaciones;
-import GUI.Celda;
-import GUI.Ventana;
-import GUI.VentanaNotificable;
+import Vista.Celda;
+import Vista.Ventana;
+import Vista.VentanaNotificable;
 
 public class CentralAnimaciones implements ManejadorAnimaciones{
 	

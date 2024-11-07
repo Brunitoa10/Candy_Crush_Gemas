@@ -1,7 +1,7 @@
 package Animadores;
 
-import GUI.Celda;
 import ManejadorAnimaciones.CentralAnimaciones;
+import Vista.Celda;
 
 public class AnimadorCaida extends AnimadorMovimiento{
 	

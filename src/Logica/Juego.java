@@ -1,14 +1,13 @@
 package Logica;
-import java.awt.EventQueue;
 
 import Entidades.Entidad;
-import GUI.EntidadGrafica;
-import GUI.Ventana;
-import GUI.VentanaJuego;
 import Nivel.GeneradorNivel;
 import Nivel.Nivel;
 import Tablero.Tablero;
 import Tablero.TableroJuego;
+import Vista.EntidadGrafica;
+import Vista.Ventana;
+import Vista.VentanaJuego;
 
 public class Juego {
 
@@ -46,17 +45,5 @@ public class Juego {
 	
 	public Nivel getNivelActual(){
 		return nivel;
-	}
-
-	public static void main(String [] args) {
-		EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                	new Juego();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
 	}
 }

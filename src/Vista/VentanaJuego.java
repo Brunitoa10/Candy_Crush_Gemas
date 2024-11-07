@@ -1,4 +1,4 @@
-package GUI;
+package Vista;
 
 import Entidades.EntidadLogica;
 import Logica.Juego;

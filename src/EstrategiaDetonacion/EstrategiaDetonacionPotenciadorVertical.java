@@ -1,8 +1,8 @@
 package EstrategiaDetonacion;
 
 import Entidades.Entidad;
-import GUI.EntidadGrafica;
 import Tablero.TableroJuego;
+import Vista.EntidadGrafica;
 
 public class EstrategiaDetonacionPotenciadorVertical implements EstrategiaDetonacion{
 

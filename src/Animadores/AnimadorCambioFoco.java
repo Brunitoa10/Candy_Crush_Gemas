@@ -5,8 +5,8 @@ import java.awt.Image;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
-import GUI.Celda;
 import ManejadorAnimaciones.CentralAnimaciones;
+import Vista.Celda;
 
 public class AnimadorCambioFoco implements Animador {
 

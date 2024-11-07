@@ -1,4 +1,4 @@
-package GUI;
+package Vista;
 
 import java.awt.*;
 import javax.swing.*;
